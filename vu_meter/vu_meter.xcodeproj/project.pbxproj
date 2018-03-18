@@ -145,6 +145,13 @@
 		B62B53F9205E51F400A300E5 /* yas_ui_matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62B53C3205E51F400A300E5 /* yas_ui_matrix.cpp */; };
 		B62B53FA205E51F400A300E5 /* yas_ui_metal_system_protocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B53C4205E51F400A300E5 /* yas_ui_metal_system_protocol.mm */; };
 		B62B53FB205E51F400A300E5 /* yas_ui_node_actions.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B53C5205E51F400A300E5 /* yas_ui_node_actions.mm */; };
+		B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */; };
+		B62B5401205E59C500A300E5 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B53FF205E59C500A300E5 /* Metal.framework */; };
+		B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5400205E59C500A300E5 /* MetalKit.framework */; };
+		B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */; };
+		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
+		B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5407205E5A1E00A300E5 /* GLKit.framework */; };
+		B62B540A205E5A7600A300E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -490,6 +497,13 @@
 		B62B53C3205E51F400A300E5 /* yas_ui_matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_ui_matrix.cpp; sourceTree = "<group>"; };
 		B62B53C4205E51F400A300E5 /* yas_ui_metal_system_protocol.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_ui_metal_system_protocol.mm; sourceTree = "<group>"; };
 		B62B53C5205E51F400A300E5 /* yas_ui_node_actions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = yas_ui_node_actions.mm; sourceTree = "<group>"; };
+		B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B62B53FF205E59C500A300E5 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		B62B5400205E59C500A300E5 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
+		B62B5405205E5A0600A300E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B62B5407205E5A1E00A300E5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +511,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B62B540A205E5A7600A300E5 /* AVFoundation.framework in Frameworks */,
+				B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */,
+				B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */,
+				B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */,
+				B62B5401205E59C500A300E5 /* Metal.framework in Frameworks */,
+				B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */,
+				B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +537,7 @@
 				B62B5205205E1A0A00A300E5 /* vu_meter */,
 				B62B521E205E1A0A00A300E5 /* vu_meterTests */,
 				B62B5204205E1A0A00A300E5 /* Products */,
+				B62B53FC205E59BB00A300E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -995,6 +1017,20 @@
 				B62B53A3205E51F400A300E5 /* yas_ui_shaders.metal */,
 			);
 			path = shader_mac;
+			sourceTree = "<group>";
+		};
+		B62B53FC205E59BB00A300E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B62B5409205E5A7600A300E5 /* AVFoundation.framework */,
+				B62B5407205E5A1E00A300E5 /* GLKit.framework */,
+				B62B5405205E5A0600A300E5 /* Accelerate.framework */,
+				B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */,
+				B62B53FF205E59C500A300E5 /* Metal.framework */,
+				B62B5400205E59C500A300E5 /* MetalKit.framework */,
+				B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
