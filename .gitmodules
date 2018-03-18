@@ -10,3 +10,6 @@
 [submodule "cpp_utils"]
 	path = cpp_utils
 	url = git@github.com:objective-audio/cpp_utils.git
+[submodule "objc_utils"]
+	path = objc_utils
+	url = git@github.com:objective-audio/objc_utils.git
