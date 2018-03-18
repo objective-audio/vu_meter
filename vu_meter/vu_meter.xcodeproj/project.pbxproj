@@ -146,7 +146,6 @@
 		B62B53FA205E51F400A300E5 /* yas_ui_metal_system_protocol.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B53C4205E51F400A300E5 /* yas_ui_metal_system_protocol.mm */; };
 		B62B53FB205E51F400A300E5 /* yas_ui_node_actions.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B53C5205E51F400A300E5 /* yas_ui_node_actions.mm */; };
 		B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */; };
-		B62B5401205E59C500A300E5 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B53FF205E59C500A300E5 /* Metal.framework */; };
 		B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5400205E59C500A300E5 /* MetalKit.framework */; };
 		B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */; };
 		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
@@ -515,7 +514,6 @@
 				B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */,
 				B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */,
 				B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */,
-				B62B5401205E59C500A300E5 /* Metal.framework in Frameworks */,
 				B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */,
 				B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */,
 			);
