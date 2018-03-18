@@ -1,0 +1,3 @@
+[submodule "audio_engine"]
+	path = audio_engine
+	url = git@github.com:objective-audio/audio_engine.git
