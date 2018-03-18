@@ -7,3 +7,6 @@
 [submodule "processing"]
 	path = processing
 	url = git@github.com:objective-audio/processing.git
+[submodule "cpp_utils"]
+	path = cpp_utils
+	url = git@github.com:objective-audio/cpp_utils.git
