@@ -556,15 +556,7 @@
 				B62B52EE205E51C700A300E5 /* objc_utils */,
 				B62B52F3205E51D300A300E5 /* processing */,
 				B62B5354205E51F300A300E5 /* ui */,
-				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
-				B62B5207205E1A0A00A300E5 /* AppDelegate.m */,
-				B62B5209205E1A0A00A300E5 /* ViewController.h */,
-				B62B520A205E1A0A00A300E5 /* ViewController.m */,
-				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
-				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
-				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
-				B62B5214205E1A0A00A300E5 /* Info.plist */,
-				B62B5215205E1A0A00A300E5 /* main.m */,
+				B62B5410205FCFED00A300E5 /* vu_meter */,
 			);
 			path = vu_meter;
 			sourceTree = "<group>";
@@ -1029,6 +1021,22 @@
 				B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B62B5410205FCFED00A300E5 /* vu_meter */ = {
+			isa = PBXGroup;
+			children = (
+				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
+				B62B5207205E1A0A00A300E5 /* AppDelegate.m */,
+				B62B5209205E1A0A00A300E5 /* ViewController.h */,
+				B62B520A205E1A0A00A300E5 /* ViewController.m */,
+				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
+				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
+				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
+				B62B5214205E1A0A00A300E5 /* Info.plist */,
+				B62B5215205E1A0A00A300E5 /* main.m */,
+			);
+			path = vu_meter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
