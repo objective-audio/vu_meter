@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B62B5208205E1A0A00A300E5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.m */; };
+		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
+		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
 		B62B520B205E1A0A00A300E5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B520A205E1A0A00A300E5 /* ViewController.m */; };
 		B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B520C205E1A0A00A300E5 /* Main.storyboard */; };
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
@@ -164,9 +165,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
+		B628C9C3205FD05B0085DF7F /* vu_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_main.hpp; sourceTree = "<group>"; };
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B5206205E1A0A00A300E5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B62B5207205E1A0A00A300E5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B62B5207205E1A0A00A300E5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		B62B5209205E1A0A00A300E5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B62B520A205E1A0A00A300E5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B62B520D205E1A0A00A300E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -1027,9 +1030,11 @@
 			isa = PBXGroup;
 			children = (
 				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
-				B62B5207205E1A0A00A300E5 /* AppDelegate.m */,
+				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
 				B62B5209205E1A0A00A300E5 /* ViewController.h */,
 				B62B520A205E1A0A00A300E5 /* ViewController.m */,
+				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
+				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
 				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
 				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
@@ -1255,6 +1260,7 @@
 				B62B5285205E51AC00A300E5 /* yas_audio_engine_kernel_protocol.cpp in Sources */,
 				B62B52DE205E51BC00A300E5 /* yas_property.cpp in Sources */,
 				B62B53D5205E51F400A300E5 /* yas_ui_layout_actions.mm in Sources */,
+				B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */,
 				B62B5216205E1A0A00A300E5 /* main.m in Sources */,
 				B62B5287205E51AC00A300E5 /* yas_audio_engine_offline_output_protocol.cpp in Sources */,
 				B62B53F4205E51F400A300E5 /* yas_ui_effect.mm in Sources */,
@@ -1264,7 +1270,7 @@
 				B62B5291205E51AC00A300E5 /* yas_audio_engine_au.cpp in Sources */,
 				B62B52E4205E51BC00A300E5 /* yas_base.cpp in Sources */,
 				B62B527C205E51AC00A300E5 /* yas_audio_types.cpp in Sources */,
-				B62B5208205E1A0A00A300E5 /* AppDelegate.m in Sources */,
+				B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */,
 				B62B53D1205E51F400A300E5 /* yas_ui_render_target.mm in Sources */,
 				B62B53DC205E51F400A300E5 /* yas_ui_metal_render_encoder.mm in Sources */,
 				B62B5281205E51AC00A300E5 /* yas_audio_graph.mm in Sources */,
@@ -1424,7 +1430,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
-				INFOPLIST_FILE = vu_meter/Info.plist;
+				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1438,7 +1444,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
-				INFOPLIST_FILE = vu_meter/Info.plist;
+				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
