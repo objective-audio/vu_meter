@@ -8,7 +8,9 @@
 
 namespace yas::vu {
 class main {
-    audio::engine::manager manager = nullptr;
+    audio::engine::manager manager;
+    audio::engine::au_input au_input;
+    audio::engine::tap input_tap = {{.is_input = true}};
 
    public:
     void setup();
