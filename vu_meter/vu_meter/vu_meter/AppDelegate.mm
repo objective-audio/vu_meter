@@ -12,6 +12,8 @@ using namespace yas;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self->_main.setup();
+
     return YES;
 }
 
