@@ -3,13 +3,13 @@
 //
 
 #import "AppDelegate.h"
+#import "vu_main.hpp"
 
-@interface AppDelegate ()
+using namespace yas;
 
-@end
-
-@implementation AppDelegate
-
+@implementation AppDelegate {
+    vu::main _main;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
