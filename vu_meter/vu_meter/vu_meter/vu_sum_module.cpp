@@ -31,13 +31,6 @@ void yas::connect(module &module, vu::sum::output const &output, channel_index_t
     module.connect_output(to_connector_index(output), ch_idx);
 }
 
-std::string yas::to_string(vu::sum::output const &output) {
-    using namespace yas::vu::sum;
-
-    switch (output) {
-        case output::value:
-            return "value";
-    }
-
-    throw "output not found.";
+void yas::connect(module &module, vu::sum::input const &input, channel_index_t const &ch_idx) {
+    module.connect_input(to_connector_index(input), ch_idx);
 }

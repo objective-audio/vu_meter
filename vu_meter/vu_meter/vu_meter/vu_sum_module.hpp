@@ -11,11 +11,14 @@ enum class output : proc::connector_index_t {
     value,
 };
 
+enum class input : proc::connector_index_t {
+    value,
+};
+
 proc::module make_signal_module();
 }
 
 namespace yas {
 void connect(proc::module &, vu::sum::output const &, proc::channel_index_t const &);
-
-std::string to_string(vu::sum::output const &);
+void connect(proc::module &, vu::sum::input const &, proc::channel_index_t const &);
 }

@@ -4,6 +4,7 @@
 
 #include "vu_main.hpp"
 #include "vu_send_module.hpp"
+#include "vu_sum_module.hpp"
 #include <limits>
 #include <iostream>
 
@@ -89,6 +90,15 @@ void vu::main::setup() {
     }
 
     // sumする
+    for (auto const ch : {0, 1}) {
+        if (auto track = timeline.add_track(trk_idx++)) {
+            auto module = vu::sum::make_signal_module();
+            module.connect_input(proc::to_connector_index(vu::sum::input::value), ch);
+            module.connect_output(proc::to_connector_index(vu::sum::output::value), ch);
+
+            track.insert_module(time_range, std::move(module));
+        }
+    }
 
     // 平方根を取る
     for (auto const ch : {0, 1}) {
