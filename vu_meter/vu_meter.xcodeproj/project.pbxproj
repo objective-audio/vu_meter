@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
 		B62B520B205E1A0A00A300E5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B520A205E1A0A00A300E5 /* ViewController.m */; };
@@ -166,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B610E98220629153004A46B5 /* vu_sum_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_sum_module.cpp; sourceTree = "<group>"; };
+		B610E98320629153004A46B5 /* vu_sum_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_sum_module.hpp; sourceTree = "<group>"; };
 		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
 		B628C9C3205FD05B0085DF7F /* vu_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_main.hpp; sourceTree = "<group>"; };
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1040,6 +1043,8 @@
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
 				B659949920620A5E00EBC1D8 /* vu_send_module.hpp */,
+				B610E98220629153004A46B5 /* vu_sum_module.cpp */,
+				B610E98320629153004A46B5 /* vu_sum_module.hpp */,
 				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
 				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
 				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
@@ -1200,6 +1205,7 @@
 				B62B52EC205E51BC00A300E5 /* yas_objc_ptr.mm in Sources */,
 				B62B5292205E51AC00A300E5 /* yas_audio_engine_offline_output.mm in Sources */,
 				B62B53F9205E51F400A300E5 /* yas_ui_matrix.cpp in Sources */,
+				B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */,
 				B62B53EF205E51F400A300E5 /* yas_ui_image.cpp in Sources */,
 				B62B53D4205E51F400A300E5 /* yas_ui_action.mm in Sources */,
 				B62B5344205E51D300A300E5 /* yas_processing_cast_module.cpp in Sources */,
