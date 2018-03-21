@@ -13,6 +13,7 @@ module vu::sum::make_signal_module() {
         make_receive_signal_processor<float>([](proc::time::range const &, sync_source const &, channel_index_t const,
                                                 connector_index_t const, float const *const) {
 #warning todo 300ms+新規分を元データで保持する
+#warning todo time_rangeが繋がらなかったら保持したいたデータをリセットする
         });
 
     auto send_processor = make_send_signal_processor<float>(
