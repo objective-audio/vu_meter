@@ -6,17 +6,14 @@
 
 #include "yas_processing.h"
 
-namespace yas::vu {
-namespace send {
-    enum class output : proc::connector_index_t {
-        left,
-        right,
-    };
+namespace yas::vu::send {
+enum class output : proc::connector_index_t {
+    value,
+};
 
-    using handler = std::function<void(proc::time::range const &, proc::connector_index_t const &, float *const)>;
+using handler = std::function<void(proc::time::range const &, proc::connector_index_t const &, float *const)>;
 
-    proc::module make_signal_module(handler);
-}
+proc::module make_signal_module(handler);
 }
 
 namespace yas {

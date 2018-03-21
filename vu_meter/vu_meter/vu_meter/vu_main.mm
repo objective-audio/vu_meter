@@ -37,32 +37,58 @@ void vu::main::setup() {
     auto context = std::make_shared<context_t>();
 
     proc::timeline timeline{};
+    proc::track_index_t trk_idx = 0;
+    proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
 
-    if (auto track = timeline.add_track(0)) {
-        auto send_module = vu::send::make_signal_module([context](
-            proc::time::range const &time_range, proc::connector_index_t const &co_idx, float *const signal_ptr) {
-            auto &buffer = context->buffer;
-            if (!buffer) {
-                return;
-            }
+    /// インプットを受け付けるトラック
+    for (auto const ch : {0, 1}) {
+        if (auto track = timeline.add_track(trk_idx++)) {
+            auto module = vu::send::make_signal_module([context, ch](
+                proc::time::range const &time_range, proc::connector_index_t const &, float *const signal_ptr) {
+                auto &buffer = context->buffer;
+                if (!buffer) {
+                    return;
+                }
 
-            auto const &format = buffer.format();
-            bool const is_interleaved = format.is_interleaved();
-            auto const ch_count = format.channel_count();
+                auto const &format = buffer.format();
+                bool const is_interleaved = format.is_interleaved();
+                auto const ch_count = format.channel_count();
+                auto const length = buffer.frame_length();
 
-            if (!is_interleaved && co_idx < ch_count) {
-                float *in_ptr = buffer.data_ptr_at_channel<float>(co_idx);
-                memcpy(signal_ptr, in_ptr, time_range.length * sizeof(float));
-            }
-        });
+                /// signal_ptrに渡せるデータであればsignal_ptrにコピーする
+                if (!is_interleaved && ch < ch_count && time_range.length <= length) {
+                    float *in_ptr = buffer.data_ptr_at_channel<float>(ch);
+                    memcpy(signal_ptr, in_ptr, time_range.length * sizeof(float));
+                }
+            });
 
-        send_module.connect_output(proc::to_connector_index(vu::send::output::left), 0);
-        send_module.connect_output(proc::to_connector_index(vu::send::output::right), 1);
+            module.connect_output(proc::to_connector_index(vu::send::output::value), ch);
 
-        proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
-        track.insert_module(time_range, std::move(send_module));
+            track.insert_module(time_range, std::move(module));
+        }
     }
 
+    // 累乗するための固定値
+    if (auto track = timeline.add_track(trk_idx++)) {
+        auto module = proc::make_signal_module(float(2.0f));
+        module.connect_output(proc::to_connector_index(proc::constant::output::value), 2);
+
+        track.insert_module(time_range, std::move(module));
+    }
+
+    // 累乗する
+    for (auto const ch : {0, 1}) {
+        if (auto track = timeline.add_track(trk_idx++)) {
+            auto module = proc::make_signal_module<float>(proc::math2::kind::pow);
+            module.connect_input(proc::to_connector_index(proc::math2::input::left), ch);
+            module.connect_input(proc::to_connector_index(proc::math2::input::right), 2);
+            module.connect_output(proc::to_connector_index(proc::math2::output::result), ch);
+
+            track.insert_module(time_range, std::move(module));
+        }
+    }
+
+    // デバイスのインプットからタイムラインにデータを渡す
     this->input_tap.set_render_handler([context, timeline](audio::engine::node::render_args args) mutable {
         proc::length_t const length = args.buffer.frame_length();
         context->buffer = args.buffer;
