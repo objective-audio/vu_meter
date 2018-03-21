@@ -88,6 +88,19 @@ void vu::main::setup() {
         }
     }
 
+    // sumする
+
+    // 平方根を取る
+    for (auto const ch : {0, 1}) {
+        if (auto track = timeline.add_track(trk_idx++)) {
+            auto module = proc::make_signal_module<float>(proc::math1::kind::sqrt);
+            module.connect_input(proc::to_connector_index(proc::math1::input::parameter), ch);
+            module.connect_output(proc::to_connector_index(proc::math1::output::result), ch);
+
+            track.insert_module(time_range, std::move(module));
+        }
+    }
+
     // デバイスのインプットからタイムラインにデータを渡す
     this->input_tap.set_render_handler([context, timeline](audio::engine::node::render_args args) mutable {
         proc::length_t const length = args.buffer.frame_length();
