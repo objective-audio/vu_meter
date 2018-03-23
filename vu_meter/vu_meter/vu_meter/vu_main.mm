@@ -51,16 +51,8 @@ void vu::main::setup() {
                     return;
                 }
 
-                auto const &format = buffer.format();
-                bool const is_interleaved = format.is_interleaved();
-                auto const ch_count = format.channel_count();
-                auto const length = buffer.frame_length();
-
-                /// signal_ptrに渡せるデータであればsignal_ptrにコピーする
-                if (!is_interleaved && ch < ch_count && time_range.length <= length) {
-                    float *in_ptr = buffer.data_ptr_at_channel<float>(ch);
-                    memcpy(signal_ptr, in_ptr, time_range.length * sizeof(float));
-                }
+                uint32_t const length = std::min(buffer.frame_length(), static_cast<uint32_t>(time_range.length));
+                buffer.copy_to(signal_ptr, 1, 0, ch, 0, length);
             });
 
             module.connect_output(proc::to_connector_index(vu::send::output::value), ch);
