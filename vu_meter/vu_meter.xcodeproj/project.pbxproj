@@ -169,6 +169,8 @@
 /* Begin PBXFileReference section */
 		B610E98220629153004A46B5 /* vu_sum_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_sum_module.cpp; sourceTree = "<group>"; };
 		B610E98320629153004A46B5 /* vu_sum_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_sum_module.hpp; sourceTree = "<group>"; };
+		B610E99320660551004A46B5 /* yas_data_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data_private.h; sourceTree = "<group>"; };
+		B610E99420660552004A46B5 /* yas_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data.h; sourceTree = "<group>"; };
 		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
 		B628C9C3205FD05B0085DF7F /* vu_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_main.hpp; sourceTree = "<group>"; };
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -761,6 +763,8 @@
 				B62B52DA205E51BB00A300E5 /* yas_to_integer.h */,
 				B62B52DB205E51BB00A300E5 /* yas_boolean.cpp */,
 				B62B52DC205E51BB00A300E5 /* yas_operation.h */,
+				B610E99320660551004A46B5 /* yas_data_private.h */,
+				B610E99420660552004A46B5 /* yas_data.h */,
 			);
 			name = cpp_utils;
 			path = ../../cpp_utils/cpp_utils;
