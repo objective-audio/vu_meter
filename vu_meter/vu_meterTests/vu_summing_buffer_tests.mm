@@ -113,6 +113,7 @@ using namespace yas;
     {
         proc::time::range time_range{2, 2};
         buffer.setup(time_range, 3);
+
         std::vector<float> push_vec{3.0f, 4.0f};
         buffer.push(push_vec.data(), 2);
 
