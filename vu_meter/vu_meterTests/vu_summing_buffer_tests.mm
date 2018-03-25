@@ -69,6 +69,8 @@ using namespace yas;
 
     XCTAssertEqual(fetch_vec.at(0), 1.0f);
     XCTAssertEqual(fetch_vec.at(1), 3.0f);
+
+    XCTAssertEqual(buffer.pos, 0);
 }
 
 - (void)test_finalize {
@@ -86,6 +88,7 @@ using namespace yas;
     XCTAssertEqual(buffer.stored.at(3), 0.0f);
 
     XCTAssertEqual(buffer.pushed.size(), 0);
+    XCTAssertEqual(buffer.pos, 2);
 }
 
 - (void)test_execute_several_times {
@@ -106,6 +109,7 @@ using namespace yas;
         buffer.finalize();
     }
 
+    XCTAssertEqual(buffer.pos, 2);
     XCTAssertEqual(buffer.stored.at(0), 1.0f);
     XCTAssertEqual(buffer.stored.at(1), 2.0f);
     XCTAssertEqual(buffer.stored.at(2), 0.0f);
@@ -126,6 +130,7 @@ using namespace yas;
         buffer.finalize();
     }
 
+    XCTAssertEqual(buffer.pos, 1);
     XCTAssertEqual(buffer.stored.at(0), 4.0f);
     XCTAssertEqual(buffer.stored.at(1), 2.0f);
     XCTAssertEqual(buffer.stored.at(2), 3.0f);
@@ -145,6 +150,7 @@ using namespace yas;
         buffer.finalize();
     }
 
+    XCTAssertEqual(buffer.pos, 0);
     XCTAssertEqual(buffer.stored.at(0), 4.0f);
     XCTAssertEqual(buffer.stored.at(1), 5.0f);
     XCTAssertEqual(buffer.stored.at(2), 6.0f);
