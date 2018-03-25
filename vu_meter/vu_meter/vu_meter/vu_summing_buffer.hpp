@@ -24,6 +24,6 @@ struct summing_buffer {
 
    private:
     std::experimental::optional<proc::time::range> _last_time_range;
-    proc::sample_rate_t _last_length = 0;
+    std::size_t _last_length = 0;
 };
 }
