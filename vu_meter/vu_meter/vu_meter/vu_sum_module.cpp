@@ -25,7 +25,7 @@ struct summing_buffer {
 
         if (is_resize) {
             this->stored.clear();
-            this->stored.resize(static_cast<std::size_t>(sample_rate * (3.0 / 10.0)));
+            this->stored.resize(static_cast<std::size_t>(sample_rate * (3.0 / 10.0)));  // 300ms
         }
     }
 
