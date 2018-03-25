@@ -153,6 +153,7 @@
 		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
 		B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5407205E5A1E00A300E5 /* GLKit.framework */; };
 		B62B540A205E5A7600A300E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
+		B64CEEDD20672E2A00DEFAEA /* yas_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */; };
 		B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B659949820620A5E00EBC1D8 /* vu_send_module.cpp */; };
 /* End PBXBuildFile section */
 
@@ -512,6 +513,7 @@
 		B62B5405205E5A0600A300E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B62B5407205E5A1E00A300E5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_data.cpp; sourceTree = "<group>"; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
 		B659949920620A5E00EBC1D8 /* vu_send_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_send_module.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -764,6 +766,7 @@
 				B62B52DB205E51BB00A300E5 /* yas_boolean.cpp */,
 				B62B52DC205E51BB00A300E5 /* yas_operation.h */,
 				B610E99320660551004A46B5 /* yas_data_private.h */,
+				B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */,
 				B610E99420660552004A46B5 /* yas_data.h */,
 			);
 			name = cpp_utils;
@@ -1227,6 +1230,7 @@
 				B62B53F2205E51F400A300E5 /* yas_ui_rect_plane.mm in Sources */,
 				B62B527F205E51AC00A300E5 /* yas_audio_pcm_buffer.cpp in Sources */,
 				B62B53C6205E51F400A300E5 /* yas_ui_layout.cpp in Sources */,
+				B64CEEDD20672E2A00DEFAEA /* yas_data.cpp in Sources */,
 				B62B53C9205E51F400A300E5 /* yas_ui_texture_element.mm in Sources */,
 				B62B53F3205E51F400A300E5 /* yas_ui_blur.mm in Sources */,
 				B62B52E9205E51BC00A300E5 /* yas_stl_utils.cpp in Sources */,
