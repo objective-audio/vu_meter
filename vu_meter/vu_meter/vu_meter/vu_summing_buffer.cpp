@@ -48,7 +48,7 @@ void vu::summing_buffer::finalize() {
     data_copy<float> data_copy{.src_data = {.ptr = this->pushed.data(), .length = this->pushed.size()},
                                .dst_data = {.ptr = this->stored.data(), .length = this->stored.size()},
                                .dst_begin_idx = this->pos,
-                               .length = this->stored.size()};
+                               .length = this->pushed.size()};
 
     auto const result = data_copy.execute_cyclical();
 
