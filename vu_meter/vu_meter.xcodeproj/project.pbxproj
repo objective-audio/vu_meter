@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */; };
+		B605C0C12067A76C00B4ACCF /* yas_processing_test_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B605C0BF2067A76C00B4ACCF /* yas_processing_test_utils.cpp */; };
 		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
@@ -169,6 +170,8 @@
 
 /* Begin PBXFileReference section */
 		B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_sum_module_tests.mm; sourceTree = "<group>"; };
+		B605C0BF2067A76C00B4ACCF /* yas_processing_test_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = yas_processing_test_utils.cpp; path = ../../processing/processing_tests/processing_mac_tests/yas_processing_test_utils.cpp; sourceTree = "<group>"; };
+		B605C0C02067A76C00B4ACCF /* yas_processing_test_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = yas_processing_test_utils.h; path = ../../processing/processing_tests/processing_mac_tests/yas_processing_test_utils.h; sourceTree = "<group>"; };
 		B610E98220629153004A46B5 /* vu_sum_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_sum_module.cpp; sourceTree = "<group>"; };
 		B610E98320629153004A46B5 /* vu_sum_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_sum_module.hpp; sourceTree = "<group>"; };
 		B610E99320660551004A46B5 /* yas_data_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data_private.h; sourceTree = "<group>"; };
@@ -577,6 +580,8 @@
 		B62B521E205E1A0A00A300E5 /* vu_meterTests */ = {
 			isa = PBXGroup;
 			children = (
+				B605C0BF2067A76C00B4ACCF /* yas_processing_test_utils.cpp */,
+				B605C0C02067A76C00B4ACCF /* yas_processing_test_utils.h */,
 				B62B5221205E1A0A00A300E5 /* Info.plist */,
 				B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */,
 			);
@@ -1308,6 +1313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B605C0C12067A76C00B4ACCF /* yas_processing_test_utils.cpp in Sources */,
 				B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
