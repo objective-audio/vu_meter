@@ -92,7 +92,7 @@ module vu::sum::make_signal_module() {
             buffer->finalize();
         });
 
-    return module{{std::move(send_processor)}};
+    return module{{std::move(receive_processor), std::move(send_processor)}};
 }
 
 #pragma mark -
