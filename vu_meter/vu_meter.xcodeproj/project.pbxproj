@@ -156,6 +156,7 @@
 		B62B540A205E5A7600A300E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 		B64CEEDD20672E2A00DEFAEA /* yas_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */; };
 		B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B659949820620A5E00EBC1D8 /* vu_send_module.cpp */; };
+		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -519,6 +520,8 @@
 		B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_data.cpp; sourceTree = "<group>"; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
 		B659949920620A5E00EBC1D8 /* vu_send_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_send_module.hpp; sourceTree = "<group>"; };
+		B675643F2067AE0600944F8E /* TestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestAppDelegate.h; sourceTree = "<group>"; };
+		B67564402067AE0600944F8E /* TestAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestAppDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1049,6 +1052,8 @@
 			children = (
 				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
 				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
+				B675643F2067AE0600944F8E /* TestAppDelegate.h */,
+				B67564402067AE0600944F8E /* TestAppDelegate.m */,
 				B62B5209205E1A0A00A300E5 /* ViewController.h */,
 				B62B520A205E1A0A00A300E5 /* ViewController.m */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
@@ -1254,6 +1259,7 @@
 				B62B533F205E51D300A300E5 /* yas_processing_math1_modules.cpp in Sources */,
 				B62B5288205E51AC00A300E5 /* yas_audio_engine_tap.cpp in Sources */,
 				B62B53F5205E51F400A300E5 /* yas_ui_render_encoder_protocol.mm in Sources */,
+				B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */,
 				B62B528E205E51AC00A300E5 /* yas_audio_engine_au_io.mm in Sources */,
 				B62B53F0205E51F400A300E5 /* yas_ui_layout_guide.cpp in Sources */,
 				B62B527D205E51AC00A300E5 /* yas_audio_math.cpp in Sources */,
