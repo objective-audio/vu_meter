@@ -24,14 +24,27 @@ using namespace yas;
 
 - (void)test_process {
     proc::sample_rate_t const sample_rate = 8;
-    double const duration = 1.0 / 4.0;
+    double const duration = 0.5;
     proc::length_t const process_length = 2;
 
-    //    auto stream = test::make_signal_stream(time::range{0, process_length}, left_data, time::range{1, 3}, 0,
-    //                                           right_data,
-    //                                           time::range{2, 3}, 1);
-
     auto module = vu::sum::make_signal_module(duration);
+    connect(module, vu::sum::input::value, 0);
+    connect(module, vu::sum::output::value, 0);
+
+    {
+        time::range time_range{0, process_length};
+        proc::stream stream{sync_source{sample_rate, time_range.length}};
+
+        auto &channel = stream.add_channel(0);
+        signal_event phase_signal = proc::make_signal_event<float>(process_length);
+        float *phase_data = phase_signal.data<float>();
+        phase_data[0] = 1.0f;
+        phase_data[1] = 2.0f;
+        channel.insert_event(proc::time{time_range}, std::move(phase_signal));
+
+        module.process(time_range, stream);
+    }
+
     //    length_t const process_length = 6;
     //
     //    int16_t const left_data[3] = {
