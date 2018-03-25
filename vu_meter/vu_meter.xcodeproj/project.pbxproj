@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */; };
 		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
@@ -15,7 +16,6 @@
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
 		B62B5216205E1A0A00A300E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B5215205E1A0A00A300E5 /* main.m */; };
-		B62B5220205E1A0A00A300E5 /* vu_meterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B521F205E1A0A00A300E5 /* vu_meterTests.m */; };
 		B62B5278205E51AC00A300E5 /* yas_audio_exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B62B5230205E51AC00A300E5 /* yas_audio_exception.cpp */; };
 		B62B5279205E51AC00A300E5 /* yas_audio_format.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5231205E51AC00A300E5 /* yas_audio_format.mm */; };
 		B62B527A205E51AC00A300E5 /* yas_audio_file.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5232205E51AC00A300E5 /* yas_audio_file.mm */; };
@@ -168,6 +168,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_sum_module_tests.mm; sourceTree = "<group>"; };
 		B610E98220629153004A46B5 /* vu_sum_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_sum_module.cpp; sourceTree = "<group>"; };
 		B610E98320629153004A46B5 /* vu_sum_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_sum_module.hpp; sourceTree = "<group>"; };
 		B610E99320660551004A46B5 /* yas_data_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data_private.h; sourceTree = "<group>"; };
@@ -185,7 +186,6 @@
 		B62B5214205E1A0A00A300E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B62B5215205E1A0A00A300E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B62B521B205E1A0A00A300E5 /* vu_meterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vu_meterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B62B521F205E1A0A00A300E5 /* vu_meterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vu_meterTests.m; sourceTree = "<group>"; };
 		B62B5221205E1A0A00A300E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B62B522C205E51AC00A300E5 /* yas_audio_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_audio_time.h; sourceTree = "<group>"; };
 		B62B522D205E51AC00A300E5 /* yas_audio_file_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_audio_file_utils.h; sourceTree = "<group>"; };
@@ -577,8 +577,8 @@
 		B62B521E205E1A0A00A300E5 /* vu_meterTests */ = {
 			isa = PBXGroup;
 			children = (
-				B62B521F205E1A0A00A300E5 /* vu_meterTests.m */,
 				B62B5221205E1A0A00A300E5 /* Info.plist */,
+				B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */,
 			);
 			path = vu_meterTests;
 			sourceTree = "<group>";
@@ -1308,7 +1308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B62B5220205E1A0A00A300E5 /* vu_meterTests.m in Sources */,
+				B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
