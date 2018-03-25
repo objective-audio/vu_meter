@@ -156,13 +156,48 @@ using namespace yas;
     XCTAssertEqual(buffer.stored.at(2), 6.0f);
 }
 
-- (void)test_setup_skip {
-}
-
 - (void)test_setup_reset_by_time_range {
+    vu::summing_buffer buffer{};
+
+    {
+        proc::time::range time_range{0, 2};
+        buffer.setup(time_range, 4);
+        std::vector<float> push_vec{1.0f, 2.0f};
+        buffer.push(push_vec.data(), 2);
+        buffer.finalize();
+    }
+
+    {
+        proc::time::range time_range{3, 2};
+        buffer.setup(time_range, 4);
+
+        XCTAssertEqual(buffer.stored.at(0), 0.0f);
+        XCTAssertEqual(buffer.stored.at(1), 0.0f);
+        XCTAssertEqual(buffer.stored.at(2), 0.0f);
+        XCTAssertEqual(buffer.stored.at(3), 0.0f);
+    }
 }
 
 - (void)test_setup_reset_by_length {
+    vu::summing_buffer buffer{};
+
+    {
+        proc::time::range time_range{0, 2};
+        buffer.setup(time_range, 4);
+        std::vector<float> push_vec{1.0f, 2.0f};
+        buffer.push(push_vec.data(), 2);
+        buffer.finalize();
+    }
+
+    {
+        proc::time::range time_range{2, 2};
+        buffer.setup(time_range, 3);
+
+        XCTAssertEqual(buffer.stored.size(), 3);
+        XCTAssertEqual(buffer.stored.at(0), 0.0f);
+        XCTAssertEqual(buffer.stored.at(1), 0.0f);
+        XCTAssertEqual(buffer.stored.at(2), 0.0f);
+    }
 }
 
 @end
