@@ -19,6 +19,9 @@ void vu::summing_buffer::setup(proc::time::range const &time_range, std::size_t 
         this->stored.clear();
         this->stored.resize(length);
     }
+
+    this->_last_time_range = time_range;
+    this->_last_length = length;
 }
 
 void vu::summing_buffer::push(float const *const in_ptr, uint32_t const length) {
