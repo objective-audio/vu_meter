@@ -15,7 +15,7 @@ enum class input : proc::connector_index_t {
     value,
 };
 
-proc::module make_signal_module();
+proc::module make_signal_module(double const duration);
 }
 
 namespace yas {

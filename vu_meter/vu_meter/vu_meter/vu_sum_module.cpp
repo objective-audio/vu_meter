@@ -16,8 +16,8 @@ struct summing_buffer {
     std::vector<float> stored;
     std::size_t pos = 0;
 
-    void setup(proc::time::range const &time_range, proc::sample_rate_t const sample_rate) {
-        bool is_resize = this->_last_sample_rate != sample_rate;
+    void setup(proc::time::range const &time_range, std::size_t const length) {
+        bool is_resize = this->_last_length != length;
 
         if (!is_resize) {
             is_resize = !this->_last_time_range || time_range.frame != this->_last_time_range->next_frame();
@@ -25,7 +25,7 @@ struct summing_buffer {
 
         if (is_resize) {
             this->stored.clear();
-            this->stored.resize(static_cast<std::size_t>(sample_rate * (3.0 / 10.0)));  // 300ms
+            this->stored.resize(length);
         }
     }
 
@@ -69,17 +69,17 @@ struct summing_buffer {
 
    private:
     std::experimental::optional<proc::time::range> _last_time_range;
-    proc::sample_rate_t _last_sample_rate = 0;
+    proc::sample_rate_t _last_length = 0;
 };
 }
 
-module vu::sum::make_signal_module() {
+module vu::sum::make_signal_module(double const duration) {
     auto buffer = std::make_shared<summing_buffer>();
 
     auto receive_processor = make_receive_signal_processor<float>(
-        [buffer](proc::time::range const &time_range, sync_source const &sync_source, channel_index_t const,
-                 connector_index_t const, float const *const signal_ptr) {
-            buffer->setup(time_range, sync_source.sample_rate);
+        [buffer, duration](proc::time::range const &time_range, sync_source const &sync_source, channel_index_t const,
+                           connector_index_t const, float const *const signal_ptr) {
+            buffer->setup(time_range, sync_source.sample_rate * duration);
             buffer->push(signal_ptr, static_cast<uint32_t>(time_range.length));
         });
 

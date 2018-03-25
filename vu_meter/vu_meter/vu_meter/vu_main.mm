@@ -84,7 +84,7 @@ void vu::main::setup() {
     // sumする
     for (auto const ch : {0, 1}) {
         if (auto track = timeline.add_track(trk_idx++)) {
-            auto module = vu::sum::make_signal_module();
+            auto module = vu::sum::make_signal_module(300.0 / 1000.0);  // 300ms
             module.connect_input(proc::to_connector_index(vu::sum::input::value), ch);
             module.connect_output(proc::to_connector_index(vu::sum::output::value), ch);
 
