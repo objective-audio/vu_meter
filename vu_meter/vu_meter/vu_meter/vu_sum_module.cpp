@@ -4,6 +4,7 @@
 
 #include "vu_sum_module.hpp"
 #include "yas_fast_each.h"
+#include "yas_data.h"
 #import <Accelerate/Accelerate.h>
 
 using namespace yas;
@@ -29,7 +30,6 @@ struct summing_buffer {
     }
 
     void push(float const *const in_ptr, uint32_t const length) {
-        this->pushed.clear();
         this->pushed.resize(length);
         memcpy(this->pushed.data(), in_ptr, length * sizeof(float));
     }
@@ -53,20 +53,18 @@ struct summing_buffer {
     }
 
     void finalize() {
-        std::size_t idx = 0;
-        float *const stored_data = this->stored.data();
-        float const *const pushed_data = this->pushed.data();
-        std::size_t const pushed_length = this->pushed.size();
+        data_copy<float> data_copy{.src_data = {.ptr = this->pushed.data(), .length = this->pushed.size()},
+                                   .dst_data = {.ptr = this->stored.data(), .length = this->stored.size()},
+                                   .dst_begin_idx = this->pos,
+                                   .length = this->stored.size()};
 
-        while (idx < pushed_length) {
-            std::size_t const stored_remain = this->stored.size() - this->pos;
-            std::size_t const pushed_remain = pushed_length - idx;
-            std::size_t const copy_length = std::min(pushed_remain, stored_remain);
-            memcpy(&stored_data[this->pos], &pushed_data[idx], copy_length * sizeof(float));
+        auto const result = data_copy.execute_cyclical();
 
-            idx = idx + copy_length;
-            this->pos = (this->pos + copy_length) % this->stored.size();
+        if (result) {
+            this->pos = result.value();
         }
+
+        this->pushed.clear();
     }
 
    private:
