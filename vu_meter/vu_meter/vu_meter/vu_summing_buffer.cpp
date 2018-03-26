@@ -47,6 +47,10 @@ void vu::summing_buffer::fetch_sum(float *const out_ptr, uint32_t const length) 
     }
 }
 
+void vu::summing_buffer::divide(float *const out_ptr, uint32_t const length, float const div) {
+    vDSP_vsdiv(out_ptr, 1, &div, out_ptr, 1, static_cast<vDSP_Length>(length));
+}
+
 void vu::summing_buffer::finalize() {
     data_copy<float> data_copy{.src_data = {.ptr = this->pushed.data(), .length = this->pushed.size()},
                                .dst_data = {.ptr = this->stored.data(), .length = this->stored.size()},

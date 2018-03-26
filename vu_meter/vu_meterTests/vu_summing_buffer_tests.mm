@@ -73,6 +73,17 @@ using namespace yas;
     XCTAssertEqual(buffer.pos, 0);
 }
 
+- (void)test_divide {
+    std::vector<float> vec{1.0f, 2.0f, 4.0f, 8.0f};
+
+    vu::summing_buffer::divide(vec.data(), 4, 4.0f);
+
+    XCTAssertEqual(vec.at(0), 0.25f);
+    XCTAssertEqual(vec.at(1), 0.5f);
+    XCTAssertEqual(vec.at(2), 1.0f);
+    XCTAssertEqual(vec.at(3), 2.0f);
+}
+
 - (void)test_finalize {
     vu::summing_buffer buffer{};
     proc::time::range time_range{0, 2};

@@ -19,9 +19,11 @@ module vu::sum::make_signal_module(double const duration) {
         });
 
     auto send_processor = make_send_signal_processor<float>(
-        [buffer](time::range const &time_range, sync_source const &sync_src, channel_index_t const,
-                 connector_index_t const co_idx, float *const signal_ptr) {
-            buffer->fetch_sum(signal_ptr, static_cast<uint32_t>(time_range.length));
+        [buffer, duration](time::range const &time_range, sync_source const &sync_source, channel_index_t const,
+                           connector_index_t const co_idx, float *const signal_ptr) {
+            auto const length = static_cast<uint32_t>(time_range.length);
+            buffer->fetch_sum(signal_ptr, length);
+            buffer->divide(signal_ptr, length, sync_source.sample_rate * duration);
             buffer->finalize();
         });
 

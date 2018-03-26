@@ -20,6 +20,8 @@ struct summing_buffer {
 
     void fetch_sum(float *const out_ptr, uint32_t const length);
 
+    static void divide(float *const out_ptr, uint32_t const length, float const div);
+
     void finalize();
 
    private:

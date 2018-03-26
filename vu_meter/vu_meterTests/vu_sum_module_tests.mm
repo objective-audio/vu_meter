@@ -61,8 +61,8 @@ using namespace yas;
 
         XCTAssertEqual(vec.size(), process_length);
 
-        XCTAssertEqual(vec.at(0), 1.0f);
-        XCTAssertEqual(vec.at(1), 3.0f);
+        XCTAssertEqual(vec.at(0), 0.25f);
+        XCTAssertEqual(vec.at(1), 0.75f);
     }
 
     {
@@ -82,8 +82,8 @@ using namespace yas;
 
         XCTAssertEqual(vec.size(), process_length);
 
-        XCTAssertEqual(vec.at(0), 6.0f);
-        XCTAssertEqual(vec.at(1), 10.0f);
+        XCTAssertEqual(vec.at(0), 1.5f);
+        XCTAssertEqual(vec.at(1), 2.5f);
     }
 
     {
@@ -103,8 +103,8 @@ using namespace yas;
 
         XCTAssertEqual(vec.size(), process_length);
 
-        XCTAssertEqual(vec.at(0), 14.0f);
-        XCTAssertEqual(vec.at(1), 18.0f);
+        XCTAssertEqual(vec.at(0), 3.5f);
+        XCTAssertEqual(vec.at(1), 4.5f);
     }
 }
 
