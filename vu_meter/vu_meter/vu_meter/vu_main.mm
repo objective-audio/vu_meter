@@ -6,6 +6,7 @@
 #include "vu_send_module.hpp"
 #include "vu_sum_module.hpp"
 #include <limits>
+#include <array>
 #include <iostream>
 
 using namespace yas;
@@ -41,8 +42,11 @@ void vu::main::setup() {
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
 
+    std::array<proc::channel_index_t, 2> main_channels{0, 1};
+    proc::channel_index_t const pow_ch = 2;
+
     /// インプットを受け付けるトラック
-    for (auto const ch : {0, 1}) {
+    for (auto const ch : main_channels) {
         if (auto track = timeline.add_track(trk_idx++)) {
             auto module = vu::send::make_signal_module([context, ch](
                 proc::time::range const &time_range, proc::connector_index_t const &, float *const signal_ptr) {
@@ -52,7 +56,7 @@ void vu::main::setup() {
                 }
 
                 uint32_t const length = std::min(buffer.frame_length(), static_cast<uint32_t>(time_range.length));
-                buffer.copy_to(signal_ptr, 1, 0, ch, 0, length);
+                buffer.copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
             });
 
             module.connect_output(proc::to_connector_index(vu::send::output::value), ch);
@@ -70,11 +74,11 @@ void vu::main::setup() {
     }
 
     // 累乗する
-    for (auto const ch : {0, 1}) {
+    for (auto const ch : main_channels) {
         if (auto track = timeline.add_track(trk_idx++)) {
             auto module = proc::make_signal_module<float>(proc::math2::kind::pow);
             module.connect_input(proc::to_connector_index(proc::math2::input::left), ch);
-            module.connect_input(proc::to_connector_index(proc::math2::input::right), 2);
+            module.connect_input(proc::to_connector_index(proc::math2::input::right), pow_ch);
             module.connect_output(proc::to_connector_index(proc::math2::output::result), ch);
 
             track.insert_module(time_range, std::move(module));
@@ -82,7 +86,7 @@ void vu::main::setup() {
     }
 
     // sumする
-    for (auto const ch : {0, 1}) {
+    for (auto const ch : main_channels) {
         if (auto track = timeline.add_track(trk_idx++)) {
             auto module = vu::sum::make_signal_module(300.0 / 1000.0);  // 300ms
             module.connect_input(proc::to_connector_index(vu::sum::input::value), ch);
@@ -93,7 +97,7 @@ void vu::main::setup() {
     }
 
     // 平方根を取る
-    for (auto const ch : {0, 1}) {
+    for (auto const ch : main_channels) {
         if (auto track = timeline.add_track(trk_idx++)) {
             auto module = proc::make_signal_module<float>(proc::math1::kind::sqrt);
             module.connect_input(proc::to_connector_index(proc::math1::input::parameter), ch);
@@ -104,32 +108,33 @@ void vu::main::setup() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->input_tap.set_render_handler([context, timeline](audio::engine::node::render_args args) mutable {
-        proc::length_t const length = args.buffer.frame_length();
-        context->buffer = args.buffer;
+    this->input_tap.set_render_handler(
+        [context, timeline, main_channels](audio::engine::node::render_args args) mutable {
+            proc::length_t const length = args.buffer.frame_length();
+            context->buffer = args.buffer;
 
-        proc::time::range const time_range{args.when.sample_time(), length};
-        proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
-        proc::stream stream{sync_source};
+            proc::time::range const time_range{args.when.sample_time(), length};
+            proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
+            proc::stream stream{sync_source};
 
-        timeline.process(time_range, stream);
+            timeline.process(time_range, stream);
 
-        for (auto const ch : {0, 1}) {
-            if (stream.has_channel(ch)) {
-                auto const &channel = stream.channel(ch);
-                auto events = channel.filtered_events<float, proc::signal_event>();
-                for (auto const &event_pair : events) {
-                    auto const &time_range = event_pair.first;
-                    auto const &event = event_pair.second;
-                    std::cout << "ch:" << ch << "time_range:" << to_string(time_range)
-                              << " event.first:" << event.vector<float>().at(0) << std::endl;
+            for (auto const ch : main_channels) {
+                if (stream.has_channel(ch)) {
+                    auto const &channel = stream.channel(ch);
+                    auto events = channel.filtered_events<float, proc::signal_event>();
+                    for (auto const &event_pair : events) {
+                        auto const &time_range = event_pair.first;
+                        auto const &event = event_pair.second;
+                        std::cout << "ch:" << ch << "time_range:" << to_string(time_range)
+                                  << " event.first:" << event.vector<float>().at(0) << std::endl;
+                    }
                 }
             }
-        }
 #warning todo process後にdb値を残す
 
-        context->reset_buffer();
-    });
+            context->reset_buffer();
+        });
 
     if (auto result = this->manager.start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
