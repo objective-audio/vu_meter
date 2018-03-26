@@ -5,6 +5,7 @@
 #include "vu_main.hpp"
 #include "vu_send_module.hpp"
 #include "vu_sum_module.hpp"
+#include "yas_audio.h"
 #include <limits>
 #include <array>
 #include <iostream>
@@ -109,7 +110,7 @@ void vu::main::setup() {
 
     // デバイスのインプットからタイムラインにデータを渡す
     this->input_tap.set_render_handler(
-        [context, timeline, main_channels](audio::engine::node::render_args args) mutable {
+        [context, timeline, main_channels, this](audio::engine::node::render_args args) mutable {
             proc::length_t const length = args.buffer.frame_length();
             context->buffer = args.buffer;
 
@@ -124,14 +125,13 @@ void vu::main::setup() {
                     auto const &channel = stream.channel(ch);
                     auto events = channel.filtered_events<float, proc::signal_event>();
                     for (auto const &event_pair : events) {
-                        auto const &time_range = event_pair.first;
                         auto const &event = event_pair.second;
-                        std::cout << "ch:" << ch << "time_range:" << to_string(time_range)
-                                  << " event.first:" << event.vector<float>().at(0) << std::endl;
+
+                        float const db_value = audio::math::decibel_from_linear(event.vector<float>().at(ch));
+                        this->db_values.at(ch).store(db_value);
                     }
                 }
             }
-#warning todo process後にdb値を残す
 
             context->reset_buffer();
         });
