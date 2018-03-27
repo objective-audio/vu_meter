@@ -19,4 +19,6 @@ class main {
    public:
     void setup();
 };
+
+using main_ptr_t = std::shared_ptr<main>;
 }

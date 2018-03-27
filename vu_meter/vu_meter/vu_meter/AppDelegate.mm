@@ -8,11 +8,12 @@
 using namespace yas;
 
 @implementation AppDelegate {
-    vu::main _main;
+    vu::main_ptr_t _main;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self->_main.setup();
+    self->_main = std::make_shared<vu::main>();
+    self->_main->setup();
 
     return YES;
 }
