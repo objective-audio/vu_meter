@@ -160,6 +160,7 @@
 		B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67564422067B85800944F8E /* vu_summing_buffer.cpp */; };
 		B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */; };
 		B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756448206A824900944F8E /* VUReferenceViewController.mm */; };
+		B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644B206A8C8800944F8E /* VUMeterViewController.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -530,6 +531,8 @@
 		B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_summing_buffer_tests.mm; sourceTree = "<group>"; };
 		B6756447206A824900944F8E /* VUReferenceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUReferenceViewController.h; sourceTree = "<group>"; };
 		B6756448206A824900944F8E /* VUReferenceViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUReferenceViewController.mm; sourceTree = "<group>"; };
+		B675644A206A8C8800944F8E /* VUMeterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUMeterViewController.h; sourceTree = "<group>"; };
+		B675644B206A8C8800944F8E /* VUMeterViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUMeterViewController.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1067,6 +1070,8 @@
 				B62B520A205E1A0A00A300E5 /* ViewController.m */,
 				B6756447206A824900944F8E /* VUReferenceViewController.h */,
 				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
+				B675644A206A8C8800944F8E /* VUMeterViewController.h */,
+				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
@@ -1305,6 +1310,7 @@
 				B62B5285205E51AC00A300E5 /* yas_audio_engine_kernel_protocol.cpp in Sources */,
 				B62B52DE205E51BC00A300E5 /* yas_property.cpp in Sources */,
 				B62B53D5205E51F400A300E5 /* yas_ui_layout_actions.mm in Sources */,
+				B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */,
 				B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */,
 				B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */,
 				B62B5216205E1A0A00A300E5 /* main.m in Sources */,
