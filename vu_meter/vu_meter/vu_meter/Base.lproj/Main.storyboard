@@ -11,6 +11,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="TrebuchetMSBold.ttf">
+            <string>TrebuchetMS-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -77,15 +82,41 @@
             </objects>
             <point key="canvasLocation" x="618" y="16"/>
         </scene>
-        <!--View Controller-->
+        <!--Reference View Controller-->
         <scene sceneID="obZ-hG-r1J">
             <objects>
-                <viewController id="fHZ-sh-PtD" sceneMemberID="viewController">
+                <viewController id="fHZ-sh-PtD" customClass="VUReferenceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="umX-bS-p9B">
                         <rect key="frame" x="0.0" y="0.0" width="724" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-18" minimumValue="-30" maximumValue="-10" translatesAutoresizingMaskIntoConstraints="NO" id="FRv-8k-O24">
+                                <rect key="frame" x="610" y="16" width="94" height="29"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <connections>
+                                    <action selector="stepperValueChanged:" destination="fHZ-sh-PtD" eventType="valueChanged" id="T5L-q8-Hxg"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOb-as-RYg">
+                                <rect key="frame" x="546.66666666666663" y="20.666666666666668" width="43.333333333333371" height="20.000000000000004"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="yOb-as-RYg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="umX-bS-p9B" secondAttribute="leading" constant="20" id="2fj-2R-AcK"/>
+                            <constraint firstAttribute="trailing" secondItem="FRv-8k-O24" secondAttribute="trailing" constant="20" id="O28-bP-o9u"/>
+                            <constraint firstItem="FRv-8k-O24" firstAttribute="leading" secondItem="yOb-as-RYg" secondAttribute="trailing" constant="20" id="TtH-SG-70u"/>
+                            <constraint firstItem="FRv-8k-O24" firstAttribute="centerY" secondItem="umX-bS-p9B" secondAttribute="centerY" id="pfq-DK-6V2"/>
+                            <constraint firstItem="yOb-as-RYg" firstAttribute="centerY" secondItem="umX-bS-p9B" secondAttribute="centerY" id="w0U-j7-Dr3"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="yOb-as-RYg" id="213-OP-wsD"/>
+                        <outlet property="stepper" destination="FRv-8k-O24" id="oom-Ne-aN5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4i7-Yl-rcQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

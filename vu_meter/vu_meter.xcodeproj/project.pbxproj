@@ -159,6 +159,7 @@
 		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
 		B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67564422067B85800944F8E /* vu_summing_buffer.cpp */; };
 		B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */; };
+		B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756448206A824900944F8E /* VUReferenceViewController.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -527,6 +528,8 @@
 		B67564422067B85800944F8E /* vu_summing_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_summing_buffer.cpp; sourceTree = "<group>"; };
 		B67564432067B85800944F8E /* vu_summing_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_summing_buffer.hpp; sourceTree = "<group>"; };
 		B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_summing_buffer_tests.mm; sourceTree = "<group>"; };
+		B6756447206A824900944F8E /* VUReferenceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUReferenceViewController.h; sourceTree = "<group>"; };
+		B6756448206A824900944F8E /* VUReferenceViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUReferenceViewController.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1062,6 +1065,8 @@
 				B67564402067AE0600944F8E /* TestAppDelegate.m */,
 				B62B5209205E1A0A00A300E5 /* ViewController.h */,
 				B62B520A205E1A0A00A300E5 /* ViewController.m */,
+				B6756447206A824900944F8E /* VUReferenceViewController.h */,
+				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
@@ -1266,6 +1271,7 @@
 				B62B53E2205E51F400A300E5 /* yas_ui_metal_protocol.mm in Sources */,
 				B62B534F205E51D300A300E5 /* yas_processing_timeline.cpp in Sources */,
 				B62B533F205E51D300A300E5 /* yas_processing_math1_modules.cpp in Sources */,
+				B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */,
 				B62B5288205E51AC00A300E5 /* yas_audio_engine_tap.cpp in Sources */,
 				B62B53F5205E51F400A300E5 /* yas_ui_render_encoder_protocol.mm in Sources */,
 				B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */,
