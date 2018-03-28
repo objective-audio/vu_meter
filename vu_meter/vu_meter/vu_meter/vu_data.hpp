@@ -14,6 +14,7 @@ struct data {
     };
 
     using subject_t = subject<method, data>;
+    using observer_t = subject_t::observer_t;
 
     data();
     
