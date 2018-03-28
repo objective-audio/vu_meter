@@ -5,6 +5,7 @@
 #pragma once
 
 #include "yas_audio.h"
+#include "vu_data.hpp"
 #include <atomic>
 #include <array>
 
@@ -17,6 +18,8 @@ class main {
     std::array<std::atomic<float>, 2> db_values{0.0f, 0.0f};
 
    public:
+    vu::data data;
+
     void setup();
 };
 

@@ -28,11 +28,12 @@ using namespace yas;
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
+    self->_main->data.set_reference(sender.value);
     [self _updateLabel];
 }
 
 - (void)_updateLabel {
-    self.label.text = [NSString stringWithFormat:@"%@ dB", @(NSInteger(self.stepper.value))];
+    self.label.text = [NSString stringWithFormat:@"%@ dB", @(self->_main->data.reference())];
 }
 
 @end
