@@ -75,12 +75,51 @@
                     <view key="view" contentMode="scaleToFill" id="ht1-W6-WBw">
                         <rect key="frame" x="0.0" y="0.0" width="362" height="294"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pjV-gS-NBF">
+                                <rect key="frame" x="18" y="244" width="326" height="31"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="ZDi-pY-ZJp" eventType="valueChanged" id="WkB-ll-spu"/>
+                                </connections>
+                            </slider>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CxI-pN-XPc">
+                                <rect key="frame" x="171" y="204" width="20" height="20"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppg-8D-dvG">
+                                        <rect key="frame" x="9.6666666666666572" y="-184" width="2" height="194"/>
+                                        <color key="backgroundColor" white="0.09765625" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="2" id="Bb5-hh-2a7"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="B4A-pE-2LK"/>
+                                    <constraint firstAttribute="height" constant="20" id="JcM-cp-aJh"/>
+                                    <constraint firstAttribute="centerY" secondItem="ppg-8D-dvG" secondAttribute="bottom" id="rXB-nv-XX8"/>
+                                    <constraint firstItem="ppg-8D-dvG" firstAttribute="centerX" secondItem="CxI-pN-XPc" secondAttribute="centerX" id="rmF-Cb-q1w"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="pjV-gS-NBF" firstAttribute="top" secondItem="CxI-pN-XPc" secondAttribute="bottom" constant="20" id="YTh-ms-BFO"/>
+                            <constraint firstAttribute="trailing" secondItem="pjV-gS-NBF" secondAttribute="trailing" constant="20" id="agL-GU-wVK"/>
+                            <constraint firstAttribute="bottom" secondItem="pjV-gS-NBF" secondAttribute="bottom" constant="20" id="l83-dz-Sva"/>
+                            <constraint firstItem="ppg-8D-dvG" firstAttribute="height" secondItem="ht1-W6-WBw" secondAttribute="height" constant="-100" id="oHn-Pj-ywJ"/>
+                            <constraint firstItem="CxI-pN-XPc" firstAttribute="centerX" secondItem="ht1-W6-WBw" secondAttribute="centerX" id="qPm-Em-cda"/>
+                            <constraint firstItem="pjV-gS-NBF" firstAttribute="leading" secondItem="ht1-W6-WBw" secondAttribute="leading" constant="20" id="tPv-nb-AjM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="needleBaseView" destination="CxI-pN-XPc" id="5C0-hH-Lhl"/>
+                        <outlet property="slider" destination="pjV-gS-NBF" id="JQX-PJ-Zbw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JJJ-8S-Z5j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="618" y="16"/>
+            <point key="canvasLocation" x="617.73399014778329" y="16"/>
         </scene>
         <!--Reference View Controller-->
         <scene sceneID="obZ-hG-r1J">
