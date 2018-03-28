@@ -16,7 +16,12 @@ vu::data::data() {
 }
 
 void vu::data::set_reference(int32_t const ref) {
-    [[NSUserDefaults standardUserDefaults] setInteger:ref forKey:vu::reference_key];
+    if (ref != this->reference()) {
+        [[NSUserDefaults standardUserDefaults] setInteger:ref forKey:vu::reference_key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        this->subject.notify(vu::data::method::reference_changed, *this);
+    }
 }
 
 int32_t vu::data::reference() const {
