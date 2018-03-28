@@ -28,13 +28,13 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hM-lI-4UD">
                                 <rect key="frame" x="44" y="0.0" width="362" height="294"/>
                                 <connections>
-                                    <segue destination="ZDi-pY-ZJp" kind="embed" id="FDB-ix-R0V"/>
+                                    <segue destination="ZDi-pY-ZJp" kind="embed" identifier="0" id="FDB-ix-R0V"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMl-eC-y8F">
                                 <rect key="frame" x="406" y="0.0" width="362" height="294"/>
                                 <connections>
-                                    <segue destination="ZDi-pY-ZJp" kind="embed" id="TOn-o5-3c2"/>
+                                    <segue destination="ZDi-pY-ZJp" kind="embed" identifier="1" id="TOn-o5-3c2"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGm-dD-BM6">

@@ -7,6 +7,6 @@
 
 @interface VUMeterViewController : UIViewController
 
-- (void)set_vu_main:(yas::vu::main_ptr_t)main;
+- (void)set_vu_main:(yas::vu::main_ptr_t)main index:(std::size_t)index;
 
 @end

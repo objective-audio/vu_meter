@@ -22,7 +22,7 @@ using namespace yas;
         [controller set_vu_main:self->_main];
     } else if ([segue.destinationViewController isKindOfClass:[VUMeterViewController class]]) {
         VUMeterViewController *controller = segue.destinationViewController;
-        [controller set_vu_main:self->_main];
+        [controller set_vu_main:self->_main index:segue.identifier.integerValue];
     }
 }
 
