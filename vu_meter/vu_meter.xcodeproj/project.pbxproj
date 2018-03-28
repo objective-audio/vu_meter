@@ -161,6 +161,7 @@
 		B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */; };
 		B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756448206A824900944F8E /* VUReferenceViewController.mm */; };
 		B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644B206A8C8800944F8E /* VUMeterViewController.mm */; };
+		B675644F206B21FA00944F8E /* vu_data.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644D206B21FA00944F8E /* vu_data.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -533,6 +534,8 @@
 		B6756448206A824900944F8E /* VUReferenceViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUReferenceViewController.mm; sourceTree = "<group>"; };
 		B675644A206A8C8800944F8E /* VUMeterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUMeterViewController.h; sourceTree = "<group>"; };
 		B675644B206A8C8800944F8E /* VUMeterViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUMeterViewController.mm; sourceTree = "<group>"; };
+		B675644D206B21FA00944F8E /* vu_data.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_data.mm; sourceTree = "<group>"; };
+		B675644E206B21FA00944F8E /* vu_data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_data.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1074,6 +1077,8 @@
 				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
+				B675644D206B21FA00944F8E /* vu_data.mm */,
+				B675644E206B21FA00944F8E /* vu_data.hpp */,
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
 				B659949920620A5E00EBC1D8 /* vu_send_module.hpp */,
 				B610E98220629153004A46B5 /* vu_sum_module.cpp */,
@@ -1282,6 +1287,7 @@
 				B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */,
 				B62B528E205E51AC00A300E5 /* yas_audio_engine_au_io.mm in Sources */,
 				B62B53F0205E51F400A300E5 /* yas_ui_layout_guide.cpp in Sources */,
+				B675644F206B21FA00944F8E /* vu_data.mm in Sources */,
 				B62B527D205E51AC00A300E5 /* yas_audio_math.cpp in Sources */,
 				B62B53E7205E51F400A300E5 /* yas_ui_render_target_protocol.mm in Sources */,
 				B62B5283205E51AC00A300E5 /* yas_audio_unit.mm in Sources */,
