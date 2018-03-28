@@ -15,7 +15,7 @@ class main {
     audio::engine::au_input au_input;
     audio::engine::tap input_tap = {{.is_input = true}};
 
-    std::array<std::atomic<float>, 2> db_values{0.0f, 0.0f};
+    std::array<std::atomic<float>, 2> values{0.0f, 0.0f};
 
    public:
     vu::data data;

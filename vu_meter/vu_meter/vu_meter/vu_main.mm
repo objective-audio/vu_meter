@@ -126,9 +126,7 @@ void vu::main::setup() {
                     auto events = channel.filtered_events<float, proc::signal_event>();
                     for (auto const &event_pair : events) {
                         auto const &event = event_pair.second;
-
-                        float const db_value = audio::math::decibel_from_linear(event.vector<float>().at(ch));
-                        this->db_values.at(ch).store(db_value);
+                        this->values.at(ch).store(event.vector<float>().at(ch));
                     }
                 }
             }
