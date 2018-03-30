@@ -76,12 +76,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="362" height="294"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pjV-gS-NBF">
-                                <rect key="frame" x="18" y="244" width="326" height="31"/>
-                                <connections>
-                                    <action selector="sliderValueChanged:" destination="ZDi-pY-ZJp" eventType="valueChanged" id="WkB-ll-spu"/>
-                                </connections>
-                            </slider>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xwg-eN-3vy">
+                                <rect key="frame" x="171" y="204" width="20" height="20"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8up-gX-wav">
+                                        <rect key="frame" x="9" y="-174" width="2" height="184"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="2" id="hOu-4Y-rZ5"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-LQ-L0R">
+                                        <rect key="frame" x="5.3333333333333428" y="-198" width="10" height="20"/>
+                                        <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="9QL-Ix-u6J"/>
+                                    <constraint firstItem="0XG-LQ-L0R" firstAttribute="centerX" secondItem="xwg-eN-3vy" secondAttribute="centerX" id="Dbx-H5-JUr"/>
+                                    <constraint firstItem="8up-gX-wav" firstAttribute="centerX" secondItem="xwg-eN-3vy" secondAttribute="centerX" id="fpe-C4-gfV"/>
+                                    <constraint firstAttribute="centerY" secondItem="8up-gX-wav" secondAttribute="bottom" id="wFN-GI-Lvu"/>
+                                    <constraint firstAttribute="width" constant="20" id="y0Z-Yg-uIl"/>
+                                    <constraint firstItem="8up-gX-wav" firstAttribute="top" secondItem="0XG-LQ-L0R" secondAttribute="bottom" constant="4" id="z4z-Ws-NOZ"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CxI-pN-XPc">
                                 <rect key="frame" x="171" y="204" width="20" height="20"/>
                                 <subviews>
@@ -93,7 +113,6 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="B4A-pE-2LK"/>
                                     <constraint firstAttribute="height" constant="20" id="JcM-cp-aJh"/>
@@ -101,11 +120,20 @@
                                     <constraint firstItem="ppg-8D-dvG" firstAttribute="centerX" secondItem="CxI-pN-XPc" secondAttribute="centerX" id="rmF-Cb-q1w"/>
                                 </constraints>
                             </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pjV-gS-NBF">
+                                <rect key="frame" x="18" y="244" width="326" height="31"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="ZDi-pY-ZJp" eventType="valueChanged" id="WkB-ll-spu"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="8up-gX-wav" firstAttribute="height" secondItem="ht1-W6-WBw" secondAttribute="height" constant="-110" id="3Ek-Na-NAt"/>
+                            <constraint firstItem="xwg-eN-3vy" firstAttribute="centerY" secondItem="CxI-pN-XPc" secondAttribute="centerY" id="D0f-E0-iuT"/>
                             <constraint firstItem="pjV-gS-NBF" firstAttribute="top" secondItem="CxI-pN-XPc" secondAttribute="bottom" constant="20" id="YTh-ms-BFO"/>
                             <constraint firstAttribute="trailing" secondItem="pjV-gS-NBF" secondAttribute="trailing" constant="20" id="agL-GU-wVK"/>
+                            <constraint firstItem="xwg-eN-3vy" firstAttribute="centerX" secondItem="CxI-pN-XPc" secondAttribute="centerX" id="j34-Dg-KRj"/>
                             <constraint firstAttribute="bottom" secondItem="pjV-gS-NBF" secondAttribute="bottom" constant="20" id="l83-dz-Sva"/>
                             <constraint firstItem="ppg-8D-dvG" firstAttribute="height" secondItem="ht1-W6-WBw" secondAttribute="height" constant="-100" id="oHn-Pj-ywJ"/>
                             <constraint firstItem="CxI-pN-XPc" firstAttribute="centerX" secondItem="ht1-W6-WBw" secondAttribute="centerX" id="qPm-Em-cda"/>
@@ -113,6 +141,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="db0BaseView" destination="xwg-eN-3vy" id="c5i-dU-Oda"/>
                         <outlet property="needleBaseView" destination="CxI-pN-XPc" id="5C0-hH-Lhl"/>
                         <outlet property="slider" destination="pjV-gS-NBF" id="JQX-PJ-Zbw"/>
                     </connections>
