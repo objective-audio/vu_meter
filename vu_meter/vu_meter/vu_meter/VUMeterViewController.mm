@@ -28,6 +28,13 @@ static CGAffineTransform transformForMeter(CGFloat in_value, CGFloat reference) 
 @property (nonatomic, assign) IBOutlet UISlider *slider;
 @property (nonatomic, assign) IBOutlet UIView *needleBaseView;
 @property (nonatomic, assign) IBOutlet UIView *db0BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db1BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db2BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db3BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db5BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db7BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db10BaseView;
+@property (nonatomic, assign) IBOutlet UIView *db20BaseView;
 
 @property (nonatomic, assign) CADisplayLink *displayLink;
 
@@ -53,6 +60,13 @@ static CGAffineTransform transformForMeter(CGFloat in_value, CGFloat reference) 
     [super viewDidLoad];
 
     self.db0BaseView.transform = transformForMeter(audio::math::linear_from_decibel(0.0), 0.0);
+    self.db1BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-1.0), 0.0);
+    self.db2BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-2.0), 0.0);
+    self.db3BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-3.0), 0.0);
+    self.db5BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-5.0), 0.0);
+    self.db7BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-7.0), 0.0);
+    self.db10BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-10.0), 0.0);
+    self.db20BaseView.transform = transformForMeter(audio::math::linear_from_decibel(-20.0), 0.0);
 
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
