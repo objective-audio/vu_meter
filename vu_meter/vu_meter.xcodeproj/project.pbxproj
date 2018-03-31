@@ -164,6 +164,7 @@
 		B675644F206B21FA00944F8E /* vu_data.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644D206B21FA00944F8E /* vu_data.mm */; };
 		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
+		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -541,6 +542,8 @@
 		B6756450206F0A3B00944F8E /* RMSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMSViewController.h; sourceTree = "<group>"; };
 		B6756451206F0A3B00944F8E /* RMSViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RMSViewController.mm; sourceTree = "<group>"; };
 		B6756453206F167300944F8E /* RMSMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RMSMain.storyboard; sourceTree = "<group>"; };
+		B6756455206F3EF800944F8E /* vu_ui_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_main.mm; sourceTree = "<group>"; };
+		B6756456206F3EF800944F8E /* vu_ui_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1085,6 +1088,8 @@
 				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
+				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
+				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
 				B675644D206B21FA00944F8E /* vu_data.mm */,
 				B675644E206B21FA00944F8E /* vu_data.hpp */,
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
@@ -1232,6 +1237,7 @@
 				B62B53E3205E51F400A300E5 /* yas_ui_types.cpp in Sources */,
 				B62B527B205E51AC00A300E5 /* yas_audio_file_utils.mm in Sources */,
 				B62B53E9205E51F400A300E5 /* yas_ui_transformer.cpp in Sources */,
+				B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */,
 				B62B53EB205E51F400A300E5 /* yas_ui_button.mm in Sources */,
 				B62B5350205E51D300A300E5 /* yas_processing_event.cpp in Sources */,
 				B62B5340205E51D300A300E5 /* yas_processing_number_to_signal_module.cpp in Sources */,
