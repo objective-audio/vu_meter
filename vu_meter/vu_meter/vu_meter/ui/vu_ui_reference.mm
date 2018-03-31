@@ -42,9 +42,23 @@ void vu::ui_reference::setup(main &main, ui::texture &texture) {
     }
 
     this->font_atlas = ui::font_atlas{
-        {.font_name = "AmericanTypewriter-Bold", .font_size = 20.0f, .words = "0123456789.dB-", .texture = texture}};
+        {.font_name = "AmericanTypewriter-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
     this->text =
         ui::strings{{.max_word_count = 10, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
+    float const text_y = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
+    this->text.rect_plane().node().set_position({.y = text_y});
     this->node.add_sub_node(this->text.rect_plane().node());
+
+    this->_data_observer =
+        main.data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
+            vu::data const &data = context.value;
+            this->_update_text(data.reference());
+        });
+    this->_update_text(main.data.reference());
+}
+
+void vu::ui_reference::_update_text(int32_t const ref) {
+    std::string ref_text = std::to_string(ref) + " dB";
+    this->text.set_text(std::move(ref_text));
 }

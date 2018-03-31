@@ -5,6 +5,7 @@
 #pragma once
 
 #include "yas_ui.h"
+#include "vu_data.hpp"
 
 namespace yas::vu {
 class main;
@@ -17,5 +18,10 @@ struct ui_reference {
     ui::strings text{nullptr};
 
     void setup(main &main, ui::texture &texture);
+
+   private:
+    vu::data::observer_t _data_observer = nullptr;
+
+    void _update_text(int32_t const);
 };
 }
