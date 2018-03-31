@@ -6,6 +6,7 @@
 
 #include "yas_audio.h"
 #include "vu_data.hpp"
+#include "vu_ui_main.hpp"
 #include <atomic>
 #include <array>
 
@@ -14,6 +15,8 @@ class main {
     audio::engine::manager manager;
     audio::engine::au_input au_input;
     audio::engine::tap input_tap = {{.is_input = true}};
+
+    ui_main ui_main;
 
    public:
     std::array<std::atomic<float>, 2> values{0.0f, 0.0f};
