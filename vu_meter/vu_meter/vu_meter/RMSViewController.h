@@ -4,10 +4,13 @@
 
 #import <UIKit/UIKit.h>
 #import "yas_ui_metal_view_controller.h"
+#import "vu_main.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RMSViewController : YASUIMetalViewController
+
+- (void)set_vu_main:(yas::vu::main_ptr_t)main;
 
 @end
 
