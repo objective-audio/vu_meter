@@ -162,6 +162,8 @@
 		B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756448206A824900944F8E /* VUReferenceViewController.mm */; };
 		B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644B206A8C8800944F8E /* VUMeterViewController.mm */; };
 		B675644F206B21FA00944F8E /* vu_data.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644D206B21FA00944F8E /* vu_data.mm */; };
+		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
+		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -536,6 +538,9 @@
 		B675644B206A8C8800944F8E /* VUMeterViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUMeterViewController.mm; sourceTree = "<group>"; };
 		B675644D206B21FA00944F8E /* vu_data.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_data.mm; sourceTree = "<group>"; };
 		B675644E206B21FA00944F8E /* vu_data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_data.hpp; sourceTree = "<group>"; };
+		B6756450206F0A3B00944F8E /* RMSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMSViewController.h; sourceTree = "<group>"; };
+		B6756451206F0A3B00944F8E /* RMSViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RMSViewController.mm; sourceTree = "<group>"; };
+		B6756453206F167300944F8E /* RMSMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RMSMain.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1071,6 +1076,9 @@
 				B67564402067AE0600944F8E /* TestAppDelegate.m */,
 				B62B5209205E1A0A00A300E5 /* ViewController.h */,
 				B62B520A205E1A0A00A300E5 /* ViewController.mm */,
+				B6756450206F0A3B00944F8E /* RMSViewController.h */,
+				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
+				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756447206A824900944F8E /* VUReferenceViewController.h */,
 				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
 				B675644A206A8C8800944F8E /* VUMeterViewController.h */,
@@ -1176,6 +1184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6756454206F167300944F8E /* RMSMain.storyboard in Resources */,
 				B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */,
 				B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */,
 				B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */,
@@ -1339,6 +1348,7 @@
 				B62B53DA205E51F400A300E5 /* yas_ui_mesh_data_protocol.mm in Sources */,
 				B62B53EA205E51F400A300E5 /* yas_ui_metal_view.mm in Sources */,
 				B62B52E2205E51BC00A300E5 /* yas_flex_ptr.cpp in Sources */,
+				B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
