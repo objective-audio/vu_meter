@@ -20,8 +20,9 @@ struct ui_reference {
     void setup(main &main, ui::texture &texture);
 
    private:
+    std::vector<ui::button::observer_t> _button_observers;
     vu::data::observer_t _data_observer = nullptr;
 
-    void _update_text(int32_t const);
+    void _update_ui(int32_t const);
 };
 }

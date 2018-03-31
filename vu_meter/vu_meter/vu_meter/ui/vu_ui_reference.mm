@@ -26,6 +26,12 @@ void vu::ui_reference::setup(main &main, ui::texture &texture) {
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
+    auto minus_observer =
+        this->minus_button.subject().make_observer(ui::button::method::ended, [](auto const &context) {
+#warning
+        });
+    this->_button_observers.emplace_back(std::move(minus_observer));
+
     this->plus_button.rect_plane().node().mesh().set_texture(texture);
     this->plus_button.rect_plane().node().set_position({.x = 100.0f});
     this->node.add_sub_node(this->plus_button.rect_plane().node());
@@ -41,6 +47,11 @@ void vu::ui_reference::setup(main &main, ui::texture &texture) {
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
+    auto plus_observer = this->plus_button.subject().make_observer(ui::button::method::ended, [](auto const &context) {
+#warning
+    });
+    this->_button_observers.emplace_back(std::move(minus_observer));
+
     this->font_atlas = ui::font_atlas{
         {.font_name = "AmericanTypewriter-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
@@ -53,12 +64,12 @@ void vu::ui_reference::setup(main &main, ui::texture &texture) {
     this->_data_observer =
         main.data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
             vu::data const &data = context.value;
-            this->_update_text(data.reference());
+            this->_update_ui(data.reference());
         });
-    this->_update_text(main.data.reference());
+    this->_update_ui(main.data.reference());
 }
 
-void vu::ui_reference::_update_text(int32_t const ref) {
+void vu::ui_reference::_update_ui(int32_t const ref) {
     std::string ref_text = std::to_string(ref) + " dB";
     this->text.set_text(std::move(ref_text));
 }
