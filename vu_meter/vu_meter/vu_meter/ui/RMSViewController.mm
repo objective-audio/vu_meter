@@ -3,6 +3,7 @@
 //
 
 #import "RMSViewController.h"
+#include "vu_ui_color.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,6 +19,8 @@ using namespace yas;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.metalView.clearColor = vu::base_color();
 
     [self setRenderable:self->_main->ui_main.renderer.view_renderable()];
 
