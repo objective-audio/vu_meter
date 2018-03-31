@@ -19,7 +19,7 @@ using namespace yas;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setRenderable:self->_main->renderer.view_renderable()];
+    [self setRenderable:self->_main->ui_main.renderer.view_renderable()];
 
     self->_main->setup();
 }
