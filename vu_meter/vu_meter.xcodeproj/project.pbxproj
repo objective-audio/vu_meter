@@ -1073,7 +1073,6 @@
 		B62B5410205FCFED00A300E5 /* vu_meter */ = {
 			isa = PBXGroup;
 			children = (
-				B675645A206F431400944F8E /* etc */,
 				B675645B206F432D00944F8E /* app */,
 				B6756459206F430500944F8E /* processing */,
 				B6756458206F42F700944F8E /* ui */,
@@ -1081,6 +1080,7 @@
 				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
 				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
 				B62B5214205E1A0A00A300E5 /* Info.plist */,
+				B675645A206F431400944F8E /* etc */,
 			);
 			path = vu_meter;
 			sourceTree = "<group>";

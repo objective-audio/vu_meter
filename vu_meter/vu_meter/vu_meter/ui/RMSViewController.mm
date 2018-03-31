@@ -18,6 +18,10 @@ using namespace yas;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self setRenderable:_main.renderer.view_renderable()];
+
+    self->_main.setup();
 }
 
 - (void)set_vu_main:(vu::main_ptr_t)main {
@@ -27,4 +31,3 @@ using namespace yas;
 @end
 
 NS_ASSUME_NONNULL_END
-

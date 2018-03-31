@@ -9,5 +9,7 @@
 namespace yas::vu {
 struct ui_main {
     ui::renderer renderer{ui::metal_system{make_objc_ptr(MTLCreateSystemDefaultDevice()).object()}};
+
+    void setup();
 };
 }
