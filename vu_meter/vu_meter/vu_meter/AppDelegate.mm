@@ -4,6 +4,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "RMSViewController.h"
 #import "vu_main.hpp"
 
 using namespace yas;
@@ -15,10 +16,12 @@ using namespace yas;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self->_main = std::make_shared<vu::main>();
     self->_main->setup();
-    
-    ViewController *rootViewController = (ViewController *)self.window.rootViewController;
+
+    UIViewController *rootViewController = self.window.rootViewController;
     if ([rootViewController isKindOfClass:[ViewController class]]) {
-        [rootViewController set_vu_main:self->_main];
+        [(ViewController *)rootViewController set_vu_main:self->_main];
+    } else if ([rootViewController isKindOfClass:[RMSViewController class]]) {
+        [(RMSViewController *)rootViewController set_vu_main:self->_main];
     }
 
     return YES;
