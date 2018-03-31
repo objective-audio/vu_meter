@@ -6,5 +6,5 @@
 
 using namespace yas;
 
-void setup() {
+void vu::ui_main::setup() {
 }
