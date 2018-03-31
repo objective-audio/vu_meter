@@ -31,6 +31,8 @@ using namespace yas;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.stepper.value = self->_main->data.reference();
+    
     [self _updateLabel];
 }
 
