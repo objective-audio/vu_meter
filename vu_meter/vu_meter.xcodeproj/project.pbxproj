@@ -1073,38 +1073,70 @@
 		B62B5410205FCFED00A300E5 /* vu_meter */ = {
 			isa = PBXGroup;
 			children = (
-				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
-				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
-				B675643F2067AE0600944F8E /* TestAppDelegate.h */,
-				B67564402067AE0600944F8E /* TestAppDelegate.m */,
-				B62B5209205E1A0A00A300E5 /* ViewController.h */,
-				B62B520A205E1A0A00A300E5 /* ViewController.mm */,
+				B675645A206F431400944F8E /* etc */,
+				B675645B206F432D00944F8E /* app */,
+				B6756459206F430500944F8E /* processing */,
+				B6756458206F42F700944F8E /* ui */,
+				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
+				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
+				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
+				B62B5214205E1A0A00A300E5 /* Info.plist */,
+			);
+			path = vu_meter;
+			sourceTree = "<group>";
+		};
+		B6756458206F42F700944F8E /* ui */ = {
+			isa = PBXGroup;
+			children = (
 				B6756450206F0A3B00944F8E /* RMSViewController.h */,
 				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
-				B6756447206A824900944F8E /* VUReferenceViewController.h */,
-				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
-				B675644A206A8C8800944F8E /* VUMeterViewController.h */,
-				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
-				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
-				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
-				B675644D206B21FA00944F8E /* vu_data.mm */,
-				B675644E206B21FA00944F8E /* vu_data.hpp */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		B6756459206F430500944F8E /* processing */ = {
+			isa = PBXGroup;
+			children = (
 				B659949820620A5E00EBC1D8 /* vu_send_module.cpp */,
 				B659949920620A5E00EBC1D8 /* vu_send_module.hpp */,
 				B610E98220629153004A46B5 /* vu_sum_module.cpp */,
 				B610E98320629153004A46B5 /* vu_sum_module.hpp */,
 				B67564422067B85800944F8E /* vu_summing_buffer.cpp */,
 				B67564432067B85800944F8E /* vu_summing_buffer.hpp */,
-				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
-				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
-				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
-				B62B5214205E1A0A00A300E5 /* Info.plist */,
-				B62B5215205E1A0A00A300E5 /* main.m */,
 			);
-			path = vu_meter;
+			path = processing;
+			sourceTree = "<group>";
+		};
+		B675645A206F431400944F8E /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				B675643F2067AE0600944F8E /* TestAppDelegate.h */,
+				B67564402067AE0600944F8E /* TestAppDelegate.m */,
+				B6756447206A824900944F8E /* VUReferenceViewController.h */,
+				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
+				B675644A206A8C8800944F8E /* VUMeterViewController.h */,
+				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
+				B62B5209205E1A0A00A300E5 /* ViewController.h */,
+				B62B520A205E1A0A00A300E5 /* ViewController.mm */,
+			);
+			path = etc;
+			sourceTree = "<group>";
+		};
+		B675645B206F432D00944F8E /* app */ = {
+			isa = PBXGroup;
+			children = (
+				B62B5215205E1A0A00A300E5 /* main.m */,
+				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
+				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
+				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
+				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
+				B675644D206B21FA00944F8E /* vu_data.mm */,
+				B675644E206B21FA00944F8E /* vu_data.hpp */,
+			);
+			path = app;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
