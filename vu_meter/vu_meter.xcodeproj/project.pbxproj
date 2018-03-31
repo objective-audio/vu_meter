@@ -165,6 +165,7 @@
 		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
 		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
+		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -544,6 +545,8 @@
 		B6756453206F167300944F8E /* RMSMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RMSMain.storyboard; sourceTree = "<group>"; };
 		B6756455206F3EF800944F8E /* vu_ui_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_main.mm; sourceTree = "<group>"; };
 		B6756456206F3EF800944F8E /* vu_ui_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main.hpp; sourceTree = "<group>"; };
+		B675645C206F45FC00944F8E /* vu_ui_color.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_color.mm; sourceTree = "<group>"; };
+		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1093,6 +1096,8 @@
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
+				B675645C206F45FC00944F8E /* vu_ui_color.mm */,
+				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1344,6 +1349,7 @@
 				B62B5342205E51D300A300E5 /* yas_processing_routing_modules.cpp in Sources */,
 				B62B53E5205E51F400A300E5 /* yas_ui_event_protocol.cpp in Sources */,
 				B62B53D0205E51F400A300E5 /* yas_ui_render_info.mm in Sources */,
+				B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */,
 				B62B53CF205E51F400A300E5 /* yas_ui_mesh.mm in Sources */,
 				B62B5286205E51AC00A300E5 /* yas_audio_engine_route.cpp in Sources */,
 				B62B5341205E51D300A300E5 /* yas_processing_envelope_module.cpp in Sources */,
