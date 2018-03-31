@@ -7,6 +7,8 @@
 #include "yas_ui.h"
 
 namespace yas::vu {
+class main;
+
 struct ui_reference {
     ui::node node;
     ui::button minus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
@@ -14,6 +16,6 @@ struct ui_reference {
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
 
-    void setup(ui::texture &texture);
+    void setup(main &main, ui::texture &texture);
 };
 }

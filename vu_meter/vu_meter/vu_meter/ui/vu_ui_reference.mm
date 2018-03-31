@@ -3,10 +3,11 @@
 //
 
 #include "vu_ui_reference.hpp"
+#include "vu_main.hpp"
 
 using namespace yas;
 
-void vu::ui_reference::setup(ui::texture &texture) {
+void vu::ui_reference::setup(main &main, ui::texture &texture) {
     this->minus_button.rect_plane().node().set_position({.x = -100.0f});
     this->node.add_sub_node(this->minus_button.rect_plane().node());
 
