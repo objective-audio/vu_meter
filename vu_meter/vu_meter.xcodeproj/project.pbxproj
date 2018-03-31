@@ -1097,10 +1097,10 @@
 				B6756450206F0A3B00944F8E /* RMSViewController.h */,
 				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
-				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
-				B6A4694F206FA63400480D4F /* vu_ui_reference.mm */,
+				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6A46950206FA63400480D4F /* vu_ui_reference.hpp */,
+				B6A4694F206FA63400480D4F /* vu_ui_reference.mm */,
 				B675645C206F45FC00944F8E /* vu_ui_color.mm */,
 				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
 			);
