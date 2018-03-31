@@ -166,6 +166,7 @@
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
 		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
+		B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A4694F206FA63400480D4F /* vu_ui_reference.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,6 +548,8 @@
 		B6756456206F3EF800944F8E /* vu_ui_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main.hpp; sourceTree = "<group>"; };
 		B675645C206F45FC00944F8E /* vu_ui_color.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_color.mm; sourceTree = "<group>"; };
 		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
+		B6A4694F206FA63400480D4F /* vu_ui_reference.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_reference.mm; sourceTree = "<group>"; };
+		B6A46950206FA63400480D4F /* vu_ui_reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_reference.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1096,6 +1099,8 @@
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
+				B6A4694F206FA63400480D4F /* vu_ui_reference.mm */,
+				B6A46950206FA63400480D4F /* vu_ui_reference.hpp */,
 				B675645C206F45FC00944F8E /* vu_ui_color.mm */,
 				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
 			);
@@ -1293,6 +1298,7 @@
 				B62B5279205E51AC00A300E5 /* yas_audio_format.mm in Sources */,
 				B62B5352205E51D300A300E5 /* yas_processing_signal_event.cpp in Sources */,
 				B62B534D205E51D300A300E5 /* yas_processing_track.cpp in Sources */,
+				B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */,
 				B62B52E0205E51BC00A300E5 /* yas_chain.cpp in Sources */,
 				B62B52EC205E51BC00A300E5 /* yas_objc_ptr.mm in Sources */,
 				B62B5292205E51AC00A300E5 /* yas_audio_engine_offline_output.mm in Sources */,
