@@ -527,6 +527,7 @@
 		B62B5405205E5A0600A300E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B62B5407205E5A1E00A300E5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B634214320711978002C6742 /* vu_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_types.h; sourceTree = "<group>"; };
 		B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_data.cpp; sourceTree = "<group>"; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
 		B659949920620A5E00EBC1D8 /* vu_send_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_send_module.hpp; sourceTree = "<group>"; };
@@ -1145,6 +1146,7 @@
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B675644D206B21FA00944F8E /* vu_data.mm */,
 				B675644E206B21FA00944F8E /* vu_data.hpp */,
+				B634214320711978002C6742 /* vu_types.h */,
 			);
 			path = app;
 			sourceTree = "<group>";
