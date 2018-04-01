@@ -4,6 +4,7 @@
 
 #import "VUMeterViewController.h"
 #import "yas_audio.h"
+#import "vu_main.hpp"
 
 using namespace yas;
 

@@ -4,6 +4,7 @@
 
 #import "VUReferenceViewController.h"
 #import "yas_objc_unowned.h"
+#import "vu_main.hpp"
 
 using namespace yas;
 

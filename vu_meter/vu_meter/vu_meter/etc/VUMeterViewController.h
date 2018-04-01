@@ -3,7 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "vu_main.hpp"
+#import "vu_types.h"
 
 @interface VUMeterViewController : UIViewController
 

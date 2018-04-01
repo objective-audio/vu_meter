@@ -4,6 +4,7 @@
 
 #import "RMSViewController.h"
 #include "vu_ui_color.hpp"
+#include "vu_main.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
