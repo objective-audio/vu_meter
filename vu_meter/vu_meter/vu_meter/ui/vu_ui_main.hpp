@@ -6,6 +6,7 @@
 
 #include "yas_ui.h"
 #include "vu_ui_reference.hpp"
+#include "vu_types.h"
 
 namespace yas::vu {
 class main;
@@ -15,6 +16,6 @@ struct ui_main {
 
     ui_reference reference;
 
-    void setup(data &data);
+    void setup(main_ptr_t &main);
 };
 }

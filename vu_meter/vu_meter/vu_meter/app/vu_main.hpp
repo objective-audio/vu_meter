@@ -23,6 +23,5 @@ class main {
     ui_main ui_main;
 
     void setup();
-    void setup_ui();
 };
 }

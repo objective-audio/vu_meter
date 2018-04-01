@@ -8,7 +8,7 @@
 
 using namespace yas;
 
-void vu::ui_reference::setup(data &data, ui::texture &texture) {
+void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     ui::uint_size button_size{60, 60};
 
     this->minus_button.rect_plane().node().mesh().set_texture(texture);
@@ -61,11 +61,11 @@ void vu::ui_reference::setup(data &data, ui::texture &texture) {
     this->text.rect_plane().node().set_position({.y = text_y});
     this->node.add_sub_node(this->text.rect_plane().node());
 
-    this->_data_observer = data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
+    this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
         vu::data const &data = context.value;
         this->_update_ui(data.reference());
     });
-    this->_update_ui(data.reference());
+    this->_update_ui(main->data.reference());
 }
 
 void vu::ui_reference::_update_ui(int32_t const ref) {

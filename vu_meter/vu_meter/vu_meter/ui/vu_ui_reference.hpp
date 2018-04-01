@@ -5,6 +5,7 @@
 #pragma once
 
 #include "yas_ui.h"
+#include "vu_types.h"
 #include "vu_data.hpp"
 
 namespace yas::vu {
@@ -17,7 +18,7 @@ struct ui_reference {
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
 
-    void setup(data &data, ui::texture &texture);
+    void setup(main_ptr_t &main, ui::texture &texture);
 
    private:
     std::vector<ui::button::observer_t> _button_observers;

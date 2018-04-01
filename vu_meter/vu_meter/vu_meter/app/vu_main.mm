@@ -138,8 +138,3 @@ void vu::main::setup() {
         std::cout << "error : " << result.error() << std::endl;
     }
 }
-
-void vu::main::setup_ui() {
-    this->ui_main.setup(this->data);
-}
-
