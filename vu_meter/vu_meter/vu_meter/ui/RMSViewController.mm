@@ -24,7 +24,7 @@ using namespace yas;
 
     [self setRenderable:self->_main->ui_main.renderer.view_renderable()];
 
-    self->_main->ui_main.setup(*self->_main);
+    self->_main->setup_ui();
 }
 
 - (void)set_vu_main:(vu::main_ptr_t)main {

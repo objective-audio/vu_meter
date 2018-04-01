@@ -15,6 +15,6 @@ struct ui_main {
 
     ui_reference reference;
 
-    void setup(main &main);
+    void setup(data &data);
 };
 }

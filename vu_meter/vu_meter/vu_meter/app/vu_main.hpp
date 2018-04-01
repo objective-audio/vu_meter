@@ -23,6 +23,7 @@ class main {
     ui_main ui_main;
 
     void setup();
+    void setup_ui();
 };
 
 using main_ptr_t = std::shared_ptr<main>;

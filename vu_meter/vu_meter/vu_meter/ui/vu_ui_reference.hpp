@@ -17,7 +17,7 @@ struct ui_reference {
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
 
-    void setup(main &main, ui::texture &texture);
+    void setup(data &data, ui::texture &texture);
 
    private:
     std::vector<ui::button::observer_t> _button_observers;
