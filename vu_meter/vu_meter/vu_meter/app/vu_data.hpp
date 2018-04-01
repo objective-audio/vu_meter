@@ -19,6 +19,8 @@ struct data {
     data();
     
     void set_reference(int32_t const);
+    void increment_reference();
+    void decrement_reference();
     int32_t reference() const;
     
     subject_t subject;
