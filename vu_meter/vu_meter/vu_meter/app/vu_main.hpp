@@ -20,7 +20,6 @@ class main {
     std::array<std::atomic<float>, 2> values{0.0f, 0.0f};
 
     vu::data data;
-    ui_main ui_main;
 
     void setup();
 };
