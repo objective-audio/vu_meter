@@ -5,6 +5,8 @@
 #pragma once
 
 #include "yas_ui.h"
+#include "vu_types.h"
+#include "vu_data.hpp"
 
 namespace yas::vu {
 struct ui_indicator {
@@ -13,8 +15,11 @@ struct ui_indicator {
     std::vector<ui::rect_plane> gridlines;
     std::vector<ui::strings> numbers;
 
-    void setup(ui::texture &texture);
-    
-    void set_value(float const);
+    void setup(main_ptr_t &main, ui::texture &texture);
+
+    void update(main_ptr_t const &main);
+
+   private:
+    vu::data::observer_t _data_observer = nullptr;
 };
 }
