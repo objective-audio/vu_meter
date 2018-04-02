@@ -5,5 +5,5 @@
 #pragma once
 
 namespace yas::vu {
-struct indicator {};
+struct ui_indicator {};
 }
