@@ -20,5 +20,8 @@ struct ui_main {
     std::array<ui_indicator, 2> indicators;
 
     void setup(main_ptr_t &main);
+
+   private:
+    ui::renderer::observer_t _renderer_observer;
 };
 }

@@ -24,23 +24,27 @@ namespace yas::vu {
     }
 }
 
-void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t const idx) {
     weak_main_ptr_t weak_main = main;
+    this->_weak_main = weak_main;
+    
+    this->idx = idx;
     
     this->needle.data().set_rect_position({.origin = {.x = -0.5f}, .size = {.width = 1.0f, .height = 120.0f}}, 0);
     this->needle.node().set_color(ui::blue_color());
     this->node.add_sub_node(this->needle.node());
 
 #warning todo
-    this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed, [this, weak_main](auto const &context) {
-        if (auto main = weak_main.lock()) {
-            this->update(main);
-        }
-    });
-    this->update(main);
+    this->_data_observer =
+        main->data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
+            this->update();
+        });
+    this->update();
 }
 
-void vu::ui_indicator::update(main_ptr_t const &main) {
-    ui::angle const angle = meter_angle(main->values.at(0).load(), main->data.reference());
-    this->needle.node().set_angle(angle);
+void vu::ui_indicator::update() {
+    if (auto main = this->_weak_main.lock()) {
+        ui::angle const angle = meter_angle(main->values.at(this->idx).load(), main->data.reference());
+        this->needle.node().set_angle(angle);
+    }
 }

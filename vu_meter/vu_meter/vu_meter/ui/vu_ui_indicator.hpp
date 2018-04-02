@@ -10,16 +10,18 @@
 
 namespace yas::vu {
 struct ui_indicator {
+    std::size_t idx;
     ui::node node;
     ui::rect_plane needle = ui::make_rect_plane(1);
     std::vector<ui::rect_plane> gridlines;
     std::vector<ui::strings> numbers;
 
-    void setup(main_ptr_t &main, ui::texture &texture);
+    void setup(main_ptr_t &main, ui::texture &texture, std::size_t const idx);
 
-    void update(main_ptr_t const &main);
+    void update();
 
    private:
     vu::data::observer_t _data_observer = nullptr;
+    weak_main_ptr_t _weak_main;
 };
 }
