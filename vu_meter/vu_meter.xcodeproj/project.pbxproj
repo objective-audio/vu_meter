@@ -10,6 +10,7 @@
 		B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */; };
 		B605C0C12067A76C00B4ACCF /* yas_processing_test_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B605C0BF2067A76C00B4ACCF /* yas_processing_test_utils.cpp */; };
 		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
+		B617CF642071AA320012B32A /* vu_indicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B617CF622071AA320012B32A /* vu_indicator.mm */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
 		B62B520B205E1A0A00A300E5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B520A205E1A0A00A300E5 /* ViewController.mm */; };
@@ -187,6 +188,8 @@
 		B610E98320629153004A46B5 /* vu_sum_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_sum_module.hpp; sourceTree = "<group>"; };
 		B610E99320660551004A46B5 /* yas_data_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data_private.h; sourceTree = "<group>"; };
 		B610E99420660552004A46B5 /* yas_data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_data.h; sourceTree = "<group>"; };
+		B617CF622071AA320012B32A /* vu_indicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_indicator.mm; sourceTree = "<group>"; };
+		B617CF632071AA320012B32A /* vu_indicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_indicator.hpp; sourceTree = "<group>"; };
 		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
 		B628C9C3205FD05B0085DF7F /* vu_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_main.hpp; sourceTree = "<group>"; };
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1102,6 +1105,8 @@
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 				B6A46950206FA63400480D4F /* vu_ui_reference.hpp */,
 				B6A4694F206FA63400480D4F /* vu_ui_reference.mm */,
+				B617CF632071AA320012B32A /* vu_indicator.hpp */,
+				B617CF622071AA320012B32A /* vu_indicator.mm */,
 				B675645C206F45FC00944F8E /* vu_ui_color.mm */,
 				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
 			);
@@ -1302,6 +1307,7 @@
 				B62B534D205E51D300A300E5 /* yas_processing_track.cpp in Sources */,
 				B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */,
 				B62B52E0205E51BC00A300E5 /* yas_chain.cpp in Sources */,
+				B617CF642071AA320012B32A /* vu_indicator.mm in Sources */,
 				B62B52EC205E51BC00A300E5 /* yas_objc_ptr.mm in Sources */,
 				B62B5292205E51AC00A300E5 /* yas_audio_engine_offline_output.mm in Sources */,
 				B62B53F9205E51F400A300E5 /* yas_ui_matrix.cpp in Sources */,
