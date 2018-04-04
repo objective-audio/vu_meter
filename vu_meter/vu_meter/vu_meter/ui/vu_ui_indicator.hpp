@@ -12,6 +12,7 @@ namespace yas::vu {
 struct ui_indicator {
     std::size_t idx;
     ui::node node;
+    ui::node needle_root_node;
     ui::rect_plane needle = ui::make_rect_plane(1);
     std::vector<ui::node> gridlineHandles;
     std::vector<ui::rect_plane> gridlines;
