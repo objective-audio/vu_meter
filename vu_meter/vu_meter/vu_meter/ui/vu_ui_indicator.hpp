@@ -17,9 +17,10 @@ struct ui_indicator {
     std::vector<ui::rect_plane> gridlines;
     ui::font_atlas font_atlas{{.font_name = "AmericanTypewriter-Bold", .font_size = 20.0f, .words = "012357-"}};
     std::vector<ui::strings> numbers;
+#warning todo 枠
 
     void setup(main_ptr_t &main, ui::texture &texture, std::size_t const idx);
-    void layout();
+    void layout(float const height);
 
     void update();
 

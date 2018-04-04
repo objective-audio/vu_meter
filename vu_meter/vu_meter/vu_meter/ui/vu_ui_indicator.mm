@@ -9,6 +9,13 @@
 using namespace yas;
 
 namespace yas::vu {
+static float constexpr indicator_height_base = 1.0f;
+static float constexpr indicator_width_base = 2.0f;
+static float constexpr needle_height_base = 1.0f;
+static float constexpr needle_width_base = 1.0f / 100.0f;
+static float constexpr gridline_height_base = 1.0f / 20.0f;
+static float constexpr gridline_width_base = 1.0f / 100.0f;
+
 ui::angle meter_angle(float const in_value, float const reference) {
     float const db_value = audio::math::decibel_from_linear(in_value);
     float const value = audio::math::linear_from_decibel(db_value - reference);
@@ -30,7 +37,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
 
     this->idx = idx;
 
-    this->needle.data().set_rect_position({.origin = {.x = -0.5f}, .size = {.width = 1.0f, .height = 120.0f}}, 0);
     this->needle.node().set_color(ui::blue_color());
     this->node.add_sub_node(this->needle.node());
 
@@ -51,14 +57,21 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
         handle.add_sub_node(number.rect_plane().node());
     }
 
-    this->layout();
-
     this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed,
                                                             [this](auto const &context) { this->update(); });
     this->update();
 }
 
-void vu::ui_indicator::layout() {
+void vu::ui_indicator::layout(float const height) {
+    float const indicator_height = indicator_height_base * height;
+    float const indicator_width = indicator_width_base * height;
+    float const needle_height = needle_height_base * height;
+    float const needle_width = needle_width_base * height;
+    float const gridline_height = gridline_height_base * height;
+    float const gridline_width = gridline_width_base * height;
+
+    this->needle.data().set_rect_position(
+        {.origin = {.x = -needle_width * 0.5f}, .size = {.width = needle_width, .height = needle_height}}, 0);
 #warning todo viewの大きさに合わせて位置を調整する
 }
 
