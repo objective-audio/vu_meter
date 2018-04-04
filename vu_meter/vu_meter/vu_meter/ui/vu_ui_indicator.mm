@@ -9,12 +9,18 @@
 using namespace yas;
 
 namespace yas::vu {
-static float constexpr indicator_height_base = 1.0f;
-static float constexpr indicator_width_base = 2.0f;
-static float constexpr needle_height_base = 1.0f;
-static float constexpr needle_width_base = 1.0f / 100.0f;
-static float constexpr gridline_height_base = 1.0f / 20.0f;
-static float constexpr gridline_width_base = 1.0f / 100.0f;
+namespace constants {
+    static float constexpr indicator_height_rate = 1.0f;
+    static float constexpr indicator_width_rate = 2.0f;
+    static float constexpr needle_x_rate = 1.0f;
+    static float constexpr needle_y_rate = 0.25f;
+    static float constexpr needle_height_rate = 0.5f;
+    static float constexpr needle_width_rate = 0.5f / 100.0f;
+    static float constexpr gridline_height_rate = 1.0f / 20.0f;
+    static float constexpr gridline_width_rate = 1.0f / 100.0f;
+
+    static auto const params = {-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
+}
 
 ui::angle meter_angle(float const in_value, float const reference) {
     float const db_value = audio::math::decibel_from_linear(in_value);
@@ -40,9 +46,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
     this->needle.node().set_color(ui::blue_color());
     this->node.add_sub_node(this->needle.node());
 
-    auto const params = {-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
-
-    for (auto const &param : params) {
+    for (auto const &param : constants::params) {
         auto &handle = this->gridlineHandles.emplace_back();
         auto &plane = this->gridlines.emplace_back(ui::make_rect_plane(1));
 
@@ -62,14 +66,17 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
     this->update();
 }
 
-void vu::ui_indicator::layout(float const height) {
-    float const indicator_height = indicator_height_base * height;
-    float const indicator_width = indicator_width_base * height;
-    float const needle_height = needle_height_base * height;
-    float const needle_width = needle_width_base * height;
-    float const gridline_height = gridline_height_base * height;
-    float const gridline_width = gridline_width_base * height;
+void vu::ui_indicator::layout(float const rate) {
+    float const indicator_height = constants::indicator_height_rate * rate;
+    float const indicator_width = constants::indicator_width_rate * rate;
+    float const needle_x = constants::needle_x_rate * rate;
+    float const needle_y = constants::needle_y_rate * rate;
+    float const needle_height = constants::needle_height_rate * rate;
+    float const needle_width = constants::needle_width_rate * rate;
+    float const gridline_height = constants::gridline_height_rate * rate;
+    float const gridline_width = constants::gridline_width_rate * rate;
 
+    this->needle.node().set_position({.x = needle_x});
     this->needle.data().set_rect_position(
         {.origin = {.x = -needle_width * 0.5f}, .size = {.width = needle_width, .height = needle_height}}, 0);
 #warning todo viewの大きさに合わせて位置を調整する
