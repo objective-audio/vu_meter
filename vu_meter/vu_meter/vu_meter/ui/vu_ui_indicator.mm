@@ -6,6 +6,7 @@
 #include "yas_audio.h"
 #include "vu_main.hpp"
 #include "yas_fast_each.h"
+#include "vu_ui_utils.hpp"
 
 using namespace yas;
 
@@ -24,20 +25,6 @@ namespace constants {
     static float constexpr number_font_size_rate = 1.0f / 10.0f;
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
-}
-
-ui::angle meter_angle(float const in_value, float const reference) {
-    float const db_value = audio::math::decibel_from_linear(in_value);
-    float const value = audio::math::linear_from_decibel(db_value - reference);
-
-    float const min = audio::math::linear_from_decibel(-20.0);
-    float const max = audio::math::linear_from_decibel(3.0);
-    float const min_to_one = 1.0f - min;
-    float const min_to_max = max - min;
-    float const value1 = (value - min) / min_to_one;
-    float const meterValue = value1 / min_to_max;
-
-    return {.degrees = 45.0f + meterValue * -90.0f};
 }
 }
 
@@ -71,7 +58,8 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         handle.add_sub_node(plane.node());
         handle.add_sub_node(number.rect_plane().node());
 
-        ui::angle const angle = meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
+        ui::angle const angle =
+            ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
         handle.set_angle(angle);
         number.rect_plane().node().set_angle(-angle);
     }
@@ -121,7 +109,7 @@ void vu::ui_indicator::layout(float const rate, ui::texture &texture) {
 
 void vu::ui_indicator::update() {
     if (auto main = this->_weak_main.lock()) {
-        ui::angle const angle = meter_angle(main->values.at(this->idx).load(), main->data.reference());
+        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference());
         this->needle.node().set_angle(angle);
     }
 }

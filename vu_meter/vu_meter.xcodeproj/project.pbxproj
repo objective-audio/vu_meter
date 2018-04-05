@@ -168,6 +168,7 @@
 		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
 		B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A4694F206FA63400480D4F /* vu_ui_reference.mm */; };
+		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -554,6 +555,8 @@
 		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
 		B6A4694F206FA63400480D4F /* vu_ui_reference.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_reference.mm; sourceTree = "<group>"; };
 		B6A46950206FA63400480D4F /* vu_ui_reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_reference.hpp; sourceTree = "<group>"; };
+		B6A846672075ABD200DFF041 /* vu_ui_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils.mm; sourceTree = "<group>"; };
+		B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_utils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1109,6 +1112,8 @@
 				B617CF622071AA320012B32A /* vu_ui_indicator.mm */,
 				B675645C206F45FC00944F8E /* vu_ui_color.mm */,
 				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
+				B6A846672075ABD200DFF041 /* vu_ui_utils.mm */,
+				B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1273,6 +1278,7 @@
 				B62B53DD205E51F400A300E5 /* yas_ui_texture.mm in Sources */,
 				B62B5293205E51AC00A300E5 /* yas_audio_engine_manager.mm in Sources */,
 				B62B53CA205E51F400A300E5 /* yas_ui_mesh_data.mm in Sources */,
+				B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */,
 				B62B52E5205E51BC00A300E5 /* yas_exception.cpp in Sources */,
 				B62B52DF205E51BC00A300E5 /* yas_delaying_caller.cpp in Sources */,
 				B62B527E205E51AC00A300E5 /* yas_audio_time.mm in Sources */,
