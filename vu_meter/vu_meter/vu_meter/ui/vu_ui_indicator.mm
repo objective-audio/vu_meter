@@ -41,13 +41,14 @@ ui::angle meter_angle(float const in_value, float const reference) {
 }
 }
 
-void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t const idx) {
+void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     weak_main_ptr_t weak_main = main;
     this->_weak_main = weak_main;
 
     this->idx = idx;
 
     // base_plane
+    this->base_plane.node().set_color(ui::orange_color());
     this->node.add_sub_node(this->base_plane.node());
 
     // needle_root_node
@@ -70,7 +71,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
         handle.add_sub_node(plane.node());
         handle.add_sub_node(number.rect_plane().node());
 
-        ui::angle const angle = meter_angle(param, 0.0f);
+        ui::angle const angle = meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
         handle.set_angle(angle);
         number.rect_plane().node().set_angle(-angle);
     }
@@ -80,7 +81,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, ui::texture &texture, std::size_t
     this->update();
 }
 
-void vu::ui_indicator::layout(float const rate) {
+void vu::ui_indicator::layout(float const rate, ui::texture &texture) {
     float const base_height = constants::base_height_rate * rate;
     float const base_width = constants::base_width_rate * rate;
     float const needle_root_x = constants::needle_root_x_rate * rate;
@@ -109,8 +110,8 @@ void vu::ui_indicator::layout(float const rate) {
     // numbers
     float const font_size = constants::number_font_size_rate * rate;
     float const number_y = constants::number_y_rate * rate;
-    this->font_atlas =
-        ui::font_atlas{{.font_name = "AmericanTypewriter-Bold", .font_size = font_size, .words = "012357-"}};
+    this->font_atlas = ui::font_atlas{
+        {.font_name = "AmericanTypewriter-Bold", .font_size = font_size, .words = "012357-", .texture = texture}};
     for (auto &number : this->numbers) {
         number.rect_plane().node().set_position({.y = number_y});
         number.set_font_atlas(this->font_atlas);

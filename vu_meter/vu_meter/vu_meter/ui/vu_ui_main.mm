@@ -22,9 +22,9 @@ void vu::ui_main::setup(main_ptr_t &main) {
     for (auto const &idx : {0, 1}) {
         auto &indicator = this->indicators.at(idx);
         root_node.add_sub_node(indicator.node);
-        indicator.setup(main, texture, idx);
+        indicator.setup(main, idx);
 #warning todo ちゃんとviewのサイズから算出する
-        indicator.layout(100.0f);
+        indicator.layout(100.0f, texture);
 
         indicator.node.set_position({.x = (idx == 0 ? -offset : offset)});
     }

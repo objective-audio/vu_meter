@@ -21,8 +21,8 @@ struct ui_indicator {
     std::vector<ui::strings> numbers;
 #warning todo 枠
 
-    void setup(main_ptr_t &main, ui::texture &texture, std::size_t const idx);
-    void layout(float const height);
+    void setup(main_ptr_t &main, std::size_t const idx);
+    void layout(float const height, ui::texture &texture);
 
     void update();
 
