@@ -7,7 +7,9 @@
 
 using namespace yas;
 
-void vu::ui_main::setup(main_ptr_t &main) {
+void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
+    this->renderer = std::move(renderer);
+
     weak_main_ptr_t weak_main = main;
 
     ui::texture texture{{.point_size = {1024, 1024}}};

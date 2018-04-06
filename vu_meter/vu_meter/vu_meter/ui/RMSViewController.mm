@@ -22,11 +22,17 @@ using namespace yas;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    if (NSClassFromString(@"XCTest")) {
+        return;
+    }
+
     self.metalView.clearColor = vu::base_color();
 
-    [self setRenderable:self->ui_main.renderer.view_renderable()];
+    ui::renderer renderer{ui::metal_system{make_objc_ptr(MTLCreateSystemDefaultDevice()).object()}};
 
-    self->ui_main.setup(self->_main);
+    [self setRenderable:renderer.view_renderable()];
+
+    self->ui_main.setup(std::move(renderer), self->_main);
 }
 
 - (void)set_vu_main:(vu::main_ptr_t)main {

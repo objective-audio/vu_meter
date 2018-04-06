@@ -14,12 +14,12 @@ namespace yas::vu {
 class main;
 
 struct ui_main {
-    ui::renderer renderer{ui::metal_system{make_objc_ptr(MTLCreateSystemDefaultDevice()).object()}};
+    ui::renderer renderer{nullptr};
 
     ui_reference reference;
     std::array<ui_indicator, 2> indicators;
 
-    void setup(main_ptr_t &main);
+    void setup(ui::renderer &&renderer, main_ptr_t &main);
 
    private:
     ui::renderer::observer_t _renderer_observer;
