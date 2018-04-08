@@ -37,11 +37,14 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // indicators
 
-    ui::layout_guide center_layout_guide;
+    ui::layout_guide center_left_layout_guide;
+    ui::layout_guide center_right_layout_guide;
     this->_layouts.emplace_back(
         ui::make_layout({.first_source_guide = safe_area_guide_rect.left(),
                          .second_source_guide = safe_area_guide_rect.right(),
-                         .destination_guides = {ui::layout_guide{}, center_layout_guide, ui::layout_guide{}}}));
+                         .ratios = {100.0f, 1.0f, 100.0f},
+                         .destination_guides = {ui::layout_guide{}, center_left_layout_guide, center_right_layout_guide,
+                                                ui::layout_guide{}}}));
 
     for (auto const &idx : {0, 1}) {
         auto &indicator = this->indicators.at(idx);
@@ -53,10 +56,10 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
             this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.left(),
                                                          .destination_guide = indicator.layout_guide_rect.left()}));
             this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = center_layout_guide, .destination_guide = indicator.layout_guide_rect.right()}));
+                {.source_guide = center_left_layout_guide, .destination_guide = indicator.layout_guide_rect.right()}));
         } else if (idx == 1) {
             this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = center_layout_guide, .destination_guide = indicator.layout_guide_rect.left()}));
+                {.source_guide = center_right_layout_guide, .destination_guide = indicator.layout_guide_rect.left()}));
             this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.right(),
                                                          .destination_guide = indicator.layout_guide_rect.right()}));
         }
