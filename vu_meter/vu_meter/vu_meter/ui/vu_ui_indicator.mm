@@ -35,7 +35,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->idx = idx;
 
     // base_plane
-    this->base_plane.node().set_color(ui::orange_color());
+    this->base_plane.node().set_color(ui::dark_gray_color());
     this->node.add_sub_node(this->base_plane.node());
 
     // needle_root_node
@@ -70,28 +70,55 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     // layout_guide
 
     this->layout_guide_rect.set_value_changed_handler([this](ui::layout_guide_rect::change_context const &context) {
+        ui::region const &old_region = context.old_value;
         ui::region const &region = context.new_value;
         this->node.set_position({.x = region.left(), .y = region.bottom()});
+
+        this->layout();
+
+        // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
+        if (old_region.vertical_range().length != region.vertical_range().length) {
+            this->font_atlas = nullptr;
+            for (auto &number : this->numbers) {
+                number.set_font_atlas(nullptr);
+            }
+        }
     });
+
+    // node
+
+    this->_node_observer =
+        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
+            if (!this->font_atlas) {
+                return;
+            }
+
+            if (ui::texture texture = this->font_atlas.texture()) {
+                ui::node const &node = context.value;
+                if (ui::renderer renderer = node.renderer()) {
+                    texture.observe_scale_from_renderer(renderer);
+                }
+            }
+        });
 
     this->update();
 }
 
-void vu::ui_indicator::layout(float const rate) {
-    this->font_atlas = nullptr;
-    for (auto &number : this->numbers) {
-        number.set_font_atlas(nullptr);
+void vu::ui_indicator::layout() {
+    float const height = this->layout_guide_rect.region().vertical_range().length;
+    if (height <= 0.0f) {
+        return;
     }
 
-    float const base_height = constants::base_height_rate * rate;
-    float const base_width = constants::base_width_rate * rate;
-    float const needle_root_x = constants::needle_root_x_rate * rate;
-    float const needle_root_y = constants::needle_root_y_rate * rate;
-    float const needle_height = constants::needle_height_rate * rate;
-    float const needle_width = constants::needle_width_rate * rate;
-    float const gridline_y = constants::gridline_y_rate * rate;
-    float const gridline_height = constants::gridline_height_rate * rate;
-    float const gridline_width = constants::gridline_width_rate * rate;
+    float const base_height = constants::base_height_rate * height;
+    float const base_width = constants::base_width_rate * height;
+    float const needle_root_x = constants::needle_root_x_rate * height;
+    float const needle_root_y = constants::needle_root_y_rate * height;
+    float const needle_height = constants::needle_height_rate * height;
+    float const needle_width = constants::needle_width_rate * height;
+    float const gridline_y = constants::gridline_y_rate * height;
+    float const gridline_height = constants::gridline_height_rate * height;
+    float const gridline_width = constants::gridline_width_rate * height;
 
     // base_plane
     this->base_plane.data().set_rect_position({.size = {base_width, base_height}}, 0);
@@ -108,36 +135,32 @@ void vu::ui_indicator::layout(float const rate) {
             {.origin = {.x = -gridline_width * 0.5f}, .size = {.width = gridline_width, .height = gridline_height}}, 0);
     }
 
-    // numbers
-    float const font_size = constants::number_font_size_rate * rate;
-    float const number_y = constants::number_y_rate * rate;
-    ui::texture texture{{.point_size = {1024, 1024}}};
-    if (auto renderer = this->node.renderer()) {
-        texture.observe_scale_from_renderer(renderer);
-    }
-    this->font_atlas = ui::font_atlas{
-        {.font_name = "AmericanTypewriter-Bold", .font_size = font_size, .words = "012357-", .texture = texture}};
+    float const number_y = constants::number_y_rate * height;
     for (auto &number : this->numbers) {
         number.rect_plane().node().set_position({.y = number_y});
-        number.set_font_atlas(this->font_atlas);
     }
-
-    this->_node_observer =
-        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
-            if (!this->font_atlas) {
-                return;
-            }
-
-            if (ui::texture texture = this->font_atlas.texture()) {
-                ui::node const &node = context.value;
-                if (ui::renderer renderer = node.renderer()) {
-                    texture.observe_scale_from_renderer(renderer);
-                }
-            }
-        });
 }
 
 void vu::ui_indicator::update() {
+    if (!this->font_atlas) {
+        if (float const height = this->layout_guide_rect.region().vertical_range().length; height > 0.0f) {
+            ui::texture texture{{.point_size = {1024, 1024}}};
+            if (auto renderer = this->node.renderer()) {
+                texture.observe_scale_from_renderer(renderer);
+            }
+
+            float const font_size = constants::number_font_size_rate * height;
+
+            this->font_atlas = ui::font_atlas{{.font_name = "AmericanTypewriter-Bold",
+                                               .font_size = font_size,
+                                               .words = "012357-",
+                                               .texture = texture}};
+            for (auto &number : this->numbers) {
+                number.set_font_atlas(this->font_atlas);
+            }
+        }
+    }
+
     if (auto main = this->_weak_main.lock()) {
         ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference());
         this->needle.node().set_angle(angle);

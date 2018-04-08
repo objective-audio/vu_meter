@@ -22,7 +22,7 @@ struct ui_indicator {
     ui::layout_guide_rect layout_guide_rect;
 
     void setup(main_ptr_t &main, std::size_t const idx);
-    void layout(float const height);
+    void layout();
 
     void update();
 
