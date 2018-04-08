@@ -48,7 +48,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // numbers
     for (auto const &param : constants::params) {
-        auto &handle = this->gridlineHandles.emplace_back();
+        auto &handle = this->gridline_handles.emplace_back();
         auto &plane = this->gridlines.emplace_back(1);
 
         ui::strings::args args{
