@@ -5,6 +5,7 @@
 #include "vu_ui_reference.hpp"
 #include "vu_main.hpp"
 #include "yas_fast_each.h"
+#include "vu_ui_color.hpp"
 
 using namespace yas;
 
@@ -32,12 +33,11 @@ void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::textu
     minus_node.mesh().set_texture(texture);
     this->node.add_sub_node(minus_node);
     minus_node.attach_position_layout_guides(this->_minus_layout_guide_point);
+    minus_node.set_color(vu::reference_button_color());
 
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
-            auto color =
-                make_objc_ptr([[UIColor alloc] initWithRed:1.0 green:1.0 blue:0.0 alpha:is_tracking ? 1.0 : 0.5]);
-            CGContextSetFillColorWithColor(ctx, color.object().CGColor);
+            CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
             CGContextFillEllipseInRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
@@ -61,12 +61,11 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
     plus_node.mesh().set_texture(texture);
     this->node.add_sub_node(plus_node);
     plus_node.attach_position_layout_guides(this->_plus_layout_guide_point);
+    plus_node.set_color(vu::reference_button_color());
 
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
-            auto color =
-                make_objc_ptr([[UIColor alloc] initWithRed:1.0 green:0.0 blue:1.0 alpha:is_tracking ? 1.0 : 0.5]);
-            CGContextSetFillColorWithColor(ctx, color.object().CGColor);
+            CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
             CGContextFillEllipseInRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
@@ -92,6 +91,7 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     ui::node &text_node = this->text.rect_plane().node();
     this->node.add_sub_node(text_node);
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
+    text_node.set_color(vu::reference_text_color());
 
     this->_data_observer =
         main->data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {

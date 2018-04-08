@@ -35,3 +35,8 @@ ui::color const &vu::reference_button_color() {
     static ui::color _color{.red = 0.33f, .green = 0.33f, .blue = 0.33f};
     return _color;
 }
+
+ui::color const &vu::reference_text_color() {
+    static ui::color _color{.red = 0.82f, .green = 0.8f, .blue = 0.75f};
+    return _color;
+}
