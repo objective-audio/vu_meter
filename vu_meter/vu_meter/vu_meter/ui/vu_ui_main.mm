@@ -25,8 +25,15 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
+    this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.bottom(),
+                                                 .destination_guide = this->reference.layout_guide_rect.bottom()}));
+    this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.bottom(),
+                                                 .destination_guide = this->reference.layout_guide_rect.top(),
+                                                 .distance = 60.0f}));
     this->_layouts.emplace_back(ui::make_layout(
-        {.source_guide = safe_area_guide_rect.bottom(), .destination_guide = this->reference.layout_guide_point.y()}));
+        {.source_guide = safe_area_guide_rect.left(), .destination_guide = this->reference.layout_guide_rect.left()}));
+    this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.right(),
+                                                 .destination_guide = this->reference.layout_guide_rect.right()}));
 
     // indicators
 
