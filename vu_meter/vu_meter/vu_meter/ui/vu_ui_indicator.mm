@@ -105,13 +105,12 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 }
 
 void vu::ui_indicator::layout() {
+    float const width = this->layout_guide_rect.region().horizontal_range().length;
     float const height = this->layout_guide_rect.region().vertical_range().length;
-    if (height <= 0.0f) {
+    if (height <= 0.0f || width <= 0.0f) {
         return;
     }
 
-    float const base_height = constants::base_height_rate * height;
-    float const base_width = constants::base_width_rate * height;
     float const needle_root_x = constants::needle_root_x_rate * height;
     float const needle_root_y = constants::needle_root_y_rate * height;
     float const needle_height = constants::needle_height_rate * height;
@@ -121,7 +120,7 @@ void vu::ui_indicator::layout() {
     float const gridline_width = constants::gridline_width_rate * height;
 
     // base_plane
-    this->base_plane.data().set_rect_position({.size = {base_width, base_height}}, 0);
+    this->base_plane.data().set_rect_position({.size = {width, height}}, 0);
 
     // needle
     this->needle_root_node.set_position({.x = needle_root_x, .y = needle_root_y});
