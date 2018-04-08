@@ -75,7 +75,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         this->layout();
 
         // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-        if (old_region.vertical_range().length != region.vertical_range().length) {
+        if (old_region.size.height != region.size.height) {
             this->font_atlas = nullptr;
             for (auto &number : this->numbers) {
                 number.set_font_atlas(nullptr);
@@ -103,8 +103,9 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 }
 
 void vu::ui_indicator::layout() {
-    float const width = this->layout_guide_rect.region().horizontal_range().length;
-    float const height = this->layout_guide_rect.region().vertical_range().length;
+    ui::size const size = this->layout_guide_rect.region().size;
+    float const width = size.width;
+    float const height = size.height;
     if (width <= 0.0f || height <= 0.0f) {
         return;
     }
@@ -140,7 +141,7 @@ void vu::ui_indicator::layout() {
 
 void vu::ui_indicator::update() {
     if (!this->font_atlas) {
-        if (float const height = this->layout_guide_rect.region().vertical_range().length; height > 0.0f) {
+        if (float const height = this->layout_guide_rect.region().size.height; height > 0.0f) {
             ui::texture texture{{.point_size = {1024, 1024}}};
             if (auto renderer = this->node.renderer()) {
                 texture.observe_scale_from_renderer(renderer);
