@@ -16,17 +16,25 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     texture.observe_scale_from_renderer(this->renderer);
 
     ui::node &root_node = this->renderer.root_node();
+
+    // reference
+
     root_node.add_sub_node(this->reference.node);
 
     this->reference.setup(main, texture);
 
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
+    this->_layouts.emplace_back(ui::make_layout(
+        {.source_guide = safe_area_guide_rect.bottom(), .destination_guide = this->reference.layout_guide_point.y()}));
+
+    // indicators
+
     ui::layout_guide center_layout_guide;
-    this->_layouts.emplace_back(ui::make_layout(ui::justified_layout::args{
-        .first_source_guide = safe_area_guide_rect.left(),
-        .second_source_guide = safe_area_guide_rect.right(),
-        .destination_guides = {ui::layout_guide{}, center_layout_guide, ui::layout_guide{}}}));
+    this->_layouts.emplace_back(
+        ui::make_layout({.first_source_guide = safe_area_guide_rect.left(),
+                         .second_source_guide = safe_area_guide_rect.right(),
+                         .destination_guides = {ui::layout_guide{}, center_layout_guide, ui::layout_guide{}}}));
 
     for (auto const &idx : {0, 1}) {
         auto &indicator = this->indicators.at(idx);
@@ -68,7 +76,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                             indicator.layout(height, texture);
                         }
                     }
-#warning todof
+#warning todo
                 } break;
                 default:
                     break;
