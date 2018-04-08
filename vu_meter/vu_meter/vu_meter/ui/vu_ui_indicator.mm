@@ -22,7 +22,7 @@ namespace constants {
     static float constexpr gridline_height_rate = 0.1f;
     static float constexpr gridline_width_rate = gridline_height_rate * 0.15f;
     static float constexpr number_y_rate = 1.15f;
-    static float constexpr number_font_size_rate = 1.0f / 7.0f;
+    static float constexpr number_font_size_rate = 1.0f / 8.0f;
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
 }
