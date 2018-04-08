@@ -77,7 +77,12 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->update();
 }
 
-void vu::ui_indicator::layout(float const rate, ui::texture &texture) {
+void vu::ui_indicator::layout(float const rate) {
+    this->font_atlas = nullptr;
+    for (auto &number : this->numbers) {
+        number.set_font_atlas(nullptr);
+    }
+
     float const base_height = constants::base_height_rate * rate;
     float const base_width = constants::base_width_rate * rate;
     float const needle_root_x = constants::needle_root_x_rate * rate;
@@ -106,13 +111,30 @@ void vu::ui_indicator::layout(float const rate, ui::texture &texture) {
     // numbers
     float const font_size = constants::number_font_size_rate * rate;
     float const number_y = constants::number_y_rate * rate;
+    ui::texture texture{{.point_size = {1024, 1024}}};
+    if (auto renderer = this->node.renderer()) {
+        texture.observe_scale_from_renderer(renderer);
+    }
     this->font_atlas = ui::font_atlas{
         {.font_name = "AmericanTypewriter-Bold", .font_size = font_size, .words = "012357-", .texture = texture}};
     for (auto &number : this->numbers) {
         number.rect_plane().node().set_position({.y = number_y});
         number.set_font_atlas(this->font_atlas);
     }
-#warning todo viewの大きさに合わせて位置を調整する
+
+    this->_node_observer =
+        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
+            if (!this->font_atlas) {
+                return;
+            }
+
+            if (ui::texture texture = this->font_atlas.texture()) {
+                ui::node const &node = context.value;
+                if (ui::renderer renderer = node.renderer()) {
+                    texture.observe_scale_from_renderer(renderer);
+                }
+            }
+        });
 }
 
 void vu::ui_indicator::update() {

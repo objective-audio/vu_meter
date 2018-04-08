@@ -22,12 +22,13 @@ struct ui_indicator {
     ui::layout_guide_rect layout_guide_rect;
 
     void setup(main_ptr_t &main, std::size_t const idx);
-    void layout(float const height, ui::texture &texture);
+    void layout(float const height);
 
     void update();
 
    private:
     vu::data::observer_t _data_observer = nullptr;
+    ui::node::observer_t _node_observer = nullptr;
     weak_main_ptr_t _weak_main;
 };
 }
