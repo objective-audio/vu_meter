@@ -161,7 +161,7 @@ void vu::ui_indicator::update() {
 
             float const font_size = constants::number_font_size_rate * height;
 
-            this->font_atlas = ui::font_atlas{{.font_name = "AmericanTypewriter-Bold",
+            this->font_atlas = ui::font_atlas{{.font_name = "TrebuchetMS-Bold",
                                                .font_size = font_size,
                                                .words = "012357-",
                                                .texture = texture}};

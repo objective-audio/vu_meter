@@ -84,7 +84,7 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
 
 void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     this->font_atlas = ui::font_atlas{
-        {.font_name = "AmericanTypewriter-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
+        {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
     this->text =
         ui::strings{{.max_word_count = 10, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
