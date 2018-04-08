@@ -66,6 +66,14 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed,
                                                             [this](auto const &context) { this->update(); });
+
+    // layout_guide
+
+    this->layout_guide_rect.set_value_changed_handler([this](ui::layout_guide_rect::change_context const &context) {
+        ui::region const &region = context.new_value;
+        this->node.set_position({.x = region.left(), .y = region.bottom()});
+    });
+
     this->update();
 }
 

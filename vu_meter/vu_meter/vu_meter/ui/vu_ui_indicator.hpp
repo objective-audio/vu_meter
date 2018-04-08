@@ -19,7 +19,7 @@ struct ui_indicator {
     std::vector<ui::rect_plane> gridlines;
     ui::font_atlas font_atlas{nullptr};
     std::vector<ui::strings> numbers;
-#warning todo 枠
+    ui::layout_guide_rect layout_guide_rect;
 
     void setup(main_ptr_t &main, std::size_t const idx);
     void layout(float const height, ui::texture &texture);
