@@ -132,6 +132,5 @@ void vu::ui_reference::_setup_layout() {
 }
 
 void vu::ui_reference::_update_ui(int32_t const ref) {
-    std::string ref_text = std::to_string(ref) + " dB";
-    this->text.set_text(std::move(ref_text));
+    this->text.set_text(std::to_string(ref) + " dB");
 }
