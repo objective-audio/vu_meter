@@ -7,20 +7,22 @@
 #include "vu_main.hpp"
 #include "yas_fast_each.h"
 #include "vu_ui_utils.hpp"
+#include "vu_ui_color.hpp"
 
 using namespace yas;
 
 namespace yas::vu {
 namespace constants {
     static float constexpr needle_root_x_rate = 1.0f;
-    static float constexpr needle_root_y_rate = 0.25f;
-    static float constexpr needle_height_rate = 0.5f;
-    static float constexpr needle_width_rate = 0.5f / 100.0f;
-    static float constexpr gridline_y_rate = 0.45f;
-    static float constexpr gridline_height_rate = 1.0f / 20.0f;
-    static float constexpr gridline_width_rate = 1.0f / 100.0f;
-    static float constexpr number_y_rate = 0.6f;
-    static float constexpr number_font_size_rate = 1.0f / 10.0f;
+    static float constexpr needle_root_y_rate = -0.2f;
+    static float constexpr needle_height_rate = 1.0f;
+    static float constexpr needle_width_rate = 0.01f;
+    static float constexpr gridline_y_rate = 1.0f;
+    static float constexpr gridline_top_y_rate = needle_height_rate * 0.9f;
+    static float constexpr gridline_height_rate = 0.1f;
+    static float constexpr gridline_width_rate = gridline_height_rate * 0.15f;
+    static float constexpr number_y_rate = 1.15f;
+    static float constexpr number_font_size_rate = 1.0f / 7.0f;
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
 }
@@ -74,7 +76,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->layout_guide_rect.set_value_changed_handler([this](ui::layout_guide_rect::change_context const &context) {
         ui::region const &old_region = context.old_value;
         ui::region const &region = context.new_value;
-        this->node.set_position({.x = region.left(), .y = region.bottom()});
 
         this->layout();
 
@@ -107,7 +108,8 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 }
 
 void vu::ui_indicator::layout() {
-    ui::size const size = this->layout_guide_rect.region().size;
+    ui::region const region = this->layout_guide_rect.region();
+    ui::size const size = region.size;
     float const width = size.width;
     float const height = size.height;
     if (width <= 0.0f || height <= 0.0f) {
@@ -122,6 +124,9 @@ void vu::ui_indicator::layout() {
     float const gridline_height = constants::gridline_height_rate * height;
     float const gridline_width = constants::gridline_width_rate * height;
 
+    // node
+    this->node.set_position({.x = region.left(), .y = region.bottom()});
+
     // base_plane
     this->base_plane.data().set_rect_position({.size = {width, height}}, 0);
 
@@ -133,8 +138,9 @@ void vu::ui_indicator::layout() {
     // gridline
     for (auto &gridline : this->gridlines) {
         gridline.node().set_position({.y = gridline_y});
-        gridline.data().set_rect_position(
-            {.origin = {.x = -gridline_width * 0.5f}, .size = {.width = gridline_width, .height = gridline_height}}, 0);
+        gridline.data().set_rect_position({.origin = {.x = -gridline_width * 0.5f, .y = -gridline_height * 0.5f},
+                                           .size = {.width = gridline_width, .height = gridline_height}},
+                                          0);
     }
 
     float const number_y = constants::number_y_rate * height;

@@ -15,5 +15,6 @@ ui::angle vu::ui_utils::meter_angle(float const in_value, float const reference)
     float const max = audio::math::linear_from_decibel(3.0);
     float const min_to_max = max - min;
 
-    return {.degrees = 45.0f + (value - min) / min_to_max * -90.0f};
+    float const half_degrees = 50.0f;
+    return {.degrees = half_degrees + (value - min) / min_to_max * -half_degrees * 2.0f};
 }
