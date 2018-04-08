@@ -33,14 +33,15 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->idx = idx;
 
     // base_plane
-    this->base_plane.node().set_color(ui::dark_gray_color());
+
+    this->base_plane.node().set_color(vu::indicator_base_color());
     this->node.add_sub_node(this->base_plane.node());
 
     // needle_root_node
     this->node.add_sub_node(this->needle_root_node);
 
     // needle
-    this->needle.node().set_color(ui::blue_color());
+    this->needle.node().set_color(vu::indicator_needle_color());
     this->needle_root_node.add_sub_node(this->needle.node());
 
     // numbers
@@ -60,6 +61,9 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
         handle.set_angle(angle);
         number.rect_plane().node().set_angle(-angle);
+
+        plane.node().set_color(vu::indicator_gridline_color());
+        number.rect_plane().node().set_color(vu::indicator_number_color());
     }
 
     this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed,
