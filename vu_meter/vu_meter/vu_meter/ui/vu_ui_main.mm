@@ -57,7 +57,6 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
         root_node.add_sub_node(indicator.node);
         indicator.setup(main, idx);
 
-#warning todo safe_areaの位置にバインドする
         if (idx == 0) {
             this->_layouts.emplace_back(ui::make_layout({.source_guide = safe_area_guide_rect.left(),
                                                          .destination_guide = indicator.layout_guide_rect.left()}));
@@ -88,31 +87,10 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // renderer observing
 
-    this->_renderer_observer =
-        this->renderer.subject().make_wild_card_observer([this, weak_main, texture](auto const &context) mutable {
-            ui::renderer::method const &method = context.key;
-            switch (method) {
-                case ui::renderer::method::will_render: {
-                    for (auto &indicator : this->indicators) {
-                        indicator.update();
-                    }
-                } break;
-                case ui::renderer::method::view_size_changed:
-                case ui::renderer::method::safe_area_insets_changed: {
-                    ui::renderer const &renderer = context.value;
-
-                    ui::region const safe_area_region = renderer.safe_area_layout_guide_rect().region();
-                    if (safe_area_region.horizontal_range().length > 0.0 &&
-                        safe_area_region.vertical_range().length > 0.0) {
-                        float const height = safe_area_region.horizontal_range().length * 0.25f;
-                        for (auto &indicator : this->indicators) {
-                            indicator.layout(height, texture);
-                        }
-                    }
-#warning todo
-                } break;
-                default:
-                    break;
+    this->_renderer_observer = this->renderer.subject().make_observer(
+        ui::renderer::method::will_render, [this, weak_main, texture](auto const &context) mutable {
+            for (auto &indicator : this->indicators) {
+                indicator.update();
             }
         });
 }
