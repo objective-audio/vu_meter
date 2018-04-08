@@ -42,31 +42,33 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     // needle_root_node
     this->node.add_sub_node(this->needle_root_node);
 
-    // needle
-    this->needle.node().set_color(vu::indicator_needle_color());
-    this->needle_root_node.add_sub_node(this->needle.node());
-
     // numbers
     for (auto const &param : constants::params) {
-        auto &handle = this->gridline_handles.emplace_back();
+        auto &gridline_handle = this->gridline_handles.emplace_back();
         auto &plane = this->gridlines.emplace_back(1);
 
+        auto &number_handle = this->number_handles.emplace_back();
         ui::strings::args args{
             .text = std::to_string(param), .max_word_count = 3, .alignment = ui::layout_alignment::mid};
         auto &number = this->numbers.emplace_back(std::move(args));
 
-        this->needle_root_node.add_sub_node(handle);
-        handle.add_sub_node(plane.node());
-        handle.add_sub_node(number.rect_plane().node());
+        this->needle_root_node.add_sub_node(gridline_handle);
+        gridline_handle.add_sub_node(plane.node());
+        gridline_handle.add_sub_node(number_handle);
+        number_handle.add_sub_node(number.rect_plane().node());
 
         ui::angle const angle =
             ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
-        handle.set_angle(angle);
-        number.rect_plane().node().set_angle(-angle);
+        gridline_handle.set_angle(angle);
+        number_handle.set_angle(-angle);
 
         plane.node().set_color(vu::indicator_gridline_color());
         number.rect_plane().node().set_color(vu::indicator_number_color());
     }
+
+    // needle
+    this->needle.node().set_color(vu::indicator_needle_color());
+    this->needle_root_node.add_sub_node(this->needle.node());
 
     this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed,
                                                             [this](auto const &context) { this->update(); });
@@ -144,8 +146,8 @@ void vu::ui_indicator::layout() {
     }
 
     float const number_y = constants::number_y_rate * height;
-    for (auto &number : this->numbers) {
-        number.rect_plane().node().set_position({.y = number_y});
+    for (auto &handle : this->number_handles) {
+        handle.set_position({.y = number_y});
     }
 }
 
@@ -163,8 +165,12 @@ void vu::ui_indicator::update() {
                                                .font_size = font_size,
                                                .words = "012357-",
                                                .texture = texture}};
+
+            float const number_offset = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
+
             for (auto &number : this->numbers) {
                 number.set_font_atlas(this->font_atlas);
+                number.rect_plane().node().set_position({.y = number_offset});
             }
         }
     }

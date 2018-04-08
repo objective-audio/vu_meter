@@ -18,6 +18,7 @@ struct ui_indicator {
     std::vector<ui::node> gridline_handles;
     std::vector<ui::rect_plane> gridlines;
     ui::font_atlas font_atlas{nullptr};
+    std::vector<ui::node> number_handles;
     std::vector<ui::strings> numbers;
     ui::layout_guide_rect layout_guide_rect;
 
