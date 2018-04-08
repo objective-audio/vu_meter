@@ -30,3 +30,8 @@ ui::color const &vu::indicator_number_color() {
     static ui::color _color{.red = 0.33f, .green = 0.33f, .blue = 0.33f};
     return _color;
 }
+
+ui::color const &vu::reference_button_color() {
+    static ui::color _color{.red = 0.33f, .green = 0.33f, .blue = 0.33f};
+    return _color;
+}
