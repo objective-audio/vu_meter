@@ -23,5 +23,6 @@ struct ui_main {
 
    private:
     ui::renderer::observer_t _renderer_observer;
+    std::vector<ui::layout> _layouts;
 };
 }
