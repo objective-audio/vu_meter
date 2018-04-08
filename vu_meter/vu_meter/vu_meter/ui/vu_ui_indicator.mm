@@ -62,8 +62,13 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         gridline_handle.set_angle(angle);
         number_handle.set_angle(-angle);
 
-        plane.node().set_color(vu::indicator_gridline_color());
-        number.rect_plane().node().set_color(vu::indicator_number_color());
+        if (param > 0) {
+            plane.node().set_color(vu::indicator_over_gridline_color());
+            number.rect_plane().node().set_color(vu::indicator_over_number_color());
+        } else {
+            plane.node().set_color(vu::indicator_gridline_color());
+            number.rect_plane().node().set_color(vu::indicator_number_color());
+        }
     }
 
     // needle
@@ -161,10 +166,8 @@ void vu::ui_indicator::update() {
 
             float const font_size = constants::number_font_size_rate * height;
 
-            this->font_atlas = ui::font_atlas{{.font_name = "TrebuchetMS-Bold",
-                                               .font_size = font_size,
-                                               .words = "012357-",
-                                               .texture = texture}};
+            this->font_atlas = ui::font_atlas{
+                {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "012357-", .texture = texture}};
 
             float const number_offset = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
 
