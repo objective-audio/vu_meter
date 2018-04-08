@@ -16,7 +16,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     this->node.attach_position_layout_guides(this->layout_guide_point);
 
     this->minus_button.rect_plane().node().mesh().set_texture(texture);
-    this->minus_button.rect_plane().node().set_position({.x = -100.0f});
+    this->minus_button.rect_plane().node().set_position({.x = -100.0f, .y = button_size.height * 0.5f});
     this->node.add_sub_node(this->minus_button.rect_plane().node());
 
     for (auto const is_tracking : {false, true}) {
@@ -41,7 +41,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     }
 
     this->plus_button.rect_plane().node().mesh().set_texture(texture);
-    this->plus_button.rect_plane().node().set_position({.x = 100.0f});
+    this->plus_button.rect_plane().node().set_position({.x = 100.0f, .y = button_size.height * 0.5f});
     this->node.add_sub_node(this->plus_button.rect_plane().node());
 
     for (auto const is_tracking : {false, true}) {
@@ -71,7 +71,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     this->text =
         ui::strings{{.max_word_count = 10, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
     float const text_y = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
-    this->text.rect_plane().node().set_position({.y = text_y});
+    this->text.rect_plane().node().set_position({.y = text_y + button_size.height * 0.5f});
     this->node.add_sub_node(this->text.rect_plane().node());
 
     this->_data_observer =
