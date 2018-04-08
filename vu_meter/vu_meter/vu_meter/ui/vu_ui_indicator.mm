@@ -12,8 +12,6 @@ using namespace yas;
 
 namespace yas::vu {
 namespace constants {
-    static float constexpr base_height_rate = 1.0f;
-    static float constexpr base_width_rate = 2.0f;
     static float constexpr needle_root_x_rate = 1.0f;
     static float constexpr needle_root_y_rate = 0.25f;
     static float constexpr needle_height_rate = 0.5f;
@@ -107,7 +105,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 void vu::ui_indicator::layout() {
     float const width = this->layout_guide_rect.region().horizontal_range().length;
     float const height = this->layout_guide_rect.region().vertical_range().length;
-    if (height <= 0.0f || width <= 0.0f) {
+    if (width <= 0.0f || height <= 0.0f) {
         return;
     }
 
