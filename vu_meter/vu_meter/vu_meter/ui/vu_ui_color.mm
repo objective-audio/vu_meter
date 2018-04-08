@@ -7,6 +7,6 @@
 using namespace yas;
 
 MTLClearColor const &vu::base_color() {
-    static MTLClearColor _color{.red = 1.0, .green = 0.0, .blue = 0.0, .alpha = 1.0};
+    static MTLClearColor _color{.red = 0.1, .green = 0.1, .blue = 0.1, .alpha = 1.0};
     return _color;
 }
