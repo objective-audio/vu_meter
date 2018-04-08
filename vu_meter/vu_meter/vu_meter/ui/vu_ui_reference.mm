@@ -13,6 +13,8 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
 
     weak_main_ptr_t weak_main = main;
 
+    this->node.attach_position_layout_guides(this->layout_guide_point);
+
     this->minus_button.rect_plane().node().mesh().set_texture(texture);
     this->minus_button.rect_plane().node().set_position({.x = -100.0f});
     this->node.add_sub_node(this->minus_button.rect_plane().node());

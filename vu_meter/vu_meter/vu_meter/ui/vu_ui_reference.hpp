@@ -17,6 +17,7 @@ struct ui_reference {
     ui::button plus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
+    ui::layout_guide_point layout_guide_point;
 
     void setup(main_ptr_t &main, ui::texture &texture);
 
