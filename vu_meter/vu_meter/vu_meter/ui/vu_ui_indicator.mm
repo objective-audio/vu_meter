@@ -18,12 +18,11 @@ namespace constants {
     static float constexpr needle_height_rate = 1.0f;
     static float constexpr needle_width_rate = 0.01f;
     static float constexpr gridline_y_rate = 1.0f;
-    static float constexpr gridline_top_y_rate = needle_height_rate * 0.9f;
     static float constexpr gridline_height_rate = 0.1f;
     static float constexpr gridline_width_rate = gridline_height_rate * 0.15f;
     static float constexpr number_y_rate = 1.15f;
     static float constexpr number_font_size_rate = 1.0f / 8.0f;
-    static float constexpr half_degrees = 50.0f;
+    static ui::angle constexpr half_angle{.degrees = 50.0f};
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
 }
@@ -50,7 +49,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
         auto &number_handle = this->number_handles.emplace_back();
         ui::strings::args args{
-            .text = std::to_string(param), .max_word_count = 3, .alignment = ui::layout_alignment::mid};
+            .text = std::to_string(std::abs(param)), .max_word_count = 3, .alignment = ui::layout_alignment::mid};
         auto &number = this->numbers.emplace_back(std::move(args));
 
         this->needle_root_node.add_sub_node(gridline_handle);
@@ -59,7 +58,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         number_handle.add_sub_node(number.rect_plane().node());
 
         ui::angle const angle = ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f,
-                                                      constants::half_degrees);
+                                                      constants::half_angle.degrees);
         gridline_handle.set_angle(angle);
         number_handle.set_angle(-angle);
 
@@ -129,7 +128,7 @@ void vu::ui_indicator::layout() {
     float const needle_root_y = constants::needle_root_y_rate * height;
     float const needle_height = constants::needle_height_rate * height;
     float const needle_width = constants::needle_width_rate * height;
-    float const gridline_y = constants::gridline_y_rate * height;
+    float const gridline_side_y = constants::gridline_y_rate * height;
     float const gridline_height = constants::gridline_height_rate * height;
     float const gridline_width = constants::gridline_width_rate * height;
 
@@ -146,14 +145,18 @@ void vu::ui_indicator::layout() {
 
     // gridline
     for (auto &gridline : this->gridlines) {
+        ui::node const parent = gridline.node().parent();
+        float const gridline_y = vu::ui_utils::gridline_y(parent.angle(), constants::half_angle, gridline_side_y, 0.1f);
         gridline.node().set_position({.y = gridline_y});
         gridline.data().set_rect_position({.origin = {.x = -gridline_width * 0.5f, .y = -gridline_height * 0.5f},
                                            .size = {.width = gridline_width, .height = gridline_height}},
                                           0);
     }
 
-    float const number_y = constants::number_y_rate * height;
+    float const number_side_y = constants::number_y_rate * height;
     for (auto &handle : this->number_handles) {
+        ui::node const parent = handle.parent();
+        float const number_y = vu::ui_utils::gridline_y(parent.angle(), constants::half_angle, number_side_y, 0.1f);
         handle.set_position({.y = number_y});
     }
 }
@@ -181,8 +184,8 @@ void vu::ui_indicator::update() {
     }
 
     if (auto main = this->_weak_main.lock()) {
-        ui::angle const angle =
-            ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference(), constants::half_degrees);
+        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference(),
+                                                      constants::half_angle.degrees);
         this->needle.node().set_angle(angle);
     }
 }
