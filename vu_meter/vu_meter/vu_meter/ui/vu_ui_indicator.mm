@@ -81,20 +81,21 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // layout_guide
 
-    this->layout_guide_rect.set_value_changed_handler([this](ui::layout_guide_rect::change_context const &context) {
-        ui::region const &old_region = context.old_value;
-        ui::region const &region = context.new_value;
+    this->frame_layout_guide_rect.set_value_changed_handler(
+        [this](ui::layout_guide_rect::change_context const &context) {
+            ui::region const &old_region = context.old_value;
+            ui::region const &region = context.new_value;
 
-        this->layout();
+            this->layout();
 
-        // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-        if (old_region.size.height != region.size.height) {
-            this->font_atlas = nullptr;
-            for (auto &number : this->numbers) {
-                number.set_font_atlas(nullptr);
+            // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
+            if (old_region.size.height != region.size.height) {
+                this->font_atlas = nullptr;
+                for (auto &number : this->numbers) {
+                    number.set_font_atlas(nullptr);
+                }
             }
-        }
-    });
+        });
 
     // node
 
