@@ -35,9 +35,9 @@ using namespace yas;
 }
 
 - (void)test_gridline_y {
-    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(0.0f, 2.0f, 1.0f), 2.0f, 0.001f);
-    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(-50.0f, 2.0f, 1.0f), 1.0f, 0.001f);
-    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(50.0f, 2.0f, 1.0f), 1.0f, 0.001f);
+    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(0.0f, 50.0f, 2.0f, 1.0f), 2.0f, 0.001f);
+    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(-50.0f, 50.0f, 2.0f, 1.0f), 1.0f, 0.001f);
+    XCTAssertEqualWithAccuracy(vu::ui_utils::gridline_y(50.0f, 50.0f, 2.0f, 1.0f), 1.0f, 0.001f);
 }
 
 @end
