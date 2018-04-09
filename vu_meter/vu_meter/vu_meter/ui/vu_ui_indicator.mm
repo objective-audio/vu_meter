@@ -23,6 +23,7 @@ namespace constants {
     static float constexpr gridline_width_rate = gridline_height_rate * 0.15f;
     static float constexpr number_y_rate = 1.15f;
     static float constexpr number_font_size_rate = 1.0f / 8.0f;
+    static float constexpr half_degrees = 50.0f;
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
 }
@@ -57,8 +58,8 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         gridline_handle.add_sub_node(number_handle);
         number_handle.add_sub_node(number.rect_plane().node());
 
-        ui::angle const angle =
-            ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f);
+        ui::angle const angle = ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)), 0.0f,
+                                                      constants::half_degrees);
         gridline_handle.set_angle(angle);
         number_handle.set_angle(-angle);
 
@@ -179,7 +180,8 @@ void vu::ui_indicator::update() {
     }
 
     if (auto main = this->_weak_main.lock()) {
-        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference());
+        ui::angle const angle =
+            ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference(), constants::half_degrees);
         this->needle.node().set_angle(angle);
     }
 }

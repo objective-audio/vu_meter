@@ -23,15 +23,15 @@ using namespace yas;
 }
 
 - (void)test_meter_angle {
-    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-20.0f), 0.0f).degrees, 50.0f,
-                               0.001f);
-    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(3.0f), 0.0f).degrees, -50.0f,
-                               0.001f);
-
-    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-40.0f), -20.0f).degrees,
+    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-20.0f), 0.0f, 50.0f).degrees,
                                50.0f, 0.001f);
-    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-17.0f), -20.0f).degrees,
+    XCTAssertEqualWithAccuracy(vu::ui_utils::meter_angle(audio::math::linear_from_decibel(3.0f), 0.0f, 50.0f).degrees,
                                -50.0f, 0.001f);
+
+    XCTAssertEqualWithAccuracy(
+        vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-40.0f), -20.0f, 50.0f).degrees, 50.0f, 0.001f);
+    XCTAssertEqualWithAccuracy(
+        vu::ui_utils::meter_angle(audio::math::linear_from_decibel(-17.0f), -20.0f, 50.0f).degrees, -50.0f, 0.001f);
 }
 
 - (void)test_gridline_y {

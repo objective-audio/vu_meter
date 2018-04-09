@@ -7,10 +7,6 @@
 
 using namespace yas;
 
-ui::angle vu::ui_utils::meter_angle(float const in_value, float const reference) {
-    return meter_angle(in_value, reference, 50.0f);
-}
-
 ui::angle vu::ui_utils::meter_angle(float const in_value, float const reference, float const half_degrees) {
     float const db_value = audio::math::decibel_from_linear(in_value);
     float const value = audio::math::linear_from_decibel(db_value - reference);
