@@ -116,7 +116,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 }
 
 void vu::ui_indicator::layout() {
-    ui::region const region = this->layout_guide_rect.region();
+    ui::region const region = this->frame_layout_guide_rect.region();
     ui::size const size = region.size;
     float const width = size.width;
     float const height = size.height;
@@ -159,7 +159,7 @@ void vu::ui_indicator::layout() {
 
 void vu::ui_indicator::update() {
     if (!this->font_atlas) {
-        if (float const height = this->layout_guide_rect.region().size.height; height > 0.0f) {
+        if (float const height = this->frame_layout_guide_rect.region().size.height; height > 0.0f) {
             ui::texture texture{{.point_size = {1024, 1024}}};
             if (auto renderer = this->node.renderer()) {
                 texture.observe_scale_from_renderer(renderer);

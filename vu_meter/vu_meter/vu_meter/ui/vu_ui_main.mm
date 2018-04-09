@@ -61,15 +61,19 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
         indicator.setup(main, idx);
 
         if (idx == 0) {
-            this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = indicator_0_left_guide, .destination_guide = indicator.layout_guide_rect.left()}));
-            this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = indicator_0_right_guide, .destination_guide = indicator.layout_guide_rect.right()}));
+            this->_layouts.emplace_back(
+                ui::make_layout({.source_guide = indicator_0_left_guide,
+                                 .destination_guide = indicator.frame_layout_guide_rect.left()}));
+            this->_layouts.emplace_back(
+                ui::make_layout({.source_guide = indicator_0_right_guide,
+                                 .destination_guide = indicator.frame_layout_guide_rect.right()}));
         } else if (idx == 1) {
-            this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = indicator_1_left_guide, .destination_guide = indicator.layout_guide_rect.left()}));
-            this->_layouts.emplace_back(ui::make_layout(
-                {.source_guide = indicator_1_right_guide, .destination_guide = indicator.layout_guide_rect.right()}));
+            this->_layouts.emplace_back(
+                ui::make_layout({.source_guide = indicator_1_left_guide,
+                                 .destination_guide = indicator.frame_layout_guide_rect.left()}));
+            this->_layouts.emplace_back(
+                ui::make_layout({.source_guide = indicator_1_right_guide,
+                                 .destination_guide = indicator.frame_layout_guide_rect.right()}));
         }
 
         auto layout_handler = [](std::vector<ui::layout_guide> const &source_guides,
@@ -94,11 +98,13 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
         this->_layouts.emplace_back(
             ui::layout{{.source_guides = {indicator_0_left_guide, indicator_0_right_guide, center_y_guide},
-                        .destination_guides = {indicator.layout_guide_rect.bottom(), indicator.layout_guide_rect.top()},
+                        .destination_guides = {indicator.frame_layout_guide_rect.bottom(),
+                                               indicator.frame_layout_guide_rect.top()},
                         .handler = layout_handler}});
         this->_layouts.emplace_back(
             ui::layout{{.source_guides = {indicator_1_left_guide, indicator_1_right_guide, center_y_guide},
-                        .destination_guides = {indicator.layout_guide_rect.bottom(), indicator.layout_guide_rect.top()},
+                        .destination_guides = {indicator.frame_layout_guide_rect.bottom(),
+                                               indicator.frame_layout_guide_rect.top()},
                         .handler = layout_handler}});
     }
 

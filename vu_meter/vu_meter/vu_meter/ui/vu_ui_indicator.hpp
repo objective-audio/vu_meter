@@ -20,7 +20,8 @@ struct ui_indicator {
     ui::font_atlas font_atlas{nullptr};
     std::vector<ui::node> number_handles;
     std::vector<ui::strings> numbers;
-    ui::layout_guide_rect layout_guide_rect;
+
+    ui::layout_guide_rect frame_layout_guide_rect;
 
     void setup(main_ptr_t &main, std::size_t const idx);
     void layout();
