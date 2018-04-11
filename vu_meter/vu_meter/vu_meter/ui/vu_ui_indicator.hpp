@@ -32,5 +32,8 @@ struct ui_indicator {
     vu::data::observer_t _data_observer = nullptr;
     ui::node::observer_t _node_observer = nullptr;
     weak_main_ptr_t _weak_main;
+
+    std::vector<ui::layout> _layouts;
+    ui::layout_guide_point _node_guide_point;
 };
 }

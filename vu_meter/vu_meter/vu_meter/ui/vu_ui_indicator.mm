@@ -34,6 +34,29 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->idx = idx;
 
+    // node
+
+    this->node.attach_position_layout_guides(this->_node_guide_point);
+
+    this->_layouts.emplace_back(ui::make_layout(
+        {.source_guide = this->frame_layout_guide_rect.left(), .destination_guide = this->_node_guide_point.x()}));
+    this->_layouts.emplace_back(ui::make_layout(
+        {.source_guide = this->frame_layout_guide_rect.bottom(), .destination_guide = this->_node_guide_point.y()}));
+
+    this->_node_observer =
+        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
+            if (!this->font_atlas) {
+                return;
+            }
+
+            if (ui::texture texture = this->font_atlas.texture()) {
+                ui::node const &node = context.value;
+                if (ui::renderer renderer = node.renderer()) {
+                    texture.observe_scale_from_renderer(renderer);
+                }
+            }
+        });
+
     // base_plane
 
     this->base_plane.node().set_color(vu::indicator_base_color());
@@ -96,22 +119,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             }
         });
 
-    // node
-
-    this->_node_observer =
-        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
-            if (!this->font_atlas) {
-                return;
-            }
-
-            if (ui::texture texture = this->font_atlas.texture()) {
-                ui::node const &node = context.value;
-                if (ui::renderer renderer = node.renderer()) {
-                    texture.observe_scale_from_renderer(renderer);
-                }
-            }
-        });
-
     this->update();
 }
 
@@ -131,9 +138,6 @@ void vu::ui_indicator::layout() {
     float const gridline_side_y = constants::gridline_y_rate * height;
     float const gridline_height = constants::gridline_height_rate * height;
     float const gridline_width = constants::gridline_width_rate * height;
-
-    // node
-    this->node.set_position({.x = region.left(), .y = region.bottom()});
 
     // base_plane
     this->base_plane.data().set_rect_position({.size = {width, height}}, 0);
