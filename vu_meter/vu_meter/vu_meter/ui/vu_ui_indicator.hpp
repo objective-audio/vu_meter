@@ -35,5 +35,6 @@ struct ui_indicator {
 
     std::vector<ui::layout> _layouts;
     ui::layout_guide_point _node_guide_point;
+    ui::layout_guide_rect _base_guide_rect;
 };
 }

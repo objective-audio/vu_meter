@@ -62,6 +62,16 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->base_plane.node().set_color(vu::indicator_base_color());
     this->node.add_sub_node(this->base_plane.node());
 
+    this->_base_guide_rect.set_value_changed_handler([this](auto const &context) {
+        ui::region const &region = context.new_value;
+        this->base_plane.data().set_rect_position(region, 0);
+    });
+
+    this->_layouts.emplace_back(ui::make_layout(
+        {.source_guide = this->frame_layout_guide_rect.width(), .destination_guide = this->_base_guide_rect.right()}));
+    this->_layouts.emplace_back(ui::make_layout(
+        {.source_guide = this->frame_layout_guide_rect.height(), .destination_guide = this->_base_guide_rect.top()}));
+
     // needle_root_node
     this->node.add_sub_node(this->needle_root_node);
 
@@ -138,9 +148,6 @@ void vu::ui_indicator::layout() {
     float const gridline_side_y = constants::gridline_y_rate * height;
     float const gridline_height = constants::gridline_height_rate * height;
     float const gridline_width = constants::gridline_width_rate * height;
-
-    // base_plane
-    this->base_plane.data().set_rect_position({.size = {width, height}}, 0);
 
     // needle
     this->needle_root_node.set_position({.x = needle_root_x, .y = needle_root_y});
