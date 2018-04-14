@@ -8,6 +8,7 @@
 #include "yas_fast_each.h"
 #include "vu_ui_utils.hpp"
 #include "vu_ui_color.hpp"
+#include "yas_flow_observing.h"
 
 using namespace yas;
 
@@ -43,19 +44,19 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->_layouts.emplace_back(ui::make_layout(
         {.source_guide = this->frame_layout_guide_rect.bottom(), .destination_guide = this->_node_guide_point.y()}));
 
-    this->_node_observer =
-        this->node.subject().make_observer(ui::node::method::renderer_changed, [this](auto const &context) {
-            if (!this->font_atlas) {
-                return;
-            }
+    this->_node_flow = begin_flow(this->node.subject(), ui::node::method::renderer_changed)
+                           .execute([this](ui::node const &node) {
+                               if (!this->font_atlas) {
+                                   return;
+                               }
 
-            if (ui::texture texture = this->font_atlas.texture()) {
-                ui::node const &node = context.value;
-                if (ui::renderer renderer = node.renderer()) {
-                    texture.observe_scale_from_renderer(renderer);
-                }
-            }
-        });
+                               if (ui::texture texture = this->font_atlas.texture()) {
+                                   if (ui::renderer renderer = node.renderer()) {
+                                       texture.observe_scale_from_renderer(renderer);
+                                   }
+                               }
+                           })
+                           .end();
 
     // base_plane
 
