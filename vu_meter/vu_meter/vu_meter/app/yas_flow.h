@@ -5,6 +5,7 @@
 #pragma once
 
 #include "yas_base.h"
+#include "yas_protocol.h"
 #include "yas_any.h"
 #include <functional>
 
@@ -13,15 +14,27 @@ template <typename Out, typename In, typename Begin>
 struct node;
 
 template <typename T>
+struct receivable : protocol {
+    struct impl : protocol::impl {
+        virtual void receive_value(T const &) = 0;
+    };
+
+    explicit receivable(std::shared_ptr<impl> impl);
+    receivable(std::nullptr_t);
+
+    void receive_value(T const &);
+};
+
+template <typename T>
 struct sender : base {
     class impl;
 
     sender();
     sender(std::nullptr_t);
 
-    void set_value(T const &);
+    void send_value(T const &);
 
-    node<T, T, T> make_flow();
+    node<T, T, T> begin_flow();
 
     // observer
     void set_observer(base);
@@ -43,6 +56,7 @@ struct node : base {
     node(std::nullptr_t);
 
     node<Out, In, Begin> execute(std::function<void(In)>);
+    node<Out, In, Begin> receive(receivable<In>);
 
     template <typename Next = Out>
     node<Next, In, Begin> change(std::function<Next(In)>);

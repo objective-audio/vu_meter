@@ -8,6 +8,24 @@
 #include <vector>
 
 namespace yas::flow {
+
+#pragma mark - receiver
+
+template <typename T>
+receivable<T>::receivable(std::shared_ptr<impl> impl) : protocol(std::move(impl)) {
+}
+
+template <typename T>
+receivable<T>::receivable(std::nullptr_t) : protocol(nullptr) {
+}
+
+template <typename T>
+void receivable<T>::receive_value(T const &value) {
+    impl_ptr<impl>()->receive_value(value);
+}
+
+#pragma mark - sender
+
 template <typename T>
 struct sender<T>::impl : base::impl {
     std::vector<yas::any> _handlers;
@@ -16,6 +34,8 @@ struct sender<T>::impl : base::impl {
     void set_value(T const &value) {
         if (this->_handlers.size() > 0) {
             this->_handlers.front().template get<std::function<void(T const &)>>()(value);
+        } else {
+            std::runtime_error("handler not found. must call the end.");
         }
     }
 };
@@ -29,12 +49,12 @@ sender<T>::sender(std::nullptr_t) : base(nullptr) {
 }
 
 template <typename T>
-void sender<T>::set_value(T const &value) {
+void sender<T>::send_value(T const &value) {
     impl_ptr<impl>()->set_value(value);
 }
 
 template <typename T>
-node<T, T, T> sender<T>::make_flow() {
+node<T, T, T> sender<T>::begin_flow() {
     return node<T, T, T>(*this);
 }
 
@@ -95,6 +115,11 @@ node<Out, In, Begin> node<Out, In, Begin>::execute(std::function<void(In)> exe_h
             exe_handler(result);
             return result;
         });
+}
+
+template <typename Out, typename In, typename Begin>
+node<Out, In, Begin> node<Out, In, Begin>::receive(receivable<In> receiver) {
+    return this->execute([receiver = std::move(receiver)](In const &value) mutable { receiver.receive_value(value); });
 }
 
 template <typename Out, typename In, typename Begin>
