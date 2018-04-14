@@ -70,4 +70,18 @@ struct receiver : base {
     XCTAssertEqual(received, 3.0f);
 }
 
+- (void)test_receive_by_end {
+    float received = 0.0f;
+
+    vu::test::receiver receiver{[&received](float const &value) { received = value; }};
+
+    flow::sender<float> sender;
+
+    auto node = sender.begin_flow().end(receiver.receivable());
+
+    sender.send_value(4.0f);
+
+    XCTAssertEqual(received, 4.0f);
+}
+
 @end

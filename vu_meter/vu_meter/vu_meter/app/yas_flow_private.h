@@ -157,4 +157,9 @@ node<std::nullptr_t, In, Begin> node<Out, In, Begin>::end() {
     sender.template push_handler<In>([handler = impl_ptr<impl>()->_handler](In const &value) { handler(value); });
     return node<std::nullptr_t, In, Begin>(std::move(sender), [](In const &) { return nullptr; });
 }
+
+template <typename Out, typename In, typename Begin>
+node<std::nullptr_t, In, Begin> node<Out, In, Begin>::end(receivable<In> receiver) {
+    return this->receive(std::move(receiver)).end();
+}
 }
