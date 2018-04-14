@@ -109,8 +109,9 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->needle.node().set_color(vu::indicator_needle_color());
     this->needle_root_node.add_sub_node(this->needle.node());
 
-    this->_data_observer = main->data.subject.make_observer(vu::data::method::reference_changed,
-                                                            [this](auto const &context) { this->update(); });
+    this->_data_flow = begin_flow(main->data.subject(), vu::data::method::reference_changed)
+                           .execute([this](vu::data const &) { this->update(); })
+                           .end();
 
     // layout_guide
 

@@ -6,6 +6,7 @@
 #include "vu_main.hpp"
 #include "yas_fast_each.h"
 #include "vu_ui_color.hpp"
+#include "yas_flow_observing.h"
 
 using namespace yas;
 
@@ -93,11 +94,9 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
     text_node.set_color(vu::reference_text_color());
 
-    this->_data_observer =
-        main->data.subject.make_observer(vu::data::method::reference_changed, [this](auto const &context) {
-            vu::data const &data = context.value;
-            this->_update_ui(data.reference());
-        });
+    this->_data_flow = begin_flow(main->data.subject(), vu::data::method::reference_changed)
+                           .execute([this](vu::data const &data) { this->_update_ui(data.reference()); })
+                           .end();
 }
 
 void vu::ui_reference::_setup_layout() {

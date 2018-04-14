@@ -13,8 +13,18 @@ static int32_t const reference_max = 0;
 static int32_t const reference_min = -30;
 }
 
-vu::data::data() {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-18) }];
+struct vu::data::impl : base::impl {
+    impl() {
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-18) }];
+    }
+
+    vu::data::subject_t _subject;
+};
+
+vu::data::data() : base(std::make_shared<impl>()) {
+}
+
+vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
 void vu::data::set_reference(int32_t const ref) {
@@ -22,7 +32,7 @@ void vu::data::set_reference(int32_t const ref) {
         [[NSUserDefaults standardUserDefaults] setInteger:ref forKey:vu::reference_key];
         [[NSUserDefaults standardUserDefaults] synchronize];
 
-        this->subject.notify(vu::data::method::reference_changed, *this);
+        this->subject().notify(vu::data::method::reference_changed, *this);
     }
 }
 
@@ -36,4 +46,8 @@ void vu::data::decrement_reference() {
 
 int32_t vu::data::reference() const {
     return static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]);
+}
+
+vu::data::subject_t &vu::data::subject() {
+    return impl_ptr<impl>()->_subject;
 }

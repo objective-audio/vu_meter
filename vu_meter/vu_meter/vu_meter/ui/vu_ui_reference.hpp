@@ -23,7 +23,7 @@ struct ui_reference {
 
    private:
     std::vector<ui::button::observer_t> _button_observers;
-    vu::data::observer_t _data_observer = nullptr;
+    base _data_flow = nullptr;
     ui::layout_guide_point _minus_layout_guide_point;
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;

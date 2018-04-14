@@ -29,7 +29,7 @@ struct ui_indicator {
     void update();
 
    private:
-    vu::data::observer_t _data_observer = nullptr;
+    base _data_flow = nullptr;
     base _node_flow = nullptr;
     weak_main_ptr_t _weak_main;
 
