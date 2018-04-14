@@ -84,20 +84,20 @@ std::function<void(P const &)> const &sender<T>::handler(std::size_t const idx) 
 
 template <typename Out, typename In, typename Begin>
 struct node<Out, In, Begin>::impl : base::impl {
-    impl(sender<Begin> &&sender, std::function<Out(In)> &&handler)
+    impl(sender<Begin> &&sender, std::function<Out(In const &)> &&handler)
         : _sender(std::move(sender)), _handler(std::move(handler)) {
     }
 
     sender<Begin> _sender;
-    std::function<Out(In)> _handler;
+    std::function<Out(In const &)> _handler;
 };
 
 template <typename Out, typename In, typename Begin>
-node<Out, In, Begin>::node(sender<Begin> sender) : node(std::move(sender), [](Begin value) { return value; }) {
+node<Out, In, Begin>::node(sender<Begin> sender) : node(std::move(sender), [](Begin const &value) { return value; }) {
 }
 
 template <typename Out, typename In, typename Begin>
-node<Out, In, Begin>::node(sender<Begin> sender, std::function<Out(In)> handler)
+node<Out, In, Begin>::node(sender<Begin> sender, std::function<Out(In const &)> handler)
     : base(std::make_shared<impl>(std::move(sender), std::move(handler))) {
 }
 
@@ -106,7 +106,7 @@ node<Out, In, Begin>::node(std::nullptr_t) : base(nullptr) {
 }
 
 template <typename Out, typename In, typename Begin>
-node<Out, In, Begin> node<Out, In, Begin>::execute(std::function<void(In)> exe_handler) {
+node<Out, In, Begin> node<Out, In, Begin>::execute(std::function<void(In const &)> exe_handler) {
     auto imp = impl_ptr<impl>();
     return node<Out, In, Begin>(
         std::move(imp->_sender),
@@ -124,7 +124,7 @@ node<Out, In, Begin> node<Out, In, Begin>::receive(receivable<In> receiver) {
 
 template <typename Out, typename In, typename Begin>
 template <typename Next>
-node<Next, In, Begin> node<Out, In, Begin>::change(std::function<Next(In)> change_handler) {
+node<Next, In, Begin> node<Out, In, Begin>::change(std::function<Next(In const &)> change_handler) {
     auto imp = impl_ptr<impl>();
     return node<Next, In, Begin>(std::move(imp->_sender), [
         change_handler = std::move(change_handler), handler = std::move(imp->_handler)

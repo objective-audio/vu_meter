@@ -52,14 +52,14 @@ struct node : base {
 
     node(sender<Begin>);
     // private
-    node(sender<Begin>, std::function<Out(In)>);
+    node(sender<Begin>, std::function<Out(In const &)>);
     node(std::nullptr_t);
 
-    node<Out, In, Begin> execute(std::function<void(In)>);
+    node<Out, In, Begin> execute(std::function<void(In const &)>);
     node<Out, In, Begin> receive(receivable<In>);
 
     template <typename Next = Out>
-    node<Next, In, Begin> change(std::function<Next(In)>);
+    node<Next, In, Begin> change(std::function<Next(In const &)>);
 
     node<Out, Out, Begin> wait(double const);
 
