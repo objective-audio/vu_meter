@@ -171,6 +171,7 @@
 		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6F2CBBB2082183400148C5D /* vu_flow_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F2CBBA2082183400148C5D /* vu_flow_tests.mm */; };
+		B6F2CBC02082CAB400148C5D /* vu_observing_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F2CBBF2082CAB400148C5D /* vu_observing_tests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -564,6 +565,7 @@
 		B6F2CBB92081FF9300148C5D /* yas_flow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_flow.h; sourceTree = "<group>"; };
 		B6F2CBBA2082183400148C5D /* vu_flow_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_flow_tests.mm; sourceTree = "<group>"; };
 		B6F2CBBD208239CE00148C5D /* yas_flow_observing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_flow_observing.h; sourceTree = "<group>"; };
+		B6F2CBBF2082CAB400148C5D /* vu_observing_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_observing_tests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -632,6 +634,7 @@
 				B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */,
 				B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */,
 				B6F2CBBA2082183400148C5D /* vu_flow_tests.mm */,
+				B6F2CBBF2082CAB400148C5D /* vu_observing_tests.mm */,
 			);
 			path = vu_meterTests;
 			sourceTree = "<group>";
@@ -1436,6 +1439,7 @@
 				B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */,
 				B6F2CBBB2082183400148C5D /* vu_flow_tests.mm in Sources */,
 				B605C0C12067A76C00B4ACCF /* yas_processing_test_utils.cpp in Sources */,
+				B6F2CBC02082CAB400148C5D /* vu_observing_tests.mm in Sources */,
 				B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
