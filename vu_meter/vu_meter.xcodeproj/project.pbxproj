@@ -171,7 +171,6 @@
 		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6F2CBBB2082183400148C5D /* vu_flow_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6F2CBBA2082183400148C5D /* vu_flow_tests.mm */; };
-		B6F2CBBE208239CE00148C5D /* yas_flow_observing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F2CBBC208239CE00148C5D /* yas_flow_observing.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -564,8 +563,7 @@
 		B6F2CBB82081FF9200148C5D /* yas_flow_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_flow_private.h; sourceTree = "<group>"; };
 		B6F2CBB92081FF9300148C5D /* yas_flow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_flow.h; sourceTree = "<group>"; };
 		B6F2CBBA2082183400148C5D /* vu_flow_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_flow_tests.mm; sourceTree = "<group>"; };
-		B6F2CBBC208239CE00148C5D /* yas_flow_observing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = yas_flow_observing.cpp; sourceTree = "<group>"; };
-		B6F2CBBD208239CE00148C5D /* yas_flow_observing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = yas_flow_observing.hpp; sourceTree = "<group>"; };
+		B6F2CBBD208239CE00148C5D /* yas_flow_observing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yas_flow_observing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1125,8 +1123,7 @@
 				B675645D206F45FC00944F8E /* vu_ui_color.hpp */,
 				B6A846672075ABD200DFF041 /* vu_ui_utils.mm */,
 				B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */,
-				B6F2CBBC208239CE00148C5D /* yas_flow_observing.cpp */,
-				B6F2CBBD208239CE00148C5D /* yas_flow_observing.hpp */,
+				B6F2CBBD208239CE00148C5D /* yas_flow_observing.h */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -1284,7 +1281,6 @@
 				B62B52EB205E51BC00A300E5 /* yas_cf_ref.cpp in Sources */,
 				B62B53C8205E51F400A300E5 /* yas_ui_metal_system.mm in Sources */,
 				B62B52E7205E51BC00A300E5 /* yas_any.cpp in Sources */,
-				B6F2CBBE208239CE00148C5D /* yas_flow_observing.cpp in Sources */,
 				B62B52ED205E51BC00A300E5 /* yas_boolean.cpp in Sources */,
 				B62B5282205E51AC00A300E5 /* yas_audio_unit_parameter.cpp in Sources */,
 				B62B53F8205E51F400A300E5 /* yas_ui_collider.cpp in Sources */,
