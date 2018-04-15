@@ -45,14 +45,13 @@ void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::textu
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    auto minus_observer =
-        this->minus_button.subject().make_observer(ui::button::method::ended, [weak_main](auto const &context) {
-            if (auto main = weak_main.lock()) {
-                main->data.decrement_reference();
-            }
-        });
-
-    this->_button_observers.emplace_back(std::move(minus_observer));
+    this->_minus_flow = begin_flow(this->minus_button.subject(), ui::button::method::ended)
+                            .execute([weak_main](auto const &) {
+                                if (auto main = weak_main.lock()) {
+                                    main->data.decrement_reference();
+                                }
+                            })
+                            .end();
 }
 
 void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::texture &texture) {
@@ -73,14 +72,13 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    auto plus_observer =
-        this->plus_button.subject().make_observer(ui::button::method::ended, [weak_main](auto const &context) {
-            if (auto main = weak_main.lock()) {
-                main->data.increment_reference();
-            }
-        });
-
-    this->_button_observers.emplace_back(std::move(plus_observer));
+    this->_plus_flow = begin_flow(this->plus_button.subject(), ui::button::method::ended)
+                           .execute([weak_main](auto const &) {
+                               if (auto main = weak_main.lock()) {
+                                   main->data.increment_reference();
+                               }
+                           })
+                           .end();
 }
 
 void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {

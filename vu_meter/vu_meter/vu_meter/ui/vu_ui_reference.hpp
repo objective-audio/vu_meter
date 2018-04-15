@@ -22,8 +22,9 @@ struct ui_reference {
     void setup(main_ptr_t &main, ui::texture &texture);
 
    private:
-    std::vector<ui::button::observer_t> _button_observers;
     base _data_flow = nullptr;
+    base _minus_flow = nullptr;
+    base _plus_flow = nullptr;
     ui::layout_guide_point _minus_layout_guide_point;
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;
