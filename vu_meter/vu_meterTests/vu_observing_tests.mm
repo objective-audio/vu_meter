@@ -1,12 +1,12 @@
 //
-//  vu_observing_tests.m
-//  vu_meterTests
-//
-//  Created by Yuki Yasoshima on 2018/04/15.
-//  Copyright © 2018年 Yuki Yasoshima. All rights reserved.
+//  vu_observing_tests.mm
 //
 
 #import <XCTest/XCTest.h>
+#import "yas_observing.h"
+#import <string>
+
+using namespace yas;
 
 @interface vu_observing_tests : XCTestCase
 
@@ -16,24 +16,20 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
+- (void)test_object {
+    subject<std::string, int> subject;
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+    subject.set_object_handler([](std::string const &key) {
+        return std::stoi(key);
+    });
+
+    XCTAssertEqual(subject.object("2"), 2);
 }
 
 @end
