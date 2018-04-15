@@ -30,6 +30,7 @@ template <typename T>
 struct sender<T>::impl : base::impl {
     std::vector<yas::any> _handlers;
     base _observer = nullptr;
+    std::function<T const &(void)> _value_handler;
 
     void set_value(T const &value) {
         if (this->_handlers.size() > 0) {
@@ -51,6 +52,17 @@ sender<T>::sender(std::nullptr_t) : base(nullptr) {
 template <typename T>
 void sender<T>::send_value(T const &value) {
     impl_ptr<impl>()->set_value(value);
+}
+
+template <typename T>
+void sender<T>::observe_value(std::function<T const &(void)> handler) {
+    impl_ptr<impl>()->_value_handler = std::move(handler);
+}
+
+template <typename T>
+void sender<T>::send() {
+    auto imp = impl_ptr<impl>();
+    imp->set_value(imp->_value_handler());
 }
 
 template <typename T>
