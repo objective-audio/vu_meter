@@ -110,8 +110,8 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // renderer observing
 
-    this->_renderer_observer = this->renderer.subject().make_observer(
-        ui::renderer::method::will_render, [this, weak_main, texture](auto const &context) mutable {
+    this->_renderer_observer = this->renderer.subject().make_value_observer(
+        ui::renderer::method::will_render, [this, weak_main, texture](auto const &) mutable {
             for (auto &indicator : this->indicators) {
                 indicator.update();
             }
