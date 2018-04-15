@@ -92,9 +92,8 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
     text_node.set_color(vu::reference_text_color());
 
-    this->_data_flow = begin_flow(main->data.subject(), vu::data::method::reference_changed)
-                           .execute([this](vu::data const &data) { this->_update_ui(data.reference().value()); })
-                           .end();
+    this->_data_flow =
+        main->data.reference().begin_flow().execute([this](int32_t const &value) { this->_update_ui(value); }).end();
 }
 
 void vu::ui_reference::_setup_layout() {

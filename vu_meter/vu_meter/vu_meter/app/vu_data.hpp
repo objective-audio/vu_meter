@@ -26,7 +26,5 @@ struct data : base {
     property<std::nullptr_t, int32_t> const &reference() const;
     void increment_reference();
     void decrement_reference();
-
-    subject_t &subject();
 };
 }

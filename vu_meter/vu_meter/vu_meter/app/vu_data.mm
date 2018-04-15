@@ -25,20 +25,14 @@ struct vu::data::impl : base::impl {
 
         this->_reference.set_value(
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
-    }
-
-    void prepare(vu::data &data) {
+        
         this->_reference_flow =
-            this->_reference.begin_flow()
-                .execute([weak_data = to_weak(data)](int32_t const &value) {
-                    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-
-                    if (auto data = weak_data.lock()) {
-                        data.subject().notify(vu::data::method::reference_changed, data);
-                    }
-                })
-                .end();
+        this->_reference.begin_flow()
+        .execute([](int32_t const &value) {
+            [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        })
+        .end();
     }
 
     property<std::nullptr_t, int32_t> _reference;
@@ -47,7 +41,6 @@ struct vu::data::impl : base::impl {
 };
 
 vu::data::data() : base(std::make_shared<impl>()) {
-    impl_ptr<impl>()->prepare(*this);
 }
 
 vu::data::data(std::nullptr_t) : base(nullptr) {
@@ -67,8 +60,4 @@ void vu::data::increment_reference() {
 
 void vu::data::decrement_reference() {
     this->reference().set_value(this->reference().value() - 1);
-}
-
-vu::data::subject_t &vu::data::subject() {
-    return impl_ptr<impl>()->_subject;
 }
