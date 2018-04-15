@@ -34,7 +34,7 @@ struct ui_reference {
     void _setup_plus_button(weak_main_ptr_t &weak_main, ui::texture &texture);
     void _setup_text(main_ptr_t &main, ui::texture &texture);
     void _setup_layout();
-    
-    void _update_ui(int32_t const);
+
+    void _update_text(int32_t const);
 };
 }

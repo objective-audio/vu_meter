@@ -24,7 +24,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
 
     // update ui
 
-    this->_update_ui(main->data.reference().value());
+    this->_update_text(main->data.reference().value());
 }
 
 void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::texture &texture) {
@@ -92,8 +92,10 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
     text_node.set_color(vu::reference_text_color());
 
-    this->_data_flow =
-        main->data.reference().begin_flow().execute([this](int32_t const &value) { this->_update_ui(value); }).end();
+    auto flow =
+        main->data.reference().begin_flow().execute([this](int32_t const &value) { this->_update_text(value); }).end();
+    flow.sync();
+    this->_data_flow = std::move(flow);
 }
 
 void vu::ui_reference::_setup_layout() {
@@ -127,6 +129,6 @@ void vu::ui_reference::_setup_layout() {
                                                  .distance = text_distance}));
 }
 
-void vu::ui_reference::_update_ui(int32_t const ref) {
+void vu::ui_reference::_update_text(int32_t const ref) {
     this->text.set_text(std::to_string(ref) + " dB");
 }
