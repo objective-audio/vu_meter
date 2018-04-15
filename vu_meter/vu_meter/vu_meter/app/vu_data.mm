@@ -53,20 +53,20 @@ vu::data::data() : base(std::make_shared<impl>()) {
 vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
-void vu::data::set_reference(int32_t const ref) {
-    impl_ptr<impl>()->_reference.set_value(ref);
+property<std::nullptr_t, int32_t> &vu::data::reference() {
+    return impl_ptr<impl>()->_reference;
+}
+
+property<std::nullptr_t, int32_t> const &vu::data::reference() const {
+    return impl_ptr<impl>()->_reference;
 }
 
 void vu::data::increment_reference() {
-    this->set_reference(this->reference() + 1);
+    this->reference().set_value(this->reference().value() + 1);
 }
 
 void vu::data::decrement_reference() {
-    this->set_reference(this->reference() - 1);
-}
-
-int32_t vu::data::reference() const {
-    return impl_ptr<impl>()->_reference.value();
+    this->reference().set_value(this->reference().value() - 1);
 }
 
 vu::data::subject_t &vu::data::subject() {

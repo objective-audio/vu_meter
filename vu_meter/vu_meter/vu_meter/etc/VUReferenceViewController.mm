@@ -40,17 +40,17 @@ namespace yas::vu {
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.stepper.value = self->_cpp.main->data.reference();
+    self.stepper.value = self->_cpp.main->data.reference().value();
     
     [self _updateLabel];
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
-    self->_cpp.main->data.set_reference(sender.value);
+    self->_cpp.main->data.reference().set_value(sender.value);
 }
 
 - (void)_updateLabel {
-    self.label.text = [NSString stringWithFormat:@"%@ dB", @(self->_cpp.main->data.reference())];
+    self.label.text = [NSString stringWithFormat:@"%@ dB", @(self->_cpp.main->data.reference().value())];
 }
 
 @end

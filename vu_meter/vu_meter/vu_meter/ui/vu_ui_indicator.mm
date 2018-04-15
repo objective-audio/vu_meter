@@ -197,7 +197,7 @@ void vu::ui_indicator::update() {
     }
 
     if (auto main = this->_weak_main.lock()) {
-        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference(),
+        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference().value(),
                                                       constants::half_angle.degrees);
         this->needle.node().set_angle(angle);
     }

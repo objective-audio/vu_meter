@@ -84,7 +84,7 @@ static CGAffineTransform transformForMeter(CGFloat in_value, CGFloat reference) 
 }
 
 - (void)_updateNeedleRotation {
-    int32_t const reference = self->_main->data.reference();
+    int32_t const &reference = self->_main->data.reference().value();
     self.needleBaseView.transform = transformForMeter(self->_main->values.at(self->_idx).load(), reference);
 }
 

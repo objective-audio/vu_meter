@@ -22,10 +22,10 @@ struct data : base {
     data();
     data(std::nullptr_t);
 
-    void set_reference(int32_t const);
+    property<std::nullptr_t, int32_t> &reference();
+    property<std::nullptr_t, int32_t> const &reference() const;
     void increment_reference();
     void decrement_reference();
-    int32_t reference() const;
 
     subject_t &subject();
 };

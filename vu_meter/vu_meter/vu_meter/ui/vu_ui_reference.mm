@@ -24,7 +24,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
 
     // update ui
 
-    this->_update_ui(main->data.reference());
+    this->_update_ui(main->data.reference().value());
 }
 
 void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::texture &texture) {
@@ -93,7 +93,7 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.set_color(vu::reference_text_color());
 
     this->_data_flow = begin_flow(main->data.subject(), vu::data::method::reference_changed)
-                           .execute([this](vu::data const &data) { this->_update_ui(data.reference()); })
+                           .execute([this](vu::data const &data) { this->_update_ui(data.reference().value()); })
                            .end();
 }
 
