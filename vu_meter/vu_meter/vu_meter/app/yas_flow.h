@@ -34,7 +34,7 @@ struct sender : base {
 
     void send_value(T const &);
 
-    void observe_value(std::function<T const &(void)>);
+    void set_send_handler(std::function<T const &(void)>);
     void send();
 
     node<T, T, T> begin_flow();
