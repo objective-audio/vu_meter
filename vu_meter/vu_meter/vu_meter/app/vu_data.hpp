@@ -8,6 +8,7 @@
 #include "yas_base.h"
 #include "yas_observing.h"
 #include "yas_flow.h"
+#include "yas_property.h"
 
 namespace yas::vu {
 struct data : base {

@@ -16,24 +16,45 @@ static int32_t const reference_min = -30;
 struct vu::data::impl : base::impl {
     impl() {
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-18) }];
+
+        this->_reference.set_limiter([](int32_t const &value) {
+            int32_t const min_limited = std::max(value, reference_min);
+            int32_t const max_limited = std::min(min_limited, reference_max);
+            return max_limited;
+        });
+
+        this->_reference.set_value(
+            static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
     }
 
+    void prepare(vu::data &data) {
+        this->_reference_flow =
+            this->_reference.begin_flow()
+                .execute([weak_data = to_weak(data)](int32_t const &value) {
+                    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+
+                    if (auto data = weak_data.lock()) {
+                        data.subject().notify(vu::data::method::reference_changed, data);
+                    }
+                })
+                .end();
+    }
+
+    property<std::nullptr_t, int32_t> _reference;
     vu::data::subject_t _subject;
+    base _reference_flow = nullptr;
 };
 
 vu::data::data() : base(std::make_shared<impl>()) {
+    impl_ptr<impl>()->prepare(*this);
 }
 
 vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
 void vu::data::set_reference(int32_t const ref) {
-    if (ref != this->reference() && reference_min <= ref && ref <= reference_max) {
-        [[NSUserDefaults standardUserDefaults] setInteger:ref forKey:vu::reference_key];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-
-        this->subject().notify(vu::data::method::reference_changed, *this);
-    }
+    impl_ptr<impl>()->_reference.set_value(ref);
 }
 
 void vu::data::increment_reference() {
@@ -45,7 +66,7 @@ void vu::data::decrement_reference() {
 }
 
 int32_t vu::data::reference() const {
-    return static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]);
+    return impl_ptr<impl>()->_reference.value();
 }
 
 vu::data::subject_t &vu::data::subject() {
