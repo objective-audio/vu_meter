@@ -31,10 +31,10 @@ struct vu::data::impl : base::impl {
 
         this->_reference_setter_flow = this->_reference_setter.begin_flow()
                                            .change<int32_t>([](int32_t const &value) {
-                                               if (value < reference_min) {
-                                                   return reference_min;
-                                               } else if (reference_max < value) {
-                                                   return reference_max;
+                                               if (value < vu::reference_min) {
+                                                   return vu::reference_min;
+                                               } else if (vu::reference_max < value) {
+                                                   return vu::reference_max;
                                                }
                                                return value;
                                            })
