@@ -32,8 +32,7 @@ namespace yas::vu {
 
     YASUnownedObject<VUReferenceViewController *> *unowned = [[YASUnownedObject alloc] initWithObject:self];
 
-    self->_cpp.data_flow = self->_cpp.main->data.reference()
-                               .begin_flow()
+    self->_cpp.data_flow = self->_cpp.main->data.begin_reference_flow()
                                .execute([unowned](int32_t const &) { [[unowned object] _updateLabel]; })
                                .end();
 }
@@ -47,7 +46,7 @@ namespace yas::vu {
 }
 
 - (IBAction)stepperValueChanged:(UIStepper *)sender {
-    self->_cpp.main->data.reference().set_value(sender.value);
+    self->_cpp.main->data.set_reference(sender.value);
 }
 
 - (void)_updateLabel {

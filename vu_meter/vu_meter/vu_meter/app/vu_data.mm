@@ -15,13 +15,7 @@ static int32_t const reference_min = -30;
 
 struct vu::data::impl : base::impl {
     impl() {
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-18) }];
-
-        this->_reference.set_limiter([](int32_t const &value) {
-            int32_t const min_limited = std::max(value, reference_min);
-            int32_t const max_limited = std::min(min_limited, reference_max);
-            return max_limited;
-        });
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-20) }];
 
         this->_reference.set_value(
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
@@ -34,11 +28,24 @@ struct vu::data::impl : base::impl {
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 })
                 .end();
+
+        this->_reference_setter_flow = this->_reference_setter.begin_flow()
+                                           .change<int32_t>([](int32_t const &value) {
+                                               if (value < reference_min) {
+                                                   return reference_min;
+                                               } else if (reference_max < value) {
+                                                   return reference_max;
+                                               }
+                                               return value;
+                                           })
+                                           .end(this->_reference.receivable());
     }
 
     property<std::nullptr_t, int32_t> _reference;
+    flow::sender<int32_t> _reference_setter;
     vu::data::subject_t _subject;
     base _reference_flow = nullptr;
+    base _reference_setter_flow = nullptr;
 };
 
 vu::data::data() : base(std::make_shared<impl>()) {
@@ -47,8 +54,12 @@ vu::data::data() : base(std::make_shared<impl>()) {
 vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
-property<std::nullptr_t, int32_t> &vu::data::reference() {
-    return impl_ptr<impl>()->_reference;
+flow::node<int32_t, int32_t, int32_t> vu::data::begin_reference_flow() {
+    return impl_ptr<impl>()->_reference.begin_flow();
+}
+
+void vu::data::set_reference(int32_t const value) {
+    impl_ptr<impl>()->_reference_setter.send_value(value);
 }
 
 property<std::nullptr_t, int32_t> const &vu::data::reference() const {
@@ -56,9 +67,9 @@ property<std::nullptr_t, int32_t> const &vu::data::reference() const {
 }
 
 void vu::data::increment_reference() {
-    this->reference().set_value(this->reference().value() + 1);
+    this->set_reference(this->reference().value() + 1);
 }
 
 void vu::data::decrement_reference() {
-    this->reference().set_value(this->reference().value() - 1);
+    this->set_reference(this->reference().value() - 1);
 }
