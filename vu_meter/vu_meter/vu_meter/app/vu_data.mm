@@ -23,7 +23,7 @@ struct vu::data::impl : base::impl {
         this->_reference_flow =
             this->_reference.begin_flow()
                 .guard([](int32_t const &value) { return reference_min <= value && value <= reference_max; })
-                .execute([](int32_t const &value) {
+                .perform([](int32_t const &value) {
                     [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 })

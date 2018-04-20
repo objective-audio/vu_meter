@@ -46,7 +46,7 @@ void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::textu
     }
 
     this->_minus_flow = begin_flow(this->minus_button.subject(), ui::button::method::ended)
-                            .execute([weak_main](auto const &) {
+                            .perform([weak_main](auto const &) {
                                 if (auto main = weak_main.lock()) {
                                     main->data.decrement_reference();
                                 }
@@ -73,7 +73,7 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
     }
 
     this->_plus_flow = begin_flow(this->plus_button.subject(), ui::button::method::ended)
-                           .execute([weak_main](auto const &) {
+                           .perform([weak_main](auto const &) {
                                if (auto main = weak_main.lock()) {
                                    main->data.increment_reference();
                                }
@@ -93,7 +93,7 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.set_color(vu::reference_text_color());
 
     auto flow =
-        main->data.begin_reference_flow().execute([this](int32_t const &value) { this->_update_text(value); }).end();
+        main->data.begin_reference_flow().perform([this](int32_t const &value) { this->_update_text(value); }).end();
     flow.sync();
     this->_data_flow = std::move(flow);
 }

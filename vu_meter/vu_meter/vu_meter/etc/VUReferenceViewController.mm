@@ -33,7 +33,7 @@ namespace yas::vu {
     YASUnownedObject<VUReferenceViewController *> *unowned = [[YASUnownedObject alloc] initWithObject:self];
 
     self->_cpp.data_flow = self->_cpp.main->data.begin_reference_flow()
-                               .execute([unowned](int32_t const &) { [[unowned object] _updateLabel]; })
+                               .perform([unowned](int32_t const &) { [[unowned object] _updateLabel]; })
                                .end();
 }
 

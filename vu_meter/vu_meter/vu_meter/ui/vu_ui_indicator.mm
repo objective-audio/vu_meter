@@ -45,7 +45,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         {.source_guide = this->frame_layout_guide_rect.bottom(), .destination_guide = this->_node_guide_point.y()}));
 
     this->_node_flow = begin_flow(this->node.subject(), ui::node::method::renderer_changed)
-                           .execute([this](ui::node const &node) {
+                           .perform([this](ui::node const &node) {
                                if (!this->font_atlas) {
                                    return;
                                }
@@ -109,7 +109,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->needle.node().set_color(vu::indicator_needle_color());
     this->needle_root_node.add_sub_node(this->needle.node());
 
-    this->_data_flow = main->data.begin_reference_flow().execute([this](int32_t const &) { this->update(); }).end();
+    this->_data_flow = main->data.begin_reference_flow().perform([this](int32_t const &) { this->update(); }).end();
 
     // layout_guide
 
