@@ -3,7 +3,6 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
 #import "RMSViewController.h"
 #import "vu_main.hpp"
 
@@ -18,9 +17,7 @@ using namespace yas;
     self->_main->setup();
 
     UIViewController *rootViewController = self.window.rootViewController;
-    if ([rootViewController isKindOfClass:[ViewController class]]) {
-        [(ViewController *)rootViewController set_vu_main:self->_main];
-    } else if ([rootViewController isKindOfClass:[RMSViewController class]]) {
+    if ([rootViewController isKindOfClass:[RMSViewController class]]) {
         [(RMSViewController *)rootViewController set_vu_main:self->_main];
     }
 

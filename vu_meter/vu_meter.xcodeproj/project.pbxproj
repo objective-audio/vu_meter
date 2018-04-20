@@ -13,7 +13,6 @@
 		B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B617CF622071AA320012B32A /* vu_ui_indicator.mm */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
-		B62B520B205E1A0A00A300E5 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B520A205E1A0A00A300E5 /* ViewController.mm */; };
 		B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B520C205E1A0A00A300E5 /* Main.storyboard */; };
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
@@ -160,8 +159,6 @@
 		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
 		B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67564422067B85800944F8E /* vu_summing_buffer.cpp */; };
 		B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */; };
-		B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756448206A824900944F8E /* VUReferenceViewController.mm */; };
-		B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644B206A8C8800944F8E /* VUMeterViewController.mm */; };
 		B675644F206B21FA00944F8E /* vu_data.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644D206B21FA00944F8E /* vu_data.mm */; };
 		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
@@ -197,8 +194,6 @@
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B5206205E1A0A00A300E5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B62B5207205E1A0A00A300E5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		B62B5209205E1A0A00A300E5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B62B520A205E1A0A00A300E5 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		B62B520D205E1A0A00A300E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B62B520F205E1A0A00A300E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B62B5212205E1A0A00A300E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -541,10 +536,6 @@
 		B67564422067B85800944F8E /* vu_summing_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_summing_buffer.cpp; sourceTree = "<group>"; };
 		B67564432067B85800944F8E /* vu_summing_buffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_summing_buffer.hpp; sourceTree = "<group>"; };
 		B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_summing_buffer_tests.mm; sourceTree = "<group>"; };
-		B6756447206A824900944F8E /* VUReferenceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUReferenceViewController.h; sourceTree = "<group>"; };
-		B6756448206A824900944F8E /* VUReferenceViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUReferenceViewController.mm; sourceTree = "<group>"; };
-		B675644A206A8C8800944F8E /* VUMeterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VUMeterViewController.h; sourceTree = "<group>"; };
-		B675644B206A8C8800944F8E /* VUMeterViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VUMeterViewController.mm; sourceTree = "<group>"; };
 		B675644D206B21FA00944F8E /* vu_data.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_data.mm; sourceTree = "<group>"; };
 		B675644E206B21FA00944F8E /* vu_data.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_data.hpp; sourceTree = "<group>"; };
 		B6756450206F0A3B00944F8E /* RMSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMSViewController.h; sourceTree = "<group>"; };
@@ -1145,12 +1136,6 @@
 			children = (
 				B675643F2067AE0600944F8E /* TestAppDelegate.h */,
 				B67564402067AE0600944F8E /* TestAppDelegate.m */,
-				B6756447206A824900944F8E /* VUReferenceViewController.h */,
-				B6756448206A824900944F8E /* VUReferenceViewController.mm */,
-				B675644A206A8C8800944F8E /* VUMeterViewController.h */,
-				B675644B206A8C8800944F8E /* VUMeterViewController.mm */,
-				B62B5209205E1A0A00A300E5 /* ViewController.h */,
-				B62B520A205E1A0A00A300E5 /* ViewController.mm */,
 			);
 			path = etc;
 			sourceTree = "<group>";
@@ -1362,7 +1347,6 @@
 				B62B53E2205E51F400A300E5 /* yas_ui_metal_protocol.mm in Sources */,
 				B62B534F205E51D300A300E5 /* yas_processing_timeline.cpp in Sources */,
 				B62B533F205E51D300A300E5 /* yas_processing_math1_modules.cpp in Sources */,
-				B6756449206A824900944F8E /* VUReferenceViewController.mm in Sources */,
 				B62B5288205E51AC00A300E5 /* yas_audio_engine_tap.cpp in Sources */,
 				B62B53F5205E51F400A300E5 /* yas_ui_render_encoder_protocol.mm in Sources */,
 				B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */,
@@ -1393,12 +1377,10 @@
 				B62B5345205E51D300A300E5 /* yas_processing_sub_timeline_module.cpp in Sources */,
 				B62B52E6205E51BC00A300E5 /* yas_protocol.cpp in Sources */,
 				B62B53C7205E51F400A300E5 /* yas_ui_detector_protocol.cpp in Sources */,
-				B62B520B205E1A0A00A300E5 /* ViewController.mm in Sources */,
 				B62B52E3205E51BC00A300E5 /* yas_operation.cpp in Sources */,
 				B62B5285205E51AC00A300E5 /* yas_audio_engine_kernel_protocol.cpp in Sources */,
 				B62B52DE205E51BC00A300E5 /* yas_property.cpp in Sources */,
 				B62B53D5205E51F400A300E5 /* yas_ui_layout_actions.mm in Sources */,
-				B675644C206A8C8800944F8E /* VUMeterViewController.mm in Sources */,
 				B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */,
 				B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */,
 				B62B5216205E1A0A00A300E5 /* main.m in Sources */,
