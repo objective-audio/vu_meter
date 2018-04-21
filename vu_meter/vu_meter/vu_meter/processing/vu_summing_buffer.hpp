@@ -5,6 +5,7 @@
 #pragma once
 
 #include "yas_processing.h"
+#include "yas_types.h"
 #include <vector>
 #include <experimental/optional>
 
@@ -25,7 +26,7 @@ struct summing_buffer {
     void finalize();
 
    private:
-    std::experimental::optional<proc::time::range> _last_time_range;
+    opt_t<proc::time::range> _last_time_range;
     std::size_t _last_length = 0;
 };
 }
