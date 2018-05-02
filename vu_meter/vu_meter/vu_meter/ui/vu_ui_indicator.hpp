@@ -31,9 +31,10 @@ struct ui_indicator {
    private:
     base _data_flow = nullptr;
     base _node_flow = nullptr;
+    flow::observer<float> _frame_flow = nullptr;
     weak_main_ptr_t _weak_main;
 
-    std::vector<ui::layout> _layouts;
+    std::vector<flow::observer<float>> _flows;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
 };

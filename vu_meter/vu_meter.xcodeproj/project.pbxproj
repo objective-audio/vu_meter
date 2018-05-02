@@ -550,7 +550,6 @@
 		B6A846672075ABD200DFF041 /* vu_ui_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils.mm; sourceTree = "<group>"; };
 		B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_utils.hpp; sourceTree = "<group>"; };
 		B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils_tests.mm; sourceTree = "<group>"; };
-		B6BFA9392083523D00ADD43B /* yas_flow_observing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow_observing.h; sourceTree = "<group>"; };
 		B6BFA93A2083523E00ADD43B /* yas_flow_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow_private.h; sourceTree = "<group>"; };
 		B6BFA93B2083523E00ADD43B /* yas_flow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -809,7 +808,6 @@
 				B610E99320660551004A46B5 /* yas_data_private.h */,
 				B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */,
 				B610E99420660552004A46B5 /* yas_data.h */,
-				B6BFA9392083523D00ADD43B /* yas_flow_observing.h */,
 				B6BFA93A2083523E00ADD43B /* yas_flow_private.h */,
 				B6BFA93B2083523E00ADD43B /* yas_flow.h */,
 			);

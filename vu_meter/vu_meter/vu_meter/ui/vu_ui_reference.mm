@@ -6,7 +6,6 @@
 #include "vu_main.hpp"
 #include "yas_fast_each.h"
 #include "vu_ui_color.hpp"
-#include "yas_flow_observing.h"
 
 using namespace yas;
 
@@ -45,7 +44,8 @@ void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::textu
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    this->_minus_flow = begin_flow(this->minus_button.subject(), ui::button::method::ended)
+    this->_minus_flow = this->minus_button.subject()
+                            .begin_flow(ui::button::method::ended)
                             .perform([weak_main](auto const &) {
                                 if (auto main = weak_main.lock()) {
                                     main->data.decrement_reference();
@@ -72,7 +72,8 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    this->_plus_flow = begin_flow(this->plus_button.subject(), ui::button::method::ended)
+    this->_plus_flow = this->plus_button.subject()
+                           .begin_flow(ui::button::method::ended)
                            .perform([weak_main](auto const &) {
                                if (auto main = weak_main.lock()) {
                                    main->data.increment_reference();
@@ -102,31 +103,31 @@ void vu::ui_reference::_setup_layout() {
     ui::layout_guide center_x_guide;
     ui::layout_guide center_y_guide;
 
-    this->_layouts.emplace_back(
-        ui::make_layout({.first_source_guide = this->layout_guide_rect.left(),
-                         .second_source_guide = this->layout_guide_rect.right(),
-                         .destination_guides = {ui::layout_guide{}, center_x_guide, ui::layout_guide{}}}));
-    this->_layouts.emplace_back(
-        ui::make_layout({.first_source_guide = this->layout_guide_rect.top(),
-                         .second_source_guide = this->layout_guide_rect.bottom(),
-                         .destination_guides = {ui::layout_guide{}, center_y_guide, ui::layout_guide{}}}));
+    this->_flows.emplace_back(
+        ui::make_flow({.first_source_guide = this->layout_guide_rect.left(),
+                       .second_source_guide = this->layout_guide_rect.right(),
+                       .destination_guides = {ui::layout_guide{}, center_x_guide, ui::layout_guide{}}}));
+    this->_flows.emplace_back(
+        ui::make_flow({.first_source_guide = this->layout_guide_rect.top(),
+                       .second_source_guide = this->layout_guide_rect.bottom(),
+                       .destination_guides = {ui::layout_guide{}, center_y_guide, ui::layout_guide{}}}));
 
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = center_x_guide, .destination_guide = this->_minus_layout_guide_point.x(), .distance = -100}));
-    this->_layouts.emplace_back(
-        ui::make_layout({.source_guide = center_y_guide, .destination_guide = this->_minus_layout_guide_point.y()}));
+    this->_flows.emplace_back(
+        ui::make_flow({.source_guide = center_y_guide, .destination_guide = this->_minus_layout_guide_point.y()}));
 
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = center_x_guide, .destination_guide = this->_plus_layout_guide_point.x(), .distance = 100}));
-    this->_layouts.emplace_back(
-        ui::make_layout({.source_guide = center_y_guide, .destination_guide = this->_plus_layout_guide_point.y()}));
+    this->_flows.emplace_back(
+        ui::make_flow({.source_guide = center_y_guide, .destination_guide = this->_plus_layout_guide_point.y()}));
 
     float const text_distance = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
-    this->_layouts.emplace_back(
-        ui::make_layout({.source_guide = center_x_guide, .destination_guide = this->_text_layout_guide_point.x()}));
-    this->_layouts.emplace_back(ui::make_layout({.source_guide = center_y_guide,
-                                                 .destination_guide = this->_text_layout_guide_point.y(),
-                                                 .distance = text_distance}));
+    this->_flows.emplace_back(
+        ui::make_flow({.source_guide = center_x_guide, .destination_guide = this->_text_layout_guide_point.x()}));
+    this->_flows.emplace_back(ui::make_flow({.source_guide = center_y_guide,
+                                             .destination_guide = this->_text_layout_guide_point.y(),
+                                             .distance = text_distance}));
 }
 
 void vu::ui_reference::_update_text(int32_t const ref) {

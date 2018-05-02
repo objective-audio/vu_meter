@@ -21,7 +21,7 @@ struct vu::data::impl : base::impl {
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
 
         this->_reference_flow =
-            this->_reference.begin_flow()
+            this->_reference.begin_value_flow()
                 .guard([](int32_t const &value) { return reference_min <= value && value <= reference_max; })
                 .perform([](int32_t const &value) {
                     [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
@@ -29,7 +29,7 @@ struct vu::data::impl : base::impl {
                 })
                 .end();
 
-        this->_reference_setter_flow = this->_reference_setter.begin_flow()
+        this->_reference_setter_flow = this->_reference_setter.begin()
                                            .convert<int32_t>([](int32_t const &value) {
                                                if (value < vu::reference_min) {
                                                    return vu::reference_min;
@@ -55,7 +55,7 @@ vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
 flow::node<int32_t, int32_t, int32_t> vu::data::begin_reference_flow() {
-    return impl_ptr<impl>()->_reference.begin_flow();
+    return impl_ptr<impl>()->_reference.begin_value_flow();
 }
 
 void vu::data::set_reference(int32_t const value) {

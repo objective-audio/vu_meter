@@ -8,7 +8,6 @@
 #include "yas_fast_each.h"
 #include "vu_ui_utils.hpp"
 #include "vu_ui_color.hpp"
-#include "yas_flow_observing.h"
 
 using namespace yas;
 
@@ -39,12 +38,13 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->node.attach_position_layout_guides(this->_node_guide_point);
 
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = this->frame_layout_guide_rect.left(), .destination_guide = this->_node_guide_point.x()}));
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = this->frame_layout_guide_rect.bottom(), .destination_guide = this->_node_guide_point.y()}));
 
-    this->_node_flow = begin_flow(this->node.subject(), ui::node::method::renderer_changed)
+    this->_node_flow = this->node.subject()
+                           .begin_flow(ui::node::method::renderer_changed)
                            .perform([this](ui::node const &node) {
                                if (!this->font_atlas) {
                                    return;
@@ -63,14 +63,14 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->base_plane.node().set_color(vu::indicator_base_color());
     this->node.add_sub_node(this->base_plane.node());
 
-    this->_base_guide_rect.set_value_changed_handler([this](auto const &context) {
-        ui::region const &region = context.new_value;
-        this->base_plane.data().set_rect_position(region, 0);
-    });
+    this->_flows.emplace_back(
+        this->_base_guide_rect.begin_flow()
+            .perform([this](ui::region const &region) { this->base_plane.data().set_rect_position(region, 0); })
+            .end());
 
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = this->frame_layout_guide_rect.width(), .destination_guide = this->_base_guide_rect.right()}));
-    this->_layouts.emplace_back(ui::make_layout(
+    this->_flows.emplace_back(ui::make_flow(
         {.source_guide = this->frame_layout_guide_rect.height(), .destination_guide = this->_base_guide_rect.top()}));
 
     // needle_root_node
@@ -112,22 +112,25 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->_data_flow = main->data.begin_reference_flow().perform([this](int32_t const &) { this->update(); }).end();
 
     // layout_guide
-
-    this->frame_layout_guide_rect.set_value_changed_handler(
-        [this](ui::layout_guide_rect::change_context const &context) {
-            ui::region const &old_region = context.old_value;
-            ui::region const &region = context.new_value;
-
-            this->layout();
-
-            // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-            if (old_region.size.height != region.size.height) {
+    // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
+    this->_frame_flow =
+        this->frame_layout_guide_rect.begin_flow()
+            .perform([this](ui::region const &) { this->layout(); })
+            .guard([prev_height = this->frame_layout_guide_rect.height().value()](ui::region const &region) mutable {
+                if (prev_height != region.size.height) {
+                    prev_height = region.size.height;
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+            .perform([this](ui::region const &region) {
                 this->font_atlas = nullptr;
                 for (auto &number : this->numbers) {
                     number.set_font_atlas(nullptr);
                 }
-            }
-        });
+            })
+            .end();
 
     this->update();
 }
