@@ -28,6 +28,7 @@ struct ui_reference {
     ui::layout_guide_point _minus_layout_guide_point;
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;
+    ui::layout_guide_point _center_guide_point;
     std::vector<flow::observer<float>> _flows;
 
     void _setup_minus_button(weak_main_ptr_t &weak_main, ui::texture &texture);

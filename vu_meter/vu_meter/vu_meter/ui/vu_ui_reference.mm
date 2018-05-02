@@ -100,32 +100,29 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
 }
 
 void vu::ui_reference::_setup_layout() {
-    ui::layout_guide center_x_guide;
-    ui::layout_guide center_y_guide;
+    this->_flows.emplace_back(ui::make_flow({.first_source_guide = this->layout_guide_rect.left(),
+                                             .second_source_guide = this->layout_guide_rect.right(),
+                                             .destination_guides = {this->_center_guide_point.x()}}));
+    this->_flows.emplace_back(ui::make_flow({.first_source_guide = this->layout_guide_rect.top(),
+                                             .second_source_guide = this->layout_guide_rect.bottom(),
+                                             .destination_guides = {this->_center_guide_point.y()}}));
 
-    this->_flows.emplace_back(
-        ui::make_flow({.first_source_guide = this->layout_guide_rect.left(),
-                       .second_source_guide = this->layout_guide_rect.right(),
-                       .destination_guides = {ui::layout_guide{}, center_x_guide, ui::layout_guide{}}}));
-    this->_flows.emplace_back(
-        ui::make_flow({.first_source_guide = this->layout_guide_rect.top(),
-                       .second_source_guide = this->layout_guide_rect.bottom(),
-                       .destination_guides = {ui::layout_guide{}, center_y_guide, ui::layout_guide{}}}));
-
+    this->_flows.emplace_back(ui::make_flow({.source_guide = this->_center_guide_point.x(),
+                                             .destination_guide = this->_minus_layout_guide_point.x(),
+                                             .distance = -100}));
     this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = center_x_guide, .destination_guide = this->_minus_layout_guide_point.x(), .distance = -100}));
-    this->_flows.emplace_back(
-        ui::make_flow({.source_guide = center_y_guide, .destination_guide = this->_minus_layout_guide_point.y()}));
+        {.source_guide = this->_center_guide_point.y(), .destination_guide = this->_minus_layout_guide_point.y()}));
 
+    this->_flows.emplace_back(ui::make_flow({.source_guide = this->_center_guide_point.x(),
+                                             .destination_guide = this->_plus_layout_guide_point.x(),
+                                             .distance = 100}));
     this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = center_x_guide, .destination_guide = this->_plus_layout_guide_point.x(), .distance = 100}));
-    this->_flows.emplace_back(
-        ui::make_flow({.source_guide = center_y_guide, .destination_guide = this->_plus_layout_guide_point.y()}));
+        {.source_guide = this->_center_guide_point.y(), .destination_guide = this->_plus_layout_guide_point.y()}));
 
     float const text_distance = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
-    this->_flows.emplace_back(
-        ui::make_flow({.source_guide = center_x_guide, .destination_guide = this->_text_layout_guide_point.x()}));
-    this->_flows.emplace_back(ui::make_flow({.source_guide = center_y_guide,
+    this->_flows.emplace_back(ui::make_flow(
+        {.source_guide = this->_center_guide_point.x(), .destination_guide = this->_text_layout_guide_point.x()}));
+    this->_flows.emplace_back(ui::make_flow({.source_guide = this->_center_guide_point.y(),
                                              .destination_guide = this->_text_layout_guide_point.y(),
                                              .distance = text_distance}));
 }
