@@ -41,7 +41,7 @@ struct vu::data::impl : base::impl {
                                            .end(this->_reference.receivable());
     }
 
-    property<std::nullptr_t, int32_t> _reference;
+    property<int32_t> _reference;
     flow::sender<int32_t> _reference_setter;
     vu::data::subject_t _subject;
     base _reference_flow = nullptr;
@@ -62,7 +62,7 @@ void vu::data::set_reference(int32_t const value) {
     impl_ptr<impl>()->_reference_setter.send_value(value);
 }
 
-property<std::nullptr_t, int32_t> const &vu::data::reference() const {
+property<int32_t> const &vu::data::reference() const {
     return impl_ptr<impl>()->_reference;
 }
 
