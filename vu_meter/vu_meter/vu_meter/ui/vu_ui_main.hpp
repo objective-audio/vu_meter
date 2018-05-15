@@ -14,7 +14,7 @@ namespace yas::vu {
 class main;
 
 struct ui_main {
-    property<ui::renderer> renderer{nullptr};
+    property<ui::renderer> renderer{{.value = nullptr}};
 
     ui_reference reference;
     std::array<ui_indicator, 2> indicators;
