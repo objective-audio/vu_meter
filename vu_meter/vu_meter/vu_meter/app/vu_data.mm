@@ -16,7 +16,8 @@ static int32_t const reference_min = -30;
 struct vu::data::impl : base::impl {
     property<int32_t> _reference;
     flow::sender<int32_t> _reference_setter;
-    flow::receiver<int32_t> _reference_receiver = nullptr;
+    flow::receiver<std::nullptr_t> _ref_inc_receiver = nullptr;
+    flow::receiver<std::nullptr_t> _ref_dec_receiver = nullptr;
     vu::data::subject_t _subject;
     base _reference_flow = nullptr;
     base _reference_setter_flow = nullptr;
@@ -51,9 +52,17 @@ struct vu::data::impl : base::impl {
     void prepare() {
         auto weak_data = to_weak(cast<vu::data>());
 
-        this->_reference_receiver = flow::receiver<int32_t>([weak_data](int32_t const &value) {
+        this->_ref_inc_receiver = flow::receiver<std::nullptr_t>([weak_data](auto const &) {
             if (auto data = weak_data.lock()) {
-                data.impl_ptr<impl>()->_reference_setter.send_value(value);
+                auto data_impl = data.impl_ptr<impl>();
+                data_impl->_reference_setter.send_value(data_impl->_reference.value() + 1);
+            }
+        });
+
+        this->_ref_dec_receiver = flow::receiver<std::nullptr_t>([weak_data](auto const &) {
+            if (auto data = weak_data.lock()) {
+                auto data_impl = data.impl_ptr<impl>();
+                data_impl->_reference_setter.send_value(data_impl->_reference.value() - 1);
             }
         });
     }
@@ -70,8 +79,12 @@ flow::node<int32_t> vu::data::begin_reference_flow() const {
     return impl_ptr<impl>()->_reference.begin_value_flow();
 }
 
-flow::receiver<int32_t> &vu::data::reference_receiver() {
-    return impl_ptr<impl>()->_reference_receiver;
+flow::receiver<std::nullptr_t> &vu::data::reference_increment_receiver() {
+    return impl_ptr<impl>()->_ref_inc_receiver;
+}
+
+flow::receiver<std::nullptr_t> &vu::data::reference_decrement_receiver() {
+    return impl_ptr<impl>()->_ref_dec_receiver;
 }
 
 void vu::data::set_reference(int32_t const value) {

@@ -23,7 +23,8 @@ struct data : base {
     data(std::nullptr_t);
 
     flow::node<int32_t> begin_reference_flow() const;
-    flow::receiver<int32_t> &reference_receiver();
+    flow::receiver<std::nullptr_t> &reference_increment_receiver();
+    flow::receiver<std::nullptr_t> &reference_decrement_receiver();
 
     void set_reference(int32_t const);
     property<int32_t> const &reference() const;

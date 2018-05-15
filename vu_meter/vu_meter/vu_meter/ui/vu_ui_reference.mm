@@ -14,10 +14,8 @@ static ui::uint_size constexpr reference_button_size{60, 60};
 }
 
 void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
-    weak_main_ptr_t weak_main = main;
-
-    this->_setup_minus_button(weak_main, texture);
-    this->_setup_plus_button(weak_main, texture);
+    this->_setup_minus_button(main, texture);
+    this->_setup_plus_button(main, texture);
     this->_setup_text(main, texture);
     this->_setup_layout();
 
@@ -26,7 +24,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     this->_update_text(main->data.reference().value());
 }
 
-void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::texture &texture) {
+void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     ui::node &minus_node = this->minus_button.rect_plane().node();
@@ -46,15 +44,11 @@ void vu::ui_reference::_setup_minus_button(weak_main_ptr_t &weak_main, ui::textu
 
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
-                            .perform([weak_main](auto const &) {
-                                if (auto main = weak_main.lock()) {
-                                    main->data.decrement_reference();
-                                }
-                            })
-                            .end();
+                            .to_null()
+                            .end(main->data.reference_decrement_receiver());
 }
 
-void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::texture &texture) {
+void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     ui::node &plus_node = this->plus_button.rect_plane().node();
@@ -74,12 +68,8 @@ void vu::ui_reference::_setup_plus_button(weak_main_ptr_t &weak_main, ui::textur
 
     this->_plus_flow = this->plus_button.subject()
                            .begin_flow(ui::button::method::ended)
-                           .perform([weak_main](auto const &) {
-                               if (auto main = weak_main.lock()) {
-                                   main->data.increment_reference();
-                               }
-                           })
-                           .end();
+                           .to_null()
+                           .end(main->data.reference_increment_receiver());
 }
 
 void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
@@ -93,10 +83,8 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
     text_node.set_color(vu::reference_text_color());
 
-    auto flow =
-        main->data.begin_reference_flow().perform([this](int32_t const &value) { this->_update_text(value); }).end();
-    flow.sync();
-    this->_data_flow = std::move(flow);
+    this->_data_flow =
+        main->data.begin_reference_flow().perform([this](int32_t const &value) { this->_update_text(value); }).sync();
 }
 
 void vu::ui_reference::_setup_layout() {
