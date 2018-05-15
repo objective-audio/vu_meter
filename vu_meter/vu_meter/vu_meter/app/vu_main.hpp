@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "yas_audio.h"
+#include <array>
+#include <atomic>
 #include "vu_data.hpp"
 #include "vu_ui_main.hpp"
-#include <atomic>
-#include <array>
+#include "yas_audio.h"
 
 namespace yas::vu {
 class main {
@@ -23,4 +23,4 @@ class main {
 
     void setup();
 };
-}
+}  // namespace yas::vu

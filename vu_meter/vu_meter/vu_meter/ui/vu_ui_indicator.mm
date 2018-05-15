@@ -3,11 +3,11 @@
 //
 
 #include "vu_ui_indicator.hpp"
-#include "yas_audio.h"
 #include "vu_main.hpp"
-#include "yas_fast_each.h"
-#include "vu_ui_utils.hpp"
 #include "vu_ui_color.hpp"
+#include "vu_ui_utils.hpp"
+#include "yas_audio.h"
+#include "yas_fast_each.h"
 
 using namespace yas;
 

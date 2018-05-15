@@ -9,7 +9,7 @@
 
 - (void)dealloc {
     [_window release];
-    
+
     yas_super_dealloc();
 }
 

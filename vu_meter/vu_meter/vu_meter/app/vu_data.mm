@@ -30,7 +30,7 @@ struct vu::data::impl : base::impl {
                 .end();
 
         this->_reference_setter_flow = this->_reference_setter.begin()
-                                           .convert<int32_t>([](int32_t const &value) {
+                                           .to<int32_t>([](int32_t const &value) {
                                                if (value < vu::reference_min) {
                                                    return vu::reference_min;
                                                } else if (vu::reference_max < value) {
@@ -38,7 +38,7 @@ struct vu::data::impl : base::impl {
                                                }
                                                return value;
                                            })
-                                           .end(this->_reference.receivable());
+                                           .end(this->_reference.receiver());
     }
 
     property<int32_t> _reference;

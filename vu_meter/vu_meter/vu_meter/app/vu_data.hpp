@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 #include "yas_base.h"
-#include "yas_observing.h"
 #include "yas_flow.h"
+#include "yas_observing.h"
 #include "yas_property.h"
 
 namespace yas::vu {
@@ -28,4 +28,4 @@ struct data : base {
     void increment_reference();
     void decrement_reference();
 };
-}
+}  // namespace yas::vu

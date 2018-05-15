@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "yas_ui.h"
-#include "vu_ui_reference.hpp"
-#include "vu_ui_indicator.hpp"
-#include "vu_types.h"
 #include <array>
+#include "vu_types.h"
+#include "vu_ui_indicator.hpp"
+#include "vu_ui_reference.hpp"
+#include "yas_ui.h"
 
 namespace yas::vu {
 class main;
@@ -25,4 +25,4 @@ struct ui_main {
     ui::renderer::observer_t _renderer_observer;
     std::vector<flow::observer<float>> _flows;
 };
-}
+}  // namespace yas::vu

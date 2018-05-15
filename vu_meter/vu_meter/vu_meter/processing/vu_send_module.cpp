@@ -9,9 +9,10 @@ using namespace yas;
 using namespace yas::proc;
 
 module vu::send::make_signal_module(handler handler) {
-    auto send_processor = make_send_signal_processor<float>([handler = std::move(handler)](
-        time::range const &time_range, sync_source const &sync_src, channel_index_t const,
-        connector_index_t const co_idx, float *const signal_ptr) { handler(time_range, co_idx, signal_ptr); });
+    auto send_processor = make_send_signal_processor<float>(
+        [handler = std::move(handler)](time::range const &time_range, sync_source const &sync_src,
+                                       channel_index_t const, connector_index_t const co_idx,
+                                       float *const signal_ptr) { handler(time_range, co_idx, signal_ptr); });
 
     return module{{std::move(send_processor)}};
 }

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "yas_ui.h"
-#include "vu_types.h"
 #include "vu_data.hpp"
+#include "vu_types.h"
+#include "yas_ui.h"
 
 namespace yas::vu {
 class main;
@@ -38,4 +38,4 @@ struct ui_reference {
 
     void _update_text(int32_t const);
 };
-}
+}  // namespace yas::vu

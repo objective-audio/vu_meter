@@ -11,4 +11,4 @@ class main;
 
 using main_ptr_t = std::shared_ptr<main>;
 using weak_main_ptr_t = std::weak_ptr<main>;
-}
+}  // namespace yas::vu

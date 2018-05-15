@@ -4,8 +4,8 @@
 
 #include "vu_ui_reference.hpp"
 #include "vu_main.hpp"
-#include "yas_fast_each.h"
 #include "vu_ui_color.hpp"
+#include "yas_fast_each.h"
 
 using namespace yas;
 

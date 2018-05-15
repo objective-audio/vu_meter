@@ -19,4 +19,4 @@ ui::color const &indicator_over_number_color();
 
 ui::color const &reference_button_color();
 ui::color const &reference_text_color();
-}
+}  // namespace yas::vu

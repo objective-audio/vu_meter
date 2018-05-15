@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <experimental/optional>
+#include <vector>
 #include "yas_processing.h"
 #include "yas_types.h"
-#include <vector>
-#include <experimental/optional>
 
 namespace yas::vu {
 struct summing_buffer {
@@ -29,4 +29,4 @@ struct summing_buffer {
     opt_t<proc::time::range> _last_time_range;
     std::size_t _last_length = 0;
 };
-}
+}  // namespace yas::vu

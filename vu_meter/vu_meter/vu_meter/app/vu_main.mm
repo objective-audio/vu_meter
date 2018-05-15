@@ -3,12 +3,12 @@
 //
 
 #include "vu_main.hpp"
+#include <array>
+#include <iostream>
+#include <limits>
 #include "vu_send_module.hpp"
 #include "vu_sum_module.hpp"
 #include "yas_audio.h"
-#include <limits>
-#include <array>
-#include <iostream>
 
 using namespace yas;
 
@@ -49,16 +49,17 @@ void vu::main::setup() {
     /// インプットを受け付けるトラック
     for (auto const ch : main_channels) {
         if (auto track = timeline.add_track(trk_idx++)) {
-            auto module = vu::send::make_signal_module([context, ch](
-                proc::time::range const &time_range, proc::connector_index_t const &, float *const signal_ptr) {
-                auto &buffer = context->buffer;
-                if (!buffer) {
-                    return;
-                }
+            auto module =
+                vu::send::make_signal_module([context, ch](proc::time::range const &time_range,
+                                                           proc::connector_index_t const &, float *const signal_ptr) {
+                    auto &buffer = context->buffer;
+                    if (!buffer) {
+                        return;
+                    }
 
-                uint32_t const length = std::min(buffer.frame_length(), static_cast<uint32_t>(time_range.length));
-                buffer.copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
-            });
+                    uint32_t const length = std::min(buffer.frame_length(), static_cast<uint32_t>(time_range.length));
+                    buffer.copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
+                });
 
             module.connect_output(proc::to_connector_index(vu::send::output::value), ch);
 

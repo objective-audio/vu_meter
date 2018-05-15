@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "yas_ui.h"
-#include "vu_types.h"
 #include "vu_data.hpp"
+#include "vu_types.h"
+#include "yas_ui.h"
 
 namespace yas::vu {
 struct ui_indicator {
@@ -38,4 +38,4 @@ struct ui_indicator {
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
 };
-}
+}  // namespace yas::vu

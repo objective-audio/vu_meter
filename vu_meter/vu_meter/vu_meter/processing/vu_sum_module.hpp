@@ -16,9 +16,9 @@ enum class input : proc::connector_index_t {
 };
 
 proc::module make_signal_module(double const duration);
-}
+}  // namespace yas::vu::sum
 
 namespace yas {
 void connect(proc::module &, vu::sum::output const &, proc::channel_index_t const &);
 void connect(proc::module &, vu::sum::input const &, proc::channel_index_t const &);
-}
+}  // namespace yas

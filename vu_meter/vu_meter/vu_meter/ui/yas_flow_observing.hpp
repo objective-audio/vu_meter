@@ -21,4 +21,4 @@ flow::node<T, T, T> make_flow(subject<Key, T> &subject, Key const &key) {
 
     return sender.make_flow();
 }
-}
+}  // namespace yas

@@ -22,7 +22,8 @@ ui::angle vu::ui_utils::meter_angle(float const in_value, float const reference,
     return {.degrees = std::max(degrees, max_degrees)};
 }
 
-float vu::ui_utils::gridline_y(ui::angle const angle, ui::angle const half_angle, float const radius, float const rate) {
+float vu::ui_utils::gridline_y(ui::angle const angle, ui::angle const half_angle, float const radius,
+                               float const rate) {
     float const side_y = std::cos(half_angle.radians()) * radius;
     float const top_y = std::cos(angle.radians()) * radius;
     return radius - (top_y - side_y) * rate;

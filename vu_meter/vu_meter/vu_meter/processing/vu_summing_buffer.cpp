@@ -3,8 +3,8 @@
 //
 
 #include "vu_summing_buffer.hpp"
-#include "yas_data.h"
 #include <Accelerate/Accelerate.h>
+#include "yas_data.h"
 
 using namespace yas;
 
@@ -62,6 +62,6 @@ void vu::summing_buffer::finalize() {
     if (result) {
         this->pos = result.value();
     }
-    
+
     this->pushed.clear();
 }
