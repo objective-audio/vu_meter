@@ -8,14 +8,14 @@
 using namespace yas;
 
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
-    this->renderer = std::move(renderer);
+    this->renderer.set_value(std::move(renderer));
 
     weak_main_ptr_t weak_main = main;
 
     ui::texture texture{{.point_size = {1024, 1024}}};
-    texture.observe_scale_from_renderer(this->renderer);
+    texture.observe_scale_from_renderer(this->renderer.value());
 
-    ui::node &root_node = this->renderer.root_node();
+    ui::node &root_node = this->renderer.value().root_node();
 
     // reference
 
@@ -23,7 +23,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     this->reference.setup(main, texture);
 
-    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
+    auto const &safe_area_guide_rect = this->renderer.value().safe_area_layout_guide_rect();
 
     this->_flows.emplace_back(ui::make_flow({.source_guide = safe_area_guide_rect.bottom(),
                                              .destination_guide = this->reference.layout_guide_rect.bottom()}));
@@ -110,7 +110,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // renderer observing
 
-    this->_renderer_observer = this->renderer.subject().make_value_observer(
+    this->_renderer_observer = this->renderer.value().subject().make_value_observer(
         ui::renderer::method::will_render, [this, weak_main, texture](auto const &) mutable {
             for (auto &indicator : this->indicators) {
                 indicator.update();
