@@ -1160,6 +1160,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B62B5224205E1A0A00A300E5 /* Build configuration list for PBXNativeTarget "vu_meter" */;
 			buildPhases = (
+				B674FA6020AB22150092593A /* ShellScript */,
 				B62B51FF205E1A0A00A300E5 /* Sources */,
 				B62B5200205E1A0A00A300E5 /* Frameworks */,
 				B62B5201205E1A0A00A300E5 /* Resources */,
@@ -1250,6 +1251,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B674FA6020AB22150092593A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ../script/format.sh;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B62B51FF205E1A0A00A300E5 /* Sources */ = {
