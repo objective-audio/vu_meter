@@ -108,12 +108,13 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
         }
     }
 
-    // renderer observing
+    // renderer flow
 
-    this->_renderer_observer = this->renderer.subject().make_value_observer(
-        ui::renderer::method::will_render, [this, weak_main, texture](auto const &) mutable {
-            for (auto &indicator : this->indicators) {
-                indicator.update();
-            }
-        });
+    this->_will_render_receiver = flow::receiver<std::nullptr_t>([this](auto const &) {
+        for (auto &indicator : this->indicators) {
+            indicator.update();
+        }
+    });
+
+    this->_will_render_flow = this->renderer.begin_will_render_flow().end(this->_will_render_receiver);
 }

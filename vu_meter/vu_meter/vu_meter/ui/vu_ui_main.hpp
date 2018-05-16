@@ -22,7 +22,8 @@ struct ui_main {
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
    private:
-    ui::renderer::observer_t _renderer_observer;
+    flow::observer<std::nullptr_t> _will_render_flow = nullptr;
+    flow::receiver<std::nullptr_t> _will_render_receiver = nullptr;
     std::vector<flow::observer<float>> _flows;
 };
 }  // namespace yas::vu
