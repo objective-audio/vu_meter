@@ -35,6 +35,9 @@ struct ui_indicator {
     weak_main_ptr_t _weak_main;
 
     std::vector<flow::observer<float>> _flows;
+    flow::observer<weak<ui::renderer>> _renderer_flow = nullptr;
+    flow::receiver<ui::renderer> _renderer_receiver = nullptr;
+    flow::receiver<std::nullptr_t> _update_receiver = nullptr;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
 };

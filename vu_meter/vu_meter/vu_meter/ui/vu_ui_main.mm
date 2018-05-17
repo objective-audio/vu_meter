@@ -107,14 +107,4 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                                                          indicator.frame_layout_guide_rect.top()));
         }
     }
-
-    // renderer flow
-
-    this->_will_render_receiver = flow::receiver<std::nullptr_t>([this](auto const &) {
-        for (auto &indicator : this->indicators) {
-            indicator.update();
-        }
-    });
-
-    this->_will_render_flow = this->renderer.begin_will_render_flow().end(this->_will_render_receiver);
 }

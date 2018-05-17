@@ -132,6 +132,19 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             })
             .end();
 
+    this->_update_receiver = flow::receiver<std::nullptr_t>([this](auto const &) { this->update(); });
+
+    this->_renderer_receiver = flow::receiver<ui::renderer>(
+        [this, will_render_flow = flow::observer<std::nullptr_t>{nullptr}](ui::renderer const &renderer) mutable {
+            if (renderer) {
+                will_render_flow = renderer.begin_will_render_flow().end(this->_update_receiver);
+            } else {
+                will_render_flow = nullptr;
+            }
+        });
+
+    this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
+
     this->update();
 }
 
