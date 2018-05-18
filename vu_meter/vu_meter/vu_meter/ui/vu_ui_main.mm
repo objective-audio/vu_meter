@@ -25,15 +25,15 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
-    this->_flows.emplace_back(ui::make_flow({.source_guide = safe_area_guide_rect.bottom(),
-                                             .destination_guide = this->reference.layout_guide_rect.bottom()}));
-    this->_flows.emplace_back(ui::make_flow({.source_guide = safe_area_guide_rect.bottom(),
-                                             .destination_guide = this->reference.layout_guide_rect.top(),
-                                             .distance = 60.0f}));
-    this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = safe_area_guide_rect.left(), .destination_guide = this->reference.layout_guide_rect.left()}));
-    this->_flows.emplace_back(ui::make_flow({.source_guide = safe_area_guide_rect.right(),
-                                             .destination_guide = this->reference.layout_guide_rect.right()}));
+    this->_flows.emplace_back(safe_area_guide_rect.bottom()
+                                  .begin_flow()
+                                  .receive(this->reference.layout_guide_rect.bottom().receiver())
+                                  .to([](float const &bottom) { return bottom + 60.0f; })
+                                  .end(this->reference.layout_guide_rect.top().receiver()));
+    this->_flows.emplace_back(
+        safe_area_guide_rect.left().begin_flow().end(this->reference.layout_guide_rect.left().receiver()));
+    this->_flows.emplace_back(
+        safe_area_guide_rect.right().begin_flow().end(this->reference.layout_guide_rect.right().receiver()));
 
     // indicators
 
