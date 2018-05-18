@@ -29,11 +29,11 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                                   .begin_flow()
                                   .receive(this->reference.layout_guide_rect.bottom().receiver())
                                   .to([](float const &bottom) { return bottom + 60.0f; })
-                                  .end(this->reference.layout_guide_rect.top().receiver()));
+                                  .sync(this->reference.layout_guide_rect.top().receiver()));
     this->_flows.emplace_back(
-        safe_area_guide_rect.left().begin_flow().end(this->reference.layout_guide_rect.left().receiver()));
+        safe_area_guide_rect.left().begin_flow().sync(this->reference.layout_guide_rect.left().receiver()));
     this->_flows.emplace_back(
-        safe_area_guide_rect.right().begin_flow().end(this->reference.layout_guide_rect.right().receiver()));
+        safe_area_guide_rect.right().begin_flow().sync(this->reference.layout_guide_rect.right().receiver()));
 
     // indicators
 
