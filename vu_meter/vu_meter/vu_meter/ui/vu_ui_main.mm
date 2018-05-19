@@ -64,13 +64,10 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
             return src_left.begin_flow()
                 .combine(src_right.begin_flow())
                 .combine(src_y.begin_flow())
-                .guard([](auto const &pair) {
-                    return pair.first && pair.second && pair.first->first && pair.first->second;
-                })
                 .perform([dst_bottom, dst_top](auto const &pair) mutable {
-                    float const src_left = *pair.first->first;
-                    float const src_right = *pair.first->second;
-                    float const src_y = *pair.second;
+                    float const src_left = pair.first.first;
+                    float const src_right = pair.first.second;
+                    float const src_y = pair.second;
                     float const height = (src_right - src_left) * 0.5f;
 
                     dst_bottom.push_notify_waiting();
