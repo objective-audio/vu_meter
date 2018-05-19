@@ -61,47 +61,43 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
         auto make_vertical_flow = [](ui::layout_guide &src_left, ui::layout_guide &src_right, ui::layout_guide &src_y,
                                      ui::layout_guide &dst_bottom, ui::layout_guide &dst_top) {
-            auto flow = src_left.begin_flow()
-                            .combine(src_right.begin_flow())
-                            .combine(src_y.begin_flow())
-                            .guard([](auto const &pair) {
-                                return pair.first && pair.second && pair.first->first && pair.first->second;
-                            })
-                            .perform([dst_bottom, dst_top](auto const &pair) mutable {
-                                float const src_left = *pair.first->first;
-                                float const src_right = *pair.first->second;
-                                float const src_y = *pair.second;
-                                float const height = (src_right - src_left) * 0.5f;
+            return src_left.begin_flow()
+                .combine(src_right.begin_flow())
+                .combine(src_y.begin_flow())
+                .guard([](auto const &pair) {
+                    return pair.first && pair.second && pair.first->first && pair.first->second;
+                })
+                .perform([dst_bottom, dst_top](auto const &pair) mutable {
+                    float const src_left = *pair.first->first;
+                    float const src_right = *pair.first->second;
+                    float const src_y = *pair.second;
+                    float const height = (src_right - src_left) * 0.5f;
 
-                                dst_bottom.push_notify_waiting();
-                                dst_top.push_notify_waiting();
+                    dst_bottom.push_notify_waiting();
+                    dst_top.push_notify_waiting();
 
-                                dst_bottom.set_value(std::round(src_y - height * 0.5f));
-                                dst_top.set_value(std::round(src_y + height * 0.5f));
+                    dst_bottom.set_value(std::round(src_y - height * 0.5f));
+                    dst_top.set_value(std::round(src_y + height * 0.5f));
 
-                                dst_top.pop_notify_waiting();
-                                dst_bottom.pop_notify_waiting();
-                            })
-                            .end();
-
-            flow.sync();
-
-            return flow;
+                    dst_top.pop_notify_waiting();
+                    dst_bottom.pop_notify_waiting();
+                })
+                .sync();
         };
 
         if (idx == 0) {
-            this->_flows.emplace_back(ui::make_flow({.source_guide = indicator_0_left_guide,
-                                                     .destination_guide = indicator.frame_layout_guide_rect.left()}));
-            this->_flows.emplace_back(ui::make_flow({.source_guide = indicator_0_right_guide,
-                                                     .destination_guide = indicator.frame_layout_guide_rect.right()}));
+            this->_flows.emplace_back(
+                indicator_0_left_guide.begin_flow().sync(indicator.frame_layout_guide_rect.left().receiver()));
+            this->_flows.emplace_back(
+                indicator_0_right_guide.begin_flow().sync(indicator.frame_layout_guide_rect.right().receiver()));
             this->_flows.emplace_back(make_vertical_flow(indicator_0_left_guide, indicator_0_right_guide,
                                                          center_y_guide, indicator.frame_layout_guide_rect.bottom(),
                                                          indicator.frame_layout_guide_rect.top()));
         } else {
-            this->_flows.emplace_back(ui::make_flow({.source_guide = indicator_1_left_guide,
-                                                     .destination_guide = indicator.frame_layout_guide_rect.left()}));
-            this->_flows.emplace_back(ui::make_flow({.source_guide = indicator_1_right_guide,
-                                                     .destination_guide = indicator.frame_layout_guide_rect.right()}));
+            this->_flows.emplace_back(
+                indicator_1_left_guide.begin_flow().sync(indicator.frame_layout_guide_rect.left().receiver()));
+            this->_flows.emplace_back(
+                indicator_1_right_guide.begin_flow().sync(indicator.frame_layout_guide_rect.right().receiver()));
             this->_flows.emplace_back(make_vertical_flow(indicator_1_left_guide, indicator_1_right_guide,
                                                          center_y_guide, indicator.frame_layout_guide_rect.bottom(),
                                                          indicator.frame_layout_guide_rect.top()));
