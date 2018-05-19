@@ -552,6 +552,7 @@
 		B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils_tests.mm; sourceTree = "<group>"; };
 		B6BFA93A2083523E00ADD43B /* yas_flow_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow_private.h; sourceTree = "<group>"; };
 		B6BFA93B2083523E00ADD43B /* yas_flow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow.h; sourceTree = "<group>"; };
+		B6FD86F220B0EF7300AD8D2F /* yas_flow_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow_utils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -810,6 +811,7 @@
 				B610E99420660552004A46B5 /* yas_data.h */,
 				B6BFA93A2083523E00ADD43B /* yas_flow_private.h */,
 				B6BFA93B2083523E00ADD43B /* yas_flow.h */,
+				B6FD86F220B0EF7300AD8D2F /* yas_flow_utils.h */,
 			);
 			name = cpp_utils;
 			path = ../../cpp_utils/cpp_utils;
