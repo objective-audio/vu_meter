@@ -40,6 +40,7 @@ struct ui_indicator {
     ui::layout_guide_rect _base_guide_rect;
 
     void _layout();
+    void _create_font_atlas();
     void _remove_font_atlas();
     void _update();
 };

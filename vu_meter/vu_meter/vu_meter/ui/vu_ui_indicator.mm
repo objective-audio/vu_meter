@@ -128,7 +128,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // layout_guide
     // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-
     this->_frame_flow =
         this->frame_layout_guide_rect.begin_flow()
             .receive_null(this->_layout_receiver)
@@ -186,14 +185,7 @@ void vu::ui_indicator::_layout() {
     }
 }
 
-void vu::ui_indicator::_remove_font_atlas() {
-    this->font_atlas = nullptr;
-    for (auto &number : this->numbers) {
-        number.set_font_atlas(nullptr);
-    }
-}
-
-void vu::ui_indicator::_update() {
+void vu::ui_indicator::_create_font_atlas() {
     if (!this->font_atlas) {
         if (float const height = this->frame_layout_guide_rect.region().size.height; height > 0.0f) {
             ui::texture texture{{.point_size = {1024, 1024}}};
@@ -214,6 +206,17 @@ void vu::ui_indicator::_update() {
             }
         }
     }
+}
+
+void vu::ui_indicator::_remove_font_atlas() {
+    this->font_atlas = nullptr;
+    for (auto &number : this->numbers) {
+        number.set_font_atlas(nullptr);
+    }
+}
+
+void vu::ui_indicator::_update() {
+    this->_create_font_atlas();
 
     if (auto main = this->_weak_main.lock()) {
         ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference().value(),
