@@ -34,6 +34,21 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->idx = idx;
 
+    // receivers
+
+    this->_update_receiver = flow::receiver<>([this](auto const &) { this->_update(); });
+
+    this->_renderer_receiver = flow::receiver<ui::renderer>(
+        [this, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
+            if (renderer) {
+                will_render_flow = renderer.begin_will_render_flow().end(this->_update_receiver);
+            } else {
+                will_render_flow = nullptr;
+            }
+        });
+
+    this->_layout_receiver = flow::receiver<>([this](auto const &) { this->_layout(); });
+
     // node
 
     this->node.attach_position_layout_guides(this->_node_guide_point);
@@ -111,7 +126,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // layout_guide
     // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-    this->_layout_receiver = flow::receiver<>([this](auto const &) { this->_layout(); });
 
     this->_frame_flow =
         this->frame_layout_guide_rect.begin_flow()
@@ -131,17 +145,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
                 }
             })
             .end();
-
-    this->_update_receiver = flow::receiver<>([this](auto const &) { this->_update(); });
-
-    this->_renderer_receiver = flow::receiver<ui::renderer>(
-        [this, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
-            if (renderer) {
-                will_render_flow = renderer.begin_will_render_flow().end(this->_update_receiver);
-            } else {
-                will_render_flow = nullptr;
-            }
-        });
 
     this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
 }
