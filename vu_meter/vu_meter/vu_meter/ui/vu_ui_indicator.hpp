@@ -26,11 +26,8 @@ struct ui_indicator {
     void setup(main_ptr_t &main, std::size_t const idx);
     void layout();
 
-    void update();
-
    private:
-    base _data_flow = nullptr;
-    base _node_flow = nullptr;
+    flow::observer _node_flow = nullptr;
     flow::observer _frame_flow = nullptr;
     weak_main_ptr_t _weak_main;
 
@@ -40,5 +37,7 @@ struct ui_indicator {
     flow::receiver<> _update_receiver = nullptr;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
+
+    void _update();
 };
 }  // namespace yas::vu

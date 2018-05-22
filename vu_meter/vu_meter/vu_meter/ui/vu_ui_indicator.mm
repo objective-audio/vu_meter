@@ -109,8 +109,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->needle.node().set_color(vu::indicator_needle_color());
     this->needle_root_node.add_sub_node(this->needle.node());
 
-    this->_data_flow = main->data.begin_reference_flow().perform([this](int32_t const &) { this->update(); }).end();
-
     // layout_guide
     // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
     this->_frame_flow =
@@ -132,7 +130,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             })
             .end();
 
-    this->_update_receiver = flow::receiver<>([this](auto const &) { this->update(); });
+    this->_update_receiver = flow::receiver<>([this](auto const &) { this->_update(); });
 
     this->_renderer_receiver = flow::receiver<ui::renderer>(
         [this, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
@@ -144,8 +142,6 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
         });
 
     this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
-
-    this->update();
 }
 
 void vu::ui_indicator::layout() {
@@ -188,7 +184,7 @@ void vu::ui_indicator::layout() {
     }
 }
 
-void vu::ui_indicator::update() {
+void vu::ui_indicator::_update() {
     if (!this->font_atlas) {
         if (float const height = this->frame_layout_guide_rect.region().size.height; height > 0.0f) {
             ui::texture texture{{.point_size = {1024, 1024}}};
