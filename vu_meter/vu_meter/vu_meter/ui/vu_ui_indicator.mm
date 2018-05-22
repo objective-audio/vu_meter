@@ -111,9 +111,11 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // layout_guide
     // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
+    this->_layout_receiver = flow::receiver<>([this](auto const &) { this->_layout(); });
+
     this->_frame_flow =
         this->frame_layout_guide_rect.begin_flow()
-            .perform([this](ui::region const &) { this->layout(); })
+            .receive_null(this->_layout_receiver)
             .guard([prev_height = this->frame_layout_guide_rect.height().value()](ui::region const &region) mutable {
                 if (prev_height != region.size.height) {
                     prev_height = region.size.height;
@@ -144,7 +146,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
 }
 
-void vu::ui_indicator::layout() {
+void vu::ui_indicator::_layout() {
     ui::region const region = this->frame_layout_guide_rect.region();
     ui::size const size = region.size;
     float const width = size.width;
