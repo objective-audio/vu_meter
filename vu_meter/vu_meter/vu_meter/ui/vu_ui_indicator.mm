@@ -49,6 +49,8 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->_layout_receiver = flow::receiver<>([this](auto const &) { this->_layout(); });
 
+    this->_remove_font_atlas_receiver = flow::receiver<>([this](auto const &) { this->_remove_font_atlas(); });
+
     // node
 
     this->node.attach_position_layout_guides(this->_node_guide_point);
@@ -138,12 +140,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
                     return false;
                 }
             })
-            .perform([this](ui::region const &region) {
-                this->font_atlas = nullptr;
-                for (auto &number : this->numbers) {
-                    number.set_font_atlas(nullptr);
-                }
-            })
+            .receive_null(this->_remove_font_atlas_receiver)
             .end();
 
     this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
@@ -186,6 +183,13 @@ void vu::ui_indicator::_layout() {
         ui::node const parent = handle.parent();
         float const number_y = vu::ui_utils::gridline_y(parent.angle(), constants::half_angle, number_side_y, 0.1f);
         handle.set_position({.y = number_y});
+    }
+}
+
+void vu::ui_indicator::_remove_font_atlas() {
+    this->font_atlas = nullptr;
+    for (auto &number : this->numbers) {
+        number.set_font_atlas(nullptr);
     }
 }
 
