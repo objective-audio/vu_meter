@@ -52,14 +52,14 @@ struct vu::data::impl : base::impl {
     void prepare() {
         auto weak_data = to_weak(cast<vu::data>());
 
-        this->_ref_inc_receiver = flow::receiver<>([weak_data](auto const &) {
+        this->_ref_inc_receiver = flow::receiver<>([weak_data] {
             if (auto data = weak_data.lock()) {
                 auto data_impl = data.impl_ptr<impl>();
                 data_impl->_reference_setter.send_value(data_impl->_reference.value() + 1);
             }
         });
 
-        this->_ref_dec_receiver = flow::receiver<>([weak_data](auto const &) {
+        this->_ref_dec_receiver = flow::receiver<>([weak_data] {
             if (auto data = weak_data.lock()) {
                 auto data_impl = data.impl_ptr<impl>();
                 data_impl->_reference_setter.send_value(data_impl->_reference.value() - 1);

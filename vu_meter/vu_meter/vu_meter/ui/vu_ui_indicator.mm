@@ -36,7 +36,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     // receivers
 
-    this->_update_receiver = flow::receiver<>([this](auto const &) { this->_update(); });
+    this->_update_receiver = flow::receiver<>([this] { this->_update(); });
 
     this->_renderer_receiver = flow::receiver<ui::renderer>(
         [this, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
@@ -47,9 +47,9 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             }
         });
 
-    this->_layout_receiver = flow::receiver<>([this](auto const &) { this->_layout(); });
+    this->_layout_receiver = flow::receiver<>([this] { this->_layout(); });
 
-    this->_remove_font_atlas_receiver = flow::receiver<>([this](auto const &) { this->_remove_font_atlas(); });
+    this->_remove_font_atlas_receiver = flow::receiver<>([this] { this->_remove_font_atlas(); });
 
     // node
 
