@@ -43,11 +43,16 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     ui::layout_guide indicator_0_right_guide;
     ui::layout_guide indicator_1_left_guide;
     ui::layout_guide indicator_1_right_guide;
-    this->_flows.emplace_back(ui::make_flow({.first_source_guide = safe_area_guide_rect.left(),
-                                             .second_source_guide = safe_area_guide_rect.right(),
-                                             .ratios = {100.0f, 1.0f, 100.0f},
-                                             .destination_guides = {indicator_0_left_guide, indicator_0_right_guide,
-                                                                    indicator_1_left_guide, indicator_1_right_guide}}));
+    std::array<flow::receiver<float>, 4> receivers{
+        indicator_0_left_guide.receiver(), indicator_0_right_guide.receiver(), indicator_1_left_guide.receiver(),
+        indicator_1_right_guide.receiver()};
+
+    this->_flows.emplace_back(safe_area_guide_rect.left()
+                                  .begin_flow()
+                                  .combine(safe_area_guide_rect.right().begin_flow())
+                                  .map(ui::justify<3>(std::array<float, 3>{100.0f, 1.0f, 100.0f}))
+                                  .receive(receivers)
+                                  .sync());
 
     ui::layout_guide center_y_guide;
 
