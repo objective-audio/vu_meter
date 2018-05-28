@@ -41,7 +41,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->_renderer_receiver = flow::receiver<ui::renderer>(
         [this, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
             if (renderer) {
-                will_render_flow = renderer.begin_will_render_flow().end(this->_update_receiver);
+                will_render_flow = renderer.begin_will_render_flow().receive(this->_update_receiver).end();
             } else {
                 will_render_flow = nullptr;
             }
@@ -142,7 +142,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             .receive_null(this->_remove_font_atlas_receiver)
             .end();
 
-    this->_renderer_flow = this->node.begin_renderer_flow().sync(this->_renderer_receiver);
+    this->_renderer_flow = this->node.begin_renderer_flow().receive(this->_renderer_receiver).sync();
 }
 
 void vu::ui_indicator::_layout() {

@@ -42,7 +42,8 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
                             .to_null()
-                            .end(main->data.reference_decrement_receiver());
+                            .receive(main->data.reference_decrement_receiver())
+                            .end();
 }
 
 void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture) {
@@ -66,7 +67,8 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
     this->_plus_flow = this->plus_button.subject()
                            .begin_flow(ui::button::method::ended)
                            .to_null()
-                           .end(main->data.reference_increment_receiver());
+                           .receive(main->data.reference_increment_receiver())
+                           .end();
 }
 
 void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
@@ -81,8 +83,9 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     text_node.set_color(vu::reference_text_color());
 
     this->_data_flow = main->data.begin_reference_flow()
-                           .to([this](int32_t const &value) { return std::to_string(value) + " dB"; })
-                           .sync(this->text.text_receiver());
+                           .map([this](int32_t const &value) { return std::to_string(value) + " dB"; })
+                           .receive(this->text.text_receiver())
+                           .sync();
 }
 
 void vu::ui_reference::_setup_layout() {
@@ -95,23 +98,26 @@ void vu::ui_reference::_setup_layout() {
 
     this->_flows.emplace_back(this->_center_guide_point.x()
                                   .begin_flow()
-                                  .to(flow::add(-100.0f))
-                                  .sync(this->_minus_layout_guide_point.x().receiver()));
+                                  .map(flow::add(-100.0f))
+                                  .receive(this->_minus_layout_guide_point.x().receiver())
+                                  .sync());
     this->_flows.emplace_back(
-        this->_center_guide_point.y().begin_flow().sync(this->_minus_layout_guide_point.y().receiver()));
+        this->_center_guide_point.y().begin_flow().receive(this->_minus_layout_guide_point.y().receiver()).sync());
 
     this->_flows.emplace_back(this->_center_guide_point.x()
                                   .begin_flow()
-                                  .to(flow::add(100.0f))
-                                  .sync(this->_plus_layout_guide_point.x().receiver()));
+                                  .map(flow::add(100.0f))
+                                  .receive(this->_plus_layout_guide_point.x().receiver())
+                                  .sync());
     this->_flows.emplace_back(
-        this->_center_guide_point.y().begin_flow().sync(this->_plus_layout_guide_point.y().receiver()));
+        this->_center_guide_point.y().begin_flow().receive(this->_plus_layout_guide_point.y().receiver()).sync());
 
     float const text_distance = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
     this->_flows.emplace_back(
-        this->_center_guide_point.x().begin_flow().sync(this->_text_layout_guide_point.x().receiver()));
+        this->_center_guide_point.x().begin_flow().receive(this->_text_layout_guide_point.x().receiver()).sync());
     this->_flows.emplace_back(this->_center_guide_point.y()
                                   .begin_flow()
-                                  .to(flow::add(text_distance))
-                                  .sync(this->_text_layout_guide_point.y().receiver()));
+                                  .map(flow::add(text_distance))
+                                  .receive(this->_text_layout_guide_point.y().receiver())
+                                  .sync());
 }
