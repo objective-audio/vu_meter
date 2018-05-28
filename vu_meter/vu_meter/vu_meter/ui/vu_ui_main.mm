@@ -39,10 +39,10 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // indicators
 
-    ui::layout_guide indicator_0_left_guide;
-    ui::layout_guide indicator_0_right_guide;
-    ui::layout_guide indicator_1_left_guide;
-    ui::layout_guide indicator_1_right_guide;
+    ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
+    ui::layout_guide &indicator_0_right_guide = this->_guides.at(1);
+    ui::layout_guide &indicator_1_left_guide = this->_guides.at(2);
+    ui::layout_guide &indicator_1_right_guide = this->_guides.at(3);
 
     this->_flows.emplace_back(safe_area_guide_rect.left()
                                   .begin_flow()

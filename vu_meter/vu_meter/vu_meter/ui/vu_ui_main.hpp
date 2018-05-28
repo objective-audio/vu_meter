@@ -24,6 +24,7 @@ struct ui_main {
    private:
     flow::observer _will_render_flow = nullptr;
     flow::receiver<> _will_render_receiver = nullptr;
+    std::array<ui::layout_guide, 4> _guides;
     std::vector<flow::observer> _flows;
 };
 }  // namespace yas::vu
