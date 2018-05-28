@@ -89,12 +89,19 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
 }
 
 void vu::ui_reference::_setup_layout() {
-    this->_flows.emplace_back(ui::make_flow({.first_source_guide = this->layout_guide_rect.left(),
-                                             .second_source_guide = this->layout_guide_rect.right(),
-                                             .destination_guides = {this->_center_guide_point.x()}}));
-    this->_flows.emplace_back(ui::make_flow({.first_source_guide = this->layout_guide_rect.top(),
-                                             .second_source_guide = this->layout_guide_rect.bottom(),
-                                             .destination_guides = {this->_center_guide_point.y()}}));
+    this->_flows.emplace_back(this->layout_guide_rect.left()
+                                  .begin_flow()
+                                  .combine(this->layout_guide_rect.right().begin_flow())
+                                  .map(ui::justify<2>())
+                                  .receive<1>(this->_center_guide_point.x().receiver())
+                                  .sync());
+
+    this->_flows.emplace_back(this->layout_guide_rect.top()
+                                  .begin_flow()
+                                  .combine(this->layout_guide_rect.bottom().begin_flow())
+                                  .map(ui::justify<2>())
+                                  .receive<1>(this->_center_guide_point.y().receiver())
+                                  .sync());
 
     this->_flows.emplace_back(this->_center_guide_point.x()
                                   .begin_flow()

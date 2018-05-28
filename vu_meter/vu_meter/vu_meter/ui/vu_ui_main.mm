@@ -43,23 +43,23 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     ui::layout_guide indicator_0_right_guide;
     ui::layout_guide indicator_1_left_guide;
     ui::layout_guide indicator_1_right_guide;
-    std::array<flow::receiver<float>, 4> receivers{
-        indicator_0_left_guide.receiver(), indicator_0_right_guide.receiver(), indicator_1_left_guide.receiver(),
-        indicator_1_right_guide.receiver()};
 
     this->_flows.emplace_back(safe_area_guide_rect.left()
                                   .begin_flow()
                                   .combine(safe_area_guide_rect.right().begin_flow())
                                   .map(ui::justify<3>(std::array<float, 3>{100.0f, 1.0f, 100.0f}))
-                                  .receive(receivers)
+                                  .receive({indicator_0_left_guide.receiver(), indicator_0_right_guide.receiver(),
+                                            indicator_1_left_guide.receiver(), indicator_1_right_guide.receiver()})
                                   .sync());
 
     ui::layout_guide center_y_guide;
 
-    this->_flows.emplace_back(
-        ui::make_flow({.first_source_guide = safe_area_guide_rect.top(),
-                       .second_source_guide = this->reference.layout_guide_rect.top(),
-                       .destination_guides = {ui::layout_guide{}, center_y_guide, ui::layout_guide{}}}));
+    this->_flows.emplace_back(safe_area_guide_rect.top()
+                                  .begin_flow()
+                                  .combine(this->reference.layout_guide_rect.top().begin_flow())
+                                  .map(ui::justify<2>())
+                                  .receive<1>(center_y_guide.receiver())
+                                  .sync());
 
     for (auto const &idx : {0, 1}) {
         auto &indicator = this->indicators.at(idx);

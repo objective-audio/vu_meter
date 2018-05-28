@@ -55,10 +55,11 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
     this->node.attach_position_layout_guides(this->_node_guide_point);
 
-    this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = this->frame_layout_guide_rect.left(), .destination_guide = this->_node_guide_point.x()}));
-    this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = this->frame_layout_guide_rect.bottom(), .destination_guide = this->_node_guide_point.y()}));
+    this->_flows.emplace_back(
+        this->frame_layout_guide_rect.left().begin_flow().receive(this->_node_guide_point.x().receiver()).sync());
+
+    this->_flows.emplace_back(
+        this->frame_layout_guide_rect.bottom().begin_flow().receive(this->_node_guide_point.y().receiver()).sync());
 
     this->_node_flow = this->node.subject()
                            .begin_flow(ui::node::method::renderer_changed)
@@ -85,10 +86,11 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
             .perform([this](ui::region const &region) { this->base_plane.data().set_rect_position(region, 0); })
             .end());
 
-    this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = this->frame_layout_guide_rect.width(), .destination_guide = this->_base_guide_rect.right()}));
-    this->_flows.emplace_back(ui::make_flow(
-        {.source_guide = this->frame_layout_guide_rect.height(), .destination_guide = this->_base_guide_rect.top()}));
+    this->_flows.emplace_back(
+        this->frame_layout_guide_rect.width().begin_flow().receive(this->_base_guide_rect.right().receiver()).sync());
+
+    this->_flows.emplace_back(
+        this->frame_layout_guide_rect.height().begin_flow().receive(this->_base_guide_rect.top().receiver()).sync());
 
     // needle_root_node
     this->node.add_sub_node(this->needle_root_node);
@@ -131,7 +133,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
     this->_frame_flow =
         this->frame_layout_guide_rect.begin_flow()
             .receive_null(this->_layout_receiver)
-            .guard([prev_height = this->frame_layout_guide_rect.height().value()](ui::region const &region) mutable {
+            .filter([prev_height = this->frame_layout_guide_rect.height().value()](ui::region const &region) mutable {
                 if (prev_height != region.size.height) {
                     prev_height = region.size.height;
                     return true;

@@ -30,7 +30,7 @@ struct vu::data::impl : base::impl {
 
         this->_reference_flow =
             this->_reference.begin_value_flow()
-                .guard([](int32_t const &value) { return reference_min <= value && value <= reference_max; })
+                .filter([](int32_t const &value) { return reference_min <= value && value <= reference_max; })
                 .perform([](int32_t const &value) {
                     [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
                     [[NSUserDefaults standardUserDefaults] synchronize];
