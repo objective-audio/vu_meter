@@ -33,7 +33,7 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
             CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-            CGContextFillEllipseInRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
+            CGContextFillRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
@@ -58,7 +58,7 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
             CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-            CGContextFillEllipseInRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
+            CGContextFillRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
