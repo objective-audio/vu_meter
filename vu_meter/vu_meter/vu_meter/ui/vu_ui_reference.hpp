@@ -15,8 +15,6 @@ struct ui_reference {
     ui::node node;
     ui::button minus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
     ui::button plus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
-    ui::strings minus_text{nullptr};
-    ui::strings plus_text{nullptr};
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
     ui::layout_guide_rect layout_guide_rect;

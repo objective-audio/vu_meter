@@ -56,11 +56,6 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    this->minus_text = ui::strings{
-        {.text = "-", .max_word_count = 1, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
-    this->minus_text.rect_plane().node().set_color(ui::red_color());
-    this->node.add_sub_node(this->minus_text.rect_plane().node());
-
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
                             .to_null()
@@ -81,11 +76,6 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
-    this->plus_text = ui::strings{
-        {.text = "+", .max_word_count = 1, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
-    this->plus_text.rect_plane().node().set_color(ui::red_color());
-    this->node.add_sub_node(this->plus_text.rect_plane().node());
-
     this->_plus_flow = this->plus_button.subject()
                            .begin_flow(ui::button::method::ended)
                            .to_null()
@@ -95,7 +85,7 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
 
 void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     this->font_atlas = ui::font_atlas{
-        {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-+", .texture = texture}};
+        {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
     this->text =
         ui::strings{{.max_word_count = 10, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
