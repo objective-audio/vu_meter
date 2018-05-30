@@ -42,7 +42,7 @@ ui::color const &vu::indicator_over_number_color() {
 }
 
 ui::color const &vu::setting_button_base_color(bool const is_tracking) {
-    static ui::color _on_color{.red = 0.33f, .green = 0.33f, .blue = 0.33f};
+    static ui::color _on_color{.red = 0.66f, .green = 0.66f, .blue = 0.66f};
     static ui::color _off_color{.red = 0.33f, .green = 0.33f, .blue = 0.33f};
     return is_tracking ? _on_color : _off_color;
 }
