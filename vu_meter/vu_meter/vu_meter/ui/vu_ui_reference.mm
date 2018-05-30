@@ -41,6 +41,10 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
                                                               to_rect_index(0, is_tracking));
     }
 
+    this->minus_text = ui::strings{
+        {.text = "-", .max_word_count = 1, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
+    minus_node.add_sub_node(this->minus_text.rect_plane().node());
+
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
                             .to_null()
@@ -67,6 +71,10 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
         this->minus_button.rect_plane().data().set_rect_color(vu::setting_button_base_color(is_tracking), 1.0f,
                                                               to_rect_index(0, is_tracking));
     }
+
+    this->plus_text = ui::strings{
+        {.text = "+", .max_word_count = 1, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
+    plus_node.add_sub_node(this->plus_text.rect_plane().node());
 
     this->_plus_flow = this->plus_button.subject()
                            .begin_flow(ui::button::method::ended)
