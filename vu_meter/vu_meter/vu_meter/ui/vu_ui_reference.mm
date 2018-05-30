@@ -92,15 +92,15 @@ void vu::ui_reference::_setup_layout() {
     this->_flows.emplace_back(this->layout_guide_rect.left()
                                   .begin_flow()
                                   .combine(this->layout_guide_rect.right().begin_flow())
-                                  .map(ui::justify<2>())
-                                  .receive<1>(this->_center_guide_point.x().receiver())
+                                  .map(ui::justify())
+                                  .receive(this->_center_guide_point.x().receiver())
                                   .sync());
 
     this->_flows.emplace_back(this->layout_guide_rect.top()
                                   .begin_flow()
                                   .combine(this->layout_guide_rect.bottom().begin_flow())
-                                  .map(ui::justify<2>())
-                                  .receive<1>(this->_center_guide_point.y().receiver())
+                                  .map(ui::justify())
+                                  .receive(this->_center_guide_point.y().receiver())
                                   .sync());
 
     this->_flows.emplace_back(this->_center_guide_point.x()

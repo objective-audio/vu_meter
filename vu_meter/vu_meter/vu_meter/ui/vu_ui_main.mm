@@ -57,8 +57,8 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_flows.emplace_back(safe_area_guide_rect.top()
                                   .begin_flow()
                                   .combine(this->reference.layout_guide_rect.top().begin_flow())
-                                  .map(ui::justify<2>())
-                                  .receive<1>(center_y_guide.receiver())
+                                  .map(ui::justify())
+                                  .receive(center_y_guide.receiver())
                                   .sync());
 
     for (auto const &idx : {0, 1}) {
