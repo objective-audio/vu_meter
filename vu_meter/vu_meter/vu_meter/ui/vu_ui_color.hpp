@@ -17,6 +17,6 @@ ui::color const &indicator_number_color();
 ui::color const &indicator_over_gridline_color();
 ui::color const &indicator_over_number_color();
 
-ui::color const &reference_button_color();
-ui::color const &reference_text_color();
+ui::color const &setting_button_base_color(bool const is_tracking);
+ui::color const &setting_text_color();
 }  // namespace yas::vu

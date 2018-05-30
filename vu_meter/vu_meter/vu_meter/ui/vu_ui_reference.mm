@@ -26,9 +26,9 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
 
     ui::node &minus_node = this->minus_button.rect_plane().node();
     minus_node.mesh().set_texture(texture);
+    minus_node.mesh().set_use_mesh_color(true);
     this->node.add_sub_node(minus_node);
     minus_node.attach_position_layout_guides(this->_minus_layout_guide_point);
-    minus_node.set_color(vu::reference_button_color());
 
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
@@ -37,6 +37,8 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        this->minus_button.rect_plane().data().set_rect_color(vu::setting_button_base_color(is_tracking), 1.0f,
+                                                              to_rect_index(0, is_tracking));
     }
 
     this->_minus_flow = this->minus_button.subject()
@@ -51,9 +53,9 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
 
     ui::node &plus_node = this->plus_button.rect_plane().node();
     plus_node.mesh().set_texture(texture);
+    plus_node.mesh().set_use_mesh_color(true);
     this->node.add_sub_node(plus_node);
     plus_node.attach_position_layout_guides(this->_plus_layout_guide_point);
-    plus_node.set_color(vu::reference_button_color());
 
     for (auto const is_tracking : {false, true}) {
         auto draw_handler = [button_size, is_tracking](CGContextRef const ctx) {
@@ -62,6 +64,8 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
         };
         auto element = texture.add_draw_handler(button_size, std::move(draw_handler));
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        this->minus_button.rect_plane().data().set_rect_color(vu::setting_button_base_color(is_tracking), 1.0f,
+                                                              to_rect_index(0, is_tracking));
     }
 
     this->_plus_flow = this->plus_button.subject()
@@ -80,7 +84,7 @@ void vu::ui_reference::_setup_text(main_ptr_t &main, ui::texture &texture) {
     ui::node &text_node = this->text.rect_plane().node();
     this->node.add_sub_node(text_node);
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
-    text_node.set_color(vu::reference_text_color());
+    text_node.set_color(vu::setting_text_color());
 
     this->_data_flow = main->data.begin_reference_flow()
                            .map([this](int32_t const &value) { return std::to_string(value) + " dB"; })
