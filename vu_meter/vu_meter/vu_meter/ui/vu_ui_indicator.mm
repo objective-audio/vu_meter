@@ -221,7 +221,7 @@ void vu::ui_indicator::_update() {
     this->_create_font_atlas();
 
     if (auto main = this->_weak_main.lock()) {
-        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference().value(),
+        ui::angle const angle = ui_utils::meter_angle(main->values.at(this->idx).load(), main->data.reference(),
                                                       constants::half_angle.degrees);
         this->needle.node().set_angle(angle);
     }

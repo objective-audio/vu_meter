@@ -92,14 +92,14 @@ void vu::data::set_reference(int32_t const value) {
     impl_ptr<impl>()->_reference_setter.send_value(value);
 }
 
-property<int32_t> const &vu::data::reference() const {
-    return impl_ptr<impl>()->_reference;
+int32_t vu::data::reference() const {
+    return impl_ptr<impl>()->_reference.value();
 }
 
 void vu::data::increment_reference() {
-    this->set_reference(this->reference().value() + 1);
+    this->set_reference(this->reference() + 1);
 }
 
 void vu::data::decrement_reference() {
-    this->set_reference(this->reference().value() - 1);
+    this->set_reference(this->reference() - 1);
 }
