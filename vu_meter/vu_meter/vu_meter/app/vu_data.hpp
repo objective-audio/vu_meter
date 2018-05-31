@@ -28,7 +28,5 @@ struct data : base {
 
     void set_reference(int32_t const);
     int32_t reference() const;
-    void increment_reference();
-    void decrement_reference();
 };
 }  // namespace yas::vu

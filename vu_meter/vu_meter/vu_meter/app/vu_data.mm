@@ -56,14 +56,14 @@ struct vu::data::impl : base::impl {
         this->_ref_inc_receiver = flow::receiver<>([weak_data] {
             if (auto data = weak_data.lock()) {
                 auto data_impl = data.impl_ptr<impl>();
-                data_impl->_reference_setter.send_value(data_impl->_reference.value() + 1);
+                data_impl->_reference_setter.send_value(data.reference() + 1);
             }
         });
 
         this->_ref_dec_receiver = flow::receiver<>([weak_data] {
             if (auto data = weak_data.lock()) {
                 auto data_impl = data.impl_ptr<impl>();
-                data_impl->_reference_setter.send_value(data_impl->_reference.value() - 1);
+                data_impl->_reference_setter.send_value(data.reference() - 1);
             }
         });
     }
@@ -94,12 +94,4 @@ void vu::data::set_reference(int32_t const value) {
 
 int32_t vu::data::reference() const {
     return impl_ptr<impl>()->_reference.value();
-}
-
-void vu::data::increment_reference() {
-    this->set_reference(this->reference() + 1);
-}
-
-void vu::data::decrement_reference() {
-    this->set_reference(this->reference() - 1);
 }
