@@ -22,11 +22,11 @@ struct data : base {
     data();
     data(std::nullptr_t);
 
+    void set_reference(int32_t const);
+    int32_t reference() const;
+
     flow::node<int32_t> begin_reference_flow() const;
     flow::receiver<> &reference_increment_receiver();
     flow::receiver<> &reference_decrement_receiver();
-
-    void set_reference(int32_t const);
-    int32_t reference() const;
 };
 }  // namespace yas::vu

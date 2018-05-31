@@ -76,6 +76,14 @@ vu::data::data() : base(std::make_shared<impl>()) {
 vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
+void vu::data::set_reference(int32_t const value) {
+    impl_ptr<impl>()->_reference_setter.send_value(value);
+}
+
+int32_t vu::data::reference() const {
+    return impl_ptr<impl>()->_reference.value();
+}
+
 flow::node<int32_t> vu::data::begin_reference_flow() const {
     return impl_ptr<impl>()->_reference.begin_value_flow();
 }
@@ -86,12 +94,4 @@ flow::receiver<> &vu::data::reference_increment_receiver() {
 
 flow::receiver<> &vu::data::reference_decrement_receiver() {
     return impl_ptr<impl>()->_ref_dec_receiver;
-}
-
-void vu::data::set_reference(int32_t const value) {
-    impl_ptr<impl>()->_reference_setter.send_value(value);
-}
-
-int32_t vu::data::reference() const {
-    return impl_ptr<impl>()->_reference.value();
 }
