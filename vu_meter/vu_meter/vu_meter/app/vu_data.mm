@@ -9,45 +9,80 @@ using namespace yas;
 
 namespace yas::vu {
 static NSString *const reference_key = @"reference";
-static int32_t const reference_max = 0;
-static int32_t const reference_min = -30;
+static NSString *const indicator_count_key = @"indicator_count";
+
+static int32_t constexpr reference_max = 0;
+static int32_t constexpr reference_min = -30;
+static uint32_t constexpr indicator_count_max = 8;
+static uint32_t constexpr indicator_count_min = 1;
 }
 
 struct vu::data::impl : base::impl {
     property<int32_t> _reference;
+    property<uint32_t> _indicator_count;
     flow::sender<int32_t> _reference_setter;
+    flow::sender<uint32_t> _indicator_count_setter;
     flow::receiver<> _ref_inc_receiver = nullptr;
     flow::receiver<> _ref_dec_receiver = nullptr;
     vu::data::subject_t _subject;
-    base _reference_flow = nullptr;
-    base _reference_setter_flow = nullptr;
+    std::vector<flow::observer> _flows;
 
     impl() {
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ vu::reference_key: @(-20) }];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{
+            vu::reference_key: @(-20),
+            vu::indicator_count_key: @(2)
+        }];
 
         this->_reference.set_value(
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
+        this->_indicator_count.set_value(
+            static_cast<uint32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::indicator_count_key]));
+    }
 
-        this->_reference_flow =
-            this->_reference.begin_value_flow()
-                .filter([](int32_t const &value) { return reference_min <= value && value <= reference_max; })
-                .perform([](int32_t const &value) {
-                    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                })
-                .end();
+    void setup_flows() {
+        // reference
 
-        this->_reference_setter_flow = this->_reference_setter.begin()
-                                           .map([](int32_t const &value) {
-                                               if (value < vu::reference_min) {
-                                                   return vu::reference_min;
-                                               } else if (vu::reference_max < value) {
-                                                   return vu::reference_max;
-                                               }
-                                               return value;
-                                           })
-                                           .receive(this->_reference.receiver())
-                                           .end();
+        this->_flows.emplace_back(this->_reference.begin_value_flow()
+                                      .perform([](int32_t const &value) {
+                                          [[NSUserDefaults standardUserDefaults] setInteger:value
+                                                                                     forKey:vu::reference_key];
+                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                      })
+                                      .end());
+
+        this->_flows.emplace_back(this->_reference_setter.begin()
+                                      .map([](int32_t const &value) {
+                                          if (value < vu::reference_min) {
+                                              return vu::reference_min;
+                                          } else if (vu::reference_max < value) {
+                                              return vu::reference_max;
+                                          }
+                                          return value;
+                                      })
+                                      .receive(this->_reference.receiver())
+                                      .end());
+
+        // indicator_count
+
+        this->_flows.emplace_back(this->_indicator_count.begin_value_flow()
+                                      .perform([](uint32_t const &value) {
+                                          [[NSUserDefaults standardUserDefaults] setInteger:value
+                                                                                     forKey:vu::reference_key];
+                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                      })
+                                      .end());
+
+        this->_flows.emplace_back(this->_indicator_count_setter.begin()
+                                      .map([](uint32_t const &value) {
+                                          if (value < vu::indicator_count_min) {
+                                              return vu::indicator_count_min;
+                                          } else if (vu::indicator_count_max < value) {
+                                              return vu::indicator_count_max;
+                                          }
+                                          return value;
+                                      })
+                                      .receive(this->_indicator_count.receiver())
+                                      .end());
     }
 
     void prepare() {
@@ -82,6 +117,14 @@ void vu::data::set_reference(int32_t const value) {
 
 int32_t vu::data::reference() const {
     return impl_ptr<impl>()->_reference.value();
+}
+
+void vu::data::set_indicator_count(uint32_t const value) {
+    impl_ptr<impl>()->_indicator_count_setter.send_value(value);
+}
+
+uint32_t vu::data::indicator_count() const {
+    return impl_ptr<impl>()->_indicator_count.value();
 }
 
 flow::node<int32_t> vu::data::begin_reference_flow() const {

@@ -24,6 +24,8 @@ struct data : base {
 
     void set_reference(int32_t const);
     int32_t reference() const;
+    void set_indicator_count(uint32_t const);
+    uint32_t indicator_count() const;
 
     flow::node<int32_t> begin_reference_flow() const;
     flow::receiver<> &reference_increment_receiver();
