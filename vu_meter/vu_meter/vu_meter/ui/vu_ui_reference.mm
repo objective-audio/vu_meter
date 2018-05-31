@@ -5,6 +5,7 @@
 #include "vu_ui_reference.hpp"
 #include "vu_main.hpp"
 #include "vu_ui_color.hpp"
+#include "vu_ui_utils.hpp"
 #include "yas_fast_each.h"
 #include "yas_flow_utils.h"
 
@@ -12,28 +13,6 @@ using namespace yas;
 
 namespace yas::vu {
 static ui::uint_size constexpr reference_button_size{60, 60};
-
-auto draw_button_handler(ui::uint_size const button_size, bool const is_tracking, bool const is_plus) {
-    return [button_size, is_tracking, is_plus](CGContextRef const ctx) {
-        auto base_color = vu::setting_button_base_color(is_tracking);
-        CGContextSetFillColorWithColor(
-            ctx, [UIColor colorWithRed:base_color.red green:base_color.green blue:base_color.blue alpha:1.0].CGColor);
-        CGContextFillRect(ctx, CGRectMake(0.0, 0.0, button_size.width, button_size.height));
-
-        auto text_color = vu::setting_text_color();
-        CGContextSetFillColorWithColor(
-            ctx, [UIColor colorWithRed:text_color.red green:text_color.green blue:text_color.blue alpha:1.0].CGColor);
-        CGFloat const width = button_size.width * 0.05;
-        CGFloat const length = button_size.width * 0.5;
-        CGContextFillRect(
-            ctx, CGRectMake((button_size.width - length) * 0.5, (button_size.height - width) * 0.5, length, width));
-
-        if (is_plus) {
-            CGContextFillRect(
-                ctx, CGRectMake((button_size.width - width) * 0.5, (button_size.height - length) * 0.5, width, length));
-        }
-    };
-}
 }
 
 void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
@@ -52,7 +31,8 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
     minus_node.attach_position_layout_guides(this->_minus_layout_guide_point);
 
     for (auto const is_tracking : {false, true}) {
-        auto element = texture.add_draw_handler(button_size, vu::draw_button_handler(button_size, is_tracking, false));
+        auto element =
+            texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, false));
         this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
@@ -72,7 +52,8 @@ void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture
     plus_node.attach_position_layout_guides(this->_plus_layout_guide_point);
 
     for (auto const is_tracking : {false, true}) {
-        auto element = texture.add_draw_handler(button_size, vu::draw_button_handler(button_size, is_tracking, true));
+        auto element =
+            texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, true));
         this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 
