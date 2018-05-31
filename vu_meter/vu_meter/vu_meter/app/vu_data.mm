@@ -24,6 +24,8 @@ struct vu::data::impl : base::impl {
     flow::sender<uint32_t> _indicator_count_setter;
     flow::receiver<> _ref_inc_receiver = nullptr;
     flow::receiver<> _ref_dec_receiver = nullptr;
+    flow::receiver<> _ind_inc_receiver = nullptr;
+    flow::receiver<> _ind_dec_receiver = nullptr;
     vu::data::subject_t _subject;
     std::vector<flow::observer> _flows;
 
@@ -101,6 +103,20 @@ struct vu::data::impl : base::impl {
                 data_impl->_reference_setter.send_value(data.reference() - 1);
             }
         });
+
+        this->_ind_inc_receiver = flow::receiver<>([weak_data] {
+            if (auto data = weak_data.lock()) {
+                auto data_impl = data.impl_ptr<impl>();
+                data_impl->_indicator_count_setter.send_value(data.indicator_count() + 1);
+            }
+        });
+
+        this->_ind_dec_receiver = flow::receiver<>([weak_data] {
+            if (auto data = weak_data.lock()) {
+                auto data_impl = data.impl_ptr<impl>();
+                data_impl->_indicator_count_setter.send_value(data.indicator_count() - 1);
+            }
+        });
     }
 };
 
@@ -137,4 +153,16 @@ flow::receiver<> &vu::data::reference_increment_receiver() {
 
 flow::receiver<> &vu::data::reference_decrement_receiver() {
     return impl_ptr<impl>()->_ref_dec_receiver;
+}
+
+flow::node<uint32_t> vu::data::begin_indicator_count_flow() const {
+    return impl_ptr<impl>()->_indicator_count.begin_value_flow();
+}
+
+flow::receiver<> &vu::data::indicator_count_increment_receiver() {
+    return impl_ptr<impl>()->_ind_inc_receiver;
+}
+
+flow::receiver<> &vu::data::indicator_count_decrement_receiver() {
+    return impl_ptr<impl>()->_ind_dec_receiver;
 }

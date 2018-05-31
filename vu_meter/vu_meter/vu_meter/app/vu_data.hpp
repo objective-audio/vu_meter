@@ -30,5 +30,8 @@ struct data : base {
     flow::node<int32_t> begin_reference_flow() const;
     flow::receiver<> &reference_increment_receiver();
     flow::receiver<> &reference_decrement_receiver();
+    flow::node<uint32_t> begin_indicator_count_flow() const;
+    flow::receiver<> &indicator_count_increment_receiver();
+    flow::receiver<> &indicator_count_decrement_receiver();
 };
 }  // namespace yas::vu
