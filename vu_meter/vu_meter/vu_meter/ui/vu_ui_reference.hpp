@@ -31,9 +31,10 @@ struct ui_reference {
     ui::layout_guide_point _center_guide_point;
     std::vector<flow::observer> _flows;
 
-    void _setup_minus_button(main_ptr_t &weak_main, ui::texture &texture);
-    void _setup_plus_button(main_ptr_t &weak_main, ui::texture &texture);
-    void _setup_text(main_ptr_t &main, ui::texture &texture);
+    void _setup_minus_button(ui::texture &);
+    void _setup_plus_button(ui::texture &);
+    void _setup_text(ui::texture &);
+    void _setup_flows(main_ptr_t &);
     void _setup_layout();
 
     void _update_text(int32_t const);
