@@ -20,7 +20,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     // reference
 
-    root_node.add_sub_node(this->reference.node);
+    root_node.add_sub_node(this->reference.node());
 
     this->reference.setup(main, texture);
 
@@ -28,14 +28,16 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     this->_flows.emplace_back(safe_area_guide_rect.bottom()
                                   .begin_flow()
-                                  .receive(this->reference.layout_guide_rect.bottom().receiver())
+                                  .receive(this->reference.layout_guide_rect().bottom().receiver())
                                   .map(flow::add(60.0f))
-                                  .receive(this->reference.layout_guide_rect.top().receiver())
+                                  .receive(this->reference.layout_guide_rect().top().receiver())
                                   .sync());
     this->_flows.emplace_back(
-        safe_area_guide_rect.left().begin_flow().receive(this->reference.layout_guide_rect.left().receiver()).sync());
-    this->_flows.emplace_back(
-        safe_area_guide_rect.right().begin_flow().receive(this->reference.layout_guide_rect.right().receiver()).sync());
+        safe_area_guide_rect.left().begin_flow().receive(this->reference.layout_guide_rect().left().receiver()).sync());
+    this->_flows.emplace_back(safe_area_guide_rect.right()
+                                  .begin_flow()
+                                  .receive(this->reference.layout_guide_rect().right().receiver())
+                                  .sync());
 
     // indicators
 
@@ -56,7 +58,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     this->_flows.emplace_back(safe_area_guide_rect.top()
                                   .begin_flow()
-                                  .combine(this->reference.layout_guide_rect.top().begin_flow())
+                                  .combine(this->reference.layout_guide_rect().top().begin_flow())
                                   .map(ui::justify())
                                   .receive(center_y_guide.receiver())
                                   .sync());

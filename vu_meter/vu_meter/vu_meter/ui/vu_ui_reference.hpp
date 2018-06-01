@@ -11,7 +11,7 @@
 namespace yas::vu {
 class main;
 
-struct ui_reference {
+struct ui_stepper {
     ui::node node;
     ui::button minus_button{nullptr};
     ui::button plus_button{nullptr};
@@ -38,5 +38,14 @@ struct ui_reference {
     void _setup_layout_flows();
 
     void _update_text(int32_t const);
+};
+
+struct ui_reference {
+    ui_stepper stepper;
+
+    void setup(main_ptr_t &main, ui::texture &texture);
+
+    ui::node &node();
+    ui::layout_guide_rect &layout_guide_rect();
 };
 }  // namespace yas::vu

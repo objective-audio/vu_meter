@@ -15,7 +15,7 @@ namespace yas::vu {
 static ui::uint_size constexpr reference_button_size{60, 60};
 }
 
-void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_stepper::setup(main_ptr_t &main, ui::texture &texture) {
     this->_setup_minus_button(texture);
     this->_setup_plus_button(texture);
     this->_setup_text(texture);
@@ -23,7 +23,7 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     this->_setup_layout_flows();
 }
 
-void vu::ui_reference::_setup_minus_button(ui::texture &texture) {
+void vu::ui_stepper::_setup_minus_button(ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     this->minus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
@@ -40,7 +40,7 @@ void vu::ui_reference::_setup_minus_button(ui::texture &texture) {
     }
 }
 
-void vu::ui_reference::_setup_plus_button(ui::texture &texture) {
+void vu::ui_stepper::_setup_plus_button(ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     this->plus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
@@ -57,7 +57,7 @@ void vu::ui_reference::_setup_plus_button(ui::texture &texture) {
     }
 }
 
-void vu::ui_reference::_setup_text(ui::texture &texture) {
+void vu::ui_stepper::_setup_text(ui::texture &texture) {
     this->font_atlas = ui::font_atlas{
         {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
@@ -69,17 +69,15 @@ void vu::ui_reference::_setup_text(ui::texture &texture) {
     text_node.set_color(vu::setting_text_color());
 }
 
-void vu::ui_reference::_setup_data_flows(main_ptr_t &main) {
+void vu::ui_stepper::_setup_data_flows(main_ptr_t &main) {
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
-                            .to_null()
-                            .receive(main->data.reference_decrement_receiver())
+                            .receive_null(main->data.reference_decrement_receiver())
                             .end();
 
     this->_plus_flow = this->plus_button.subject()
                            .begin_flow(ui::button::method::ended)
-                           .to_null()
-                           .receive(main->data.reference_increment_receiver())
+                           .receive_null(main->data.reference_increment_receiver())
                            .end();
 
     this->_data_flow = main->data.begin_reference_flow()
@@ -88,7 +86,7 @@ void vu::ui_reference::_setup_data_flows(main_ptr_t &main) {
                            .sync();
 }
 
-void vu::ui_reference::_setup_layout_flows() {
+void vu::ui_stepper::_setup_layout_flows() {
     this->_flows.emplace_back(this->layout_guide_rect.left()
                                   .begin_flow()
                                   .combine(this->layout_guide_rect.right().begin_flow())
@@ -127,4 +125,18 @@ void vu::ui_reference::_setup_layout_flows() {
                                   .map(flow::add(text_distance))
                                   .receive(this->_text_layout_guide_point.y().receiver())
                                   .sync());
+}
+
+#pragma mark -
+
+void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
+    this->stepper.setup(main, texture);
+}
+
+ui::node &vu::ui_reference::node() {
+    return this->stepper.node;
+}
+
+ui::layout_guide_rect &vu::ui_reference::layout_guide_rect() {
+    return this->stepper.layout_guide_rect;
 }
