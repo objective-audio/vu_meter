@@ -19,7 +19,8 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
     this->_setup_minus_button(texture);
     this->_setup_plus_button(texture);
     this->_setup_text(texture);
-    this->_setup_layout();
+    this->_setup_data_flows(main);
+    this->_setup_layout_flows();
 }
 
 void vu::ui_reference::_setup_minus_button(ui::texture &texture) {
@@ -68,7 +69,7 @@ void vu::ui_reference::_setup_text(ui::texture &texture) {
     text_node.set_color(vu::setting_text_color());
 }
 
-void vu::ui_reference::_setup_flows(main_ptr_t &main) {
+void vu::ui_reference::_setup_data_flows(main_ptr_t &main) {
     this->_minus_flow = this->minus_button.subject()
                             .begin_flow(ui::button::method::ended)
                             .to_null()
@@ -87,7 +88,7 @@ void vu::ui_reference::_setup_flows(main_ptr_t &main) {
                            .sync();
 }
 
-void vu::ui_reference::_setup_layout() {
+void vu::ui_reference::_setup_layout_flows() {
     this->_flows.emplace_back(this->layout_guide_rect.left()
                                   .begin_flow()
                                   .combine(this->layout_guide_rect.right().begin_flow())
