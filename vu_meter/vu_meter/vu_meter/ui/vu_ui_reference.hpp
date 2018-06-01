@@ -13,8 +13,8 @@ class main;
 
 struct ui_reference {
     ui::node node;
-    ui::button minus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
-    ui::button plus_button{ui::region::zero_centered(ui::size{60.0f, 60.0f})};
+    ui::button minus_button{nullptr};
+    ui::button plus_button{nullptr};
     ui::font_atlas font_atlas{nullptr};
     ui::strings text{nullptr};
     ui::layout_guide_rect layout_guide_rect;

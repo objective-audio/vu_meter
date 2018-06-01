@@ -25,6 +25,9 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
 void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
+    this->minus_button = ui::button{ui::region::zero_centered(
+        ui::size{static_cast<float>(button_size.width), static_cast<float>(button_size.height)})};
+
     ui::node &minus_node = this->minus_button.rect_plane().node();
     minus_node.mesh().set_texture(texture);
     this->node.add_sub_node(minus_node);
@@ -45,6 +48,9 @@ void vu::ui_reference::_setup_minus_button(main_ptr_t &main, ui::texture &textur
 
 void vu::ui_reference::_setup_plus_button(main_ptr_t &main, ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
+
+    this->plus_button = ui::button{ui::region::zero_centered(
+        ui::size{static_cast<float>(button_size.width), static_cast<float>(button_size.height)})};
 
     ui::node &plus_node = this->plus_button.rect_plane().node();
     plus_node.mesh().set_texture(texture);
