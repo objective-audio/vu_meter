@@ -41,11 +41,12 @@ struct ui_stepper {
 };
 
 struct ui_reference {
-    ui_stepper stepper;
-
     void setup(main_ptr_t &main, ui::texture &texture);
 
     ui::node &node();
     ui::layout_guide_rect &layout_guide_rect();
+
+   private:
+    ui_stepper _stepper;
 };
 }  // namespace yas::vu

@@ -130,13 +130,13 @@ void vu::ui_stepper::_setup_layout_flows() {
 #pragma mark -
 
 void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
-    this->stepper.setup(main, texture);
+    this->_stepper.setup(main, texture);
 }
 
 ui::node &vu::ui_reference::node() {
-    return this->stepper.node;
+    return this->_stepper.node;
 }
 
 ui::layout_guide_rect &vu::ui_reference::layout_guide_rect() {
-    return this->stepper.layout_guide_rect;
+    return this->_stepper.layout_guide_rect;
 }
