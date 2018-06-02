@@ -69,6 +69,14 @@ void vu::ui_stepper::_setup_text(ui::texture &texture) {
 }
 
 void vu::ui_stepper::_setup_flows() {
+    this->_flows.emplace_back(this->_minus_enabled_setter.begin()
+                                  .receive(this->_minus_button.rect_plane().node().collider().enabled_receiver())
+                                  .end());
+
+    this->_flows.emplace_back(this->_plus_enabled_setter.begin()
+                                  .receive(this->_plus_button.rect_plane().node().collider().enabled_receiver())
+                                  .end());
+
     this->_flows.emplace_back(this->layout_guide_rect.left()
                                   .begin_flow()
                                   .combine(this->layout_guide_rect.right().begin_flow())
@@ -119,6 +127,14 @@ auto vu::ui_stepper::begin_plus_flow() {
 
 flow::receiver<std::string> &vu::ui_stepper::text_receiver() {
     return this->_text.text_receiver();
+}
+
+flow::receiver<bool> &vu::ui_stepper::minus_enabled_receiver() {
+    return this->_minus_enabled_setter.receiver();
+}
+
+flow::receiver<bool> &vu::ui_stepper::plus_enabled_receiver() {
+    return this->_plus_enabled_setter.receiver();
 }
 
 #pragma mark -

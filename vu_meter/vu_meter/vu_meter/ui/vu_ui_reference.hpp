@@ -20,6 +20,8 @@ struct ui_stepper {
     auto begin_minus_flow();
     auto begin_plus_flow();
     flow::receiver<std::string> &text_receiver();
+    flow::receiver<bool> &minus_enabled_receiver();
+    flow::receiver<bool> &plus_enabled_receiver();
 
    private:
     ui::button _minus_button{nullptr};
@@ -31,6 +33,8 @@ struct ui_stepper {
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;
     ui::layout_guide_point _center_guide_point;
+    flow::sender<bool> _minus_enabled_setter;
+    flow::sender<bool> _plus_enabled_setter;
     std::vector<flow::observer> _flows;
 
     void _setup_minus_button(ui::texture &);
