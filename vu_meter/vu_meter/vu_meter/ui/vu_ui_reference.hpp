@@ -31,7 +31,7 @@ struct ui_stepper {
     void _setup_minus_button(ui::texture &);
     void _setup_plus_button(ui::texture &);
     void _setup_text(ui::texture &);
-    void _setup_layout_flows();
+    void _setup_flows();
 
     void _update_text(int32_t const);
 };
@@ -46,6 +46,6 @@ struct ui_reference {
     ui_stepper _stepper;
     std::vector<flow::observer> _flows;
 
-    void _setup_data_flows(main_ptr_t &);
+    void _setup_flows(main_ptr_t &);
 };
 }  // namespace yas::vu
