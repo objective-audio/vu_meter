@@ -32,8 +32,11 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                                   .map(flow::add(60.0f))
                                   .receive(this->reference.layout_guide_rect().top().receiver())
                                   .sync());
-    this->_flows.emplace_back(
-        safe_area_guide_rect.left().begin_flow().receive(this->reference.layout_guide_rect().left().receiver()).sync());
+    this->_flows.emplace_back(safe_area_guide_rect.right()
+                                  .begin_flow()
+                                  .map([](float const &value) { return value - 300.0f; })
+                                  .receive(this->reference.layout_guide_rect().left().receiver())
+                                  .sync());
     this->_flows.emplace_back(safe_area_guide_rect.right()
                                   .begin_flow()
                                   .receive(this->reference.layout_guide_rect().right().receiver())
