@@ -31,6 +31,7 @@ void vu::ui_reference::_setup_flows(main_ptr_t &main) {
                                   .map([](bool const &value) { return !value; })
                                   .receive(this->_stepper.plus_enabled_receiver())
                                   .sync());
+
     this->_flows.emplace_back(main->data.begin_is_reference_min_flow()
                                   .map([](bool const &value) { return !value; })
                                   .receive(this->_stepper.minus_enabled_receiver())
