@@ -7,6 +7,7 @@
 #include <array>
 #include "vu_types.h"
 #include "vu_ui_indicator.hpp"
+#include "vu_ui_indicator_count.hpp"
 #include "vu_ui_reference.hpp"
 #include "yas_ui.h"
 
@@ -17,6 +18,7 @@ struct ui_main {
     ui::renderer renderer{nullptr};
 
     ui_reference reference;
+    ui_indicator_count indicator_count;
     std::array<ui_indicator, 2> indicators;
 
     void setup(ui::renderer &&renderer, main_ptr_t &main);

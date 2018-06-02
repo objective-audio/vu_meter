@@ -1,5 +1,5 @@
 //
-//  vu_ui_count.hpp
+//  vu_ui_indicator_count.hpp
 //
 
 #pragma once
@@ -10,7 +10,7 @@
 namespace yas::vu {
 class main;
 
-struct ui_count {
+struct ui_indicator_count {
     void setup(main_ptr_t &main, ui::texture &texture);
 
     ui::node &node();

@@ -1,19 +1,19 @@
 //
-//  vu_ui_count.mm
+//  vu_ui_indicator_count.mm
 //
 
-#include "vu_ui_count.hpp"
+#include "vu_ui_indicator_count.hpp"
 #include "vu_data.hpp"
 #include "vu_main.hpp"
 
 using namespace yas;
 
-void vu::ui_count::setup(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_indicator_count::setup(main_ptr_t &main, ui::texture &texture) {
     this->_stepper.setup(texture);
     this->_setup_flows(main);
 }
 
-void vu::ui_count::_setup_flows(main_ptr_t &main) {
+void vu::ui_indicator_count::_setup_flows(main_ptr_t &main) {
     this->_flows.emplace_back(
         this->_stepper.begin_minus_flow().receive_null(main->data.indicator_count_decrement_receiver()).end());
 
@@ -36,10 +36,10 @@ void vu::ui_count::_setup_flows(main_ptr_t &main) {
                                   .sync());
 }
 
-ui::node &vu::ui_count::node() {
+ui::node &vu::ui_indicator_count::node() {
     return this->_stepper.node;
 }
 
-ui::layout_guide_rect &vu::ui_count::layout_guide_rect() {
+ui::layout_guide_rect &vu::ui_indicator_count::layout_guide_rect() {
     return this->_stepper.layout_guide_rect;
 }

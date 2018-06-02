@@ -18,13 +18,13 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     ui::node &root_node = this->renderer.root_node();
 
+    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
+
     // reference
 
     root_node.add_sub_node(this->reference.node());
 
     this->reference.setup(main, texture);
-
-    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     this->_flows.emplace_back(safe_area_guide_rect.bottom()
                                   .begin_flow()
@@ -40,6 +40,28 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_flows.emplace_back(safe_area_guide_rect.right()
                                   .begin_flow()
                                   .receive(this->reference.layout_guide_rect().right().receiver())
+                                  .sync());
+
+    // indicator_count
+
+    root_node.add_sub_node(this->indicator_count.node());
+
+    this->indicator_count.setup(main, texture);
+
+    this->_flows.emplace_back(safe_area_guide_rect.bottom()
+                                  .begin_flow()
+                                  .receive(this->indicator_count.layout_guide_rect().bottom().receiver())
+                                  .map(flow::add(60.0f))
+                                  .receive(this->indicator_count.layout_guide_rect().top().receiver())
+                                  .sync());
+    this->_flows.emplace_back(safe_area_guide_rect.left()
+                                  .begin_flow()
+                                  .receive(this->indicator_count.layout_guide_rect().left().receiver())
+                                  .sync());
+    this->_flows.emplace_back(safe_area_guide_rect.left()
+                                  .begin_flow()
+                                  .map([](float const &value) { return value + 300.0f; })
+                                  .receive(this->indicator_count.layout_guide_rect().right().receiver())
                                   .sync());
 
     // indicators
