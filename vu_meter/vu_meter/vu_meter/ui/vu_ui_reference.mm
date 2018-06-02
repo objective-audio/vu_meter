@@ -70,10 +70,20 @@ void vu::ui_stepper::_setup_text(ui::texture &texture) {
 
 void vu::ui_stepper::_setup_flows() {
     this->_flows.emplace_back(this->_minus_enabled_setter.begin()
+                                  .perform([this](bool const &value) {
+                                      if (!value) {
+                                          this->_minus_button.cancel_tracking();
+                                      }
+                                  })
                                   .receive(this->_minus_button.rect_plane().node().collider().enabled_receiver())
                                   .end());
 
     this->_flows.emplace_back(this->_plus_enabled_setter.begin()
+                                  .perform([this](bool const &value) {
+                                      if (!value) {
+                                          this->_plus_button.cancel_tracking();
+                                      }
+                                  })
                                   .receive(this->_plus_button.rect_plane().node().collider().enabled_receiver())
                                   .end());
 

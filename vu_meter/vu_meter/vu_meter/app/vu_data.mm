@@ -19,6 +19,8 @@ static uint32_t constexpr indicator_count_min = 1;
 
 struct vu::data::impl : base::impl {
     property<int32_t> _reference;
+    property<bool> _is_reference_max;
+    property<bool> _is_reference_min;
     property<uint32_t> _indicator_count;
     flow::sender<int32_t> _reference_setter;
     flow::sender<uint32_t> _indicator_count_setter;
@@ -65,6 +67,16 @@ struct vu::data::impl : base::impl {
                                       })
                                       .receive(this->_reference.receiver())
                                       .end());
+
+        this->_flows.emplace_back(this->_reference.begin_value_flow()
+                                      .map([](int32_t const &value) { return value == vu::reference_max; })
+                                      .receive(this->_is_reference_max.receiver())
+                                      .sync());
+
+        this->_flows.emplace_back(this->_reference.begin_value_flow()
+                                      .map([](int32_t const &value) { return value == vu::reference_min; })
+                                      .receive(this->_is_reference_min.receiver())
+                                      .sync());
 
         // indicator_count
 
@@ -147,6 +159,14 @@ uint32_t vu::data::indicator_count() const {
 
 flow::node<int32_t> vu::data::begin_reference_flow() const {
     return impl_ptr<impl>()->_reference.begin_value_flow();
+}
+
+flow::node<bool> vu::data::begin_is_reference_max_flow() const {
+    return impl_ptr<impl>()->_is_reference_max.begin_value_flow();
+}
+
+flow::node<bool> vu::data::begin_is_reference_min_flow() const {
+    return impl_ptr<impl>()->_is_reference_min.begin_value_flow();
 }
 
 flow::receiver<> &vu::data::reference_increment_receiver() {
