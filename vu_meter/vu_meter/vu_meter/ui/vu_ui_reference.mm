@@ -109,6 +109,10 @@ void vu::ui_stepper::_setup_flows() {
                                   .sync());
 }
 
+flow::receiver<std::string> &vu::ui_stepper::text_receiver() {
+    return this->text.text_receiver();
+}
+
 #pragma mark -
 
 void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
@@ -129,7 +133,7 @@ void vu::ui_reference::_setup_flows(main_ptr_t &main) {
 
     this->_flows.emplace_back(main->data.begin_reference_flow()
                                   .map([this](int32_t const &value) { return std::to_string(value) + " dB"; })
-                                  .receive(this->_stepper.text.text_receiver())
+                                  .receive(this->_stepper.text_receiver())
                                   .sync());
 }
 

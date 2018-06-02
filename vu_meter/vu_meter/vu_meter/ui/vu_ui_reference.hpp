@@ -21,6 +21,8 @@ struct ui_stepper {
 
     void setup(ui::texture &texture);
 
+    flow::receiver<std::string> &text_receiver();
+
    private:
     ui::layout_guide_point _minus_layout_guide_point;
     ui::layout_guide_point _plus_layout_guide_point;
