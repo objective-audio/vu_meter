@@ -22,8 +22,8 @@ struct vu::data::impl : base::impl {
     property<uint32_t> _indicator_count;
     flow::sender<int32_t> _reference_setter;
     flow::sender<uint32_t> _indicator_count_setter;
-    flow::receiver<> _ref_inc_receiver = nullptr;
-    flow::receiver<> _ref_dec_receiver = nullptr;
+    flow::sender<std::nullptr_t> _ref_inc_sender;
+    flow::sender<std::nullptr_t> _ref_dec_sender;
     flow::receiver<> _ind_inc_receiver = nullptr;
     flow::receiver<> _ind_dec_receiver = nullptr;
     vu::data::subject_t _subject;
@@ -90,19 +90,19 @@ struct vu::data::impl : base::impl {
     void prepare() {
         auto weak_data = to_weak(cast<vu::data>());
 
-        this->_ref_inc_receiver = flow::receiver<>([weak_data] {
-            if (auto data = weak_data.lock()) {
-                auto data_impl = data.impl_ptr<impl>();
-                data_impl->_reference_setter.send_value(data.reference() + 1);
-            }
-        });
+        this->_flows.emplace_back(
+            this->_ref_inc_sender.begin()
+                .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
+                .map([weak_data](std::nullptr_t const &) { return int32_t(weak_data.lock().reference() + 1); })
+                .receive(this->_reference_setter.receiver())
+                .end());
 
-        this->_ref_dec_receiver = flow::receiver<>([weak_data] {
-            if (auto data = weak_data.lock()) {
-                auto data_impl = data.impl_ptr<impl>();
-                data_impl->_reference_setter.send_value(data.reference() - 1);
-            }
-        });
+        this->_flows.emplace_back(
+            this->_ref_dec_sender.begin()
+                .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
+                .map([weak_data](std::nullptr_t const &) { return int32_t(weak_data.lock().reference() - 1); })
+                .receive(this->_reference_setter.receiver())
+                .end());
 
         this->_ind_inc_receiver = flow::receiver<>([weak_data] {
             if (auto data = weak_data.lock()) {
@@ -148,11 +148,11 @@ flow::node<int32_t> vu::data::begin_reference_flow() const {
 }
 
 flow::receiver<> &vu::data::reference_increment_receiver() {
-    return impl_ptr<impl>()->_ref_inc_receiver;
+    return impl_ptr<impl>()->_ref_inc_sender.receiver();
 }
 
 flow::receiver<> &vu::data::reference_decrement_receiver() {
-    return impl_ptr<impl>()->_ref_dec_receiver;
+    return impl_ptr<impl>()->_ref_dec_sender.receiver();
 }
 
 flow::node<uint32_t> vu::data::begin_indicator_count_flow() const {
