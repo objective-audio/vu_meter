@@ -109,6 +109,14 @@ void vu::ui_stepper::_setup_flows() {
                                   .sync());
 }
 
+auto vu::ui_stepper::begin_minus_flow() {
+    return this->minus_button.subject().begin_flow(ui::button::method::ended);
+}
+
+auto vu::ui_stepper::begin_plus_flow() {
+    return this->plus_button.subject().begin_flow(ui::button::method::ended);
+}
+
 flow::receiver<std::string> &vu::ui_stepper::text_receiver() {
     return this->text.text_receiver();
 }
@@ -121,15 +129,11 @@ void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
 }
 
 void vu::ui_reference::_setup_flows(main_ptr_t &main) {
-    this->_flows.emplace_back(this->_stepper.minus_button.subject()
-                                  .begin_flow(ui::button::method::ended)
-                                  .receive_null(main->data.reference_decrement_receiver())
-                                  .end());
+    this->_flows.emplace_back(
+        this->_stepper.begin_minus_flow().receive_null(main->data.reference_decrement_receiver()).end());
 
-    this->_flows.emplace_back(this->_stepper.plus_button.subject()
-                                  .begin_flow(ui::button::method::ended)
-                                  .receive_null(main->data.reference_increment_receiver())
-                                  .end());
+    this->_flows.emplace_back(
+        this->_stepper.begin_plus_flow().receive_null(main->data.reference_increment_receiver()).end());
 
     this->_flows.emplace_back(main->data.begin_reference_flow()
                                   .map([this](int32_t const &value) { return std::to_string(value) + " dB"; })
