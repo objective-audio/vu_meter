@@ -32,7 +32,10 @@ struct data : base {
     flow::node<bool> begin_is_reference_min_flow() const;
     flow::receiver<> &reference_increment_receiver();
     flow::receiver<> &reference_decrement_receiver();
+
     flow::node<uint32_t> begin_indicator_count_flow() const;
+    flow::node<bool> begin_is_indicator_count_max_flow() const;
+    flow::node<bool> begin_is_indicator_count_min_flow() const;
     flow::receiver<> &indicator_count_increment_receiver();
     flow::receiver<> &indicator_count_decrement_receiver();
 };

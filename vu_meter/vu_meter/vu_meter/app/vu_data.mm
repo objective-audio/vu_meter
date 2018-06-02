@@ -22,12 +22,14 @@ struct vu::data::impl : base::impl {
     property<bool> _is_reference_max;
     property<bool> _is_reference_min;
     property<uint32_t> _indicator_count;
+    property<bool> _is_indicator_count_max;
+    property<bool> _is_indicator_count_min;
     flow::sender<int32_t> _reference_setter;
     flow::sender<uint32_t> _indicator_count_setter;
-    flow::sender<std::nullptr_t> _ref_inc_sender;
-    flow::sender<std::nullptr_t> _ref_dec_sender;
-    flow::sender<std::nullptr_t> _ind_inc_sender;
-    flow::sender<std::nullptr_t> _ind_dec_sender;
+    flow::sender<std::nullptr_t> _reference_increment_sender;
+    flow::sender<std::nullptr_t> _reference_decrement_sender;
+    flow::sender<std::nullptr_t> _indicator_increment_sender;
+    flow::sender<std::nullptr_t> _indicator_decrement_sender;
     vu::data::subject_t _subject;
     std::vector<flow::observer> _flows;
 
@@ -99,34 +101,44 @@ struct vu::data::impl : base::impl {
                                       })
                                       .receive(this->_indicator_count.receiver())
                                       .end());
+
+        this->_flows.emplace_back(this->_indicator_count.begin_value_flow()
+                                      .map([](uint32_t const &value) { return value == vu::indicator_count_max; })
+                                      .receive(this->_is_indicator_count_max.receiver())
+                                      .sync());
+
+        this->_flows.emplace_back(this->_indicator_count.begin_value_flow()
+                                      .map([](uint32_t const &value) { return value == vu::indicator_count_min; })
+                                      .receive(this->_is_indicator_count_min.receiver())
+                                      .sync());
     }
 
     void prepare() {
         auto weak_data = to_weak(cast<vu::data>());
 
         this->_flows.emplace_back(
-            this->_ref_inc_sender.begin()
+            this->_reference_increment_sender.begin()
                 .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
                 .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference() + 1; })
                 .receive(this->_reference_setter.receiver())
                 .end());
 
         this->_flows.emplace_back(
-            this->_ref_dec_sender.begin()
+            this->_reference_decrement_sender.begin()
                 .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
                 .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference() - 1; })
                 .receive(this->_reference_setter.receiver())
                 .end());
 
         this->_flows.emplace_back(
-            this->_ind_inc_sender.begin()
+            this->_indicator_increment_sender.begin()
                 .filter([weak_data](auto const &) { return !!weak_data; })
                 .map([weak_data](std::nullptr_t const &) { return weak_data.lock().indicator_count() + 1; })
                 .receive(this->_indicator_count_setter.receiver())
                 .end());
 
         this->_flows.emplace_back(
-            this->_ind_dec_sender.begin()
+            this->_indicator_decrement_sender.begin()
                 .filter([weak_data](auto const &) { return !!weak_data; })
                 .map([weak_data](std::nullptr_t const &) { return weak_data.lock().indicator_count() - 1; })
                 .receive(this->_indicator_count_setter.receiver())
@@ -170,21 +182,29 @@ flow::node<bool> vu::data::begin_is_reference_min_flow() const {
 }
 
 flow::receiver<> &vu::data::reference_increment_receiver() {
-    return impl_ptr<impl>()->_ref_inc_sender.receiver();
+    return impl_ptr<impl>()->_reference_increment_sender.receiver();
 }
 
 flow::receiver<> &vu::data::reference_decrement_receiver() {
-    return impl_ptr<impl>()->_ref_dec_sender.receiver();
+    return impl_ptr<impl>()->_reference_decrement_sender.receiver();
 }
 
 flow::node<uint32_t> vu::data::begin_indicator_count_flow() const {
     return impl_ptr<impl>()->_indicator_count.begin_value_flow();
 }
 
+flow::node<bool> vu::data::begin_is_indicator_count_max_flow() const {
+    return impl_ptr<impl>()->_is_indicator_count_max.begin_value_flow();
+}
+
+flow::node<bool> vu::data::begin_is_indicator_count_min_flow() const {
+    return impl_ptr<impl>()->_is_indicator_count_min.begin_value_flow();
+}
+
 flow::receiver<> &vu::data::indicator_count_increment_receiver() {
-    return impl_ptr<impl>()->_ind_inc_sender.receiver();
+    return impl_ptr<impl>()->_indicator_increment_sender.receiver();
 }
 
 flow::receiver<> &vu::data::indicator_count_decrement_receiver() {
-    return impl_ptr<impl>()->_ind_dec_sender.receiver();
+    return impl_ptr<impl>()->_indicator_decrement_sender.receiver();
 }
