@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "vu_data.hpp"
-#include "vu_types.h"
 #include "vu_ui_stepper.hpp"
 #include "yas_ui.h"
 

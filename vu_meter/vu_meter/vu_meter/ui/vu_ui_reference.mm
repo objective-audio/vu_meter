@@ -3,6 +3,7 @@
 //
 
 #include "vu_ui_reference.hpp"
+#include "vu_data.hpp"
 #include "vu_main.hpp"
 
 using namespace yas;
