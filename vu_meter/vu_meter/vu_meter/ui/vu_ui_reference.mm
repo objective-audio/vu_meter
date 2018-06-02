@@ -25,9 +25,9 @@ void vu::ui_stepper::setup(ui::texture &texture) {
 void vu::ui_stepper::_setup_minus_button(ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
-    this->minus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
+    this->_minus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
 
-    ui::node &minus_node = this->minus_button.rect_plane().node();
+    ui::node &minus_node = this->_minus_button.rect_plane().node();
     minus_node.mesh().set_texture(texture);
     this->node.add_sub_node(minus_node);
     minus_node.attach_position_layout_guides(this->_minus_layout_guide_point);
@@ -35,16 +35,16 @@ void vu::ui_stepper::_setup_minus_button(ui::texture &texture) {
     for (auto const is_tracking : {false, true}) {
         auto element =
             texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, false));
-        this->minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        this->_minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 }
 
 void vu::ui_stepper::_setup_plus_button(ui::texture &texture) {
     ui::uint_size const button_size = vu::reference_button_size;
 
-    this->plus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
+    this->_plus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
 
-    ui::node &plus_node = this->plus_button.rect_plane().node();
+    ui::node &plus_node = this->_plus_button.rect_plane().node();
     plus_node.mesh().set_texture(texture);
     this->node.add_sub_node(plus_node);
     plus_node.attach_position_layout_guides(this->_plus_layout_guide_point);
@@ -52,17 +52,17 @@ void vu::ui_stepper::_setup_plus_button(ui::texture &texture) {
     for (auto const is_tracking : {false, true}) {
         auto element =
             texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, true));
-        this->plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        this->_plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
     }
 }
 
 void vu::ui_stepper::_setup_text(ui::texture &texture) {
-    this->font_atlas = ui::font_atlas{
+    this->_font_atlas = ui::font_atlas{
         {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
 
-    this->text =
-        ui::strings{{.max_word_count = 10, .font_atlas = this->font_atlas, .alignment = ui::layout_alignment::mid}};
-    ui::node &text_node = this->text.rect_plane().node();
+    this->_text =
+        ui::strings{{.max_word_count = 10, .font_atlas = this->_font_atlas, .alignment = ui::layout_alignment::mid}};
+    ui::node &text_node = this->_text.rect_plane().node();
     this->node.add_sub_node(text_node);
     text_node.attach_position_layout_guides(this->_text_layout_guide_point);
     text_node.set_color(vu::setting_text_color());
@@ -99,7 +99,7 @@ void vu::ui_stepper::_setup_flows() {
     this->_flows.emplace_back(
         this->_center_guide_point.y().begin_flow().receive(this->_plus_layout_guide_point.y().receiver()).sync());
 
-    float const text_distance = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
+    float const text_distance = (this->_font_atlas.ascent() + this->_font_atlas.descent()) * 0.5;
     this->_flows.emplace_back(
         this->_center_guide_point.x().begin_flow().receive(this->_text_layout_guide_point.x().receiver()).sync());
     this->_flows.emplace_back(this->_center_guide_point.y()
@@ -110,15 +110,15 @@ void vu::ui_stepper::_setup_flows() {
 }
 
 auto vu::ui_stepper::begin_minus_flow() {
-    return this->minus_button.subject().begin_flow(ui::button::method::ended);
+    return this->_minus_button.subject().begin_flow(ui::button::method::ended);
 }
 
 auto vu::ui_stepper::begin_plus_flow() {
-    return this->plus_button.subject().begin_flow(ui::button::method::ended);
+    return this->_plus_button.subject().begin_flow(ui::button::method::ended);
 }
 
 flow::receiver<std::string> &vu::ui_stepper::text_receiver() {
-    return this->text.text_receiver();
+    return this->_text.text_receiver();
 }
 
 #pragma mark -

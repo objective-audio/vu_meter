@@ -13,10 +13,6 @@ class main;
 
 struct ui_stepper {
     ui::node node;
-    ui::button minus_button{nullptr};
-    ui::button plus_button{nullptr};
-    ui::font_atlas font_atlas{nullptr};
-    ui::strings text{nullptr};
     ui::layout_guide_rect layout_guide_rect;
 
     void setup(ui::texture &texture);
@@ -26,6 +22,11 @@ struct ui_stepper {
     flow::receiver<std::string> &text_receiver();
 
    private:
+    ui::button _minus_button{nullptr};
+    ui::button _plus_button{nullptr};
+    ui::font_atlas _font_atlas{nullptr};
+    ui::strings _text{nullptr};
+
     ui::layout_guide_point _minus_layout_guide_point;
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;
