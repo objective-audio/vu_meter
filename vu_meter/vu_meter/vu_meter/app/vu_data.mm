@@ -39,6 +39,8 @@ struct vu::data::impl : base::impl {
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
         this->_indicator_count.set_value(
             static_cast<uint32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::indicator_count_key]));
+
+        this->setup_flows();
     }
 
     void setup_flows() {
