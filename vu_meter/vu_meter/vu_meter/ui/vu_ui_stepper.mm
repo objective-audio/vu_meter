@@ -99,17 +99,17 @@ void vu::ui_stepper::_setup_flows() {
                                   .receive(this->_center_guide_point.y().receiver())
                                   .sync());
 
-    this->_flows.emplace_back(this->_center_guide_point.x()
+    this->_flows.emplace_back(this->layout_guide_rect.left()
                                   .begin_flow()
-                                  .map(flow::add(-100.0f))
+                                  .map(flow::add(static_cast<float>(vu::reference_button_size.width / 2)))
                                   .receive(this->_minus_layout_guide_point.x().receiver())
                                   .sync());
     this->_flows.emplace_back(
         this->_center_guide_point.y().begin_flow().receive(this->_minus_layout_guide_point.y().receiver()).sync());
 
-    this->_flows.emplace_back(this->_center_guide_point.x()
+    this->_flows.emplace_back(this->layout_guide_rect.right()
                                   .begin_flow()
-                                  .map(flow::add(100.0f))
+                                  .map(flow::add(-static_cast<float>(vu::reference_button_size.width / 2)))
                                   .receive(this->_plus_layout_guide_point.x().receiver())
                                   .sync());
     this->_flows.emplace_back(
