@@ -8,8 +8,8 @@
 
 using namespace yas;
 
-void vu::ui_indicator_count::setup(main_ptr_t &main, ui::texture &texture) {
-    this->_stepper.setup(texture);
+void vu::ui_indicator_count::setup(main_ptr_t &main, ui_stepper_resource &resource) {
+    this->_stepper.setup(resource);
     this->_setup_flows(main);
 }
 

@@ -11,7 +11,7 @@ namespace yas::vu {
 class main;
 
 struct ui_reference {
-    void setup(main_ptr_t &main, ui::texture &texture);
+    void setup(main_ptr_t &, ui_stepper_resource &);
 
     ui::node &node();
     ui::layout_guide_rect &layout_guide_rect();

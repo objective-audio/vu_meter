@@ -14,8 +14,9 @@ struct ui_stepper_resource : base {
     ui_stepper_resource(ui::texture &texture);
     ui_stepper_resource(std::nullptr_t);
 
-    std::vector<ui::texture_element> const &minus_elements();
-    std::vector<ui::texture_element> const &plus_elements();
+    ui::texture &texture();
+    std::vector<ui::texture_element> &minus_elements();
+    std::vector<ui::texture_element> &plus_elements();
     ui::font_atlas const &font_atlas();
 };
 
@@ -26,7 +27,7 @@ struct ui_stepper {
     ui::node node;
     ui::layout_guide_rect layout_guide_rect;
 
-    void setup(ui::texture &texture);
+    void setup(ui_stepper_resource &);
 
     button_flow_t begin_minus_flow();
     button_flow_t begin_plus_flow();
@@ -48,9 +49,9 @@ struct ui_stepper {
     flow::sender<bool> _plus_enabled_setter;
     std::vector<flow::observer> _flows;
 
-    void _setup_minus_button(ui::texture &);
-    void _setup_plus_button(ui::texture &);
-    void _setup_text(ui::texture &);
+    void _setup_minus_button(ui_stepper_resource &);
+    void _setup_plus_button(ui_stepper_resource &);
+    void _setup_text(ui_stepper_resource &);
     void _setup_flows();
 
     void _update_text(int32_t const);

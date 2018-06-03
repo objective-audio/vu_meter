@@ -10,8 +10,8 @@ using namespace yas;
 
 #pragma mark -
 
-void vu::ui_reference::setup(main_ptr_t &main, ui::texture &texture) {
-    this->_stepper.setup(texture);
+void vu::ui_reference::setup(main_ptr_t &main, ui_stepper_resource &resource) {
+    this->_stepper.setup(resource);
     this->_setup_flows(main);
 }
 

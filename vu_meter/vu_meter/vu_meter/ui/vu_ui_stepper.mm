@@ -16,12 +16,14 @@ static ui::uint_size constexpr reference_button_size{60, 60};
 #pragma mark - ui_stepper_resource
 
 struct vu::ui_stepper_resource::impl : base::impl {
+    ui::texture _texture;
     std::vector<ui::texture_element> _minus_elements;
     std::vector<ui::texture_element> _plus_elements;
     ui::font_atlas _font_atlas;
 
     impl(ui::texture &texture)
-        : _font_atlas(
+        : _texture(texture),
+          _font_atlas(
               {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}) {
         ui::uint_size const button_size = vu::reference_button_size;
 
@@ -40,11 +42,15 @@ vu::ui_stepper_resource::ui_stepper_resource(ui::texture &texture) : base(std::m
 vu::ui_stepper_resource::ui_stepper_resource(std::nullptr_t) : base(nullptr) {
 }
 
-std::vector<ui::texture_element> const &vu::ui_stepper_resource::minus_elements() {
+ui ::texture &vu::ui_stepper_resource::texture() {
+    return impl_ptr<impl>()->_texture;
+}
+
+std::vector<ui::texture_element> &vu::ui_stepper_resource::minus_elements() {
     return impl_ptr<impl>()->_minus_elements;
 }
 
-std::vector<ui::texture_element> const &vu::ui_stepper_resource::plus_elements() {
+std::vector<ui::texture_element> &vu::ui_stepper_resource::plus_elements() {
     return impl_ptr<impl>()->_plus_elements;
 }
 
@@ -54,50 +60,47 @@ ui::font_atlas const &vu::ui_stepper_resource::font_atlas() {
 
 #pragma mark - ui_stepper
 
-void vu::ui_stepper::setup(ui::texture &texture) {
-    this->_setup_minus_button(texture);
-    this->_setup_plus_button(texture);
-    this->_setup_text(texture);
+void vu::ui_stepper::setup(ui_stepper_resource &resource) {
+    this->_setup_minus_button(resource);
+    this->_setup_plus_button(resource);
+    this->_setup_text(resource);
     this->_setup_flows();
 }
 
-void vu::ui_stepper::_setup_minus_button(ui::texture &texture) {
+void vu::ui_stepper::_setup_minus_button(ui_stepper_resource &resource) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     this->_minus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
 
     ui::node &minus_node = this->_minus_button.rect_plane().node();
-    minus_node.mesh().set_texture(texture);
+    minus_node.mesh().set_texture(resource.texture());
     this->node.add_sub_node(minus_node);
     minus_node.attach_position_layout_guides(this->_minus_layout_guide_point);
 
     for (auto const is_tracking : {false, true}) {
-        auto element =
-            texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, false));
-        this->_minus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        auto const idx = to_rect_index(0, is_tracking);
+        this->_minus_button.rect_plane().data().observe_rect_tex_coords(resource.minus_elements().at(idx), idx);
     }
 }
 
-void vu::ui_stepper::_setup_plus_button(ui::texture &texture) {
+void vu::ui_stepper::_setup_plus_button(ui_stepper_resource &resource) {
     ui::uint_size const button_size = vu::reference_button_size;
 
     this->_plus_button = ui::button{ui::region::zero_centered(ui::to_size(button_size))};
 
     ui::node &plus_node = this->_plus_button.rect_plane().node();
-    plus_node.mesh().set_texture(texture);
+    plus_node.mesh().set_texture(resource.texture());
     this->node.add_sub_node(plus_node);
     plus_node.attach_position_layout_guides(this->_plus_layout_guide_point);
 
     for (auto const is_tracking : {false, true}) {
-        auto element =
-            texture.add_draw_handler(button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, true));
-        this->_plus_button.rect_plane().data().observe_rect_tex_coords(element, to_rect_index(0, is_tracking));
+        auto const idx = to_rect_index(0, is_tracking);
+        this->_plus_button.rect_plane().data().observe_rect_tex_coords(resource.plus_elements().at(idx), idx);
     }
 }
 
-void vu::ui_stepper::_setup_text(ui::texture &texture) {
-    this->_font_atlas = ui::font_atlas{
-        {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}};
+void vu::ui_stepper::_setup_text(ui_stepper_resource &resource) {
+    this->_font_atlas = resource.font_atlas();
 
     this->_text =
         ui::strings{{.max_word_count = 10, .font_atlas = this->_font_atlas, .alignment = ui::layout_alignment::mid}};

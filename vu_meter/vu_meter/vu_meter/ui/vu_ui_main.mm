@@ -14,18 +14,20 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     ui::texture texture{{.point_size = {1024, 1024}}};
     texture.observe_scale_from_renderer(this->renderer);
 
-    this->_setup_reference(main, texture);
-    this->_setup_indicator_count(main, texture);
+    ui_stepper_resource resource{texture};
+
+    this->_setup_reference(main, resource);
+    this->_setup_indicator_count(main, resource);
     this->_setup_indicators(main, texture);
 }
 
-void vu::ui_main::_setup_reference(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_main::_setup_reference(main_ptr_t &main, ui_stepper_resource &resource) {
     ui::node &root_node = this->renderer.root_node();
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     root_node.add_sub_node(this->reference.node());
 
-    this->reference.setup(main, texture);
+    this->reference.setup(main, resource);
 
     this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
                                   .map([](ui::region const &region) {
@@ -45,13 +47,13 @@ void vu::ui_main::_setup_reference(main_ptr_t &main, ui::texture &texture) {
                                   .sync());
 }
 
-void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui_stepper_resource &resource) {
     ui::node &root_node = this->renderer.root_node();
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     root_node.add_sub_node(this->indicator_count.node());
 
-    this->indicator_count.setup(main, texture);
+    this->indicator_count.setup(main, resource);
 
     this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
                                   .map([](ui::region const &region) {
