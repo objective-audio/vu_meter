@@ -62,8 +62,9 @@ void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui::texture &texture)
                                           return ui::region{.origin = {.x = region.origin.x, .y = region.origin.y},
                                                             .size = {.width = width, .height = height}};
                                       } else {
-                                          return ui::region{.origin = {.x = region.origin.x, .y = region.origin.y},
-                                                            .size = {.width = region.size.width, .height = height}};
+                                          return ui::region{
+                                              .origin = {.x = region.origin.x, .y = region.origin.y + height},
+                                              .size = {.width = region.size.width, .height = height}};
                                       }
                                   })
                                   .receive(this->indicator_count.layout_guide_rect().receiver())
