@@ -24,8 +24,6 @@ struct ui_main {
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
    private:
-    flow::observer _will_render_flow = nullptr;
-    flow::receiver<> _will_render_receiver = nullptr;
     std::array<ui::layout_guide, 4> _guides;
     std::vector<flow::observer> _flows;
 
