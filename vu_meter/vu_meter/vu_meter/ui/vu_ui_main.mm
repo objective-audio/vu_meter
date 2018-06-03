@@ -11,16 +11,17 @@ using namespace yas;
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->renderer = std::move(renderer);
 
-    weak_main_ptr_t weak_main = main;
-
     ui::texture texture{{.point_size = {1024, 1024}}};
     texture.observe_scale_from_renderer(this->renderer);
 
+    this->_setup_reference(main, texture);
+    this->_setup_indicator_count(main, texture);
+    this->_setup_indicators(main, texture);
+}
+
+void vu::ui_main::_setup_reference(main_ptr_t &main, ui::texture &texture) {
     ui::node &root_node = this->renderer.root_node();
-
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
-
-    // reference
 
     root_node.add_sub_node(this->reference.node());
 
@@ -41,8 +42,11 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                                   .begin_flow()
                                   .receive(this->reference.layout_guide_rect().right().receiver())
                                   .sync());
+}
 
-    // indicator_count
+void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui::texture &texture) {
+    ui::node &root_node = this->renderer.root_node();
+    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     root_node.add_sub_node(this->indicator_count.node());
 
@@ -63,8 +67,11 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
                                   .map([](float const &value) { return value + 300.0f; })
                                   .receive(this->indicator_count.layout_guide_rect().right().receiver())
                                   .sync());
+}
 
-    // indicators
+void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
+    ui::node &root_node = this->renderer.root_node();
+    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
     ui::layout_guide &indicator_0_right_guide = this->_guides.at(1);

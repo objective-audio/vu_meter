@@ -28,5 +28,9 @@ struct ui_main {
     flow::receiver<> _will_render_receiver = nullptr;
     std::array<ui::layout_guide, 4> _guides;
     std::vector<flow::observer> _flows;
+
+    void _setup_reference(main_ptr_t &, ui::texture &);
+    void _setup_indicator_count(main_ptr_t &, ui::texture &);
+    void _setup_indicators(main_ptr_t &, ui::texture &);
 };
 }  // namespace yas::vu
