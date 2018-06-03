@@ -18,8 +18,19 @@ static ui::uint_size constexpr reference_button_size{60, 60};
 struct vu::ui_stepper_resource::impl : base::impl {
     std::vector<ui::texture_element> _minus_elements;
     std::vector<ui::texture_element> _plus_elements;
+    ui::font_atlas _font_atlas;
 
-    impl(ui::texture &texture) {
+    impl(ui::texture &texture)
+        : _font_atlas(
+              {.font_name = "TrebuchetMS-Bold", .font_size = 24.0f, .words = "0123456789.dB-", .texture = texture}) {
+        ui::uint_size const button_size = vu::reference_button_size;
+
+        for (auto const is_tracking : {false, true}) {
+            this->_minus_elements.emplace_back(texture.add_draw_handler(
+                button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, false)));
+            this->_plus_elements.emplace_back(texture.add_draw_handler(
+                button_size, vu::ui_utils::draw_button_handler(button_size, is_tracking, true)));
+        }
     }
 };
 
@@ -35,6 +46,10 @@ std::vector<ui::texture_element> const &vu::ui_stepper_resource::minus_elements(
 
 std::vector<ui::texture_element> const &vu::ui_stepper_resource::plus_elements() {
     return impl_ptr<impl>()->_plus_elements;
+}
+
+ui::font_atlas const &vu::ui_stepper_resource::font_atlas() {
+    return impl_ptr<impl>()->_font_atlas;
 }
 
 #pragma mark - ui_stepper

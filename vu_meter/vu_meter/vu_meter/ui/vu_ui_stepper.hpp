@@ -16,6 +16,7 @@ struct ui_stepper_resource : base {
 
     std::vector<ui::texture_element> const &minus_elements();
     std::vector<ui::texture_element> const &plus_elements();
+    ui::font_atlas const &font_atlas();
 };
 
 struct ui_stepper {
