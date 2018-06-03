@@ -27,20 +27,21 @@ void vu::ui_main::_setup_reference(main_ptr_t &main, ui::texture &texture) {
 
     this->reference.setup(main, texture);
 
-    this->_flows.emplace_back(safe_area_guide_rect.bottom()
-                                  .begin_flow()
-                                  .receive(this->reference.layout_guide_rect().bottom().receiver())
-                                  .map(flow::add(60.0f))
-                                  .receive(this->reference.layout_guide_rect().top().receiver())
-                                  .sync());
-    this->_flows.emplace_back(safe_area_guide_rect.right()
-                                  .begin_flow()
-                                  .map([](float const &value) { return value - 300.0f; })
-                                  .receive(this->reference.layout_guide_rect().left().receiver())
-                                  .sync());
-    this->_flows.emplace_back(safe_area_guide_rect.right()
-                                  .begin_flow()
-                                  .receive(this->reference.layout_guide_rect().right().receiver())
+    this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
+                                  .map([](ui::region const &region) {
+                                      float const height = 60.0f;
+                                      bool const is_landscape = region.size.width >= region.size.height;
+                                      if (is_landscape) {
+                                          float const width = 300.0f;
+                                          return ui::region{
+                                              .origin = {.x = region.right() - width, .y = region.origin.y},
+                                              .size = {.width = width, .height = height}};
+                                      } else {
+                                          return ui::region{.origin = {.x = region.origin.x, .y = region.origin.y},
+                                                            .size = {.width = region.size.width, .height = height}};
+                                      }
+                                  })
+                                  .receive(this->reference.layout_guide_rect().receiver())
                                   .sync());
 }
 
