@@ -8,6 +8,16 @@
 #include "yas_ui.h"
 
 namespace yas::vu {
+struct ui_stepper_resource : base {
+    class impl;
+
+    ui_stepper_resource(ui::texture &texture);
+    ui_stepper_resource(std::nullptr_t);
+
+    std::vector<ui::texture_element> const &minus_elements();
+    std::vector<ui::texture_element> const &plus_elements();
+};
+
 struct ui_stepper {
     using button_flow_t =
         flow::node<ui::button::context, ui::button::subject_t::flow_context_t, ui::button::subject_t::flow_context_t>;

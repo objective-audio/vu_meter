@@ -13,6 +13,32 @@ namespace yas::vu {
 static ui::uint_size constexpr reference_button_size{60, 60};
 }
 
+#pragma mark - ui_stepper_resource
+
+struct vu::ui_stepper_resource::impl : base::impl {
+    std::vector<ui::texture_element> _minus_elements;
+    std::vector<ui::texture_element> _plus_elements;
+
+    impl(ui::texture &texture) {
+    }
+};
+
+vu::ui_stepper_resource::ui_stepper_resource(ui::texture &texture) : base(std::make_shared<impl>(texture)) {
+}
+
+vu::ui_stepper_resource::ui_stepper_resource(std::nullptr_t) : base(nullptr) {
+}
+
+std::vector<ui::texture_element> const &vu::ui_stepper_resource::minus_elements() {
+    return impl_ptr<impl>()->_minus_elements;
+}
+
+std::vector<ui::texture_element> const &vu::ui_stepper_resource::plus_elements() {
+    return impl_ptr<impl>()->_plus_elements;
+}
+
+#pragma mark - ui_stepper
+
 void vu::ui_stepper::setup(ui::texture &texture) {
     this->_setup_minus_button(texture);
     this->_setup_plus_button(texture);
