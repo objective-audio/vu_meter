@@ -153,6 +153,7 @@
 		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
 		B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5407205E5A1E00A300E5 /* GLKit.framework */; };
 		B62B540A205E5A7600A300E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
+		B63D031820C3DEB1001371B4 /* yas_ui_flow_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63D031720C3DEB1001371B4 /* yas_ui_flow_utils.cpp */; };
 		B64CEEDD20672E2A00DEFAEA /* yas_data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */; };
 		B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B659949820620A5E00EBC1D8 /* vu_send_module.cpp */; };
 		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
@@ -527,6 +528,8 @@
 		B62B5407205E5A1E00A300E5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B634214320711978002C6742 /* vu_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_types.h; sourceTree = "<group>"; };
+		B63D031620C3DEB0001371B4 /* yas_ui_flow_utils_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_ui_flow_utils_private.h; sourceTree = "<group>"; };
+		B63D031720C3DEB1001371B4 /* yas_ui_flow_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_ui_flow_utils.cpp; sourceTree = "<group>"; };
 		B64CEEDC20672E2A00DEFAEA /* yas_data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yas_data.cpp; sourceTree = "<group>"; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
 		B659949920620A5E00EBC1D8 /* vu_send_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_send_module.hpp; sourceTree = "<group>"; };
@@ -1047,6 +1050,8 @@
 				B62B53C3205E51F400A300E5 /* yas_ui_matrix.cpp */,
 				B62B53C4205E51F400A300E5 /* yas_ui_metal_system_protocol.mm */,
 				B62B53C5205E51F400A300E5 /* yas_ui_node_actions.mm */,
+				B63D031620C3DEB0001371B4 /* yas_ui_flow_utils_private.h */,
+				B63D031720C3DEB1001371B4 /* yas_ui_flow_utils.cpp */,
 			);
 			name = ui;
 			path = ../../ui/ui;
@@ -1295,6 +1300,7 @@
 				B62B5293205E51AC00A300E5 /* yas_audio_engine_manager.mm in Sources */,
 				B62B53CA205E51F400A300E5 /* yas_ui_mesh_data.mm in Sources */,
 				B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */,
+				B63D031820C3DEB1001371B4 /* yas_ui_flow_utils.cpp in Sources */,
 				B62B52E5205E51BC00A300E5 /* yas_exception.cpp in Sources */,
 				B62B52DF205E51BC00A300E5 /* yas_delaying_caller.cpp in Sources */,
 				B62B527E205E51AC00A300E5 /* yas_audio_time.mm in Sources */,
