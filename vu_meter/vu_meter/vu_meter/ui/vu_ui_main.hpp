@@ -33,6 +33,7 @@ struct ui_main {
     void _setup_reference(main_ptr_t &, ui_stepper_resource &);
     void _setup_indicator_count(main_ptr_t &, ui_stepper_resource &);
     void _setup_vu_bottom_y_guide();
-    void _setup_indicators(main_ptr_t &, ui::texture &);
+    void _setup_indicators(main_ptr_t &);
+    void _setup_indicators2(main_ptr_t &);
 };
 }  // namespace yas::vu

@@ -24,7 +24,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_setup_reference(main, resource);
     this->_setup_indicator_count(main, resource);
     this->_setup_vu_bottom_y_guide();
-    this->_setup_indicators(main, texture);
+    this->_setup_indicators(main);
 }
 
 void vu::ui_main::_setup_frame_guide_rect() {
@@ -97,7 +97,7 @@ void vu::ui_main::_setup_vu_bottom_y_guide() {
                                   .sync());
 }
 
-void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
+void vu::ui_main::_setup_indicators(main_ptr_t &main) {
     ui::node &root_node = this->renderer.root_node();
 
     ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
@@ -172,4 +172,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
                                                          indicator.frame_layout_guide_rect.top()));
         }
     }
+}
+
+void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
 }
