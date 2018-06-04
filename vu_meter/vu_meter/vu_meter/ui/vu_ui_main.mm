@@ -20,13 +20,13 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     ui_stepper_resource resource{texture};
 
-    this->_setup_frame();
+    this->_setup_frame_guide_rect();
     this->_setup_reference(main, resource);
     this->_setup_indicator_count(main, resource);
     this->_setup_indicators(main, texture);
 }
 
-void vu::ui_main::_setup_frame() {
+void vu::ui_main::_setup_frame_guide_rect() {
     auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     ui::insets insets{.left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
@@ -84,6 +84,15 @@ void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui_stepper_resource &
                                       }
                                   })
                                   .receive(this->indicator_count.layout_guide_rect().receiver())
+                                  .sync());
+}
+
+void vu::ui_main::_setup_vu_bottom_y_guide() {
+    this->_flows.emplace_back(this->indicator_count.layout_guide_rect()
+                                  .top()
+                                  .begin_flow()
+                                  .map(flow::add(vu::padding))
+                                  .receive(this->_vu_bottom_y_guide.receiver())
                                   .sync());
 }
 

@@ -25,12 +25,14 @@ struct ui_main {
 
    private:
     ui::layout_guide_rect _frame_guide_rect;
+    ui::layout_guide _vu_bottom_y_guide;
     std::array<ui::layout_guide, 4> _guides;
     std::vector<flow::observer> _flows;
 
-    void _setup_frame();
+    void _setup_frame_guide_rect();
     void _setup_reference(main_ptr_t &, ui_stepper_resource &);
     void _setup_indicator_count(main_ptr_t &, ui_stepper_resource &);
+    void _setup_vu_bottom_y_guide();
     void _setup_indicators(main_ptr_t &, ui::texture &);
 };
 }  // namespace yas::vu
