@@ -24,9 +24,11 @@ struct ui_main {
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
    private:
+    ui::layout_guide_rect _frame_guide_rect;
     std::array<ui::layout_guide, 4> _guides;
     std::vector<flow::observer> _flows;
 
+    void _setup_frame();
     void _setup_reference(main_ptr_t &, ui_stepper_resource &);
     void _setup_indicator_count(main_ptr_t &, ui_stepper_resource &);
     void _setup_indicators(main_ptr_t &, ui::texture &);

@@ -9,7 +9,7 @@
 using namespace yas;
 
 namespace yas::vu {
-    static float constexpr padding = 4.0f;
+static float constexpr padding = 4.0f;
 }
 
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
@@ -20,20 +20,31 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
 
     ui_stepper_resource resource{texture};
 
+    this->_setup_frame();
     this->_setup_reference(main, resource);
     this->_setup_indicator_count(main, resource);
     this->_setup_indicators(main, texture);
 }
 
+void vu::ui_main::_setup_frame() {
+    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
+
+    ui::insets insets{.left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
+
+    this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
+                                  .map(flow::add<ui::region>(insets))
+                                  .receive(this->_frame_guide_rect.receiver())
+                                  .sync());
+}
+
 void vu::ui_main::_setup_reference(main_ptr_t &main, ui_stepper_resource &resource) {
     ui::node &root_node = this->renderer.root_node();
-    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     root_node.add_sub_node(this->reference.node());
 
     this->reference.setup(main, resource);
 
-    this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
+    this->_flows.emplace_back(this->_frame_guide_rect.begin_flow()
                                   .map([](ui::region const &region) {
                                       float const height = 60.0f;
                                       bool const is_landscape = region.size.width >= region.size.height;
@@ -53,13 +64,12 @@ void vu::ui_main::_setup_reference(main_ptr_t &main, ui_stepper_resource &resour
 
 void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui_stepper_resource &resource) {
     ui::node &root_node = this->renderer.root_node();
-    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     root_node.add_sub_node(this->indicator_count.node());
 
     this->indicator_count.setup(main, resource);
 
-    this->_flows.emplace_back(safe_area_guide_rect.begin_flow()
+    this->_flows.emplace_back(this->_frame_guide_rect.begin_flow()
                                   .map([](ui::region const &region) {
                                       float const height = 60.0f;
                                       bool const is_landscape = region.size.width >= region.size.height;
@@ -79,16 +89,15 @@ void vu::ui_main::_setup_indicator_count(main_ptr_t &main, ui_stepper_resource &
 
 void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
     ui::node &root_node = this->renderer.root_node();
-    auto const &safe_area_guide_rect = this->renderer.safe_area_layout_guide_rect();
 
     ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
     ui::layout_guide &indicator_0_right_guide = this->_guides.at(1);
     ui::layout_guide &indicator_1_left_guide = this->_guides.at(2);
     ui::layout_guide &indicator_1_right_guide = this->_guides.at(3);
 
-    this->_flows.emplace_back(safe_area_guide_rect.left()
+    this->_flows.emplace_back(this->_frame_guide_rect.left()
                                   .begin_flow()
-                                  .combine(safe_area_guide_rect.right().begin_flow())
+                                  .combine(this->_frame_guide_rect.right().begin_flow())
                                   .map(ui::justify<3>(std::array<float, 3>{100.0f, 1.0f, 100.0f}))
                                   .receive({indicator_0_left_guide.receiver(), indicator_0_right_guide.receiver(),
                                             indicator_1_left_guide.receiver(), indicator_1_right_guide.receiver()})
@@ -96,7 +105,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
 
     ui::layout_guide center_y_guide;
 
-    this->_flows.emplace_back(safe_area_guide_rect.top()
+    this->_flows.emplace_back(this->_frame_guide_rect.top()
                                   .begin_flow()
                                   .combine(this->reference.layout_guide_rect().top().begin_flow())
                                   .map(ui::justify())
