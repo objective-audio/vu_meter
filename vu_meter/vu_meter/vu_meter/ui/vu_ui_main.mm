@@ -8,6 +8,10 @@
 
 using namespace yas;
 
+namespace yas::vu {
+    static float constexpr padding = 4.0f;
+}
+
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->renderer = std::move(renderer);
 
