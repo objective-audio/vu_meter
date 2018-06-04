@@ -23,6 +23,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_setup_frame_guide_rect();
     this->_setup_reference(main, resource);
     this->_setup_indicator_count(main, resource);
+    this->_setup_vu_bottom_y_guide();
     this->_setup_indicators(main, texture);
 }
 
@@ -116,7 +117,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main, ui::texture &texture) {
 
     this->_flows.emplace_back(this->_frame_guide_rect.top()
                                   .begin_flow()
-                                  .combine(this->reference.layout_guide_rect().top().begin_flow())
+                                  .combine(this->_vu_bottom_y_guide.begin_flow())
                                   .map(ui::justify())
                                   .receive(center_y_guide.receiver())
                                   .sync());
