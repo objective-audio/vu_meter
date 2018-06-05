@@ -4,6 +4,7 @@
 
 #include "vu_ui_main.hpp"
 #include "vu_main.hpp"
+#include "yas_fast_each.h"
 #include "yas_flow_utils.h"
 
 using namespace yas;
@@ -175,4 +176,26 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
 }
 
 void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
+    this->_flows.emplace_back(main->data.begin_indicator_count_flow()
+                                  .combine(this->_frame_guide_rect.begin_flow())
+                                  .map([](std::pair<std::size_t, ui::region> const &pair) {
+                                      std::size_t const &count = pair.first;
+                                      ui::region const &region = pair.second;
+
+                                      std::vector<ui::region> result;
+                                      result.reserve(pair.first);
+
+#warning todo 現在の全体のframeのサイズとindicatorの個数から、各indicatorのframeを算出する
+
+                                      auto each = make_fast_each(count);
+                                      while (yas_each_next(each)) {
+                                          result.emplace_back(region);  // regionをちゃんとしたのにする
+                                      }
+
+                                      return result;
+                                  })
+                                  .perform([](std::vector<ui::region> const &regions) {
+#warning regionsを元にindicatorを作りなおす
+                                  })
+                                  .sync());
 }
