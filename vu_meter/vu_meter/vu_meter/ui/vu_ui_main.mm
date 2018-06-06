@@ -17,7 +17,7 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->renderer = std::move(renderer);
 
     ui::texture texture{{.point_size = {1024, 1024}}};
-    texture.observe_scale_from_renderer(this->renderer);
+    texture.sync_scale_from_renderer(this->renderer);
 
     ui_stepper_resource resource{texture};
 
