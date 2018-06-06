@@ -70,7 +70,7 @@ void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
 
                                if (ui::texture texture = this->font_atlas.texture()) {
                                    if (ui::renderer renderer = node.renderer()) {
-                                       texture.observe_scale_from_renderer(renderer);
+                                       texture.sync_scale_from_renderer(renderer);
                                    }
                                }
                            })
@@ -192,7 +192,7 @@ void vu::ui_indicator::_create_font_atlas() {
         if (float const height = this->frame_layout_guide_rect.region().size.height; height > 0.0f) {
             ui::texture texture{{.point_size = {1024, 1024}}};
             if (auto renderer = this->node.renderer()) {
-                texture.observe_scale_from_renderer(renderer);
+                texture.sync_scale_from_renderer(renderer);
             }
 
             float const font_size = constants::number_font_size_rate * height;
