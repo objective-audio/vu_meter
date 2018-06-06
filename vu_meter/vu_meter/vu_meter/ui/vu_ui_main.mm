@@ -125,6 +125,8 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                                   .receive(center_y_guide.receiver())
                                   .sync());
 
+    this->indicators.resize(2);
+
     for (auto const &idx : {0, 1}) {
         auto &indicator = this->indicators.at(idx);
         root_node.add_sub_node(indicator.node);

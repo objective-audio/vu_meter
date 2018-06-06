@@ -19,7 +19,7 @@ struct ui_main {
 
     ui_reference reference;
     ui_indicator_count indicator_count;
-    std::array<ui_indicator, 2> indicators;
+    std::vector<ui_indicator> indicators;
 
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
