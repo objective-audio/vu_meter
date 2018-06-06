@@ -101,6 +101,8 @@ void vu::ui_main::_setup_vu_bottom_y_guide() {
 void vu::ui_main::_setup_indicators(main_ptr_t &main) {
     ui::node &root_node = this->renderer.root_node();
 
+    this->_guides.resize(4);
+
     ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
     ui::layout_guide &indicator_0_right_guide = this->_guides.at(1);
     ui::layout_guide &indicator_1_left_guide = this->_guides.at(2);

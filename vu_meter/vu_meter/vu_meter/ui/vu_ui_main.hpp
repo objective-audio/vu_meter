@@ -26,7 +26,7 @@ struct ui_main {
    private:
     ui::layout_guide_rect _frame_guide_rect;
     ui::layout_guide _vu_bottom_y_guide;
-    std::array<ui::layout_guide, 4> _guides;
+    std::vector<ui::layout_guide> _guides;
     std::vector<flow::observer> _flows;
 
     void _setup_frame_guide_rect();
