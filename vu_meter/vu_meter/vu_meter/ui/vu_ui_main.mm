@@ -99,9 +99,11 @@ void vu::ui_main::_setup_vu_bottom_y_guide() {
 }
 
 void vu::ui_main::_setup_indicators(main_ptr_t &main) {
+    std::size_t constexpr count = 2;
+
     ui::node &root_node = this->renderer.root_node();
 
-    this->_guides.resize(4);
+    this->_guides.resize(count * 2);
 
     std::vector<flow::receiver<float>> guide_receivers;
     for (auto &guide : this->_guides) {
@@ -124,9 +126,12 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                                   .receive(center_y_guide.receiver())
                                   .sync());
 
-    for (auto const &idx : {0, 1}) {
-        this->indicators.emplace_back();
-        auto &indicator = this->indicators.at(idx);
+    auto each = make_fast_each(count);
+
+    while (yas_each_next(each)) {
+        std::size_t const &idx = yas_each_index(each);
+
+        auto &indicator = this->indicators.emplace_back();
         root_node.add_sub_node(indicator.node());
         indicator.setup(main, idx);
 
