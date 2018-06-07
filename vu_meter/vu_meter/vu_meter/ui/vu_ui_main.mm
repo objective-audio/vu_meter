@@ -103,17 +103,16 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
 
     this->_guides.resize(4);
 
-    ui::layout_guide &indicator_0_left_guide = this->_guides.at(0);
-    ui::layout_guide &indicator_0_right_guide = this->_guides.at(1);
-    ui::layout_guide &indicator_1_left_guide = this->_guides.at(2);
-    ui::layout_guide &indicator_1_right_guide = this->_guides.at(3);
+    std::vector<flow::receiver<float>> guide_receivers;
+    for (auto &guide : this->_guides) {
+        guide_receivers.push_back(guide.receiver());
+    }
 
     this->_flows.emplace_back(this->_frame_guide_rect.left()
                                   .begin_flow()
                                   .combine(this->_frame_guide_rect.right().begin_flow())
                                   .map(ui::justify<3>(std::array<float, 3>{100.0f, 1.0f, 100.0f}))
-                                  .receive({indicator_0_left_guide.receiver(), indicator_0_right_guide.receiver(),
-                                            indicator_1_left_guide.receiver(), indicator_1_right_guide.receiver()})
+                                  .receive(guide_receivers)
                                   .sync());
 
     ui::layout_guide center_y_guide;
@@ -154,27 +153,16 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                 .sync();
         };
 
-        if (idx == 0) {
-            this->_flows.emplace_back(indicator_0_left_guide.begin_flow()
-                                          .receive(indicator.frame_layout_guide_rect().left().receiver())
-                                          .sync());
-            this->_flows.emplace_back(indicator_0_right_guide.begin_flow()
-                                          .receive(indicator.frame_layout_guide_rect().right().receiver())
-                                          .sync());
-            this->_flows.emplace_back(make_vertical_flow(indicator_0_left_guide, indicator_0_right_guide,
-                                                         center_y_guide, indicator.frame_layout_guide_rect().bottom(),
-                                                         indicator.frame_layout_guide_rect().top()));
-        } else {
-            this->_flows.emplace_back(indicator_1_left_guide.begin_flow()
-                                          .receive(indicator.frame_layout_guide_rect().left().receiver())
-                                          .sync());
-            this->_flows.emplace_back(indicator_1_right_guide.begin_flow()
-                                          .receive(indicator.frame_layout_guide_rect().right().receiver())
-                                          .sync());
-            this->_flows.emplace_back(make_vertical_flow(indicator_1_left_guide, indicator_1_right_guide,
-                                                         center_y_guide, indicator.frame_layout_guide_rect().bottom(),
-                                                         indicator.frame_layout_guide_rect().top()));
-        }
+        auto &left_guide = this->_guides.at(idx * 2);
+        auto &right_guide = this->_guides.at(idx * 2 + 1);
+
+        this->_flows.emplace_back(
+            left_guide.begin_flow().receive(indicator.frame_layout_guide_rect().left().receiver()).sync());
+        this->_flows.emplace_back(
+            right_guide.begin_flow().receive(indicator.frame_layout_guide_rect().right().receiver()).sync());
+        this->_flows.emplace_back(make_vertical_flow(left_guide, right_guide, center_y_guide,
+                                                     indicator.frame_layout_guide_rect().bottom(),
+                                                     indicator.frame_layout_guide_rect().top()));
     }
 }
 
