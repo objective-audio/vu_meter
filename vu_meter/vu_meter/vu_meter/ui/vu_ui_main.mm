@@ -14,6 +14,7 @@ static float constexpr padding = 4.0f;
 }
 
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
+    this->_weak_main = main;
     this->renderer = std::move(renderer);
 
     ui::texture texture{{.point_size = {1024, 1024}}};
@@ -25,7 +26,8 @@ void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_setup_reference(main, resource);
     this->_setup_indicator_count(main, resource);
     this->_setup_vu_bottom_y_guide();
-    this->_setup_indicators(main);
+    //    this->_setup_indicators(main);
+    this->_setup_indicators2(main);
 }
 
 void vu::ui_main::_setup_frame_guide_rect() {
@@ -172,26 +174,89 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
 }
 
 void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
-    this->_flows.emplace_back(main->data.begin_indicator_count_flow()
-                                  .combine(this->_frame_guide_rect.begin_flow())
-                                  .map([](std::pair<std::size_t, ui::region> const &pair) {
-                                      std::size_t const &count = pair.first;
-                                      ui::region const &region = pair.second;
+    this->_flows.emplace_back(
+        main->data.begin_indicator_count_flow()
+            .perform([this](std::size_t const &value) {
+                if (value < this->indicators2.size()) {
+                    auto each = make_fast_each(this->indicators2.size() - value);
+                    while (yas_each_next(each)) {
+                        this->_remove_indicator();
+                    }
+                } else if (this->indicators2.size() < value) {
+                    auto each = make_fast_each(value - this->indicators2.size());
+                    while (yas_each_next(each)) {
+                        this->_add_indicator();
+                    }
+                }
+            })
+            .to_tuple()
+            .combine(this->_frame_guide_rect.begin_flow().to_tuple())
+            .combine(this->_vu_bottom_y_guide.begin_flow().to_tuple())
+            .map([](std::tuple<std::size_t, ui::region, float> const &tuple) {
+                std::size_t const &count = std::get<0>(tuple);
+                ui::region const &region = std::get<1>(tuple);
+                float const &bottom_y = std::get<2>(tuple);
 
-                                      std::vector<ui::region> result;
-                                      result.reserve(pair.first);
+                std::vector<ui::region> result;
+                result.reserve(count);
 
-#warning todo 現在の全体のframeのサイズとindicatorの個数から、各indicatorのframeを算出する
+                if (count == 0) {
+                    return result;
+                }
 
-                                      auto each = make_fast_each(count);
-                                      while (yas_each_next(each)) {
-                                          result.emplace_back(region);  // regionをちゃんとしたのにする
-                                      }
+                bool const is_landscape = region.size.width > region.size.height;
+                std::size_t const ratio_count = count + count - 1;
 
-                                      return result;
-                                  })
-                                  .perform([](std::vector<ui::region> const &regions) {
-#warning regionsを元にindicatorを作りなおす
-                                  })
-                                  .sync());
+                if (true || is_landscape) {
+                    float const center_y = bottom_y + (region.top() - bottom_y) * 0.5f;
+                    auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 100.0f; });
+                    auto positions = justify_handler(std::make_tuple(region.left(), region.right(), ratio_count));
+                    auto each = make_fast_each(count);
+                    while (yas_each_next(each)) {
+                        std::size_t const &idx = yas_each_index(each);
+                        std::size_t const left_idx = idx * 2;
+                        std::size_t const right_idx = left_idx + 1;
+                        float const left = positions.at(left_idx);
+                        float const right = positions.at(right_idx);
+                        float const width = right - left;
+                        float const height = width * 0.5f;
+                        float const bottom = center_y - height * 0.5f;
+                        result.emplace_back(
+                            ui::region{.origin = {.x = left, .y = bottom}, .size = {.width = width, .height = height}});
+                    }
+                } else {
+                    auto justify = ui::justify([](std::size_t const &idx) { return idx % 2 ? 50.0f : 1.0f; });
+#warning todo 縦の場合
+                }
+
+                return result;
+            })
+            .perform([this](std::vector<ui::region> const &regions) {
+                std::size_t const count = std::min(this->indicators2.size(), regions.size());
+                auto each = make_fast_each(count);
+                while (yas_each_next(each)) {
+                    std::size_t const &idx = yas_each_index(each);
+                    this->indicators2.at(idx).frame_layout_guide_rect().set_region(regions.at(idx));
+                }
+            })
+            .sync());
+}
+
+void vu::ui_main::_add_indicator() {
+    if (auto main = this->_weak_main.lock()) {
+        std::size_t const idx = this->indicators2.size();
+        ui_indicator indicator;
+        this->renderer.root_node().add_sub_node(indicator.node());
+        indicator.setup(main, idx);
+        this->indicators2.emplace_back(std::move(indicator));
+    }
+}
+
+void vu::ui_main::_remove_indicator() {
+    if (this->indicators2.size() == 0) {
+        throw std::runtime_error("");
+    }
+    ui_indicator &indicator = *this->indicators2.end();
+    indicator.node().remove_from_super_node();
+    this->indicators2.pop_back();
 }
