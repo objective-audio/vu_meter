@@ -228,13 +228,20 @@ void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
                     float const center_x = region.center().x;
                     auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 50.0f; });
                     auto y_positions = justify_handler(std::make_tuple(bottom_y, region.top(), ratio_count));
+
+                    float const justified_width = (y_positions.at(1) - y_positions.at(0)) * 2.0f;
+                    float const max_width = region.size.width;
+                    float const rate = (max_width < justified_width) ? (max_width / justified_width) : 1.0f;
+                    float const max_height = region.top() - bottom_y;
+                    float const offset_y = (max_height - max_height * rate) * 0.5f;
+
                     auto each = make_fast_each(count);
                     while (yas_each_next(each)) {
                         std::size_t const &idx = yas_each_index(each);
                         std::size_t const bottom_idx = idx * 2;
                         std::size_t const top_idx = bottom_idx + 1;
-                        float const bottom = y_positions.at(bottom_idx);
-                        float const top = y_positions.at(top_idx);
+                        float const bottom = bottom_y + offset_y + (y_positions.at(bottom_idx) - bottom_y) * rate;
+                        float const top = bottom_y + offset_y + (y_positions.at(top_idx) - bottom_y) * rate;
                         float const height = top - bottom;
                         float const width = height * 2.0f;
                         float const left = center_x - width * 0.5f;
