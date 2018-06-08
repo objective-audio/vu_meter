@@ -207,17 +207,17 @@ void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
                 bool const is_landscape = region.size.width > region.size.height;
                 std::size_t const ratio_count = count + count - 1;
 
-                if (true || is_landscape) {
+                if (is_landscape) {
                     float const center_y = bottom_y + (region.top() - bottom_y) * 0.5f;
                     auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 100.0f; });
-                    auto positions = justify_handler(std::make_tuple(region.left(), region.right(), ratio_count));
+                    auto x_positions = justify_handler(std::make_tuple(region.left(), region.right(), ratio_count));
                     auto each = make_fast_each(count);
                     while (yas_each_next(each)) {
                         std::size_t const &idx = yas_each_index(each);
                         std::size_t const left_idx = idx * 2;
                         std::size_t const right_idx = left_idx + 1;
-                        float const left = positions.at(left_idx);
-                        float const right = positions.at(right_idx);
+                        float const left = x_positions.at(left_idx);
+                        float const right = x_positions.at(right_idx);
                         float const width = right - left;
                         float const height = width * 0.5f;
                         float const bottom = center_y - height * 0.5f;
@@ -225,8 +225,22 @@ void vu::ui_main::_setup_indicators2(main_ptr_t &main) {
                             ui::region{.origin = {.x = left, .y = bottom}, .size = {.width = width, .height = height}});
                     }
                 } else {
-                    auto justify = ui::justify([](std::size_t const &idx) { return idx % 2 ? 50.0f : 1.0f; });
-#warning todo 縦の場合
+                    float const center_x = region.center().x;
+                    auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 50.0f; });
+                    auto y_positions = justify_handler(std::make_tuple(bottom_y, region.top(), ratio_count));
+                    auto each = make_fast_each(count);
+                    while (yas_each_next(each)) {
+                        std::size_t const &idx = yas_each_index(each);
+                        std::size_t const bottom_idx = idx * 2;
+                        std::size_t const top_idx = bottom_idx + 1;
+                        float const bottom = y_positions.at(bottom_idx);
+                        float const top = y_positions.at(top_idx);
+                        float const height = top - bottom;
+                        float const width = height * 2.0f;
+                        float const left = center_x - width * 0.5f;
+                        result.emplace_back(
+                            ui::region{.origin = {.x = left, .y = bottom}, .size = {.width = width, .height = height}});
+                    }
                 }
 
                 return result;
