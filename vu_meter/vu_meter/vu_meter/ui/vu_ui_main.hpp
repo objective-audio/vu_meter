@@ -20,7 +20,6 @@ struct ui_main {
     ui_reference reference;
     ui_indicator_count indicator_count;
     std::vector<ui_indicator> indicators;
-    std::vector<ui_indicator> indicators2;
 
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
@@ -36,7 +35,6 @@ struct ui_main {
     void _setup_indicator_count(main_ptr_t &, ui_stepper_resource &);
     void _setup_vu_bottom_y_guide();
     void _setup_indicators(main_ptr_t &);
-    void _setup_indicators2(main_ptr_t &);
 
     void _add_indicator();
     void _remove_indicator();
