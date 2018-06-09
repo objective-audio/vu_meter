@@ -203,7 +203,7 @@ void vu::ui_main::_remove_indicator() {
     if (this->indicators.size() == 0) {
         throw std::runtime_error("");
     }
-    ui_indicator &indicator = *this->indicators.end();
+    ui_indicator &indicator = this->indicators.at(this->indicators.size() - 1);
     indicator.node().remove_from_super_node();
     this->indicators.pop_back();
 }
