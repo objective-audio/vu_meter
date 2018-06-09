@@ -194,7 +194,7 @@ void vu::ui_main::_add_indicator() {
         std::size_t const idx = this->indicators.size();
         ui_indicator indicator;
         this->renderer.root_node().add_sub_node(indicator.node());
-        indicator.setup(main, idx);
+        indicator.setup(this->renderer, main, idx);
         this->indicators.emplace_back(std::move(indicator));
     }
 }

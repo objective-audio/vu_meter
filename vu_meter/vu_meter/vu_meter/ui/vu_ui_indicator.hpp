@@ -29,7 +29,7 @@ struct ui_indicator : base {
     ui_indicator();
     ui_indicator(std::nullptr_t);
 
-    void setup(main_ptr_t &main, std::size_t const idx);
+    void setup(ui::renderer &renderer, main_ptr_t &main, std::size_t const idx);
 
     ui::node &node();
 

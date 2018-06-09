@@ -92,16 +92,17 @@ struct vu::ui_indicator::impl : base::impl {
     ui::rect_plane needle{1};
     std::vector<ui::node> gridline_handles;
     std::vector<ui::rect_plane> gridlines;
-    ui::font_atlas font_atlas{nullptr};
     std::vector<ui::node> number_handles;
     std::vector<ui::strings> numbers;
+
+    ui_indicator_resource _resource = nullptr;
 
     ui::layout_guide_rect frame_layout_guide_rect;
 
     impl() {
     }
 
-    void setup(ui_indicator &indicator, main_ptr_t &main, std::size_t const idx) {
+    void setup(ui_indicator &indicator, ui::renderer &renderer, main_ptr_t &main, std::size_t const idx) {
         auto weak_indicator = to_weak(indicator);
         weak_main_ptr_t weak_main = main;
         this->_weak_main = weak_main;
@@ -135,9 +136,9 @@ struct vu::ui_indicator::impl : base::impl {
             }
         });
 
-        this->_remove_font_atlas_receiver = flow::receiver<>([weak_indicator] {
+        this->_update_resource_receiver = flow::receiver<float>([weak_indicator](float const &height) {
             if (auto indicator = weak_indicator.lock()) {
-                indicator.impl_ptr<impl>()->_remove_font_atlas();
+                indicator.impl_ptr<impl>()->_resource.set_vu_height(height);
             }
         });
 
@@ -150,25 +151,6 @@ struct vu::ui_indicator::impl : base::impl {
 
         this->_flows.emplace_back(
             this->frame_layout_guide_rect.bottom().begin_flow().receive(this->_node_guide_point.y().receiver()).sync());
-
-        this->_node_flow = this->node.subject()
-                               .begin_flow(ui::node::method::renderer_changed)
-                               .perform([weak_indicator](ui::node const &node) {
-                                   if (auto indicator = weak_indicator.lock()) {
-                                       auto imp = indicator.impl_ptr<impl>();
-
-                                       if (!imp->font_atlas) {
-                                           return;
-                                       }
-
-                                       if (ui::texture texture = imp->font_atlas.texture()) {
-                                           if (ui::renderer renderer = node.renderer()) {
-                                               texture.sync_scale_from_renderer(renderer);
-                                           }
-                                       }
-                                   }
-                               })
-                               .end();
 
         // base_plane
 
@@ -230,6 +212,25 @@ struct vu::ui_indicator::impl : base::impl {
         this->needle.node().set_color(vu::indicator_needle_color());
         this->needle_root_node.add_sub_node(this->needle.node());
 
+        // indicator_resource
+
+        this->_resource = ui_indicator_resource{renderer};
+
+        this->_resource_flow = this->_resource.begin_font_atlas_flow()
+                                   .perform([weak_indicator](ui::font_atlas const &atlas) {
+                                       if (ui_indicator indicator = weak_indicator.lock()) {
+                                           auto imp = indicator.impl_ptr<impl>();
+                                           float const number_offset =
+                                               atlas ? (atlas.ascent() + atlas.descent()) * 0.5f : 0.0f;
+
+                                           for (auto &number : imp->numbers) {
+                                               number.set_font_atlas(atlas);
+                                               number.rect_plane().node().set_position({.y = number_offset});
+                                           }
+                                       }
+                                   })
+                                   .sync();
+
         // layout_guide
         // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
         this->_frame_flow = this->frame_layout_guide_rect.begin_flow()
@@ -243,7 +244,8 @@ struct vu::ui_indicator::impl : base::impl {
                                         return false;
                                     }
                                 })
-                                .receive_null(this->_remove_font_atlas_receiver)
+                                .map([](ui::region const &region) { return region.size.height; })
+                                .receive(this->_update_resource_receiver)
                                 .end();
 
         this->_renderer_flow = this->node.begin_renderer_flow().receive(this->_renderer_receiver).sync();
@@ -290,39 +292,7 @@ struct vu::ui_indicator::impl : base::impl {
         }
     }
 
-    void _create_font_atlas() {
-        if (!this->font_atlas) {
-            if (float const height = this->frame_layout_guide_rect.region().size.height; height > 0.0f) {
-                ui::texture texture{{.point_size = {1024, 1024}}};
-                if (auto renderer = this->node.renderer()) {
-                    texture.sync_scale_from_renderer(renderer);
-                }
-
-                float const font_size = constants::number_font_size_rate * height;
-
-                this->font_atlas = ui::font_atlas{
-                    {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "012357-", .texture = texture}};
-
-                float const number_offset = (this->font_atlas.ascent() + this->font_atlas.descent()) * 0.5;
-
-                for (auto &number : this->numbers) {
-                    number.set_font_atlas(this->font_atlas);
-                    number.rect_plane().node().set_position({.y = number_offset});
-                }
-            }
-        }
-    }
-
-    void _remove_font_atlas() {
-        this->font_atlas = nullptr;
-        for (auto &number : this->numbers) {
-            number.set_font_atlas(nullptr);
-        }
-    }
-
     void _update() {
-        this->_create_font_atlas();
-
         if (auto main = this->_weak_main.lock()) {
             float const value = (this->idx < main->values.size()) ? main->values.at(this->idx).load() : 0.0f;
             ui::angle const angle = ui_utils::meter_angle(value, main->data.reference(), constants::half_angle.degrees);
@@ -331,15 +301,15 @@ struct vu::ui_indicator::impl : base::impl {
     }
 
    private:
-    flow::observer _node_flow = nullptr;
     flow::observer _frame_flow = nullptr;
+    flow::observer _resource_flow = nullptr;
     weak_main_ptr_t _weak_main;
 
     std::vector<flow::observer> _flows;
     flow::observer _renderer_flow = nullptr;
     flow::receiver<ui::renderer> _renderer_receiver = nullptr;
     flow::receiver<> _update_receiver = nullptr;
-    flow::receiver<> _remove_font_atlas_receiver = nullptr;
+    flow::receiver<float> _update_resource_receiver = nullptr;
     flow::receiver<> _layout_receiver = nullptr;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
@@ -353,8 +323,8 @@ vu::ui_indicator::ui_indicator() : base(std::make_shared<impl>()) {
 vu::ui_indicator::ui_indicator(std::nullptr_t) : base(nullptr) {
 }
 
-void vu::ui_indicator::setup(main_ptr_t &main, std::size_t const idx) {
-    impl_ptr<impl>()->setup(*this, main, idx);
+void vu::ui_indicator::setup(ui::renderer &renderer, main_ptr_t &main, std::size_t const idx) {
+    impl_ptr<impl>()->setup(*this, renderer, main, idx);
 }
 
 ui::node &vu::ui_indicator::node() {
