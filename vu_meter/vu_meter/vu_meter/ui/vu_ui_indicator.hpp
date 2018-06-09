@@ -10,6 +10,19 @@
 #include "yas_ui.h"
 
 namespace yas::vu {
+struct ui_indicator_resource : base {
+    class impl;
+
+    ui_indicator_resource(ui::renderer &);
+    ui_indicator_resource(std::nullptr_t);
+
+    void set_vu_height(float const);
+
+    ui::font_atlas &font_atlas();
+
+    flow::node<ui::font_atlas> begin_font_atlas_flow();
+};
+
 struct ui_indicator : base {
     class impl;
 

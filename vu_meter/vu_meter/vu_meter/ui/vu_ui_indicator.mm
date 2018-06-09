@@ -28,6 +28,60 @@ namespace constants {
 }
 }
 
+#pragma mark - ui_indicator_resource::impl
+
+struct vu::ui_indicator_resource::impl : base::impl {
+    weak<ui::renderer> _weak_renderer;
+    property<ui::font_atlas> _font_atlas{{.value = nullptr}};
+    float _vu_height = 0.0f;
+
+    impl(ui::renderer &renderer) : _weak_renderer(renderer) {
+    }
+
+    void set_vu_height(float const height) {
+        float const rounded_height = std::round(height);
+        if (this->_vu_height != rounded_height) {
+            this->_vu_height = rounded_height;
+
+            this->_font_atlas.set_value(ui::font_atlas{nullptr});
+            this->_create_font_atlas();
+        }
+    }
+
+   private:
+    void _create_font_atlas() {
+        ui::texture texture{{.point_size = {1024, 1024}}};
+        if (auto renderer = this->_weak_renderer.lock()) {
+            texture.sync_scale_from_renderer(renderer);
+        }
+
+        float const font_size = constants::number_font_size_rate * this->_vu_height;
+
+        this->_font_atlas.set_value(ui::font_atlas{
+            {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "012357-", .texture = texture}});
+    }
+};
+
+#pragma mark - ui_indicator_resource
+
+vu::ui_indicator_resource::ui_indicator_resource(ui::renderer &renderer) : base(std::make_shared<impl>(renderer)) {
+}
+
+vu::ui_indicator_resource::ui_indicator_resource(std::nullptr_t) : base(nullptr) {
+}
+
+void vu::ui_indicator_resource::set_vu_height(float const height) {
+    impl_ptr<impl>()->set_vu_height(height);
+}
+
+ui::font_atlas &vu::ui_indicator_resource::font_atlas() {
+    return impl_ptr<impl>()->_font_atlas.value();
+}
+
+flow::node<ui::font_atlas> vu::ui_indicator_resource::begin_font_atlas_flow() {
+    return impl_ptr<impl>()->_font_atlas.begin_value_flow();
+}
+
 #pragma mark - ui_indicator::impl
 
 struct vu::ui_indicator::impl : base::impl {
