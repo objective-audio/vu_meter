@@ -138,7 +138,7 @@ struct vu::ui_indicator::impl : base::impl {
 
         this->_update_resource_receiver = flow::receiver<float>([weak_indicator](float const &height) {
             if (auto indicator = weak_indicator.lock()) {
-                indicator.impl_ptr<impl>()->_resource.set_vu_height(height);
+                //                indicator.impl_ptr<impl>()->_resource.set_vu_height(height);
             }
         });
 

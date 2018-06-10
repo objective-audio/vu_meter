@@ -184,7 +184,12 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                 auto each = make_fast_each(count);
                 while (yas_each_next(each)) {
                     std::size_t const &idx = yas_each_index(each);
-                    this->indicators.at(idx).frame_layout_guide_rect().set_region(regions.at(idx));
+                    ui::region const &region = regions.at(idx);
+                    this->indicators.at(idx).frame_layout_guide_rect().set_region(region);
+
+                    if (idx == 0) {
+                        this->_indicator_resource.set_vu_height(region.size.height);
+                    }
                 }
             })
             .sync());
