@@ -87,8 +87,10 @@ flow::node<ui::font_atlas> vu::ui_indicator_resource::begin_font_atlas_flow() {
 struct vu::ui_indicator::impl : base::impl {
     std::size_t idx;
     ui::node node;
+    ui::node _batch_node;
     ui::rect_plane base_plane{1};
     ui::node needle_root_node;
+    ui::node _numbers_root_node;
     ui::rect_plane needle{1};
     std::vector<ui::node> gridline_handles;
     std::vector<ui::rect_plane> gridlines;
@@ -146,10 +148,15 @@ struct vu::ui_indicator::impl : base::impl {
         this->_flows.emplace_back(
             this->frame_layout_guide_rect.bottom().begin_flow().receive(this->_node_guide_point.y().receiver()).sync());
 
+        // batch_node
+
+        this->_batch_node.set_batch(ui::batch{});
+        this->node.add_sub_node(_batch_node);
+
         // base_plane
 
         this->base_plane.node().set_color(vu::indicator_base_color());
-        this->node.add_sub_node(this->base_plane.node());
+        this->_batch_node.add_sub_node(this->base_plane.node());
 
         this->_flows.emplace_back(this->_base_guide_rect.begin_flow()
                                       .perform([weak_indicator](ui::region const &region) {
@@ -170,6 +177,9 @@ struct vu::ui_indicator::impl : base::impl {
                                       .receive(this->_base_guide_rect.top().receiver())
                                       .sync());
 
+        // numbers_root_node
+        this->_batch_node.add_sub_node(this->_numbers_root_node);
+
         // needle_root_node
         this->node.add_sub_node(this->needle_root_node);
 
@@ -183,7 +193,7 @@ struct vu::ui_indicator::impl : base::impl {
                 .text = std::to_string(std::abs(param)), .max_word_count = 3, .alignment = ui::layout_alignment::mid};
             auto &number = this->numbers.emplace_back(std::move(args));
 
-            this->needle_root_node.add_sub_node(gridline_handle);
+            this->_numbers_root_node.add_sub_node(gridline_handle);
             gridline_handle.add_sub_node(plane.node());
             gridline_handle.add_sub_node(number_handle);
             number_handle.add_sub_node(number.rect_plane().node());
@@ -249,6 +259,9 @@ struct vu::ui_indicator::impl : base::impl {
         this->needle_root_node.set_position({.x = needle_root_x, .y = needle_root_y});
         this->needle.data().set_rect_position(
             {.origin = {.x = -needle_width * 0.5f}, .size = {.width = needle_width, .height = needle_height}}, 0);
+
+        // numbers_root_node
+        this->_numbers_root_node.set_position(this->needle_root_node.position());
 
         // gridline
         for (auto &gridline : this->gridlines) {
