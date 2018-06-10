@@ -136,12 +136,6 @@ struct vu::ui_indicator::impl : base::impl {
             }
         });
 
-        this->_update_resource_receiver = flow::receiver<float>([weak_indicator](float const &height) {
-            if (auto indicator = weak_indicator.lock()) {
-                //                indicator.impl_ptr<impl>()->_resource.set_vu_height(height);
-            }
-        });
-
         // node
 
         this->node.attach_position_layout_guides(this->_node_guide_point);
@@ -230,21 +224,7 @@ struct vu::ui_indicator::impl : base::impl {
                                    .sync();
 
         // layout_guide
-        // 高さが変わったら文字の大きさも変わるのでfont_atlasを作り直す
-        this->_frame_flow = this->frame_layout_guide_rect.begin_flow()
-                                .receive_null(this->_layout_receiver)
-                                .filter([prev_height = this->frame_layout_guide_rect.height().value()](
-                                            ui::region const &region) mutable {
-                                    if (prev_height != region.size.height) {
-                                        prev_height = region.size.height;
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                })
-                                .map([](ui::region const &region) { return region.size.height; })
-                                .receive(this->_update_resource_receiver)
-                                .end();
+        this->_frame_flow = this->frame_layout_guide_rect.begin_flow().receive_null(this->_layout_receiver).end();
 
         this->_renderer_flow = this->node.begin_renderer_flow().receive(this->_renderer_receiver).sync();
     }
@@ -307,7 +287,6 @@ struct vu::ui_indicator::impl : base::impl {
     flow::observer _renderer_flow = nullptr;
     flow::receiver<ui::renderer> _renderer_receiver = nullptr;
     flow::receiver<> _update_receiver = nullptr;
-    flow::receiver<float> _update_resource_receiver = nullptr;
     flow::receiver<> _layout_receiver = nullptr;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
