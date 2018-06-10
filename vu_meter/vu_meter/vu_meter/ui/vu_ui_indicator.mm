@@ -130,9 +130,9 @@ struct vu::ui_indicator::impl : base::impl {
             }
         });
 
-        this->_layout_receiver = flow::receiver<>([weak_indicator] {
+        this->_layout_receiver = flow::receiver<ui::region>([weak_indicator](ui::region const &region) {
             if (auto indicator = weak_indicator.lock()) {
-                indicator.impl_ptr<impl>()->_layout();
+                indicator.impl_ptr<impl>()->_layout(region);
             }
         });
 
@@ -224,13 +224,12 @@ struct vu::ui_indicator::impl : base::impl {
                                    .sync();
 
         // layout_guide
-        this->_frame_flow = this->frame_layout_guide_rect.begin_flow().receive_null(this->_layout_receiver).end();
+        this->_frame_flow = this->frame_layout_guide_rect.begin_flow().receive(this->_layout_receiver).end();
 
         this->_renderer_flow = this->node.begin_renderer_flow().receive(this->_renderer_receiver).sync();
     }
 
-    void _layout() {
-        ui::region const region = this->frame_layout_guide_rect.region();
+    void _layout(ui::region const &region) {
         ui::size const size = region.size;
         float const width = size.width;
         float const height = size.height;
@@ -287,7 +286,7 @@ struct vu::ui_indicator::impl : base::impl {
     flow::observer _renderer_flow = nullptr;
     flow::receiver<ui::renderer> _renderer_receiver = nullptr;
     flow::receiver<> _update_receiver = nullptr;
-    flow::receiver<> _layout_receiver = nullptr;
+    flow::receiver<ui::region> _layout_receiver = nullptr;
     ui::layout_guide_point _node_guide_point;
     ui::layout_guide_rect _base_guide_rect;
 };
