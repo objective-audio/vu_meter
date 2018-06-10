@@ -24,6 +24,8 @@ struct ui_main {
     void setup(ui::renderer &&renderer, main_ptr_t &main);
 
    private:
+    ui_indicator_resource _indicator_resource{nullptr};
+
     weak_main_ptr_t _weak_main;
     ui::layout_guide_rect _frame_guide_rect;
     ui::layout_guide _vu_bottom_y_guide;

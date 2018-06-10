@@ -102,11 +102,11 @@ struct vu::ui_indicator::impl : base::impl {
     impl() {
     }
 
-    void setup(ui_indicator &indicator, ui::renderer &renderer, main_ptr_t &main, std::size_t const idx) {
+    void setup(ui_indicator &indicator, main_ptr_t &main, ui_indicator_resource &&resource, std::size_t const idx) {
         auto weak_indicator = to_weak(indicator);
         weak_main_ptr_t weak_main = main;
         this->_weak_main = weak_main;
-
+        this->_resource = resource;
         this->idx = idx;
 
         // receivers
@@ -213,8 +213,6 @@ struct vu::ui_indicator::impl : base::impl {
         this->needle_root_node.add_sub_node(this->needle.node());
 
         // indicator_resource
-
-        this->_resource = ui_indicator_resource{renderer};
 
         this->_resource_flow = this->_resource.begin_font_atlas_flow()
                                    .perform([weak_indicator](ui::font_atlas const &atlas) {
@@ -323,8 +321,8 @@ vu::ui_indicator::ui_indicator() : base(std::make_shared<impl>()) {
 vu::ui_indicator::ui_indicator(std::nullptr_t) : base(nullptr) {
 }
 
-void vu::ui_indicator::setup(ui::renderer &renderer, main_ptr_t &main, std::size_t const idx) {
-    impl_ptr<impl>()->setup(*this, renderer, main, idx);
+void vu::ui_indicator::setup(main_ptr_t &main, ui_indicator_resource resource, std::size_t const idx) {
+    impl_ptr<impl>()->setup(*this, main, std::move(resource), idx);
 }
 
 ui::node &vu::ui_indicator::node() {

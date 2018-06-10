@@ -16,6 +16,7 @@ static float constexpr padding = 4.0f;
 void vu::ui_main::setup(ui::renderer &&renderer, main_ptr_t &main) {
     this->_weak_main = main;
     this->renderer = std::move(renderer);
+    this->_indicator_resource = ui_indicator_resource(this->renderer);
 
     ui::texture texture{{.point_size = {1024, 1024}}};
     texture.sync_scale_from_renderer(this->renderer);
@@ -194,7 +195,7 @@ void vu::ui_main::_add_indicator() {
         std::size_t const idx = this->indicators.size();
         ui_indicator indicator;
         this->renderer.root_node().add_sub_node(indicator.node());
-        indicator.setup(this->renderer, main, idx);
+        indicator.setup(main, this->_indicator_resource, idx);
         this->indicators.emplace_back(std::move(indicator));
     }
 }
