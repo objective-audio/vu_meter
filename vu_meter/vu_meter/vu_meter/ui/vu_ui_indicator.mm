@@ -121,18 +121,18 @@ struct vu::ui_indicator::impl : base::impl {
             }
         });
 
-        this->_renderer_receiver = flow::receiver<ui::renderer>([weak_indicator,
-                                                                 will_render_flow = flow::observer{nullptr}](
-                                                                    ui::renderer const &renderer) mutable {
-            if (auto indicator = weak_indicator.lock()) {
-                if (renderer) {
-                    will_render_flow =
-                        renderer.begin_will_render_flow().receive(indicator.impl_ptr<impl>()->_update_receiver).end();
-                } else {
-                    will_render_flow = nullptr;
+        this->_renderer_receiver = flow::receiver<ui::renderer>(
+            [weak_indicator, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
+                if (auto indicator = weak_indicator.lock()) {
+                    if (renderer) {
+                        auto imp = indicator.impl_ptr<impl>();
+                        will_render_flow = renderer.begin_will_render_flow().receive(imp->_update_receiver).end();
+                        imp->_render_target.sync_scale_from_renderer(renderer);
+                    } else {
+                        will_render_flow = nullptr;
+                    }
                 }
-            }
-        });
+            });
 
         this->_layout_receiver = flow::receiver<ui::region>([weak_indicator](ui::region const &region) {
             if (auto indicator = weak_indicator.lock()) {
