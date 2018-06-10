@@ -99,6 +99,8 @@ struct vu::ui_indicator::impl : base::impl {
 
     ui_indicator_resource _resource = nullptr;
 
+    ui::render_target _render_target;
+
     ui::layout_guide_rect frame_layout_guide_rect;
 
     impl() {
@@ -176,6 +178,12 @@ struct vu::ui_indicator::impl : base::impl {
                                       .begin_flow()
                                       .receive(this->_base_guide_rect.top().receiver())
                                       .sync());
+
+        // render_target
+
+        this->_flows.emplace_back(
+            this->_base_guide_rect.begin_flow().receive(this->_render_target.layout_guide_rect().receiver()).sync());
+        this->node.set_render_target(this->_render_target);
 
         // numbers_root_node
         this->_batch_node.add_sub_node(this->_numbers_root_node);
