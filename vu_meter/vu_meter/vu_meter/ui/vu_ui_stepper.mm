@@ -111,7 +111,7 @@ void vu::ui_stepper::_setup_text(ui_stepper_resource &resource) {
 }
 
 void vu::ui_stepper::_setup_flows() {
-    this->_flows.emplace_back(this->_minus_enabled_setter.begin()
+    this->_flows.emplace_back(this->_minus_enabled_setter.begin_flow()
                                   .perform([this](bool const &value) {
                                       if (!value) {
                                           this->_minus_button.cancel_tracking();
@@ -120,7 +120,7 @@ void vu::ui_stepper::_setup_flows() {
                                   .receive(this->_minus_button.rect_plane().node().collider().enabled_receiver())
                                   .end());
 
-    this->_flows.emplace_back(this->_plus_enabled_setter.begin()
+    this->_flows.emplace_back(this->_plus_enabled_setter.begin_flow()
                                   .perform([this](bool const &value) {
                                       if (!value) {
                                           this->_plus_button.cancel_tracking();
@@ -170,11 +170,11 @@ void vu::ui_stepper::_setup_flows() {
 }
 
 vu::ui_stepper::button_flow_t vu::ui_stepper::begin_minus_flow() {
-    return this->_minus_button.subject().begin_flow(ui::button::method::ended);
+    return this->_minus_button.begin_flow(ui::button::method::ended);
 }
 
 vu::ui_stepper::button_flow_t vu::ui_stepper::begin_plus_flow() {
-    return this->_plus_button.subject().begin_flow(ui::button::method::ended);
+    return this->_plus_button.begin_flow(ui::button::method::ended);
 }
 
 flow::receiver<std::string> &vu::ui_stepper::text_receiver() {

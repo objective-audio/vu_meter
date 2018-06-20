@@ -32,7 +32,7 @@ namespace constants {
 
 struct vu::ui_indicator_resource::impl : base::impl {
     weak<ui::renderer> _weak_renderer;
-    property<ui::font_atlas> _font_atlas{{.value = nullptr}};
+    flow::property<ui::font_atlas> _font_atlas{ui::font_atlas{nullptr}};
     float _vu_height = 0.0f;
 
     impl(ui::renderer &renderer) : _weak_renderer(renderer) {
@@ -78,8 +78,8 @@ ui::font_atlas &vu::ui_indicator_resource::font_atlas() {
     return impl_ptr<impl>()->_font_atlas.value();
 }
 
-flow::node<ui::font_atlas> vu::ui_indicator_resource::begin_font_atlas_flow() {
-    return impl_ptr<impl>()->_font_atlas.begin_value_flow();
+flow::node_t<ui::font_atlas, true> vu::ui_indicator_resource::begin_font_atlas_flow() {
+    return impl_ptr<impl>()->_font_atlas.begin_flow();
 }
 
 #pragma mark - ui_indicator::impl

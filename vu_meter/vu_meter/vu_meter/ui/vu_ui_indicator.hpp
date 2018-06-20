@@ -20,7 +20,7 @@ struct ui_indicator_resource : base {
 
     ui::font_atlas &font_atlas();
 
-    flow::node<ui::font_atlas> begin_font_atlas_flow();
+    flow::node_t<ui::font_atlas, true> begin_font_atlas_flow();
 };
 
 struct ui_indicator : base {
