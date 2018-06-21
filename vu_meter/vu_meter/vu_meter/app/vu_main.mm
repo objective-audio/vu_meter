@@ -20,6 +20,11 @@ void vu::main::setup() {
         return;
     }
 
+    if (![[AVAudioSession sharedInstance] setActive:YES error:&error]) {
+        NSLog(@"%@", error);
+        return;
+    }
+
     double const sample_rate = this->au_input.au_io().device_sample_rate();
     audio::format format{{.sample_rate = sample_rate, .channel_count = 2}};
     this->manager.connect(this->au_input.au_io().au().node(), this->input_tap.node(), format);
