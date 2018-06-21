@@ -26,7 +26,7 @@ void vu::main::setup() {
     }
 
     double const sample_rate = this->au_input.au_io().device_sample_rate();
-    audio::format format{{.sample_rate = sample_rate, .channel_count = 2}};
+    audio::format format{{.sample_rate = sample_rate, .channel_count = vu::indicator_count_max}};
     this->manager.connect(this->au_input.au_io().au().node(), this->input_tap.node(), format);
 
     struct context_t {
@@ -48,8 +48,8 @@ void vu::main::setup() {
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
 
-    std::array<proc::channel_index_t, 2> main_channels{0, 1};
-    proc::channel_index_t const pow_ch = 2;
+    std::array<proc::channel_index_t, vu::indicator_count_max> main_channels{0, 1, 2, 3};
+    proc::channel_index_t const pow_ch = vu::indicator_count_max;
 
     /// インプットを受け付けるトラック
     for (auto const ch : main_channels) {
@@ -75,7 +75,7 @@ void vu::main::setup() {
     // 累乗するための固定値
     if (auto track = timeline.add_track(trk_idx++)) {
         auto module = proc::make_signal_module(float(2.0f));
-        module.connect_output(proc::to_connector_index(proc::constant::output::value), 2);
+        module.connect_output(proc::to_connector_index(proc::constant::output::value), pow_ch);
 
         track.insert_module(time_range, std::move(module));
     }
