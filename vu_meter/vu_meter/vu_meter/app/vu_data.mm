@@ -4,6 +4,7 @@
 
 #include "vu_data.hpp"
 #import <Foundation/Foundation.h>
+#include "vu_types.h"
 
 using namespace yas;
 
@@ -13,8 +14,6 @@ static NSString *const indicator_count_key = @"indicator_count";
 
 static int32_t constexpr reference_max = 0;
 static int32_t constexpr reference_min = -30;
-static uint32_t constexpr indicator_count_max = 8;
-static uint32_t constexpr indicator_count_min = 1;
 }
 
 struct vu::data::impl : base::impl {
