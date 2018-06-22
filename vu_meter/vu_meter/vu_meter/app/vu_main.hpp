@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <array>
 #include <mutex>
 #include "vu_data.hpp"
 #include "vu_types.h"

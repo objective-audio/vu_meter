@@ -3,7 +3,6 @@
 //
 
 #include "vu_main.hpp"
-#include <array>
 #include <iostream>
 #include <limits>
 #include "vu_send_module.hpp"
@@ -48,7 +47,7 @@ void vu::main::setup() {
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
 
-    std::array<proc::channel_index_t, vu::indicator_count_max> main_channels{0, 1, 2, 3};
+    std::vector<proc::channel_index_t> main_channels{0, 1, 2, 3};
     proc::channel_index_t const pow_ch = vu::indicator_count_max;
 
     /// インプットを受け付けるトラック
