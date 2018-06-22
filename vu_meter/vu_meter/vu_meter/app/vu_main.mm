@@ -26,13 +26,32 @@ void vu::main::setup() {
     }
 
     this->_update_timeline();
+
+    this->_manager_flow = this->manager.subject()
+                              .begin_flow(audio::engine::manager::method::configuration_change)
+                              .perform([this](auto const &) { this->_update_timeline(); })
+                              .end();
 }
 
 void vu::main::_update_timeline() {
-    this->manager.stop();
-
+    uint32_t const ch_count = this->au_input.au_io().input_device_channel_count();
     double const sample_rate = this->au_input.au_io().device_sample_rate();
-    audio::format format{{.sample_rate = sample_rate, .channel_count = vu::indicator_count_max}};
+
+    if (this->_last_ch_count == ch_count && this->_last_sample_rate == sample_rate) {
+        return;
+    }
+
+    this->manager.stop();
+    this->manager.disconnect_input(this->input_tap.node());
+
+    this->_last_ch_count = ch_count;
+    this->_last_sample_rate = sample_rate;
+
+    if (ch_count == 0) {
+        return;
+    }
+
+    audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
     this->manager.connect(this->au_input.au_io().au().node(), this->input_tap.node(), format);
 
     struct context_t {
@@ -49,8 +68,6 @@ void vu::main::_update_timeline() {
     };
 
     auto context = std::make_shared<context_t>();
-
-    std::size_t const ch_count = vu::indicator_count_max;
 
     proc::timeline timeline{};
     proc::track_index_t trk_idx = 0;

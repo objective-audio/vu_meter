@@ -9,6 +9,7 @@
 #include "vu_types.h"
 #include "vu_ui_main.hpp"
 #include "yas_audio.h"
+#include "yas_flow.h"
 
 namespace yas::vu {
 struct main {
@@ -28,5 +29,10 @@ struct main {
     std::mutex _values_mutex;
 
     void _update_timeline();
+
+    flow::observer _manager_flow = nullptr;
+
+    uint32_t _last_ch_count = 0;
+    double _last_sample_rate = 0.0;
 };
 }  // namespace yas::vu
