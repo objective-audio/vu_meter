@@ -26,5 +26,7 @@ struct main {
 
     std::vector<float> _values;
     std::mutex _values_mutex;
+
+    void _update_timeline();
 };
 }  // namespace yas::vu

@@ -25,6 +25,12 @@ void vu::main::setup() {
         return;
     }
 
+    this->_update_timeline();
+}
+
+void vu::main::_update_timeline() {
+    this->manager.stop();
+
     double const sample_rate = this->au_input.au_io().device_sample_rate();
     audio::format format{{.sample_rate = sample_rate, .channel_count = vu::indicator_count_max}};
     this->manager.connect(this->au_input.au_io().au().node(), this->input_tap.node(), format);
