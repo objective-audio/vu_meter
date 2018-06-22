@@ -49,8 +49,6 @@ void vu::main::setup() {
     proc::timeline timeline{};
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
-
-    //    std::vector<proc::channel_index_t> main_channels{0, 1, 2, 3};
     proc::channel_index_t const pow_ch = ch_count;
 
     /// インプットを受け付けるトラック
