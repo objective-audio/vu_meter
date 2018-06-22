@@ -115,32 +115,50 @@ void vu::main::setup() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->input_tap.set_render_handler(
-        [context, timeline, main_channels, this](audio::engine::node::render_args args) mutable {
-            proc::length_t const length = args.buffer.frame_length();
-            context->buffer = args.buffer;
+    this->input_tap.set_render_handler([context, timeline, main_channels, this,
+                                        values = std::vector<float>()](audio::engine::node::render_args args) mutable {
+        proc::length_t const length = args.buffer.frame_length();
+        context->buffer = args.buffer;
 
-            proc::time::range const time_range{args.when.sample_time(), length};
-            proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
-            proc::stream stream{sync_source};
+        proc::time::range const time_range{args.when.sample_time(), length};
+        proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
+        proc::stream stream{sync_source};
 
-            timeline.process(time_range, stream);
+        timeline.process(time_range, stream);
 
-            for (auto const ch : main_channels) {
-                if (stream.has_channel(ch)) {
-                    auto const &channel = stream.channel(ch);
-                    auto events = channel.filtered_events<float, proc::signal_event>();
-                    for (auto const &event_pair : events) {
-                        auto const &event = event_pair.second;
-                        this->values.at(ch).store(event.vector<float>().at(ch));
-                    }
+        values.clear();
+
+        for (auto const ch : main_channels) {
+            if (stream.has_channel(ch)) {
+                auto const &channel = stream.channel(ch);
+                auto events = channel.filtered_events<float, proc::signal_event>();
+                for (auto const &event_pair : events) {
+                    auto const &event = event_pair.second;
+
+                    values.push_back(event.vector<float>().at(ch));
                 }
             }
+        }
 
-            context->reset_buffer();
-        });
+        this->set_values(std::move(values));
+
+        context->reset_buffer();
+    });
 
     if (auto result = this->manager.start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
     }
+}
+
+void vu::main::set_values(std::vector<float> &&values) {
+    std::lock_guard<std::mutex> lock(_values_mutex);
+    this->_values = std::move(values);
+}
+
+std::vector<float> vu::main::values() {
+    std::vector<float> values;
+    if (std::lock_guard<std::mutex> lock(_values_mutex); true) {
+        values = this->_values;
+    }
+    return values;
 }
