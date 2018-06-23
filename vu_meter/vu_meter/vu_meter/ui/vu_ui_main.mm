@@ -168,7 +168,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                     auto each = make_fast_each(count);
                     while (yas_each_next(each)) {
                         std::size_t const &idx = yas_each_index(each);
-                        std::size_t const bottom_idx = idx * 2;
+                        std::size_t const bottom_idx = (count - 1 - idx) * 2;
                         std::size_t const top_idx = bottom_idx + 1;
                         float const bottom = bottom_y + offset_y + (y_positions.at(bottom_idx) - bottom_y) * rate;
                         float const top = bottom_y + offset_y + (y_positions.at(top_idx) - bottom_y) * rate;
