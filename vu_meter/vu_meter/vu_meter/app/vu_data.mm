@@ -84,7 +84,7 @@ struct vu::data::impl : base::impl {
         this->_flows.emplace_back(this->_indicator_count.begin_flow()
                                       .perform([](uint32_t const &value) {
                                           [[NSUserDefaults standardUserDefaults] setInteger:value
-                                                                                     forKey:vu::reference_key];
+                                                                                     forKey:vu::indicator_count_key];
                                           [[NSUserDefaults standardUserDefaults] synchronize];
                                       })
                                       .end());
