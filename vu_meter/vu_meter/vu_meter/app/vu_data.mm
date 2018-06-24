@@ -29,7 +29,6 @@ struct vu::data::impl : base::impl {
     flow::notifier<std::nullptr_t> _reference_decrement_sender;
     flow::notifier<std::nullptr_t> _indicator_increment_sender;
     flow::notifier<std::nullptr_t> _indicator_decrement_sender;
-    vu::data::subject_t _subject;
     std::vector<flow::observer> _flows;
 
     impl() {

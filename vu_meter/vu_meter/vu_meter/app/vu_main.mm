@@ -27,8 +27,7 @@ void vu::main::setup() {
 
     this->_update_timeline();
 
-    this->_manager_flow = this->manager.subject()
-                              .begin_flow(audio::engine::manager::method::configuration_change)
+    this->_manager_flow = this->manager.begin_flow(audio::engine::manager::method::configuration_change)
                               .perform([this](auto const &) { this->_update_timeline(); })
                               .end();
 }
