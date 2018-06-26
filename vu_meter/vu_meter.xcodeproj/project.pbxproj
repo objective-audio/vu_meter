@@ -170,6 +170,7 @@
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6C4697620C027F800D1AD59 /* vu_ui_indicator_count.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6C4697420C027F800D1AD59 /* vu_ui_indicator_count.mm */; };
 		B6C4697920C16EAE00D1AD59 /* vu_ui_stepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6C4697720C16EAE00D1AD59 /* vu_ui_stepper.mm */; };
+		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -561,6 +562,7 @@
 		B6C4697520C027F800D1AD59 /* vu_ui_indicator_count.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_count.hpp; sourceTree = "<group>"; };
 		B6C4697720C16EAE00D1AD59 /* vu_ui_stepper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_stepper.mm; sourceTree = "<group>"; };
 		B6C4697820C16EAE00D1AD59 /* vu_ui_stepper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_stepper.hpp; sourceTree = "<group>"; };
+		B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_layout_tests.mm; sourceTree = "<group>"; };
 		B6FD86F220B0EF7300AD8D2F /* yas_flow_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yas_flow_utils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -629,6 +631,7 @@
 				B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */,
 				B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */,
 				B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */,
+				B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */,
 			);
 			path = vu_meterTests;
 			sourceTree = "<group>";
@@ -1446,6 +1449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */,
 				B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */,
 				B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */,
 				B605C0C12067A76C00B4ACCF /* yas_processing_test_utils.cpp in Sources */,
