@@ -78,6 +78,9 @@ std::vector<ui::region> ui_indicator_layout::regions(std::size_t const count, ui
     auto h_positions = h_justify_handler(std::make_tuple(0.0f, max_scaled_size.width, max_size.width * 2 - 1));
     auto v_positions = v_justify_handler(std::make_tuple(0.0f, max_scaled_size.height, max_size.height * 2 - 1));
 
+    float const origin_y = region.bottom() + (region.size.height - max_scaled_size.height) * 0.5f;
+    float const origin_x = region.left() + (region.size.width - max_scaled_size.width) * 0.5f;
+
     std::vector<ui::region> regions;
 
     if (auto v_each = make_fast_each(max_size.height); true) {
@@ -85,16 +88,16 @@ std::vector<ui::region> ui_indicator_layout::regions(std::size_t const count, ui
             std::size_t const &v_idx = yas_each_index(v_each);
             std::size_t const bottom_idx = (max_size.height - 1 - v_idx) * 2;
             std::size_t const top_idx = bottom_idx + 1;
-            float const bottom = region.bottom() + v_positions.at(bottom_idx);
-            float const top = region.bottom() + v_positions.at(top_idx);
+            float const bottom = origin_y + v_positions.at(bottom_idx);
+            float const top = origin_y + v_positions.at(top_idx);
 
             auto h_each = make_fast_each(max_size.width);
             while (yas_each_next(h_each)) {
                 std::size_t const &h_idx = yas_each_index(h_each);
                 std::size_t const left_idx = h_idx * 2;
                 std::size_t const right_idx = left_idx + 1;
-                float const left = region.left() + h_positions.at(left_idx);
-                float const right = region.left() + h_positions.at(right_idx);
+                float const left = origin_x + h_positions.at(left_idx);
+                float const right = origin_x + h_positions.at(right_idx);
 
                 regions.emplace_back(ui::region{.origin = {.x = left, .y = bottom},
                                                 .size = {.width = right - left, .height = top - bottom}});
