@@ -4,6 +4,7 @@
 
 #include "vu_ui_main.hpp"
 #include "vu_main.hpp"
+#include "vu_ui_indicator_layout.hpp"
 #include "yas_fast_each.h"
 #include "yas_flow_utils.h"
 
@@ -127,60 +128,9 @@ void vu::ui_main::_setup_indicators(main_ptr_t &main) {
                 ui::region const &region = std::get<1>(tuple);
                 float const &bottom_y = std::get<2>(tuple);
 
-                std::vector<ui::region> result;
-                result.reserve(count);
-
-                if (count == 0) {
-                    return result;
-                }
-
-                bool const is_landscape = region.size.width > region.size.height;
-                std::size_t const ratio_count = count + count - 1;
-
-                if (is_landscape) {
-                    float const center_y = bottom_y + (region.top() - bottom_y) * 0.5f;
-                    auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 100.0f; });
-                    auto x_positions = justify_handler(std::make_tuple(region.left(), region.right(), ratio_count));
-                    auto each = make_fast_each(count);
-                    while (yas_each_next(each)) {
-                        std::size_t const &idx = yas_each_index(each);
-                        std::size_t const left_idx = idx * 2;
-                        std::size_t const right_idx = left_idx + 1;
-                        float const left = x_positions.at(left_idx);
-                        float const right = x_positions.at(right_idx);
-                        float const width = right - left;
-                        float const height = width * 0.5f;
-                        float const bottom = center_y - height * 0.5f;
-                        result.emplace_back(
-                            ui::region{.origin = {.x = left, .y = bottom}, .size = {.width = width, .height = height}});
-                    }
-                } else {
-                    float const center_x = region.center().x;
-                    auto justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 50.0f; });
-                    auto y_positions = justify_handler(std::make_tuple(bottom_y, region.top(), ratio_count));
-
-                    float const justified_width = (y_positions.at(1) - y_positions.at(0)) * 2.0f;
-                    float const max_width = region.size.width;
-                    float const rate = (max_width < justified_width) ? (max_width / justified_width) : 1.0f;
-                    float const max_height = region.top() - bottom_y;
-                    float const offset_y = (max_height - max_height * rate) * 0.5f;
-
-                    auto each = make_fast_each(count);
-                    while (yas_each_next(each)) {
-                        std::size_t const &idx = yas_each_index(each);
-                        std::size_t const bottom_idx = (count - 1 - idx) * 2;
-                        std::size_t const top_idx = bottom_idx + 1;
-                        float const bottom = bottom_y + offset_y + (y_positions.at(bottom_idx) - bottom_y) * rate;
-                        float const top = bottom_y + offset_y + (y_positions.at(top_idx) - bottom_y) * rate;
-                        float const height = top - bottom;
-                        float const width = height * 2.0f;
-                        float const left = center_x - width * 0.5f;
-                        result.emplace_back(
-                            ui::region{.origin = {.x = left, .y = bottom}, .size = {.width = width, .height = height}});
-                    }
-                }
-
-                return result;
+                return ui_indicator_layout::regions(
+                    count, ui::region{.origin = {.x = region.left(), .y = bottom_y},
+                                      .size = {.width = region.size.width, .height = region.top() - bottom_y}});
             })
             .perform([this](std::vector<ui::region> const &regions) {
                 std::size_t const count = std::min(this->indicators.size(), regions.size());
