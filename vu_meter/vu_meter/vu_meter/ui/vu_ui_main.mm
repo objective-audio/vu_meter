@@ -106,7 +106,7 @@ void vu::ui_main::_setup_vu_bottom_y_guide() {
 
 void vu::ui_main::_setup_indicators(main_ptr_t &main) {
     this->_flows.emplace_back(
-        main->data.begin_indicator_count_flow()
+        main->indicator_count.begin_flow()
             .perform([this](std::size_t const &value) {
                 if (value < this->indicators.size()) {
                     auto each = make_fast_each(this->indicators.size() - value);
