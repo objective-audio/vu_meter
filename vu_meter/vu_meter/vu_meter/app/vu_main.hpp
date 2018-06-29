@@ -14,6 +14,7 @@
 namespace yas::vu {
 struct main {
     vu::data data;
+    flow::property<uint32_t> indicator_count{uint32_t(0)};
 
     void setup();
 
@@ -28,6 +29,7 @@ struct main {
     std::vector<float> _values;
     std::mutex _values_mutex;
 
+    void _update_indicator_count();
     void _update_timeline();
 
     flow::observer _manager_flow = nullptr;

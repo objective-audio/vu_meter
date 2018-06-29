@@ -28,8 +28,15 @@ void vu::main::setup() {
     this->_update_timeline();
 
     this->_manager_flow = this->manager.begin_flow(audio::engine::manager::method::configuration_change)
-                              .perform([this](auto const &) { this->_update_timeline(); })
+                              .perform([this](auto const &) {
+                                  this->_update_indicator_count();
+                                  this->_update_timeline();
+                              })
                               .end();
+}
+
+void vu::main::_update_indicator_count() {
+    this->indicator_count.set_value(this->au_input.au_io().input_device_channel_count());
 }
 
 void vu::main::_update_timeline() {
