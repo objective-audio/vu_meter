@@ -58,7 +58,7 @@ struct vu::ui_indicator_resource::impl : base::impl {
         float const font_size = constants::number_font_size_rate * this->_vu_height;
 
         this->_font_atlas.set_value(ui::font_atlas{
-            {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "012357-", .texture = texture}});
+            {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "0123456789-", .texture = texture}});
     }
 };
 
@@ -97,6 +97,7 @@ struct vu::ui_indicator::impl : base::impl {
     std::vector<ui::node> number_handles;
     std::vector<ui::strings> db_numbers;
     ui::strings ch_number = nullptr;
+    ui::layout_guide_point _ch_number_guide;
 
     ui_indicator_resource _resource = nullptr;
 
@@ -221,11 +222,22 @@ struct vu::ui_indicator::impl : base::impl {
             }
         }
 
+        // ch_number
+
         ui::strings::args ch_number_args{
-            .text = std::to_string(idx), .max_word_count = 2, .alignment = ui::layout_alignment::mid};
+            .text = std::to_string(idx + 1), .max_word_count = 2, .alignment = ui::layout_alignment::mid};
         this->ch_number = ui::strings{ch_number_args};
-        this->ch_number.rect_plane().node().set_color(vu::indicator_number_color());
-        this->_numbers_root_node.add_sub_node(ch_number.rect_plane().node());
+        this->ch_number.rect_plane().node().set_color(vu::indicator_ch_color());
+        this->ch_number.rect_plane().node().attach_position_layout_guides(this->_ch_number_guide);
+        this->node.add_sub_node(ch_number.rect_plane().node());
+
+        this->_flows.emplace_back(this->frame_layout_guide_rect.begin_flow()
+                                      .map([](ui::region const &region) {
+                                          return ui::point{.x = region.size.width * 0.94f,
+                                                           .y = region.size.height * 0.2f};
+                                      })
+                                      .receive(this->_ch_number_guide.receiver())
+                                      .sync());
 
         // needle
         this->needle.node().set_color(vu::indicator_needle_color());
@@ -244,7 +256,7 @@ struct vu::ui_indicator::impl : base::impl {
                                                number.set_font_atlas(atlas);
                                                number.rect_plane().node().set_position({.y = number_offset});
                                            }
-#warning todo ch_numberの位置を決める
+
                                            imp->ch_number.set_font_atlas(atlas);
                                        }
                                    })

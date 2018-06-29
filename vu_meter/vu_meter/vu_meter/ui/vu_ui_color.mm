@@ -31,6 +31,11 @@ ui::color const &vu::indicator_number_color() {
     return _color;
 }
 
+ui::color const &vu::indicator_ch_color() {
+    static ui::color _color{.red = 0.70f, .green = 0.70f, .blue = 0.70f};
+    return _color;
+}
+
 ui::color const &vu::indicator_over_gridline_color() {
     static ui::color _color{.red = 0.9f, .green = 0.05f, .blue = 0.0f};
     return _color;
