@@ -95,7 +95,7 @@ struct vu::ui_indicator::impl : base::impl {
     std::vector<ui::node> gridline_handles;
     std::vector<ui::rect_plane> gridlines;
     std::vector<ui::node> number_handles;
-    std::vector<ui::strings> numbers;
+    std::vector<ui::strings> db_numbers;
 
     ui_indicator_resource _resource = nullptr;
 
@@ -199,7 +199,7 @@ struct vu::ui_indicator::impl : base::impl {
             auto &number_handle = this->number_handles.emplace_back();
             ui::strings::args args{
                 .text = std::to_string(std::abs(param)), .max_word_count = 3, .alignment = ui::layout_alignment::mid};
-            auto &number = this->numbers.emplace_back(std::move(args));
+            auto &number = this->db_numbers.emplace_back(std::move(args));
 
             this->_numbers_root_node.add_sub_node(gridline_handle);
             gridline_handle.add_sub_node(plane.node());
@@ -233,7 +233,7 @@ struct vu::ui_indicator::impl : base::impl {
                                            float const number_offset =
                                                atlas ? (atlas.ascent() + atlas.descent()) * 0.5f : 0.0f;
 
-                                           for (auto &number : imp->numbers) {
+                                           for (auto &number : imp->db_numbers) {
                                                number.set_font_atlas(atlas);
                                                number.rect_plane().node().set_position({.y = number_offset});
                                            }
