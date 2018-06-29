@@ -25,6 +25,7 @@ void vu::main::setup() {
         return;
     }
 
+    this->_update_indicator_count();
     this->_update_timeline();
 
     this->_manager_flow = this->manager.begin_flow(audio::engine::manager::method::configuration_change)
