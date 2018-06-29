@@ -96,6 +96,7 @@ struct vu::ui_indicator::impl : base::impl {
     std::vector<ui::rect_plane> gridlines;
     std::vector<ui::node> number_handles;
     std::vector<ui::strings> db_numbers;
+    ui::strings ch_number = nullptr;
 
     ui_indicator_resource _resource = nullptr;
 
@@ -220,6 +221,12 @@ struct vu::ui_indicator::impl : base::impl {
             }
         }
 
+        ui::strings::args ch_number_args{
+            .text = std::to_string(idx), .max_word_count = 2, .alignment = ui::layout_alignment::mid};
+        this->ch_number = ui::strings{ch_number_args};
+        this->ch_number.rect_plane().node().set_color(vu::indicator_number_color());
+        this->_numbers_root_node.add_sub_node(ch_number.rect_plane().node());
+
         // needle
         this->needle.node().set_color(vu::indicator_needle_color());
         this->needle_root_node.add_sub_node(this->needle.node());
@@ -237,6 +244,8 @@ struct vu::ui_indicator::impl : base::impl {
                                                number.set_font_atlas(atlas);
                                                number.rect_plane().node().set_position({.y = number_offset});
                                            }
+#warning todo ch_numberの位置を決める
+                                           imp->ch_number.set_font_atlas(atlas);
                                        }
                                    })
                                    .sync();
