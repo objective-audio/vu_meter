@@ -58,7 +58,7 @@ struct vu::ui_indicator_resource::impl : base::impl {
         float const font_size = constants::number_font_size_rate * this->_vu_height;
 
         this->_font_atlas.set_value(ui::font_atlas{
-            {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "0123456789-", .texture = texture}});
+            {.font_name = "TrebuchetMS-Bold", .font_size = font_size, .words = "0123456789-CH", .texture = texture}});
     }
 };
 
@@ -225,7 +225,7 @@ struct vu::ui_indicator::impl : base::impl {
         // ch_number
 
         ui::strings::args ch_number_args{
-            .text = std::to_string(idx + 1), .max_word_count = 2, .alignment = ui::layout_alignment::mid};
+            .text = "CH-" + std::to_string(idx + 1), .max_word_count = 5, .alignment = ui::layout_alignment::max};
         this->ch_number = ui::strings{ch_number_args};
         this->ch_number.rect_plane().node().set_color(vu::indicator_ch_color());
         this->ch_number.rect_plane().node().attach_position_layout_guides(this->_ch_number_guide);
@@ -233,7 +233,7 @@ struct vu::ui_indicator::impl : base::impl {
 
         this->_flows.emplace_back(this->frame_layout_guide_rect.begin_flow()
                                       .map([](ui::region const &region) {
-                                          return ui::point{.x = region.size.width * 0.94f,
+                                          return ui::point{.x = region.size.width * 0.97f,
                                                            .y = region.size.height * 0.2f};
                                       })
                                       .receive(this->_ch_number_guide.receiver())
