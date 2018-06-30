@@ -7,7 +7,6 @@
 #include <array>
 #include "vu_types.h"
 #include "vu_ui_indicator.hpp"
-#include "vu_ui_indicator_count.hpp"
 #include "vu_ui_reference.hpp"
 #include "yas_ui.h"
 
