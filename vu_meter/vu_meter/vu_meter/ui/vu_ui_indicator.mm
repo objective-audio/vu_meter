@@ -74,12 +74,8 @@ void vu::ui_indicator_resource::set_vu_height(float const height) {
     impl_ptr<impl>()->set_vu_height(height);
 }
 
-ui::font_atlas &vu::ui_indicator_resource::font_atlas() {
-    return impl_ptr<impl>()->_font_atlas.value();
-}
-
-flow::node_t<ui::font_atlas, true> vu::ui_indicator_resource::begin_font_atlas_flow() {
-    return impl_ptr<impl>()->_font_atlas.begin_flow();
+flow::property<ui::font_atlas> &vu::ui_indicator_resource::font_atlas() {
+    return impl_ptr<impl>()->_font_atlas;
 }
 
 #pragma mark - ui_indicator::impl
@@ -245,7 +241,8 @@ struct vu::ui_indicator::impl : base::impl {
 
         // indicator_resource
 
-        this->_resource_flow = this->_resource.begin_font_atlas_flow()
+        this->_resource_flow = this->_resource.font_atlas()
+                                   .begin_flow()
                                    .perform([weak_indicator](ui::font_atlas const &atlas) {
                                        if (ui_indicator indicator = weak_indicator.lock()) {
                                            auto imp = indicator.impl_ptr<impl>();
