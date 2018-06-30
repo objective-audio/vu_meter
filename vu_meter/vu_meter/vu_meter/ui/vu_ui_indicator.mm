@@ -150,12 +150,12 @@ struct vu::ui_indicator::impl : base::impl {
 
         // batch_node
 
-        this->_batch_node.set_batch(ui::batch{});
+        this->_batch_node.batch().set_value(ui::batch{});
         this->node.add_sub_node(_batch_node);
 
         // base_plane
 
-        this->base_plane.node().set_color(vu::indicator_base_color());
+        this->base_plane.node().color().set_value(vu::indicator_base_color());
         this->_batch_node.add_sub_node(this->base_plane.node());
 
         this->_flows.emplace_back(this->_base_guide_rect.begin_flow()
@@ -181,7 +181,7 @@ struct vu::ui_indicator::impl : base::impl {
 
         this->_flows.emplace_back(
             this->_base_guide_rect.begin_flow().receive(this->_render_target.layout_guide_rect().receiver()).sync());
-        this->node.set_render_target(this->_render_target);
+        this->node.render_target().set_value(this->_render_target);
 
         // numbers_root_node
         this->_batch_node.add_sub_node(this->_numbers_root_node);
@@ -206,15 +206,15 @@ struct vu::ui_indicator::impl : base::impl {
 
             ui::angle const angle = ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)),
                                                           0.0f, constants::half_angle.degrees);
-            gridline_handle.set_angle(angle);
-            number_handle.set_angle(-angle);
+            gridline_handle.angle().set_value(angle);
+            number_handle.angle().set_value(-angle);
 
             if (param > 0) {
-                plane.node().set_color(vu::indicator_over_gridline_color());
-                number.rect_plane().node().set_color(vu::indicator_over_number_color());
+                plane.node().color().set_value(vu::indicator_over_gridline_color());
+                number.rect_plane().node().color().set_value(vu::indicator_over_number_color());
             } else {
-                plane.node().set_color(vu::indicator_gridline_color());
-                number.rect_plane().node().set_color(vu::indicator_number_color());
+                plane.node().color().set_value(vu::indicator_gridline_color());
+                number.rect_plane().node().color().set_value(vu::indicator_number_color());
             }
         }
 
@@ -223,7 +223,7 @@ struct vu::ui_indicator::impl : base::impl {
         ui::strings::args ch_number_args{
             .text = "CH-" + std::to_string(idx + 1), .max_word_count = 5, .alignment = ui::layout_alignment::max};
         this->ch_number = ui::strings{ch_number_args};
-        this->ch_number.rect_plane().node().set_color(vu::indicator_ch_color());
+        this->ch_number.rect_plane().node().color().set_value(vu::indicator_ch_color());
         this->ch_number.rect_plane().node().attach_position_layout_guides(this->_ch_number_guide);
         this->node.add_sub_node(ch_number.rect_plane().node());
 
@@ -236,7 +236,7 @@ struct vu::ui_indicator::impl : base::impl {
                                       .sync());
 
         // needle
-        this->needle.node().set_color(vu::indicator_needle_color());
+        this->needle.node().color().set_value(vu::indicator_needle_color());
         this->needle_root_node.add_sub_node(this->needle.node());
 
         // indicator_resource
@@ -251,7 +251,7 @@ struct vu::ui_indicator::impl : base::impl {
 
                                            for (auto &number : imp->db_numbers) {
                                                number.set_font_atlas(atlas);
-                                               number.rect_plane().node().set_position({.y = number_offset});
+                                               number.rect_plane().node().position().set_value({.y = number_offset});
                                            }
 
                                            imp->ch_number.set_font_atlas(atlas);
@@ -282,19 +282,19 @@ struct vu::ui_indicator::impl : base::impl {
         float const gridline_width = constants::gridline_width_rate * height;
 
         // needle
-        this->needle_root_node.set_position({.x = needle_root_x, .y = needle_root_y});
+        this->needle_root_node.position().set_value({.x = needle_root_x, .y = needle_root_y});
         this->needle.data().set_rect_position(
             {.origin = {.x = -needle_width * 0.5f}, .size = {.width = needle_width, .height = needle_height}}, 0);
 
         // numbers_root_node
-        this->_numbers_root_node.set_position(this->needle_root_node.position());
+        this->_numbers_root_node.position().set_value(this->needle_root_node.position().value());
 
         // gridline
         for (auto &gridline : this->gridlines) {
             ui::node const parent = gridline.node().parent();
             float const gridline_y =
-                vu::ui_utils::gridline_y(parent.angle(), constants::half_angle, gridline_side_y, 0.1f);
-            gridline.node().set_position({.y = gridline_y});
+                vu::ui_utils::gridline_y(parent.angle().value(), constants::half_angle, gridline_side_y, 0.1f);
+            gridline.node().position().set_value({.y = gridline_y});
             gridline.data().set_rect_position({.origin = {.x = -gridline_width * 0.5f, .y = -gridline_height * 0.5f},
                                                .size = {.width = gridline_width, .height = gridline_height}},
                                               0);
@@ -303,8 +303,9 @@ struct vu::ui_indicator::impl : base::impl {
         float const number_side_y = constants::number_y_rate * height;
         for (auto &handle : this->number_handles) {
             ui::node const parent = handle.parent();
-            float const number_y = vu::ui_utils::gridline_y(parent.angle(), constants::half_angle, number_side_y, 0.1f);
-            handle.set_position({.y = number_y});
+            float const number_y =
+                vu::ui_utils::gridline_y(parent.angle().value(), constants::half_angle, number_side_y, 0.1f);
+            handle.position().set_value({.y = number_y});
         }
     }
 
@@ -314,7 +315,7 @@ struct vu::ui_indicator::impl : base::impl {
             float const value = (this->idx < values.size()) ? values.at(this->idx) : 0.0f;
             ui::angle const angle =
                 ui_utils::meter_angle(value, main->data.reference().value(), constants::half_angle.degrees);
-            this->needle.node().set_angle(angle);
+            this->needle.node().angle().set_value(angle);
         }
     }
 
