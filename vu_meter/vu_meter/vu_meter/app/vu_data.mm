@@ -77,14 +77,14 @@ struct vu::data::impl : base::impl {
         this->_flows.emplace_back(
             this->_reference_increment_sender.begin_flow()
                 .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
-                .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference() + 1; })
+                .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference().value() + 1; })
                 .receive(this->_reference_setter.receiver())
                 .end());
 
         this->_flows.emplace_back(
             this->_reference_decrement_sender.begin_flow()
                 .filter([weak_data](std::nullptr_t const &) { return !!weak_data; })
-                .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference() - 1; })
+                .map([weak_data](std::nullptr_t const &) { return weak_data.lock().reference().value() - 1; })
                 .receive(this->_reference_setter.receiver())
                 .end());
     }
@@ -97,16 +97,8 @@ vu::data::data() : base(std::make_shared<impl>()) {
 vu::data::data(std::nullptr_t) : base(nullptr) {
 }
 
-void vu::data::set_reference(int32_t const value) {
-    impl_ptr<impl>()->_reference_setter.notify(value);
-}
-
-int32_t vu::data::reference() const {
-    return impl_ptr<impl>()->_reference.value();
-}
-
-flow::node_t<int32_t, true> vu::data::begin_reference_flow() const {
-    return impl_ptr<impl>()->_reference.begin_flow();
+flow::property<int32_t> &vu::data::reference() {
+    return impl_ptr<impl>()->_reference;
 }
 
 flow::node_t<bool, true> vu::data::begin_is_reference_max_flow() const {

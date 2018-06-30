@@ -15,10 +15,8 @@ struct data : base {
     data();
     data(std::nullptr_t);
 
-    void set_reference(int32_t const);
-    int32_t reference() const;
+    flow::property<int32_t> &reference();
 
-    flow::node_t<int32_t, true> begin_reference_flow() const;
     flow::node_t<bool, true> begin_is_reference_max_flow() const;
     flow::node_t<bool, true> begin_is_reference_min_flow() const;
     flow::receiver<> &reference_increment_receiver();
