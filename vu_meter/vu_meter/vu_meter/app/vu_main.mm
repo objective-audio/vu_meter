@@ -3,12 +3,12 @@
 //
 
 #include "vu_main.hpp"
+#include <audio/yas_audio_umbrella.h>
+#include <cpp_utils/yas_fast_each.h>
 #include <iostream>
 #include <limits>
 #include "vu_send_module.hpp"
 #include "vu_sum_module.hpp"
-#include "yas_audio.h"
-#include "yas_fast_each.h"
 
 using namespace yas;
 
