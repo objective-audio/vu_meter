@@ -4,11 +4,11 @@
 
 #pragma once
 
+#include <ui/yas_ui_umbrella.h>
 #include <array>
 #include "vu_types.h"
 #include "vu_ui_indicator.hpp"
 #include "vu_ui_reference.hpp"
-#include "yas_ui.h"
 
 namespace yas::vu {
 class main;

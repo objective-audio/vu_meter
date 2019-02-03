@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <ui/yas_ui_types.h>
 #include <vector>
-#include "yas_ui_types.h"
 
 namespace yas::vu {
 struct ui_indicator_layout {

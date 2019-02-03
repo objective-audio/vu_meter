@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <ui/yas_ui_umbrella.h>
 #include "vu_types.h"
-#include "yas_ui.h"
 
 namespace yas::vu {
 struct ui_stepper_resource : base {

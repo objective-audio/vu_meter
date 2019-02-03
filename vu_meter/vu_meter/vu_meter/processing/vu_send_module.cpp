@@ -3,18 +3,22 @@
 //
 
 #include "vu_send_module.hpp"
-#include "yas_fast_each.h"
+#include <cpp_utils/yas_fast_each.h>
 
 using namespace yas;
 using namespace yas::proc;
 
 module vu::send::make_signal_module(handler handler) {
-    auto send_processor = make_send_signal_processor<float>(
-        [handler = std::move(handler)](time::range const &time_range, sync_source const &sync_src,
-                                       channel_index_t const, connector_index_t const co_idx,
-                                       float *const signal_ptr) { handler(time_range, co_idx, signal_ptr); });
+    auto make_processors = [handler = std::move(handler)] {
+        auto send_processor = make_send_signal_processor<float>(
+            [handler = std::move(handler)](time::range const &time_range, sync_source const &sync_src,
+                                           channel_index_t const, connector_index_t const co_idx,
+                                           float *const signal_ptr) { handler(time_range, co_idx, signal_ptr); });
 
-    return module{{std::move(send_processor)}};
+        return proc::module::processors_t{{std::move(send_processor)}};
+    };
+
+    return module{std::move(make_processors)};
 }
 
 #pragma mark -

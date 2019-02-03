@@ -3,8 +3,8 @@
 //
 
 #include "vu_ui_indicator_layout.hpp"
-#include "yas_fast_each.h"
-#include "yas_ui_flow_utils.h"
+#include <cpp_utils/yas_fast_each.h>
+#include <ui/yas_ui_chaining_utils.h>
 
 using namespace yas;
 using namespace yas::vu;

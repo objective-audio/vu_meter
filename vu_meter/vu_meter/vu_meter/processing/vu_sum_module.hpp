@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "yas_processing.h"
+#include <processing/yas_processing_umbrella.h>
 
 namespace yas::vu::sum {
 enum class output : proc::connector_index_t {

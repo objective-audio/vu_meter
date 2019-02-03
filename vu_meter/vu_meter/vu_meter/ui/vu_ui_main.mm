@@ -3,9 +3,9 @@
 //
 
 #include "vu_ui_main.hpp"
+#include <cpp_utils/yas_fast_each.h>
 #include "vu_main.hpp"
 #include "vu_ui_indicator_layout.hpp"
-#include "yas_fast_each.h"
 #include "yas_flow_utils.h"
 
 using namespace yas;
