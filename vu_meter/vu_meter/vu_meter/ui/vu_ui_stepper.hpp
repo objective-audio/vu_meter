@@ -47,7 +47,7 @@ struct ui_stepper {
     ui::layout_guide_point _center_guide_point;
     chaining::notifier<bool> _minus_enabled_setter;
     chaining::notifier<bool> _plus_enabled_setter;
-    std::vector<flow::observer> _flows;
+    chaining::observer_pool _flows;
 
     void _setup_minus_button(ui_stepper_resource &);
     void _setup_plus_button(ui_stepper_resource &);

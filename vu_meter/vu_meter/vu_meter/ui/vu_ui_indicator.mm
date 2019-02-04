@@ -3,11 +3,11 @@
 //
 
 #include "vu_ui_indicator.hpp"
+#include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
 #include "vu_main.hpp"
 #include "vu_ui_color.hpp"
 #include "vu_ui_utils.hpp"
-#include "yas_audio.h"
 
 using namespace yas;
 
@@ -32,7 +32,7 @@ namespace constants {
 
 struct vu::ui_indicator_resource::impl : base::impl {
     weak<ui::renderer> _weak_renderer;
-    flow::property<ui::font_atlas> _font_atlas{ui::font_atlas{nullptr}};
+    chaining::value::holder<ui::font_atlas> _font_atlas{ui::font_atlas{nullptr}};
     float _vu_height = 0.0f;
 
     impl(ui::renderer &renderer) : _weak_renderer(renderer) {
@@ -74,7 +74,7 @@ void vu::ui_indicator_resource::set_vu_height(float const height) {
     impl_ptr<impl>()->set_vu_height(height);
 }
 
-flow::property<ui::font_atlas> &vu::ui_indicator_resource::font_atlas() {
+chaining::value::holder<ui::font_atlas> &vu::ui_indicator_resource::font_atlas() {
     return impl_ptr<impl>()->_font_atlas;
 }
 
@@ -120,7 +120,7 @@ struct vu::ui_indicator::impl : base::impl {
         });
 
         this->_renderer_receiver = flow::receiver<ui::renderer>(
-            [weak_indicator, will_render_flow = flow::observer{nullptr}](ui::renderer const &renderer) mutable {
+            [weak_indicator, will_render_flow = chaining::any_observer{nullptr}](ui::renderer const &renderer) mutable {
                 if (auto indicator = weak_indicator.lock()) {
                     if (renderer) {
                         auto imp = indicator.impl_ptr<impl>();
@@ -143,10 +143,10 @@ struct vu::ui_indicator::impl : base::impl {
         this->node.attach_position_layout_guides(this->_node_guide_point);
 
         this->_flows.emplace_back(
-            this->frame_layout_guide_rect.left().begin_flow().receive(this->_node_guide_point.x().receiver()).sync());
+            this->frame_layout_guide_rect.left().chain().receive(this->_node_guide_point.x().receiver()).sync());
 
         this->_flows.emplace_back(
-            this->frame_layout_guide_rect.bottom().begin_flow().receive(this->_node_guide_point.y().receiver()).sync());
+            this->frame_layout_guide_rect.bottom().chain().receive(this->_node_guide_point.y().receiver()).sync());
 
         // batch_node
 
@@ -158,7 +158,7 @@ struct vu::ui_indicator::impl : base::impl {
         this->base_plane.node().color().set_value(vu::indicator_base_color());
         this->_batch_node.add_sub_node(this->base_plane.node());
 
-        this->_flows.emplace_back(this->_base_guide_rect.begin_flow()
+        this->_flows.emplace_back(this->_base_guide_rect.chain()
                                       .perform([weak_indicator](ui::region const &region) {
                                           if (auto indicator = weak_indicator.lock()) {
                                               indicator.impl_ptr<impl>()->base_plane.data().set_rect_position(region,
@@ -167,20 +167,16 @@ struct vu::ui_indicator::impl : base::impl {
                                       })
                                       .end());
 
-        this->_flows.emplace_back(this->frame_layout_guide_rect.width()
-                                      .begin_flow()
-                                      .receive(this->_base_guide_rect.right().receiver())
-                                      .sync());
+        this->_flows.emplace_back(
+            this->frame_layout_guide_rect.width().chain().receive(this->_base_guide_rect.right().receiver()).sync());
 
-        this->_flows.emplace_back(this->frame_layout_guide_rect.height()
-                                      .begin_flow()
-                                      .receive(this->_base_guide_rect.top().receiver())
-                                      .sync());
+        this->_flows.emplace_back(
+            this->frame_layout_guide_rect.height().chain().receive(this->_base_guide_rect.top().receiver()).sync());
 
         // render_target
 
         this->_flows.emplace_back(
-            this->_base_guide_rect.begin_flow().receive(this->_render_target.layout_guide_rect().receiver()).sync());
+            this->_base_guide_rect.chain().receive(this->_render_target.layout_guide_rect().receiver()).sync());
         this->node.render_target().set_value(this->_render_target);
 
         // numbers_root_node
@@ -227,7 +223,7 @@ struct vu::ui_indicator::impl : base::impl {
         this->ch_number.rect_plane().node().attach_position_layout_guides(this->_ch_number_guide);
         this->node.add_sub_node(ch_number.rect_plane().node());
 
-        this->_flows.emplace_back(this->frame_layout_guide_rect.begin_flow()
+        this->_flows.emplace_back(this->frame_layout_guide_rect.chain()
                                       .map([](ui::region const &region) {
                                           return ui::point{.x = region.size.width * 0.97f,
                                                            .y = region.size.height * 0.2f};
@@ -242,7 +238,7 @@ struct vu::ui_indicator::impl : base::impl {
         // indicator_resource
 
         this->_resource_flow = this->_resource.font_atlas()
-                                   .begin_flow()
+                                   .chain()
                                    .perform([weak_indicator](ui::font_atlas const &atlas) {
                                        if (ui_indicator indicator = weak_indicator.lock()) {
                                            auto imp = indicator.impl_ptr<impl>();
@@ -260,7 +256,7 @@ struct vu::ui_indicator::impl : base::impl {
                                    .sync();
 
         // layout_guide
-        this->_frame_flow = this->frame_layout_guide_rect.begin_flow().receive(this->_layout_receiver).end();
+        this->_frame_flow = this->frame_layout_guide_rect.chain().receive(this->_layout_receiver).end();
 
         this->_renderer_flow = this->node.begin_renderer_flow().receive(this->_renderer_receiver).sync();
     }
@@ -320,12 +316,12 @@ struct vu::ui_indicator::impl : base::impl {
     }
 
    private:
-    flow::observer _frame_flow = nullptr;
-    flow::observer _resource_flow = nullptr;
+    chaining::any_observer _frame_flow = nullptr;
+    chaining::any_observer _resource_flow = nullptr;
     weak_main_ptr_t _weak_main;
 
-    std::vector<flow::observer> _flows;
-    flow::observer _renderer_flow = nullptr;
+    chaining::observer_pool _flows;
+    chaining::any_observer _renderer_flow = nullptr;
     flow::receiver<ui::renderer> _renderer_receiver = nullptr;
     flow::receiver<> _update_receiver = nullptr;
     flow::receiver<ui::region> _layout_receiver = nullptr;

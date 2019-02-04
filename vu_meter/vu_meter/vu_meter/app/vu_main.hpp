@@ -4,17 +4,17 @@
 
 #pragma once
 
+#include <audio/yas_audio_umbrella.h>
+#include <chaining/yas_chaining_umbrella.h>
 #include <mutex>
 #include "vu_data.hpp"
 #include "vu_types.h"
 #include "vu_ui_main.hpp"
-#include "yas_audio.h"
-#include "yas_flow.h"
 
 namespace yas::vu {
 struct main {
     vu::data data;
-    flow::property<uint32_t> indicator_count{uint32_t(0)};
+    chaining::value::holder<uint32_t> indicator_count{uint32_t(0)};
 
     void setup();
 
@@ -32,7 +32,7 @@ struct main {
     void _update_indicator_count();
     void _update_timeline();
 
-    flow::observer _manager_flow = nullptr;
+    chaining::any_observer _manager_flow = nullptr;
 
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;

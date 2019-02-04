@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <ui/yas_ui_umbrella.h>
 #include "vu_ui_stepper.hpp"
+#include <ui/yas_ui_umbrella.h>
 
 namespace yas::vu {
 class main;
@@ -18,7 +18,7 @@ struct ui_reference {
 
    private:
     ui_stepper _stepper;
-    std::vector<flow::observer> _flows;
+    chaining::observer_pool _flows;
 
     void _setup_flows(main_ptr_t &);
 };

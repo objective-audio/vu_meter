@@ -23,7 +23,7 @@ void vu::ui_reference::_setup_flows(main_ptr_t &main) {
         this->_stepper.begin_plus_flow().receive_null(main->data.reference_increment_receiver()).end());
 
     this->_flows.emplace_back(main->data.reference()
-                                  .begin_flow()
+                                  .chain()
                                   .map([this](int32_t const &value) { return std::to_string(value) + " dB"; })
                                   .receive(this->_stepper.text_receiver())
                                   .sync());

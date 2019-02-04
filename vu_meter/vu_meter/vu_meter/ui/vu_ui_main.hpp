@@ -26,7 +26,7 @@ struct ui_main {
     weak_main_ptr_t _weak_main;
     ui::layout_guide_rect _frame_guide_rect;
     std::vector<ui::layout_guide> _guides;
-    std::vector<flow::observer> _flows;
+    chaining::observer_pool _flows;
 
     void _setup_frame_guide_rect();
     void _setup_indicators(main_ptr_t &);

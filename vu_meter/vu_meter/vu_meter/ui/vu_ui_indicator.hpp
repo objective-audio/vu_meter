@@ -18,7 +18,7 @@ struct ui_indicator_resource : base {
 
     void set_vu_height(float const);
 
-    flow::property<ui::font_atlas> &font_atlas();
+    chaining::value::holder<ui::font_atlas> &font_atlas();
 };
 
 struct ui_indicator : base {
