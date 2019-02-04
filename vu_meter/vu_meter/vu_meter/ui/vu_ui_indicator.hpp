@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <cpp_utils/yas_base.h>
 #include <ui/yas_ui_umbrella.h>
 #include "vu_data.hpp"
 #include "vu_types.h"
-#include "yas_base.h"
 
 namespace yas::vu {
 struct ui_indicator_resource : base {

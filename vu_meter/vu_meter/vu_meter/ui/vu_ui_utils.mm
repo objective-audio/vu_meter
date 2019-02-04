@@ -3,8 +3,8 @@
 //
 
 #include "vu_ui_utils.hpp"
+#include <audio/yas_audio_umbrella.h>
 #include "vu_ui_color.hpp"
-#include "yas_audio.h"
 
 using namespace yas;
 

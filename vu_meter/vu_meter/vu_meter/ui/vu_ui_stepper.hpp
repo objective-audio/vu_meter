@@ -21,7 +21,8 @@ struct ui_stepper_resource : base {
 };
 
 struct ui_stepper {
-    using button_flow_t = flow::node<ui::button::context, ui::button::flow_pair_t, ui::button::flow_pair_t, false>;
+    using button_flow_t =
+        chaining::chain<ui::button::context, ui::button::chain_pair_t, ui::button::chain_pair_t, false>;
 
     ui::node node;
     ui::layout_guide_rect layout_guide_rect;
@@ -30,9 +31,9 @@ struct ui_stepper {
 
     button_flow_t begin_minus_flow();
     button_flow_t begin_plus_flow();
-    flow::receiver<std::string> &text_receiver();
-    flow::receiver<bool> &minus_enabled_receiver();
-    flow::receiver<bool> &plus_enabled_receiver();
+    chaining::receiver<std::string> &text_receiver();
+    chaining::receiver<bool> &minus_enabled_receiver();
+    chaining::receiver<bool> &plus_enabled_receiver();
 
    private:
     ui::button _minus_button{nullptr};
@@ -44,8 +45,8 @@ struct ui_stepper {
     ui::layout_guide_point _plus_layout_guide_point;
     ui::layout_guide_point _text_layout_guide_point;
     ui::layout_guide_point _center_guide_point;
-    flow::notifier<bool> _minus_enabled_setter;
-    flow::notifier<bool> _plus_enabled_setter;
+    chaining::notifier<bool> _minus_enabled_setter;
+    chaining::notifier<bool> _plus_enabled_setter;
     std::vector<flow::observer> _flows;
 
     void _setup_minus_button(ui_stepper_resource &);
