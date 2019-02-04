@@ -3,8 +3,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <audio/yas_audio_umbrella.h>
 #import "vu_ui_utils.hpp"
-#import "yas_audio.h"
 
 using namespace yas;
 

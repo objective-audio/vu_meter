@@ -132,20 +132,20 @@ void vu::ui_stepper::_setup_flows() {
     this->_flows += this->layout_guide_rect.left()
                         .chain()
                         .combine(this->layout_guide_rect.right().chain())
-                        .map(ui::justify())
+                        .to(ui::justify())
                         .receive(this->_center_guide_point.x().receiver())
                         .sync();
 
     this->_flows += this->layout_guide_rect.top()
-                                  .chain()
-                                  .combine(this->layout_guide_rect.bottom().chain())
-                                  .map(ui::justify())
-                                  .receive(this->_center_guide_point.y().receiver())
-                                  .sync());
+                        .chain()
+                        .combine(this->layout_guide_rect.bottom().chain())
+                        .to(ui::justify())
+                        .receive(this->_center_guide_point.y().receiver())
+                        .sync();
 
     this->_flows += this->layout_guide_rect.left()
                         .chain()
-                        .map(flow::add(static_cast<float>(vu::reference_button_size.width / 2)))
+                        .to(chaining::add(static_cast<float>(vu::reference_button_size.width / 2)))
                         .receive(this->_minus_layout_guide_point.x().receiver())
                         .sync();
     this->_flows +=
@@ -153,7 +153,7 @@ void vu::ui_stepper::_setup_flows() {
 
     this->_flows += this->layout_guide_rect.right()
                         .chain()
-                        .map(flow::add(-static_cast<float>(vu::reference_button_size.width / 2)))
+                        .to(chaining::add(-static_cast<float>(vu::reference_button_size.width / 2)))
                         .receive(this->_plus_layout_guide_point.x().receiver())
                         .sync();
     this->_flows += this->_center_guide_point.y().chain().receive(this->_plus_layout_guide_point.y().receiver()).sync();
@@ -162,27 +162,27 @@ void vu::ui_stepper::_setup_flows() {
     this->_flows += this->_center_guide_point.x().chain().receive(this->_text_layout_guide_point.x().receiver()).sync();
     this->_flows += this->_center_guide_point.y()
                         .chain()
-                        .map(flow::add(text_distance))
+                        .to(chaining::add(text_distance))
                         .receive(this->_text_layout_guide_point.y().receiver())
                         .sync();
 }
 
 vu::ui_stepper::button_flow_t vu::ui_stepper::begin_minus_flow() {
-    return this->_minus_button.begin_flow(ui::button::method::ended);
+    return this->_minus_button.chain(ui::button::method::ended);
 }
 
 vu::ui_stepper::button_flow_t vu::ui_stepper::begin_plus_flow() {
-    return this->_plus_button.begin_flow(ui::button::method::ended);
+    return this->_plus_button.chain(ui::button::method::ended);
 }
 
-flow::receiver<std::string> &vu::ui_stepper::text_receiver() {
+chaining::receiver<std::string> &vu::ui_stepper::text_receiver() {
     return this->_text.text_receiver();
 }
 
-flow::receiver<bool> &vu::ui_stepper::minus_enabled_receiver() {
+chaining::receiver<bool> &vu::ui_stepper::minus_enabled_receiver() {
     return this->_minus_enabled_setter.receiver();
 }
 
-flow::receiver<bool> &vu::ui_stepper::plus_enabled_receiver() {
+chaining::receiver<bool> &vu::ui_stepper::plus_enabled_receiver() {
     return this->_plus_enabled_setter.receiver();
 }

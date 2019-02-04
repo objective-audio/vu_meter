@@ -3,10 +3,10 @@
 //
 
 #include "vu_ui_main.hpp"
+#include <chaining/yas_chaining_utils.h>
+#include <cpp_utils/yas_fast_each.h>
 #include "vu_main.hpp"
 #include "vu_ui_indicator_layout.hpp"
-#include <cpp_utils/yas_fast_each.h>
-#include <chaining/yas_chaining_utils.h>
 
 using namespace yas;
 
@@ -33,48 +33,48 @@ void vu::ui_main::_setup_frame_guide_rect() {
 
     ui::insets insets{.left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
 
-    this->_flows.emplace_back(safe_area_guide_rect.chain()
-                                  .map(flow::add<ui::region>(insets))
-                                  .receive(this->_frame_guide_rect.receiver())
-                                  .sync());
+    this->_flows += safe_area_guide_rect.chain()
+                        .to(chaining::add<ui::region>(insets))
+                        .receive(this->_frame_guide_rect.receiver())
+                        .sync();
 }
 
 void vu::ui_main::_setup_indicators(main_ptr_t &main) {
-    this->_flows.emplace_back(main->indicator_count.chain()
-                                  .perform([this](std::size_t const &value) {
-                                      if (value < this->indicators.size()) {
-                                          auto each = make_fast_each(this->indicators.size() - value);
-                                          while (yas_each_next(each)) {
-                                              this->_remove_indicator();
-                                          }
-                                      } else if (this->indicators.size() < value) {
-                                          auto each = make_fast_each(value - this->indicators.size());
-                                          while (yas_each_next(each)) {
-                                              this->_add_indicator();
-                                          }
-                                      }
-                                  })
-                                  .to_tuple()
-                                  .combine(this->_frame_guide_rect.chain().to_tuple())
-                                  .map([](std::tuple<std::size_t, ui::region> const &tuple) {
-                                      std::size_t const &count = std::get<0>(tuple);
-                                      ui::region const &region = std::get<1>(tuple);
-                                      return ui_indicator_layout::regions(count, region);
-                                  })
-                                  .perform([this](std::vector<ui::region> const &regions) {
-                                      std::size_t const count = std::min(this->indicators.size(), regions.size());
-                                      auto each = make_fast_each(count);
-                                      while (yas_each_next(each)) {
-                                          std::size_t const &idx = yas_each_index(each);
-                                          ui::region const &region = regions.at(idx);
-                                          this->indicators.at(idx).frame_layout_guide_rect().set_region(region);
+    this->_flows += main->indicator_count.chain()
+                        .perform([this](std::size_t const &value) {
+                            if (value < this->indicators.size()) {
+                                auto each = make_fast_each(this->indicators.size() - value);
+                                while (yas_each_next(each)) {
+                                    this->_remove_indicator();
+                                }
+                            } else if (this->indicators.size() < value) {
+                                auto each = make_fast_each(value - this->indicators.size());
+                                while (yas_each_next(each)) {
+                                    this->_add_indicator();
+                                }
+                            }
+                        })
+                        .to_tuple()
+                        .combine(this->_frame_guide_rect.chain().to_tuple())
+                        .to([](std::tuple<std::size_t, ui::region> const &tuple) {
+                            std::size_t const &count = std::get<0>(tuple);
+                            ui::region const &region = std::get<1>(tuple);
+                            return ui_indicator_layout::regions(count, region);
+                        })
+                        .perform([this](std::vector<ui::region> const &regions) {
+                            std::size_t const count = std::min(this->indicators.size(), regions.size());
+                            auto each = make_fast_each(count);
+                            while (yas_each_next(each)) {
+                                std::size_t const &idx = yas_each_index(each);
+                                ui::region const &region = regions.at(idx);
+                                this->indicators.at(idx).frame_layout_guide_rect().set_region(region);
 
-                                          if (idx == 0) {
-                                              this->_indicator_resource.set_vu_height(region.size.height);
-                                          }
-                                      }
-                                  })
-                                  .sync());
+                                if (idx == 0) {
+                                    this->_indicator_resource.set_vu_height(region.size.height);
+                                }
+                            }
+                        })
+                        .sync();
 }
 
 void vu::ui_main::_add_indicator() {
