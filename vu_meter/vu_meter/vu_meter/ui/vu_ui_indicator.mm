@@ -120,14 +120,14 @@ struct vu::ui_indicator::impl : base::impl {
         });
 
         this->_renderer_receiver = chaining::receiver<ui::renderer>(
-            [weak_indicator, will_render_flow = chaining::any_observer{nullptr}](ui::renderer const &renderer) mutable {
+            [weak_indicator, observer = chaining::any_observer{nullptr}](ui::renderer const &renderer) mutable {
                 if (auto indicator = weak_indicator.lock()) {
                     if (renderer) {
                         auto imp = indicator.impl_ptr<impl>();
-                        will_render_flow = renderer.chain_will_render().receive(imp->_update_receiver).end();
+                        observer = renderer.chain_will_render().receive(imp->_update_receiver).end();
                         imp->_render_target.sync_scale_from_renderer(renderer);
                     } else {
-                        will_render_flow = nullptr;
+                        observer = nullptr;
                     }
                 }
             });
@@ -142,10 +142,10 @@ struct vu::ui_indicator::impl : base::impl {
 
         this->node.attach_position_layout_guides(this->_node_guide_point);
 
-        this->_flows +=
+        this->_observers +=
             this->frame_layout_guide_rect.left().chain().receive(this->_node_guide_point.x().receiver()).sync();
 
-        this->_flows +=
+        this->_observers +=
             this->frame_layout_guide_rect.bottom().chain().receive(this->_node_guide_point.y().receiver()).sync();
 
         // batch_node
@@ -158,23 +158,23 @@ struct vu::ui_indicator::impl : base::impl {
         this->base_plane.node().color().set_value(vu::indicator_base_color());
         this->_batch_node.add_sub_node(this->base_plane.node());
 
-        this->_flows += this->_base_guide_rect.chain()
-                            .perform([weak_indicator](ui::region const &region) {
-                                if (auto indicator = weak_indicator.lock()) {
-                                    indicator.impl_ptr<impl>()->base_plane.data().set_rect_position(region, 0);
-                                }
-                            })
-                            .end();
+        this->_observers += this->_base_guide_rect.chain()
+                                .perform([weak_indicator](ui::region const &region) {
+                                    if (auto indicator = weak_indicator.lock()) {
+                                        indicator.impl_ptr<impl>()->base_plane.data().set_rect_position(region, 0);
+                                    }
+                                })
+                                .end();
 
-        this->_flows +=
+        this->_observers +=
             this->frame_layout_guide_rect.width().chain().receive(this->_base_guide_rect.right().receiver()).sync();
 
-        this->_flows +=
+        this->_observers +=
             this->frame_layout_guide_rect.height().chain().receive(this->_base_guide_rect.top().receiver()).sync();
 
         // render_target
 
-        this->_flows +=
+        this->_observers +=
             this->_base_guide_rect.chain().receive(this->_render_target.layout_guide_rect().receiver()).sync();
         this->node.render_target().set_value(this->_render_target);
 
@@ -222,12 +222,12 @@ struct vu::ui_indicator::impl : base::impl {
         this->ch_number.rect_plane().node().attach_position_layout_guides(this->_ch_number_guide);
         this->node.add_sub_node(ch_number.rect_plane().node());
 
-        this->_flows += this->frame_layout_guide_rect.chain()
-                            .to([](ui::region const &region) {
-                                return ui::point{.x = region.size.width * 0.97f, .y = region.size.height * 0.2f};
-                            })
-                            .receive(this->_ch_number_guide.receiver())
-                            .sync();
+        this->_observers += this->frame_layout_guide_rect.chain()
+                                .to([](ui::region const &region) {
+                                    return ui::point{.x = region.size.width * 0.97f, .y = region.size.height * 0.2f};
+                                })
+                                .receive(this->_ch_number_guide.receiver())
+                                .sync();
 
         // needle
         this->needle.node().color().set_value(vu::indicator_needle_color());
@@ -235,28 +235,28 @@ struct vu::ui_indicator::impl : base::impl {
 
         // indicator_resource
 
-        this->_resource_flow = this->_resource.font_atlas()
-                                   .chain()
-                                   .perform([weak_indicator](ui::font_atlas const &atlas) {
-                                       if (ui_indicator indicator = weak_indicator.lock()) {
-                                           auto imp = indicator.impl_ptr<impl>();
-                                           float const number_offset =
-                                               atlas ? (atlas.ascent() + atlas.descent()) * 0.5f : 0.0f;
+        this->_resource_observer =
+            this->_resource.font_atlas()
+                .chain()
+                .perform([weak_indicator](ui::font_atlas const &atlas) {
+                    if (ui_indicator indicator = weak_indicator.lock()) {
+                        auto imp = indicator.impl_ptr<impl>();
+                        float const number_offset = atlas ? (atlas.ascent() + atlas.descent()) * 0.5f : 0.0f;
 
-                                           for (auto &number : imp->db_numbers) {
-                                               number.set_font_atlas(atlas);
-                                               number.rect_plane().node().position().set_value({.y = number_offset});
-                                           }
+                        for (auto &number : imp->db_numbers) {
+                            number.set_font_atlas(atlas);
+                            number.rect_plane().node().position().set_value({.y = number_offset});
+                        }
 
-                                           imp->ch_number.set_font_atlas(atlas);
-                                       }
-                                   })
-                                   .sync();
+                        imp->ch_number.set_font_atlas(atlas);
+                    }
+                })
+                .sync();
 
         // layout_guide
-        this->_frame_flow = this->frame_layout_guide_rect.chain().receive(this->_layout_receiver).end();
+        this->_frame_observer = this->frame_layout_guide_rect.chain().receive(this->_layout_receiver).end();
 
-        this->_renderer_flow = this->node.chain_renderer().receive(this->_renderer_receiver).sync();
+        this->_renderer_observer = this->node.chain_renderer().receive(this->_renderer_receiver).sync();
     }
 
     void _layout(ui::region const &region) {
@@ -314,12 +314,12 @@ struct vu::ui_indicator::impl : base::impl {
     }
 
    private:
-    chaining::any_observer _frame_flow = nullptr;
-    chaining::any_observer _resource_flow = nullptr;
+    chaining::any_observer _frame_observer = nullptr;
+    chaining::any_observer _resource_observer = nullptr;
     weak_main_ptr_t _weak_main;
 
-    chaining::observer_pool _flows;
-    chaining::any_observer _renderer_flow = nullptr;
+    chaining::observer_pool _observers;
+    chaining::any_observer _renderer_observer = nullptr;
     chaining::receiver<ui::renderer> _renderer_receiver = nullptr;
     chaining::receiver<> _update_receiver = nullptr;
     chaining::receiver<ui::region> _layout_receiver = nullptr;

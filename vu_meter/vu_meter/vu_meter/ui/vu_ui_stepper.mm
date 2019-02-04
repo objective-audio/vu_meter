@@ -64,7 +64,7 @@ void vu::ui_stepper::setup(ui_stepper_resource &resource) {
     this->_setup_minus_button(resource);
     this->_setup_plus_button(resource);
     this->_setup_text(resource);
-    this->_setup_flows();
+    this->_setup_chainings();
 }
 
 void vu::ui_stepper::_setup_minus_button(ui_stepper_resource &resource) {
@@ -110,68 +110,70 @@ void vu::ui_stepper::_setup_text(ui_stepper_resource &resource) {
     text_node.color().set_value(vu::setting_text_color());
 }
 
-void vu::ui_stepper::_setup_flows() {
-    this->_flows += this->_minus_enabled_setter.chain()
-                        .perform([this](bool const &value) {
-                            if (!value) {
-                                this->_minus_button.cancel_tracking();
-                            }
-                        })
-                        .receive(this->_minus_button.rect_plane().node().collider().raw().enabled_receiver())
-                        .end();
+void vu::ui_stepper::_setup_chainings() {
+    this->_observers += this->_minus_enabled_setter.chain()
+                            .perform([this](bool const &value) {
+                                if (!value) {
+                                    this->_minus_button.cancel_tracking();
+                                }
+                            })
+                            .receive(this->_minus_button.rect_plane().node().collider().raw().enabled_receiver())
+                            .end();
 
-    this->_flows += this->_plus_enabled_setter.chain()
-                        .perform([this](bool const &value) {
-                            if (!value) {
-                                this->_plus_button.cancel_tracking();
-                            }
-                        })
-                        .receive(this->_plus_button.rect_plane().node().collider().raw().enabled_receiver())
-                        .end();
+    this->_observers += this->_plus_enabled_setter.chain()
+                            .perform([this](bool const &value) {
+                                if (!value) {
+                                    this->_plus_button.cancel_tracking();
+                                }
+                            })
+                            .receive(this->_plus_button.rect_plane().node().collider().raw().enabled_receiver())
+                            .end();
 
-    this->_flows += this->layout_guide_rect.left()
-                        .chain()
-                        .combine(this->layout_guide_rect.right().chain())
-                        .to(ui::justify())
-                        .receive(this->_center_guide_point.x().receiver())
-                        .sync();
+    this->_observers += this->layout_guide_rect.left()
+                            .chain()
+                            .combine(this->layout_guide_rect.right().chain())
+                            .to(ui::justify())
+                            .receive(this->_center_guide_point.x().receiver())
+                            .sync();
 
-    this->_flows += this->layout_guide_rect.top()
-                        .chain()
-                        .combine(this->layout_guide_rect.bottom().chain())
-                        .to(ui::justify())
-                        .receive(this->_center_guide_point.y().receiver())
-                        .sync();
+    this->_observers += this->layout_guide_rect.top()
+                            .chain()
+                            .combine(this->layout_guide_rect.bottom().chain())
+                            .to(ui::justify())
+                            .receive(this->_center_guide_point.y().receiver())
+                            .sync();
 
-    this->_flows += this->layout_guide_rect.left()
-                        .chain()
-                        .to(chaining::add(static_cast<float>(vu::reference_button_size.width / 2)))
-                        .receive(this->_minus_layout_guide_point.x().receiver())
-                        .sync();
-    this->_flows +=
+    this->_observers += this->layout_guide_rect.left()
+                            .chain()
+                            .to(chaining::add(static_cast<float>(vu::reference_button_size.width / 2)))
+                            .receive(this->_minus_layout_guide_point.x().receiver())
+                            .sync();
+    this->_observers +=
         this->_center_guide_point.y().chain().receive(this->_minus_layout_guide_point.y().receiver()).sync();
 
-    this->_flows += this->layout_guide_rect.right()
-                        .chain()
-                        .to(chaining::add(-static_cast<float>(vu::reference_button_size.width / 2)))
-                        .receive(this->_plus_layout_guide_point.x().receiver())
-                        .sync();
-    this->_flows += this->_center_guide_point.y().chain().receive(this->_plus_layout_guide_point.y().receiver()).sync();
+    this->_observers += this->layout_guide_rect.right()
+                            .chain()
+                            .to(chaining::add(-static_cast<float>(vu::reference_button_size.width / 2)))
+                            .receive(this->_plus_layout_guide_point.x().receiver())
+                            .sync();
+    this->_observers +=
+        this->_center_guide_point.y().chain().receive(this->_plus_layout_guide_point.y().receiver()).sync();
 
     float const text_distance = (this->_font_atlas.ascent() + this->_font_atlas.descent()) * 0.5;
-    this->_flows += this->_center_guide_point.x().chain().receive(this->_text_layout_guide_point.x().receiver()).sync();
-    this->_flows += this->_center_guide_point.y()
-                        .chain()
-                        .to(chaining::add(text_distance))
-                        .receive(this->_text_layout_guide_point.y().receiver())
-                        .sync();
+    this->_observers +=
+        this->_center_guide_point.x().chain().receive(this->_text_layout_guide_point.x().receiver()).sync();
+    this->_observers += this->_center_guide_point.y()
+                            .chain()
+                            .to(chaining::add(text_distance))
+                            .receive(this->_text_layout_guide_point.y().receiver())
+                            .sync();
 }
 
-vu::ui_stepper::button_flow_t vu::ui_stepper::begin_minus_flow() {
+vu::ui_stepper::button_chain_t vu::ui_stepper::minus_chain() {
     return this->_minus_button.chain(ui::button::method::ended);
 }
 
-vu::ui_stepper::button_flow_t vu::ui_stepper::begin_plus_flow() {
+vu::ui_stepper::button_chain_t vu::ui_stepper::plus_chain() {
     return this->_plus_button.chain(ui::button::method::ended);
 }
 

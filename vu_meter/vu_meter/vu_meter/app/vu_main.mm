@@ -28,12 +28,12 @@ void vu::main::setup() {
     this->_update_timeline();
     this->_update_indicator_count();
 
-    this->_manager_flow = this->manager.chain(audio::engine::manager::method::configuration_change)
-                              .perform([this](auto const &) {
-                                  this->_update_timeline();
-                                  this->_update_indicator_count();
-                              })
-                              .end();
+    this->_observers += this->manager.chain(audio::engine::manager::method::configuration_change)
+                            .perform([this](auto const &) {
+                                this->_update_timeline();
+                                this->_update_indicator_count();
+                            })
+                            .end();
 }
 
 void vu::main::_update_indicator_count() {

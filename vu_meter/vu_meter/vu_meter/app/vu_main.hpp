@@ -32,7 +32,7 @@ struct main {
     void _update_indicator_count();
     void _update_timeline();
 
-    chaining::any_observer _manager_flow = nullptr;
+    chaining::observer_pool _observers;
 
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;

@@ -18,8 +18,8 @@ struct ui_reference {
 
    private:
     ui_stepper _stepper;
-    chaining::observer_pool _flows;
+    chaining::observer_pool _observers;
 
-    void _setup_flows(main_ptr_t &);
+    void _setup_chainings(main_ptr_t &);
 };
 }  // namespace yas::vu

@@ -21,7 +21,7 @@ struct ui_stepper_resource : base {
 };
 
 struct ui_stepper {
-    using button_flow_t =
+    using button_chain_t =
         chaining::chain<ui::button::context, ui::button::chain_pair_t, ui::button::chain_pair_t, false>;
 
     ui::node node;
@@ -29,8 +29,8 @@ struct ui_stepper {
 
     void setup(ui_stepper_resource &);
 
-    button_flow_t begin_minus_flow();
-    button_flow_t begin_plus_flow();
+    button_chain_t minus_chain();
+    button_chain_t plus_chain();
     chaining::receiver<std::string> &text_receiver();
     chaining::receiver<bool> &minus_enabled_receiver();
     chaining::receiver<bool> &plus_enabled_receiver();
@@ -47,12 +47,12 @@ struct ui_stepper {
     ui::layout_guide_point _center_guide_point;
     chaining::notifier<bool> _minus_enabled_setter;
     chaining::notifier<bool> _plus_enabled_setter;
-    chaining::observer_pool _flows;
+    chaining::observer_pool _observers;
 
     void _setup_minus_button(ui_stepper_resource &);
     void _setup_plus_button(ui_stepper_resource &);
     void _setup_text(ui_stepper_resource &);
-    void _setup_flows();
+    void _setup_chainings();
 
     void _update_text(int32_t const);
 };

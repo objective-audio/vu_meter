@@ -34,10 +34,10 @@ struct vu::data::impl : base::impl {
         this->_reference.set_value(
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
 
-        this->setup_flows();
+        this->setup_chainings();
     }
 
-    void setup_flows() {
+    void setup_chainings() {
         // reference
 
         this->_pool += this->_reference.chain()
@@ -98,11 +98,11 @@ chaining::value::holder<int32_t> &vu::data::reference() {
     return impl_ptr<impl>()->_reference;
 }
 
-chaining::chain_sync_t<bool> vu::data::begin_is_reference_max_flow() const {
+chaining::chain_sync_t<bool> vu::data::is_reference_max_chain() const {
     return impl_ptr<impl>()->_is_reference_max.chain();
 }
 
-chaining::chain_sync_t<bool> vu::data::begin_is_reference_min_flow() const {
+chaining::chain_sync_t<bool> vu::data::is_reference_min_chain() const {
     return impl_ptr<impl>()->_is_reference_min.chain();
 }
 
