@@ -15,11 +15,11 @@ struct data : base {
     data();
     data(std::nullptr_t);
 
-    flow::property<int32_t> &reference();
+    chaining::value::holder<int32_t> &reference();
 
-    flow::node_t<bool, true> begin_is_reference_max_flow() const;
-    flow::node_t<bool, true> begin_is_reference_min_flow() const;
-    flow::receiver<> &reference_increment_receiver();
-    flow::receiver<> &reference_decrement_receiver();
+    chaining::chain_sync_t<bool> begin_is_reference_max_flow() const;
+    chaining::chain_sync_t<bool> begin_is_reference_min_flow() const;
+    chaining::receiver<> &reference_increment_receiver();
+    chaining::receiver<> &reference_decrement_receiver();
 };
 }  // namespace yas::vu
