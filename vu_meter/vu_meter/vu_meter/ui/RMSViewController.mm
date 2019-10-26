@@ -28,11 +28,12 @@ using namespace yas;
 
     self.metalView.clearColor = vu::base_color();
 
-    ui::renderer renderer{ui::metal_system{make_objc_ptr(MTLCreateSystemDefaultDevice()).object()}};
+    auto renderer = ui::renderer::make_shared(
+        ui::metal_system::make_shared(objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object()));
 
-    [self setRenderable:renderer.view_renderable()];
+    [self setRenderable:renderer];
 
-    self->ui_main.setup(std::move(renderer), self->_main);
+    self->ui_main.setup(renderer, self->_main);
 }
 
 - (void)set_vu_main:(vu::main_ptr_t)main {

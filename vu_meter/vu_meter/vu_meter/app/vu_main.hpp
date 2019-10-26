@@ -13,8 +13,8 @@
 
 namespace yas::vu {
 struct main {
-    vu::data data;
-    chaining::value::holder<uint32_t> indicator_count{uint32_t(0)};
+    vu::data_ptr data = vu::data::make_shared();
+    chaining::value::holder_ptr<uint32_t> indicator_count = chaining::value::holder<uint32_t>::make_shared(uint32_t(0));
 
     void setup();
 
@@ -22,9 +22,9 @@ struct main {
     std::vector<float> values();
 
    private:
-    audio::engine::manager manager;
-    audio::engine::au_input au_input;
-    audio::engine::tap input_tap = {{.is_input = true}};
+    audio::engine::manager_ptr manager = audio::engine::manager::make_shared();
+    audio::engine::au_input_ptr au_input = audio::engine::au_input::make_shared();
+    audio::engine::tap_ptr input_tap = audio::engine::tap::make_shared({.is_input = true});
 
     std::vector<float> _values;
     std::mutex _values_mutex;

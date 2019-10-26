@@ -35,8 +35,8 @@ using namespace yas;
         proc::stream stream{sync_source{sample_rate, time_range.length}};
 
         auto &channel = stream.add_channel(0);
-        proc::signal_event phase_signal = proc::make_signal_event<float>(process_length);
-        float *phase_data = phase_signal.data<float>();
+        proc::signal_event_ptr phase_signal = proc::signal_event::make_shared<float>(process_length);
+        float *phase_data = phase_signal->data<float>();
         phase_data[0] = data0;
         phase_data[1] = data1;
         channel.insert_event(proc::time{time_range}, std::move(phase_signal));
@@ -48,7 +48,7 @@ using namespace yas;
         time::range time_range{0, process_length};
         auto stream = make_stream(time_range, 1.0f, 2.0f);
 
-        module.process(time_range, stream);
+        module->process(time_range, stream);
 
         XCTAssertTrue(stream.has_channel(0));
 
@@ -56,8 +56,8 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event const signal = cast<proc::signal_event>(events.cbegin()->second);
-        auto const &vec = signal.vector<float>();
+        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);
 
@@ -69,7 +69,7 @@ using namespace yas;
         time::range time_range{process_length, process_length};
         auto stream = make_stream(time_range, 3.0f, 4.0f);
 
-        module.process(time_range, stream);
+        module->process(time_range, stream);
 
         XCTAssertTrue(stream.has_channel(0));
 
@@ -77,8 +77,8 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event const signal = cast<proc::signal_event>(events.cbegin()->second);
-        auto const &vec = signal.vector<float>();
+        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);
 
@@ -90,7 +90,7 @@ using namespace yas;
         time::range time_range{process_length * 2, process_length};
         auto stream = make_stream(time_range, 5.0f, 6.0f);
 
-        module.process(time_range, stream);
+        module->process(time_range, stream);
 
         XCTAssertTrue(stream.has_channel(0));
 
@@ -98,8 +98,8 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event const signal = cast<proc::signal_event>(events.cbegin()->second);
-        auto const &vec = signal.vector<float>();
+        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);
 

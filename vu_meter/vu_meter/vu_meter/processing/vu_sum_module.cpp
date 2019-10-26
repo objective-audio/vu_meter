@@ -8,7 +8,7 @@
 using namespace yas;
 using namespace yas::proc;
 
-module vu::sum::make_signal_module(double const duration) {
+module_ptr vu::sum::make_signal_module(double const duration) {
     auto make_processors = [duration] {
         auto buffer = std::make_shared<summing_buffer>();
 
@@ -31,15 +31,15 @@ module vu::sum::make_signal_module(double const duration) {
         return proc::module::processors_t{{std::move(receive_processor), std::move(send_processor)}};
     };
 
-    return module{std::move(make_processors)};
+    return proc::module::make_shared(std::move(make_processors));
 }
 
 #pragma mark -
 
-void yas::connect(module &module, vu::sum::output const &output, channel_index_t const &ch_idx) {
-    module.connect_output(to_connector_index(output), ch_idx);
+void yas::connect(module_ptr const &module, vu::sum::output const &output, channel_index_t const &ch_idx) {
+    module->connect_output(to_connector_index(output), ch_idx);
 }
 
-void yas::connect(module &module, vu::sum::input const &input, channel_index_t const &ch_idx) {
-    module.connect_input(to_connector_index(input), ch_idx);
+void yas::connect(module_ptr const &module, vu::sum::input const &input, channel_index_t const &ch_idx) {
+    module->connect_input(to_connector_index(input), ch_idx);
 }

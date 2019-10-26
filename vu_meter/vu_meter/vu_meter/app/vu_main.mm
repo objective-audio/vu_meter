@@ -10,6 +10,8 @@
 #include "vu_send_module.hpp"
 #include "vu_sum_module.hpp"
 
+#import <AVFoundation/AVFoundation.h>
+
 using namespace yas;
 
 void vu::main::setup() {
@@ -28,7 +30,7 @@ void vu::main::setup() {
     this->_update_timeline();
     this->_update_indicator_count();
 
-    this->_observers += this->manager.chain(audio::engine::manager::method::configuration_change)
+    this->_observers += this->manager->chain(audio::engine::manager::method::configuration_change)
                             .perform([this](auto const &) {
                                 this->_update_timeline();
                                 this->_update_indicator_count();
@@ -37,19 +39,19 @@ void vu::main::setup() {
 }
 
 void vu::main::_update_indicator_count() {
-    this->indicator_count.set_value(this->au_input.au_io().input_device_channel_count());
+    this->indicator_count->set_value(this->au_input->au_io().input_device_channel_count());
 }
 
 void vu::main::_update_timeline() {
-    uint32_t const ch_count = this->au_input.au_io().input_device_channel_count();
-    double const sample_rate = this->au_input.au_io().device_sample_rate();
+    uint32_t const ch_count = this->au_input->au_io().input_device_channel_count();
+    double const sample_rate = this->au_input->au_io().device_sample_rate();
 
     if (this->_last_ch_count == ch_count && this->_last_sample_rate == sample_rate) {
         return;
     }
 
-    this->manager.stop();
-    this->manager.disconnect_input(this->input_tap.node());
+    this->manager->stop();
+    this->manager->disconnect_input(this->input_tap->node());
 
     this->_last_ch_count = ch_count;
     this->_last_sample_rate = sample_rate;
@@ -59,24 +61,19 @@ void vu::main::_update_timeline() {
     }
 
     audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
-    this->manager.connect(this->au_input.au_io().au().node(), this->input_tap.node(), format);
+    this->manager->connect(this->au_input->au_io().au().node(), this->input_tap->node(), format);
 
     struct context_t {
-        audio::pcm_buffer &buffer = null_buffer();
+        audio::pcm_buffer *buffer = nullptr;
 
         void reset_buffer() {
-            this->buffer = this->null_buffer();
-        }
-
-        static audio::pcm_buffer &null_buffer() {
-            static audio::pcm_buffer _null_buffer{nullptr};
-            return _null_buffer;
+            this->buffer = nullptr;
         }
     };
 
     auto context = std::make_shared<context_t>();
 
-    proc::timeline timeline{};
+    proc::timeline_ptr timeline = proc::timeline::make_shared();
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
     proc::channel_index_t const pow_ch = ch_count;
@@ -86,36 +83,36 @@ void vu::main::_update_timeline() {
         while (yas_each_next(each)) {
             std::size_t const &ch = yas_each_index(each);
 
-            if (auto track = proc::track{}) {
+            if (auto track = proc::track::make_shared()) {
                 auto module = vu::send::make_signal_module([context, ch](proc::time::range const &time_range,
                                                                          proc::connector_index_t const &,
                                                                          float *const signal_ptr) {
-                    auto &buffer = context->buffer;
+                    auto const &buffer = context->buffer;
                     if (!buffer) {
                         return;
                     }
 
-                    uint32_t const length = std::min(buffer.frame_length(), static_cast<uint32_t>(time_range.length));
-                    buffer.copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
+                    uint32_t const length = std::min(buffer->frame_length(), static_cast<uint32_t>(time_range.length));
+                    buffer->copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
                 });
 
-                module.connect_output(proc::to_connector_index(vu::send::output::value), ch);
+                module->connect_output(proc::to_connector_index(vu::send::output::value), ch);
 
-                track.insert_module(time_range, std::move(module));
+                track->push_back_module(module, time_range);
 
-                timeline.insert_track(trk_idx++, track);
+                timeline->insert_track(trk_idx++, track);
             }
         }
     }
 
     // 累乗するための固定値
-    if (auto track = proc::track{}) {
+    if (auto track = proc::track::make_shared()) {
         auto module = proc::make_signal_module(float(2.0f));
-        module.connect_output(proc::to_connector_index(proc::constant::output::value), pow_ch);
+        module->connect_output(proc::to_connector_index(proc::constant::output::value), pow_ch);
 
-        track.insert_module(time_range, std::move(module));
+        track->push_back_module(module, time_range);
 
-        timeline.insert_track(trk_idx++, track);
+        timeline->insert_track(trk_idx++, track);
     }
 
     // 累乗する
@@ -123,15 +120,15 @@ void vu::main::_update_timeline() {
         while (yas_each_next(each)) {
             std::size_t const &ch = yas_each_index(each);
 
-            if (auto track = proc::track{}) {
+            if (auto track = proc::track::make_shared()) {
                 auto module = proc::make_signal_module<float>(proc::math2::kind::pow);
-                module.connect_input(proc::to_connector_index(proc::math2::input::left), ch);
-                module.connect_input(proc::to_connector_index(proc::math2::input::right), pow_ch);
-                module.connect_output(proc::to_connector_index(proc::math2::output::result), ch);
+                module->connect_input(proc::to_connector_index(proc::math2::input::left), ch);
+                module->connect_input(proc::to_connector_index(proc::math2::input::right), pow_ch);
+                module->connect_output(proc::to_connector_index(proc::math2::output::result), ch);
 
-                track.insert_module(time_range, std::move(module));
+                track->push_back_module(module, time_range);
 
-                timeline.insert_track(trk_idx++, track);
+                timeline->insert_track(trk_idx++, track);
             }
         }
     }
@@ -141,14 +138,14 @@ void vu::main::_update_timeline() {
         while (yas_each_next(each)) {
             std::size_t const &ch = yas_each_index(each);
 
-            if (auto track = proc::track{}) {
+            if (auto track = proc::track::make_shared()) {
                 auto module = vu::sum::make_signal_module(300.0 / 1000.0);  // 300ms
-                module.connect_input(proc::to_connector_index(vu::sum::input::value), ch);
-                module.connect_output(proc::to_connector_index(vu::sum::output::value), ch);
+                module->connect_input(proc::to_connector_index(vu::sum::input::value), ch);
+                module->connect_output(proc::to_connector_index(vu::sum::output::value), ch);
 
-                track.insert_module(time_range, std::move(module));
+                track->push_back_module(module, time_range);
 
-                timeline.insert_track(trk_idx++, track);
+                timeline->insert_track(trk_idx++, track);
             }
         }
     }
@@ -158,29 +155,29 @@ void vu::main::_update_timeline() {
         while (yas_each_next(each)) {
             std::size_t const &ch = yas_each_index(each);
 
-            if (auto track = proc::track{}) {
+            if (auto track = proc::track::make_shared()) {
                 auto module = proc::make_signal_module<float>(proc::math1::kind::sqrt);
-                module.connect_input(proc::to_connector_index(proc::math1::input::parameter), ch);
-                module.connect_output(proc::to_connector_index(proc::math1::output::result), ch);
+                module->connect_input(proc::to_connector_index(proc::math1::input::parameter), ch);
+                module->connect_output(proc::to_connector_index(proc::math1::output::result), ch);
 
-                track.insert_module(time_range, std::move(module));
+                track->push_back_module(module, time_range);
 
-                timeline.insert_track(trk_idx++, track);
+                timeline->insert_track(trk_idx++, track);
             }
         }
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->input_tap.set_render_handler([context, timeline, ch_count, this,
-                                        values = std::vector<float>()](audio::engine::node::render_args args) mutable {
+    this->input_tap->set_render_handler([context, timeline, ch_count, this,
+                                         values = std::vector<float>()](audio::engine::node::render_args args) mutable {
         proc::length_t const length = args.buffer.frame_length();
-        context->buffer = args.buffer;
+        context->buffer = &args.buffer;
 
         proc::time::range const time_range{args.when.sample_time(), length};
         proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
         proc::stream stream{sync_source};
 
-        timeline.process(time_range, stream);
+        timeline->process(time_range, stream);
 
         values.clear();
 
@@ -194,7 +191,7 @@ void vu::main::_update_timeline() {
                     for (auto const &event_pair : events) {
                         auto const &event = event_pair.second;
 
-                        values.push_back(event.vector<float>().at(ch));
+                        values.push_back(event->vector<float>().at(ch));
                     }
                 }
             }
@@ -205,7 +202,7 @@ void vu::main::_update_timeline() {
         context->reset_buffer();
     });
 
-    if (auto result = this->manager.start_render(); !result) {
+    if (auto result = this->manager->start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
     }
 }

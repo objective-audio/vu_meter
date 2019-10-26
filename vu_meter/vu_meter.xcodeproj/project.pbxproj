@@ -32,7 +32,6 @@
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
 		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
-		B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A4694F206FA63400480D4F /* vu_ui_reference.mm */; };
 		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6B09C592208857E00B483BC /* audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; };
@@ -54,7 +53,6 @@
 		B6B09C712208861E00B483BC /* processing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC322207177300717FA9 /* processing.framework */; };
 		B6B09C722208861E00B483BC /* ui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC342207177300717FA9 /* ui.framework */; };
 		B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
-		B6C4697920C16EAE00D1AD59 /* vu_ui_stepper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6C4697720C16EAE00D1AD59 /* vu_ui_stepper.mm */; };
 		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
 /* End PBXBuildFile section */
 
@@ -133,16 +131,12 @@
 		B6756456206F3EF800944F8E /* vu_ui_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main.hpp; sourceTree = "<group>"; };
 		B675645C206F45FC00944F8E /* vu_ui_color.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_color.mm; sourceTree = "<group>"; };
 		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
-		B6A4694F206FA63400480D4F /* vu_ui_reference.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_reference.mm; sourceTree = "<group>"; };
-		B6A46950206FA63400480D4F /* vu_ui_reference.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_reference.hpp; sourceTree = "<group>"; };
 		B6A846672075ABD200DFF041 /* vu_ui_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils.mm; sourceTree = "<group>"; };
 		B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_utils.hpp; sourceTree = "<group>"; };
 		B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils_tests.mm; sourceTree = "<group>"; };
 		B6B09C67220885C000B483BC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B6B09C69220885D100B483BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B6B09C6B220885E100B483BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		B6C4697720C16EAE00D1AD59 /* vu_ui_stepper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_stepper.mm; sourceTree = "<group>"; };
-		B6C4697820C16EAE00D1AD59 /* vu_ui_stepper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_stepper.hpp; sourceTree = "<group>"; };
 		B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_layout_tests.mm; sourceTree = "<group>"; };
 		B6E2CC2A2207177300717FA9 /* audio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = audio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC2C2207177300717FA9 /* chaining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = chaining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,10 +269,6 @@
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
-				B6A46950206FA63400480D4F /* vu_ui_reference.hpp */,
-				B6A4694F206FA63400480D4F /* vu_ui_reference.mm */,
-				B6C4697720C16EAE00D1AD59 /* vu_ui_stepper.mm */,
-				B6C4697820C16EAE00D1AD59 /* vu_ui_stepper.hpp */,
 				B617CF632071AA320012B32A /* vu_ui_indicator.hpp */,
 				B617CF622071AA320012B32A /* vu_ui_indicator.mm */,
 				B60CF5D720E2571B000FA9BA /* vu_ui_indicator_layout.hpp */,
@@ -451,12 +441,10 @@
 			files = (
 				B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */,
 				B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */,
-				B6A46951206FA63400480D4F /* vu_ui_reference.mm in Sources */,
 				B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */,
 				B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */,
 				B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */,
 				B60CF5D820E2571B000FA9BA /* vu_ui_indicator_layout.mm in Sources */,
-				B6C4697920C16EAE00D1AD59 /* vu_ui_stepper.mm in Sources */,
 				B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */,
 				B675644F206B21FA00944F8E /* vu_data.mm in Sources */,
 				B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */,

@@ -8,7 +8,7 @@
 using namespace yas;
 using namespace yas::proc;
 
-module vu::send::make_signal_module(handler handler) {
+module_ptr vu::send::make_signal_module(handler handler) {
     auto make_processors = [handler = std::move(handler)] {
         auto send_processor = make_send_signal_processor<float>(
             [handler = std::move(handler)](time::range const &time_range, sync_source const &sync_src,
@@ -18,13 +18,13 @@ module vu::send::make_signal_module(handler handler) {
         return proc::module::processors_t{{std::move(send_processor)}};
     };
 
-    return module{std::move(make_processors)};
+    return module::make_shared(std::move(make_processors));
 }
 
 #pragma mark -
 
-void yas::connect(module &module, vu::send::output const &output, channel_index_t const &ch_idx) {
-    module.connect_output(to_connector_index(output), ch_idx);
+void yas::connect(module_ptr const &module, vu::send::output const &output, channel_index_t const &ch_idx) {
+    module->connect_output(to_connector_index(output), ch_idx);
 }
 
 std::string yas::to_string(vu::send::output const &output) {

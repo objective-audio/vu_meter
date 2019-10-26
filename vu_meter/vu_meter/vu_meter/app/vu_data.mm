@@ -16,13 +16,15 @@ static int32_t constexpr reference_max = 0;
 static int32_t constexpr reference_min = -30;
 }
 
-struct vu::data::impl : base::impl {
-    chaining::value::holder<int32_t> _reference{0};
-    chaining::value::holder<bool> _is_reference_max{false};
-    chaining::value::holder<bool> _is_reference_min{false};
-    chaining::notifier<int32_t> _reference_setter;
-    chaining::notifier<std::nullptr_t> _reference_increment_sender;
-    chaining::notifier<std::nullptr_t> _reference_decrement_sender;
+struct vu::data::impl {
+    chaining::value::holder_ptr<int32_t> _reference = chaining::value::holder<int32_t>::make_shared(0);
+    chaining::value::holder_ptr<bool> _is_reference_max = chaining::value::holder<bool>::make_shared(false);
+    chaining::value::holder_ptr<bool> _is_reference_min = chaining::value::holder<bool>::make_shared(false);
+    chaining::notifier_ptr<int32_t> _reference_setter = chaining::notifier<int32_t>::make_shared();
+    chaining::notifier_ptr<std::nullptr_t> _reference_increment_sender =
+        chaining::notifier<std::nullptr_t>::make_shared();
+    chaining::notifier_ptr<std::nullptr_t> _reference_decrement_sender =
+        chaining::notifier<std::nullptr_t>::make_shared();
     chaining::observer_pool _pool;
 
     impl() {
@@ -31,7 +33,7 @@ struct vu::data::impl : base::impl {
             vu::indicator_count_key: @(2)
         }];
 
-        this->_reference.set_value(
+        this->_reference->set_value(
             static_cast<int32_t>([[NSUserDefaults standardUserDefaults] integerForKey:vu::reference_key]));
 
         this->setup_chainings();
@@ -40,14 +42,14 @@ struct vu::data::impl : base::impl {
     void setup_chainings() {
         // reference
 
-        this->_pool += this->_reference.chain()
+        this->_pool += this->_reference->chain()
                            .perform([](int32_t const &value) {
                                [[NSUserDefaults standardUserDefaults] setInteger:value forKey:vu::reference_key];
                                [[NSUserDefaults standardUserDefaults] synchronize];
                            })
                            .end();
 
-        this->_pool += this->_reference_setter.chain()
+        this->_pool += this->_reference_setter->chain()
                            .to([](int32_t const &value) {
                                if (value < vu::reference_min) {
                                    return vu::reference_min;
@@ -56,60 +58,66 @@ struct vu::data::impl : base::impl {
                                }
                                return value;
                            })
-                           .receive(this->_reference.receiver())
+                           .send_to(this->_reference)
                            .end();
 
-        this->_pool += this->_reference.chain()
+        this->_pool += this->_reference->chain()
                            .to([](int32_t const &value) { return value == vu::reference_max; })
-                           .receive(this->_is_reference_max.receiver())
+                           .send_to(this->_is_reference_max)
                            .sync();
 
-        this->_pool += this->_reference.chain()
+        this->_pool += this->_reference->chain()
                            .to([](int32_t const &value) { return value == vu::reference_min; })
-                           .receive(this->_is_reference_min.receiver())
+                           .send_to(this->_is_reference_min)
                            .sync();
     }
 
-    void prepare() {
-        auto weak_data = to_weak(cast<vu::data>());
+    void prepare(data_ptr const &data) {
+        auto weak_data = to_weak(data);
 
-        this->_pool += this->_reference_increment_sender.chain()
-                           .guard([weak_data](std::nullptr_t const &) { return !!weak_data; })
-                           .to([weak_data](std::nullptr_t const &) { return weak_data.lock().reference().raw() + 1; })
-                           .receive(this->_reference_setter.receiver())
+        this->_pool += this->_reference_increment_sender->chain()
+                           .guard([weak_data](std::nullptr_t const &) { return !weak_data.expired(); })
+                           .to([weak_data](std::nullptr_t const &) { return weak_data.lock()->reference()->raw() + 1; })
+                           .send_to(this->_reference_setter)
                            .end();
 
-        this->_pool += this->_reference_decrement_sender.chain()
-                           .guard([weak_data](std::nullptr_t const &) { return !!weak_data; })
-                           .to([weak_data](std::nullptr_t const &) { return weak_data.lock().reference().raw() - 1; })
-                           .receive(this->_reference_setter.receiver())
+        this->_pool += this->_reference_decrement_sender->chain()
+                           .guard([weak_data](std::nullptr_t const &) { return !weak_data.expired(); })
+                           .to([weak_data](std::nullptr_t const &) { return weak_data.lock()->reference()->raw() - 1; })
+                           .send_to(this->_reference_setter)
                            .end();
     }
 };
 
-vu::data::data() : base(std::make_shared<impl>()) {
-    impl_ptr<impl>()->prepare();
+vu::data::data() : _impl(std::make_unique<impl>()) {
 }
 
-vu::data::data(std::nullptr_t) : base(nullptr) {
-}
-
-chaining::value::holder<int32_t> &vu::data::reference() {
-    return impl_ptr<impl>()->_reference;
+chaining::value::holder_ptr<int32_t> const &vu::data::reference() {
+    return this->_impl->_reference;
 }
 
 chaining::chain_sync_t<bool> vu::data::is_reference_max_chain() const {
-    return impl_ptr<impl>()->_is_reference_max.chain();
+    return this->_impl->_is_reference_max->chain();
 }
 
 chaining::chain_sync_t<bool> vu::data::is_reference_min_chain() const {
-    return impl_ptr<impl>()->_is_reference_min.chain();
+    return this->_impl->_is_reference_min->chain();
 }
 
-chaining::receiver<> &vu::data::reference_increment_receiver() {
-    return impl_ptr<impl>()->_reference_increment_sender.receiver();
+chaining::receiver_ptr<std::nullptr_t> vu::data::reference_increment_receiver() {
+    return this->_impl->_reference_increment_sender;
 }
 
-chaining::receiver<> &vu::data::reference_decrement_receiver() {
-    return impl_ptr<impl>()->_reference_decrement_sender.receiver();
+chaining::receiver_ptr<std::nullptr_t> vu::data::reference_decrement_receiver() {
+    return this->_impl->_reference_decrement_sender;
+}
+
+void vu::data::_prepare(data_ptr const &shared) {
+    this->_impl->prepare(shared);
+}
+
+vu::data_ptr vu::data::make_shared() {
+    auto shared = std::shared_ptr<vu::data>(new vu::data{});
+
+    return shared;
 }
