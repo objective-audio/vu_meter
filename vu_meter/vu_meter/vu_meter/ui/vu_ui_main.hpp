@@ -17,6 +17,8 @@ struct ui_main {
 
     void setup(ui::renderer_ptr const &renderer, main_ptr_t const &main);
 
+    static ui_main_ptr_t make_shared();
+
    private:
     ui_indicator_resource_ptr _indicator_resource{nullptr};
 
@@ -24,6 +26,8 @@ struct ui_main {
     ui::layout_guide_rect_ptr _frame_guide_rect = ui::layout_guide_rect::make_shared();
     std::vector<ui::layout_guide> _guides;
     chaining::observer_pool _observers;
+
+    ui_main() = default;
 
     void _setup_frame_guide_rect();
     void _setup_indicators(main_ptr_t const &);

@@ -91,3 +91,7 @@ void vu::ui_main::_remove_indicator() {
     indicator->node()->remove_from_super_node();
     this->indicators.pop_back();
 }
+
+vu::ui_main_ptr_t vu::ui_main::make_shared() {
+    return std::shared_ptr<ui_main>(new ui_main{});
+}

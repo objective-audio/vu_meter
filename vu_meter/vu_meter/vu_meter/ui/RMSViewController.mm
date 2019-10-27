@@ -10,13 +10,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 using namespace yas;
 
-@interface RMSViewController ()
+namespace yas::vu {
+struct rms_vc_cpp {
+    vu::main_ptr_t main;
+    vu::ui_main_ptr_t ui_main;
 
-@end
+    bool needs_setup() const {
+        return this->main && this->ui_main;
+    }
+};
+}
 
 @implementation RMSViewController {
-    vu::main_ptr_t _main;
-    vu::ui_main ui_main;
+    vu::rms_vc_cpp _cpp;
 }
 
 - (void)viewDidLoad {
@@ -28,16 +34,28 @@ using namespace yas;
 
     self.metalView.clearColor = vu::base_color();
 
+    self->_cpp.ui_main = vu::ui_main::make_shared();
+
+    [self setup_if_needed];
+}
+
+- (void)set_vu_main:(vu::main_ptr_t)main {
+    self->_cpp.main = main;
+
+    [self setup_if_needed];
+}
+
+- (void)setup_if_needed {
+    if (!self->_cpp.needs_setup()) {
+        return;
+    }
+
     auto renderer = ui::renderer::make_shared(
         ui::metal_system::make_shared(objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object()));
 
     [self setRenderable:renderer];
 
-    self->ui_main.setup(renderer, self->_main);
-}
-
-- (void)set_vu_main:(vu::main_ptr_t)main {
-    self->_main = main;
+    self->_cpp.ui_main->setup(renderer, self->_cpp.main);
 }
 
 @end
