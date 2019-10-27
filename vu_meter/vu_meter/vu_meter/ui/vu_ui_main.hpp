@@ -10,8 +10,6 @@
 #include "vu_ui_indicator.hpp"
 
 namespace yas::vu {
-class main;
-
 struct ui_main {
     ui::renderer_ptr renderer{nullptr};
 
