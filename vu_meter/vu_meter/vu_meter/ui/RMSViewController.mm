@@ -16,7 +16,7 @@ struct rms_vc_cpp {
     vu::ui_main_ptr_t ui_main;
 
     bool needs_setup() const {
-        return this->main && this->ui_main;
+        return this->main && this->ui_main && this->ui_main->needs_setup();
     }
 };
 }

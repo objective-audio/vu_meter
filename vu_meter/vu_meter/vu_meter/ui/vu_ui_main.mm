@@ -14,6 +14,10 @@ namespace yas::vu {
 static float constexpr padding = 4.0f;
 }
 
+bool vu::ui_main::needs_setup() const {
+    return !this->renderer;
+}
+
 void vu::ui_main::setup(ui::renderer_ptr const &renderer, main_ptr_t const &main) {
     this->_weak_main = main;
     this->renderer = std::move(renderer);

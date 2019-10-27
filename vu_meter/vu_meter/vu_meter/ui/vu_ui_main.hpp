@@ -15,6 +15,7 @@ struct ui_main {
 
     std::vector<ui_indicator_ptr> indicators;
 
+    bool needs_setup() const;
     void setup(ui::renderer_ptr const &renderer, main_ptr_t const &main);
 
     static ui_main_ptr_t make_shared();
