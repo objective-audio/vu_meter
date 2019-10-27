@@ -41,14 +41,14 @@ void vu::main::setup() {
 }
 
 uint32_t vu::main::_input_channel_count() {
-    if (auto const &device = this->manager->io()->device()) {
+    if (auto const &device = this->manager->io().value()->device()) {
         return device.value()->input_channel_count();
     }
     return 0;
 }
 
 double vu::main::_sample_rate() {
-    if (auto const &device = this->manager->io()->device()) {
+    if (auto const &device = this->manager->io().value()->device()) {
         if (auto const &format = device.value()->input_format()) {
             return format.value().sample_rate();
         }
@@ -79,7 +79,7 @@ void vu::main::_update_timeline() {
     }
 
     audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
-    this->manager->connect(this->manager->io()->node(), this->input_tap->node(), format);
+    this->manager->connect(this->manager->io().value()->node(), this->input_tap->node(), format);
 
     struct context_t {
         audio::pcm_buffer *buffer = nullptr;
