@@ -23,12 +23,13 @@ struct main {
 
    private:
     audio::engine::manager_ptr manager = audio::engine::manager::make_shared();
-    audio::engine::au_input_ptr au_input = audio::engine::au_input::make_shared();
     audio::engine::tap_ptr input_tap = audio::engine::tap::make_shared({.is_input = true});
 
     std::vector<float> _values;
     std::mutex _values_mutex;
 
+    uint32_t _input_channel_count();
+    double _sample_rate();
     void _update_indicator_count();
     void _update_timeline();
 
