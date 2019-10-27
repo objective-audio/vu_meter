@@ -21,6 +21,8 @@ struct main {
     void set_values(std::vector<float> &&);
     std::vector<float> values();
 
+    static main_ptr_t make_shared();
+
    private:
     audio::engine::manager_ptr manager = audio::engine::manager::make_shared();
     audio::engine::tap_ptr input_tap = audio::engine::tap::make_shared({.is_input = true});
@@ -37,5 +39,7 @@ struct main {
 
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;
+
+    main() = default;
 };
 }  // namespace yas::vu

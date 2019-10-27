@@ -237,3 +237,9 @@ std::vector<float> vu::main::values() {
     }
     return values;
 }
+
+vu::main_ptr_t vu::main::make_shared() {
+    auto shared = std::shared_ptr<main>(new main{});
+    shared->setup();
+    return shared;
+}

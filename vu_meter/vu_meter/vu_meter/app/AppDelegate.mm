@@ -13,8 +13,7 @@ using namespace yas;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self->_main = std::make_shared<vu::main>();
-    self->_main->setup();
+    self->_main = vu::main::make_shared();
 
     UIViewController *rootViewController = self.window.rootViewController;
     if ([rootViewController isKindOfClass:[RMSViewController class]]) {
