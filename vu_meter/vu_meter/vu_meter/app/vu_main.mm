@@ -14,6 +14,10 @@
 
 using namespace yas;
 
+vu::main::main() {
+    this->manager->add_io();
+}
+
 void vu::main::setup() {
     NSError *error = nil;
 
@@ -26,8 +30,6 @@ void vu::main::setup() {
         NSLog(@"%@", error);
         return;
     }
-
-    this->manager->add_io();
 
     this->_update_timeline();
     this->_update_indicator_count();
@@ -239,7 +241,5 @@ std::vector<float> vu::main::values() {
 }
 
 vu::main_ptr_t vu::main::make_shared() {
-    auto shared = std::shared_ptr<main>(new main{});
-    shared->setup();
-    return shared;
+    return std::shared_ptr<main>(new main{});
 }

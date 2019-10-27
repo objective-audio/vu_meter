@@ -40,6 +40,6 @@ struct main {
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;
 
-    main() = default;
+    main();
 };
 }  // namespace yas::vu
