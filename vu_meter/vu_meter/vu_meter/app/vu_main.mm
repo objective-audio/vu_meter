@@ -14,10 +14,6 @@
 
 using namespace yas;
 
-vu::main::main() {
-    this->manager->add_io();
-}
-
 void vu::main::setup() {
     NSError *error = nil;
 
@@ -30,6 +26,8 @@ void vu::main::setup() {
         NSLog(@"%@", error);
         return;
     }
+
+    this->manager->add_io();
 
     this->_update_timeline();
     this->_update_indicator_count();
