@@ -34,7 +34,7 @@ void vu::main::setup() {
     this->_update_timeline();
     this->_update_indicator_count();
 
-    this->_observers += this->manager->chain(audio::engine::manager::method::configuration_change)
+    this->_observers += this->manager->chain()
                             .perform([this](auto const &) {
                                 this->_update_timeline();
                                 this->_update_indicator_count();
