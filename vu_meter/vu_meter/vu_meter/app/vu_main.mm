@@ -82,7 +82,7 @@ void vu::main::_update_timeline() {
     this->manager->connect(this->manager->io().value()->node(), this->input_tap->node(), format);
 
     struct context_t {
-        audio::pcm_buffer *buffer = nullptr;
+        audio::pcm_buffer_ptr buffer = nullptr;
 
         void reset_buffer() {
             this->buffer = nullptr;
@@ -188,8 +188,8 @@ void vu::main::_update_timeline() {
     // デバイスのインプットからタイムラインにデータを渡す
     this->input_tap->set_render_handler([context, timeline, ch_count, this,
                                          values = std::vector<float>()](audio::engine::node::render_args args) mutable {
-        proc::length_t const length = args.buffer.frame_length();
-        context->buffer = &args.buffer;
+        proc::length_t const length = args.buffer->frame_length();
+        context->buffer = args.buffer;
 
         proc::time::range const time_range{args.when.sample_time(), length};
         proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
