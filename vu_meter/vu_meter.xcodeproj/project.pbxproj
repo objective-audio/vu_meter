@@ -54,6 +54,7 @@
 		B6B09C722208861E00B483BC /* ui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC342207177300717FA9 /* ui.framework */; };
 		B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
+		B6FF26DF23E1B79B00E38ED3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +145,7 @@
 		B6E2CC302207177300717FA9 /* objc_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = objc_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC322207177300717FA9 /* processing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = processing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC342207177300717FA9 /* ui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = vu_meter/vu_meter/Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 		B62B51FA205E1A0A00A300E5 = {
 			isa = PBXGroup;
 			children = (
+				B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */,
 				B62B5205205E1A0A00A300E5 /* vu_meter */,
 				B62B521E205E1A0A00A300E5 /* vu_meterTests */,
 				B62B5204205E1A0A00A300E5 /* Products */,
@@ -404,6 +407,7 @@
 			files = (
 				B6756454206F167300944F8E /* RMSMain.storyboard in Resources */,
 				B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */,
+				B6FF26DF23E1B79B00E38ED3 /* Settings.bundle in Resources */,
 				B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */,
 				B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */,
 			);
