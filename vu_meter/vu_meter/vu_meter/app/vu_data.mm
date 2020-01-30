@@ -4,7 +4,12 @@
 
 #include "vu_data.hpp"
 #import <Foundation/Foundation.h>
+#include <cpp_utils/yas_cf_utils.h>
+#include <cpp_utils/yas_objc_ptr.h>
+#import "KVOObserver.h"
 #include "vu_types.h"
+
+#include <iostream>
 
 using namespace yas;
 
@@ -25,6 +30,18 @@ struct vu::data::impl {
         chaining::notifier<std::nullptr_t>::make_shared();
     chaining::notifier_ptr<std::nullptr_t> _reference_decrement_sender =
         chaining::notifier<std::nullptr_t>::make_shared();
+
+    objc_ptr<KVOObserver *> _reference_observer = objc_ptr_with_move_object([[KVOObserver alloc]
+        initWithTarget:[NSUserDefaults standardUserDefaults]
+               keyPath:vu::reference_key
+               handler:[weak_setter = to_weak(this->_reference_setter)](NSDictionary<NSKeyValueChangeKey, id> *change) {
+                   if (auto setter = weak_setter.lock()) {
+                       double const value = [[NSUserDefaults standardUserDefaults] doubleForKey:vu::reference_key];
+                       std::cout << "value : " << value << std::endl;
+                       setter->notify(value);
+                   }
+               }]);
+
     chaining::observer_pool _pool;
 
     impl() {

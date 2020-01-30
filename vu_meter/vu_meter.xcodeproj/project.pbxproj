@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B6034C4323E314470077E832 /* KVOObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = B6034C4223E314470077E832 /* KVOObserver.m */; };
 		B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */; };
 		B60CF5D820E2571B000FA9BA /* vu_ui_indicator_layout.mm in Sources */ = {isa = PBXBuildFile; fileRef = B60CF5D620E2571B000FA9BA /* vu_ui_indicator_layout.mm */; };
 		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
@@ -87,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B6034C4123E314470077E832 /* KVOObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOObserver.h; sourceTree = "<group>"; };
+		B6034C4223E314470077E832 /* KVOObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVOObserver.m; sourceTree = "<group>"; };
 		B605BFC62067867B00B4ACCF /* vu_sum_module_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_sum_module_tests.mm; sourceTree = "<group>"; };
 		B60CF5D620E2571B000FA9BA /* vu_ui_indicator_layout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_layout.mm; sourceTree = "<group>"; };
 		B60CF5D720E2571B000FA9BA /* vu_ui_indicator_layout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_layout.hpp; sourceTree = "<group>"; };
@@ -316,6 +319,8 @@
 				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B675644D206B21FA00944F8E /* vu_data.mm */,
 				B675644E206B21FA00944F8E /* vu_data.hpp */,
+				B6034C4123E314470077E832 /* KVOObserver.h */,
+				B6034C4223E314470077E832 /* KVOObserver.m */,
 				B634214320711978002C6742 /* vu_types.h */,
 			);
 			path = app;
@@ -457,6 +462,7 @@
 				B62B5216205E1A0A00A300E5 /* main.m in Sources */,
 				B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */,
 				B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */,
+				B6034C4323E314470077E832 /* KVOObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
