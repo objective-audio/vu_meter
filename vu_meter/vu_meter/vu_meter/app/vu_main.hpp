@@ -6,7 +6,9 @@
 
 #include <audio/yas_audio_umbrella.h>
 #include <chaining/yas_chaining_umbrella.h>
+
 #include <mutex>
+
 #include "vu_data.hpp"
 #include "vu_types.h"
 #include "vu_ui_main.hpp"

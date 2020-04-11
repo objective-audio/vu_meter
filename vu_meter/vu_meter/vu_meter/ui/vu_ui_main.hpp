@@ -5,7 +5,9 @@
 #pragma once
 
 #include <ui/yas_ui_umbrella.h>
+
 #include <array>
+
 #include "vu_types.h"
 #include "vu_ui_indicator.hpp"
 
