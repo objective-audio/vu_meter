@@ -15,40 +15,41 @@
 using namespace yas;
 
 void vu::main::setup() {
-    NSError *error = nil;
+    auto const &session = audio::ios_session::shared();
 
-    if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:&error]) {
-        NSLog(@"error : %@", error);
+    session->set_category(audio::ios_session::category::record);
+    auto const result = session->activate();
+    if (!result) {
+        std::cout << "session activate result : " << result.error() << std::endl;
         return;
     }
 
-    if (![[AVAudioSession sharedInstance] setActive:YES error:&error]) {
-        NSLog(@"%@", error);
-        return;
-    }
+    this->_device = audio::ios_device::make_shared(session);
 
-    this->manager->add_io();
+    this->_graph->add_io(this->_device);
 
     this->_update_timeline();
     this->_update_indicator_count();
 
-    this->_observers += this->manager->chain()
-                            .perform([this](auto const &) {
-                                this->_update_timeline();
-                                this->_update_indicator_count();
-                            })
-                            .end();
+    this->_device.value()
+        ->io_device_chain()
+        .perform([this](auto const &) {
+            this->_update_timeline();
+            this->_update_indicator_count();
+        })
+        .end()
+        ->add_to(this->_pool);
 }
 
 uint32_t vu::main::_input_channel_count() {
-    if (auto const &device = this->manager->io().value()->device()) {
+    if (auto const &device = this->_device) {
         return device.value()->input_channel_count();
     }
     return 0;
 }
 
 double vu::main::_sample_rate() {
-    if (auto const &device = this->manager->io().value()->device()) {
+    if (auto const &device = this->_device) {
         if (auto const &format = device.value()->input_format()) {
             return format.value().sample_rate();
         }
@@ -68,8 +69,8 @@ void vu::main::_update_timeline() {
         return;
     }
 
-    this->manager->stop();
-    this->manager->disconnect_input(this->input_tap->node());
+    this->_graph->stop();
+    this->_graph->disconnect_input(this->_input_tap->node());
 
     this->_last_ch_count = ch_count;
     this->_last_sample_rate = sample_rate;
@@ -79,7 +80,7 @@ void vu::main::_update_timeline() {
     }
 
     audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
-    this->manager->connect(this->manager->io().value()->node(), this->input_tap->node(), format);
+    this->_graph->connect(this->_graph->io().value()->node(), this->_input_tap->node(), format);
 
     struct context_t {
         audio::pcm_buffer_ptr buffer = nullptr;
@@ -186,8 +187,8 @@ void vu::main::_update_timeline() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->input_tap->set_render_handler([context, timeline, ch_count, this,
-                                         values = std::vector<float>()](audio::engine::node::render_args args) mutable {
+    this->_input_tap->set_render_handler([context, timeline, ch_count, this,
+                                          values = std::vector<float>()](audio::graph_node::render_args args) mutable {
         proc::length_t const length = args.buffer->frame_length();
         context->buffer = args.buffer;
 
@@ -220,7 +221,7 @@ void vu::main::_update_timeline() {
         context->reset_buffer();
     });
 
-    if (auto result = this->manager->start_render(); !result) {
+    if (auto result = this->_graph->start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
     }
 }

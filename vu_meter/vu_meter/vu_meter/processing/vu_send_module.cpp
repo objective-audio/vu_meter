@@ -3,6 +3,7 @@
 //
 
 #include "vu_send_module.hpp"
+
 #include <cpp_utils/yas_fast_each.h>
 
 using namespace yas;

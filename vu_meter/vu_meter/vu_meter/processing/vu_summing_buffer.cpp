@@ -3,6 +3,7 @@
 //
 
 #include "vu_summing_buffer.hpp"
+
 #include <Accelerate/Accelerate.h>
 #include <cpp_utils/yas_data.h>
 

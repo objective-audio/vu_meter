@@ -3,6 +3,7 @@
 //
 
 #include "vu_sum_module.hpp"
+
 #include "vu_summing_buffer.hpp"
 
 using namespace yas;
