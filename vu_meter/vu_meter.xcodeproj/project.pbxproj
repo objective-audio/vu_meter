@@ -23,7 +23,6 @@
 		B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5400205E59C500A300E5 /* MetalKit.framework */; };
 		B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */; };
 		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
-		B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5407205E5A1E00A300E5 /* GLKit.framework */; };
 		B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B659949820620A5E00EBC1D8 /* vu_send_module.cpp */; };
 		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
 		B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67564422067B85800944F8E /* vu_summing_buffer.cpp */; };
@@ -116,7 +115,6 @@
 		B62B5400205E59C500A300E5 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
 		B62B5405205E5A0600A300E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		B62B5407205E5A1E00A300E5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B634214320711978002C6742 /* vu_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_types.h; sourceTree = "<group>"; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */,
-				B62B5408205E5A1E00A300E5 /* GLKit.framework in Frameworks */,
 				B6B09C632208857E00B483BC /* ui.framework in Frameworks */,
 				B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */,
 				B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */,
@@ -242,7 +239,6 @@
 				B6E2CC322207177300717FA9 /* processing.framework */,
 				B6E2CC342207177300717FA9 /* ui.framework */,
 				B62B5409205E5A7600A300E5 /* AVFoundation.framework */,
-				B62B5407205E5A1E00A300E5 /* GLKit.framework */,
 				B62B5405205E5A0600A300E5 /* Accelerate.framework */,
 				B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */,
 				B62B53FF205E59C500A300E5 /* Metal.framework */,
