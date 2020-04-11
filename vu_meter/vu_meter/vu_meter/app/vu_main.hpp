@@ -26,8 +26,9 @@ struct main {
     static main_ptr_t make_shared();
 
    private:
-    audio::engine::manager_ptr manager = audio::engine::manager::make_shared();
-    audio::engine::tap_ptr input_tap = audio::engine::tap::make_shared({.is_input = true});
+    std::optional<audio::ios_device_ptr> _device = std::nullopt;
+    audio::graph_ptr _graph = audio::graph::make_shared();
+    audio::graph_tap_ptr _input_tap = audio::graph_tap::make_shared({.is_input = true});
 
     std::vector<float> _values;
     std::mutex _values_mutex;
@@ -37,7 +38,7 @@ struct main {
     void _update_indicator_count();
     void _update_timeline();
 
-    chaining::observer_pool _observers;
+    chaining::observer_pool _pool;
 
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;
