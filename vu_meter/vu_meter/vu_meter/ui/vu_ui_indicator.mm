@@ -310,7 +310,7 @@ struct vu::ui_indicator::impl {
             auto values = main->values();
             float const value = (this->idx < values.size()) ? values.at(this->idx) : 0.0f;
             ui::angle const angle =
-                ui_utils::meter_angle(value, main->data->reference()->raw(), constants::half_angle.degrees);
+                ui_utils::meter_angle(value, main->data->reference(), constants::half_angle.degrees);
             this->needle->node()->angle()->set_value(angle);
         }
     }
