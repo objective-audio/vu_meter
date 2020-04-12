@@ -3,6 +3,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <objc_utils/objc_utils.h>
 #import "KVOObserver.h"
 
 @interface TestObject : NSObject
@@ -44,14 +45,14 @@
     XCTAssertEqual(received.count, 1);
     XCTAssertEqualObjects(received[0], @"test_1");
 
-    [observer release];
-    
+    yas_release(observer);
+
     target.value = @"test_2";
 
     XCTAssertEqual(received.count, 1);
 
-    [received release];
-    [target release];
+    yas_release(received);
+    yas_release(target);
 }
 
 @end
