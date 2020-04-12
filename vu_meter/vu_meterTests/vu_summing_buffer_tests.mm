@@ -22,7 +22,7 @@ using namespace yas;
 }
 
 - (void)test_create {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
 
     XCTAssertEqual(buffer.pushed.size(), 0);
     XCTAssertEqual(buffer.stored.size(), 0);
@@ -30,7 +30,7 @@ using namespace yas;
 }
 
 - (void)test_setup {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
     proc::time::range time_range{0, 2};
 
     buffer.setup(time_range, 4);
@@ -41,7 +41,7 @@ using namespace yas;
 }
 
 - (void)test_push {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
     proc::time::range time_range{0, 2};
     buffer.setup(time_range, 4);
 
@@ -57,7 +57,7 @@ using namespace yas;
 }
 
 - (void)test_fetch_sum {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
     proc::time::range time_range{0, 2};
     buffer.setup(time_range, 4);
     std::vector<float> push_vec{1.0f, 2.0f};
@@ -85,7 +85,7 @@ using namespace yas;
 }
 
 - (void)test_finalize {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
     proc::time::range time_range{0, 2};
     buffer.setup(time_range, 4);
     std::vector<float> push_vec{1.0f, 2.0f};
@@ -103,7 +103,7 @@ using namespace yas;
 }
 
 - (void)test_execute_several_times {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
 
     {
         proc::time::range time_range{0, 2};
@@ -168,7 +168,7 @@ using namespace yas;
 }
 
 - (void)test_setup_reset_by_time_range {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
 
     {
         proc::time::range time_range{0, 2};
@@ -190,7 +190,7 @@ using namespace yas;
 }
 
 - (void)test_setup_reset_by_length {
-    vu::summing_buffer buffer{};
+    vu::summing_buffer buffer;
 
     {
         proc::time::range time_range{0, 2};
