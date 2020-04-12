@@ -33,6 +33,7 @@
 		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
 		B68CE46F2442E294005019C2 /* KVOObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B68CE46E2442E294005019C2 /* KVOObserverTests.m */; };
+		B68CE471244350B9005019C2 /* vu_data_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B68CE470244350B9005019C2 /* vu_data_tests.mm */; };
 		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6B09C592208857E00B483BC /* audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; };
@@ -135,6 +136,7 @@
 		B675645C206F45FC00944F8E /* vu_ui_color.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_color.mm; sourceTree = "<group>"; };
 		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
 		B68CE46E2442E294005019C2 /* KVOObserverTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVOObserverTests.m; sourceTree = "<group>"; };
+		B68CE470244350B9005019C2 /* vu_data_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_data_tests.mm; sourceTree = "<group>"; };
 		B6A846672075ABD200DFF041 /* vu_ui_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils.mm; sourceTree = "<group>"; };
 		B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_utils.hpp; sourceTree = "<group>"; };
 		B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils_tests.mm; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				B67564452067C50400944F8E /* vu_summing_buffer_tests.mm */,
 				B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */,
 				B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */,
+				B68CE470244350B9005019C2 /* vu_data_tests.mm */,
 				B68CE46E2442E294005019C2 /* KVOObserverTests.m */,
 			);
 			path = vu_meterTests;
@@ -473,6 +476,7 @@
 				B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */,
 				B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */,
 				B61301EA2207B5E500CBCB4D /* yas_processing_test_utils.cpp in Sources */,
+				B68CE471244350B9005019C2 /* vu_data_tests.mm in Sources */,
 				B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */,
 				B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */,
 			);
