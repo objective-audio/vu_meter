@@ -18,6 +18,7 @@
                        handler:(void (^)(NSDictionary<NSKeyValueChangeKey, id> *))handler {
     self = [super init];
     if (self) {
+        self.target = target;
         self.keyPath = keyPath;
         self.handler = handler;
 
