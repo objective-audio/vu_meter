@@ -38,23 +38,23 @@ using namespace yas::vu;
 
 - (void)test_set_reference_from_user_defaults {
     auto const data = vu::data::make_shared();
-    
+
     XCTAssertEqual(data->reference(), -20);
-    
+
     [self setUserDefaultsReference:0];
-    
+
     XCTAssertEqual(data->reference(), 0);
-    
+
     [self setUserDefaultsReference:1];
-    
+
     XCTAssertEqual(data->reference(), 0);
-    
+
     [self setUserDefaultsReference:-30];
-    
+
     XCTAssertEqual(data->reference(), -30);
-    
+
     [self setUserDefaultsReference:-31];
-    
+
     XCTAssertEqual(data->reference(), -30);
 }
 
