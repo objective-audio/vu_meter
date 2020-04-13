@@ -22,6 +22,12 @@ using namespace yas::vu;
     [super tearDown];
 }
 
+- (void)test_zero {
+    auto const regions = ui_indicator_layout::regions(0, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 50.0f}});
+
+    XCTAssertEqual(regions.size(), 0);
+}
+
 - (void)test_just_one {
     // ---
     // |0|
