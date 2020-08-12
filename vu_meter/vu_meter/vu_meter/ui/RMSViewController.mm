@@ -32,8 +32,6 @@ struct rms_vc_cpp {
         return;
     }
 
-    self.metalView.clearColor = vu::base_color();
-
     self->_cpp.ui_main = vu::ui_main::make_shared();
 
     [self setup_if_needed];
