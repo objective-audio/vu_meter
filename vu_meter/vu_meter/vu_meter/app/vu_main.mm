@@ -15,6 +15,8 @@
 using namespace yas;
 
 void vu::main::setup() {
+    yas_audio_set_log_enabled(true);
+
     auto const &session = audio::ios_session::shared();
 
     session->set_category(audio::ios_session::category::record);

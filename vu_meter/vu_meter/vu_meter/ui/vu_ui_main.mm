@@ -6,6 +6,7 @@
 #include <chaining/yas_chaining_utils.h>
 #include <cpp_utils/yas_fast_each.h>
 #include "vu_main.hpp"
+#include "vu_ui_color.hpp"
 #include "vu_ui_indicator_layout.hpp"
 
 using namespace yas;
@@ -25,6 +26,8 @@ void vu::ui_main::setup(ui::renderer_ptr const &renderer, main_ptr_t const &main
 
     auto texture = ui::texture::make_shared({.point_size = {1024, 1024}});
     texture->sync_scale_from_renderer(this->renderer);
+
+    this->renderer->background()->color()->set_value(vu::base_color());
 
     this->_setup_frame_guide_rect();
     this->_setup_indicators(main);

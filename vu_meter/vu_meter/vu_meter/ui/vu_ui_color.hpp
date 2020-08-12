@@ -8,7 +8,7 @@
 #include <ui/yas_ui_umbrella.h>
 
 namespace yas::vu {
-MTLClearColor const &base_color();
+ui::color const &base_color();
 
 ui::color const &indicator_base_color();
 ui::color const &indicator_needle_color();
