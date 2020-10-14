@@ -28,7 +28,7 @@ struct main {
    private:
     std::optional<audio::ios_device_ptr> _device = std::nullopt;
     audio::graph_ptr _graph = audio::graph::make_shared();
-    audio::graph_tap_ptr _input_tap = audio::graph_tap::make_shared({.is_input = true});
+    audio::graph_input_tap_ptr _input_tap = audio::graph_input_tap::make_shared();
 
     std::vector<float> _values;
     std::mutex _values_mutex;
