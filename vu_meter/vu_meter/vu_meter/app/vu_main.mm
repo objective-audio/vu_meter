@@ -72,7 +72,7 @@ void vu::main::_update_timeline() {
     }
 
     this->_graph->stop();
-    this->_graph->disconnect_input(this->_input_tap->node());
+    this->_graph->disconnect_input(this->_input_tap->node);
 
     this->_last_ch_count = ch_count;
     this->_last_sample_rate = sample_rate;
@@ -82,10 +82,10 @@ void vu::main::_update_timeline() {
     }
 
     audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
-    this->_graph->connect(this->_graph->io().value()->node(), this->_input_tap->node(), format);
+    this->_graph->connect(this->_graph->io().value()->input_node, this->_input_tap->node, format);
 
     struct context_t {
-        audio::pcm_buffer_ptr buffer = nullptr;
+        audio::pcm_buffer const *buffer = nullptr;
 
         void reset_buffer() {
             this->buffer = nullptr;
@@ -108,7 +108,7 @@ void vu::main::_update_timeline() {
                 auto module = vu::send::make_signal_module([context, ch](proc::time::range const &time_range,
                                                                          proc::connector_index_t const &,
                                                                          float *const signal_ptr) {
-                    auto const &buffer = context->buffer;
+                    audio::pcm_buffer const *const buffer = context->buffer;
                     if (!buffer) {
                         return;
                     }
@@ -189,13 +189,13 @@ void vu::main::_update_timeline() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->_input_tap->set_render_handler([context, timeline, ch_count, this,
-                                          values = std::vector<float>()](audio::graph_node::render_args args) mutable {
+    this->_input_tap->set_render_handler([context, timeline, ch_count, this, values = std::vector<float>()](
+                                             audio::node_input_render_args const &args) mutable {
         proc::length_t const length = args.buffer->frame_length();
         context->buffer = args.buffer;
 
-        proc::time::range const time_range{args.when.sample_time(), length};
-        proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.when.sample_rate()), length};
+        proc::time::range const time_range{args.time.sample_time(), length};
+        proc::sync_source const sync_source{static_cast<proc::sample_rate_t>(args.time.sample_rate()), length};
         proc::stream stream{sync_source};
 
         timeline->process(time_range, stream);
