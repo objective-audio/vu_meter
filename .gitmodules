@@ -1,18 +1,18 @@
-[submodule "audio_engine"]
-	path = audio_engine
-	url = git@github.com:objective-audio/audio_engine.git
-[submodule "ui"]
-	path = ui
-	url = git@github.com:objective-audio/ui.git
-[submodule "processing"]
-	path = processing
+[submodule "submodules/observing"]
+	path = submodules/observing
+	url = git@github.com:objective-audio/observing.git
+[submodule "submodules/processing"]
+	path = submodules/processing
 	url = git@github.com:objective-audio/processing.git
-[submodule "cpp_utils"]
-	path = cpp_utils
+[submodule "submodules/cpp_utils"]
+	path = submodules/cpp_utils
 	url = git@github.com:objective-audio/cpp_utils.git
-[submodule "objc_utils"]
-	path = objc_utils
+[submodule "submodules/audio_engine"]
+	path = submodules/audio_engine
+	url = git@github.com:objective-audio/audio_engine.git
+[submodule "submodules/objc_utils"]
+	path = submodules/objc_utils
 	url = git@github.com:objective-audio/objc_utils.git
-[submodule "chaining"]
-	path = chaining
-	url = https://github.com/objective-audio/chaining.git
+[submodule "submodules/ui"]
+	path = submodules/ui
+	url = git@github.com:objective-audio/ui.git
