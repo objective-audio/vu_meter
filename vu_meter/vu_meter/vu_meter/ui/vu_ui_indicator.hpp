@@ -20,7 +20,7 @@ struct ui_indicator_resource {
 
     void set_vu_height(float const);
 
-    chaining::value::holder_ptr<ui::font_atlas_ptr> const &font_atlas();
+    observing::value::holder_ptr<ui::font_atlas_ptr> const &font_atlas();
 
     static ui_indicator_resource_ptr make_shared(ui::renderer_ptr const &);
 

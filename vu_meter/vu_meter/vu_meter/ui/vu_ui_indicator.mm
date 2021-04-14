@@ -32,8 +32,8 @@ namespace constants {
 
 struct vu::ui_indicator_resource::impl {
     std::weak_ptr<ui::renderer> _weak_renderer;
-    chaining::value::holder_ptr<ui::font_atlas_ptr> _font_atlas{
-        chaining::value::holder<ui::font_atlas_ptr>::make_shared(nullptr)};
+    observing::value::holder_ptr<ui::font_atlas_ptr> _font_atlas{
+        observing::value::holder<ui::font_atlas_ptr>::make_shared(nullptr)};
     float _vu_height = 0.0f;
 
     impl(ui::renderer_ptr const &renderer) : _weak_renderer(renderer) {
@@ -73,7 +73,7 @@ void vu::ui_indicator_resource::set_vu_height(float const height) {
     this->_impl->set_vu_height(height);
 }
 
-chaining::value::holder_ptr<ui::font_atlas_ptr> const &vu::ui_indicator_resource::font_atlas() {
+observing::value::holder_ptr<ui::font_atlas_ptr> const &vu::ui_indicator_resource::font_atlas() {
     return this->_impl->_font_atlas;
 }
 
@@ -114,71 +114,57 @@ struct vu::ui_indicator::impl {
         this->_resource = resource;
         this->idx = idx;
 
-        // receivers
-
-        this->_update_receiver = chaining::perform_receiver<std::nullptr_t>::make_shared([weak_indicator] {
-            if (auto indicator = weak_indicator.lock()) {
-                indicator->_impl->_update();
-            }
-        });
-
-        this->_renderer_receiver = chaining::perform_receiver<ui::renderer_ptr>::make_shared(
-            [weak_indicator, observer = chaining::any_observer_ptr{nullptr}](ui::renderer_ptr const &renderer) mutable {
-                if (auto indicator = weak_indicator.lock()) {
-                    if (renderer) {
-                        auto &imp = indicator->_impl;
-                        observer = renderer->chain_will_render().send_to(imp->_update_receiver).end();
-                        imp->_render_target->sync_scale_from_renderer(renderer);
-                    } else {
-                        observer = nullptr;
-                    }
-                }
-            });
-
-        this->_layout_receiver =
-            chaining::perform_receiver<ui::region>::make_shared([weak_indicator](ui::region const &region) {
-                if (auto indicator = weak_indicator.lock()) {
-                    indicator->_impl->_layout(region);
-                }
-            });
-
         // node
 
         this->node->attach_position_layout_guides(*this->_node_guide_point);
 
-        this->_observers += this->frame_layout_guide_rect->left()->chain().send_to(this->_node_guide_point->x()).sync();
+        this->frame_layout_guide_rect->left()
+            ->observe([this](float const &value) { this->_node_guide_point->x()->set_value(value); })
+            .sync()
+            ->add_to(this->_pool);
 
-        this->_observers +=
-            this->frame_layout_guide_rect->bottom()->chain().send_to(this->_node_guide_point->y()).sync();
+        this->frame_layout_guide_rect->bottom()
+            ->observe([this](float const &value) { this->_node_guide_point->y()->set_value(value); })
+            .sync()
+            ->add_to(this->_pool);
 
         // batch_node
 
-        this->_batch_node->batch()->set_value(ui::batch::make_shared());
-        this->node->add_sub_node(_batch_node);
+        this->_batch_node->set_batch(ui::batch::make_shared());
+        this->node->add_sub_node(this->_batch_node);
 
         // base_plane
 
-        this->base_plane->node()->color()->set_value(vu::indicator_base_color());
+        this->base_plane->node()->set_color(vu::indicator_base_color());
         this->_batch_node->add_sub_node(this->base_plane->node());
 
-        this->_observers += this->_base_guide_rect->chain()
-                                .perform([weak_indicator](ui::region const &region) {
-                                    if (auto indicator = weak_indicator.lock()) {
-                                        indicator->_impl->base_plane->data()->set_rect_position(region, 0);
-                                    }
-                                })
-                                .end();
+        this->_base_guide_rect
+            ->observe([weak_indicator](ui::region const &region) {
+                if (auto indicator = weak_indicator.lock()) {
+                    indicator->_impl->base_plane->data()->set_rect_position(region, 0);
+                }
+            })
+            .end()
+            ->add_to(this->_pool);
 
-        this->_observers +=
-            this->frame_layout_guide_rect->width()->chain().send_to(this->_base_guide_rect->right()).sync();
+        this->frame_layout_guide_rect->width()
+            ->observe([this](float const &value) { this->_base_guide_rect->right()->set_value(value); })
+            .sync()
+            ->add_to(this->_pool);
 
-        this->_observers +=
-            this->frame_layout_guide_rect->height()->chain().send_to(this->_base_guide_rect->top()).sync();
+        this->frame_layout_guide_rect->height()
+            ->observe([this](float const &value) { this->_base_guide_rect->top()->set_value(value); })
+            .sync()
+            ->add_to(this->_pool);
 
         // render_target
 
-        this->_observers += this->_base_guide_rect->chain().send_to(this->_render_target->layout_guide_rect()).sync();
-        this->node->render_target()->set_value(this->_render_target);
+        this->_base_guide_rect
+            ->observe(
+                [this](ui::region const &region) { this->_render_target->layout_guide_rect()->set_region(region); })
+            .sync()
+            ->add_to(this->_pool);
+        this->node->set_render_target(this->_render_target);
 
         // numbers_root_node
         this->_batch_node->add_sub_node(this->_numbers_root_node);
@@ -203,15 +189,15 @@ struct vu::ui_indicator::impl {
 
             ui::angle const angle = ui_utils::meter_angle(audio::math::linear_from_decibel(static_cast<float>(param)),
                                                           0.0f, constants::half_angle.degrees);
-            gridline_handle->angle()->set_value(angle);
-            number_handle->angle()->set_value(-angle);
+            gridline_handle->set_angle(angle);
+            number_handle->set_angle(-angle);
 
             if (param > 0) {
-                plane->node()->color()->set_value(vu::indicator_over_gridline_color());
-                number->rect_plane()->node()->color()->set_value(vu::indicator_over_number_color());
+                plane->node()->set_color(vu::indicator_over_gridline_color());
+                number->rect_plane()->node()->set_color(vu::indicator_over_number_color());
             } else {
-                plane->node()->color()->set_value(vu::indicator_gridline_color());
-                number->rect_plane()->node()->color()->set_value(vu::indicator_number_color());
+                plane->node()->set_color(vu::indicator_gridline_color());
+                number->rect_plane()->node()->set_color(vu::indicator_number_color());
             }
         }
 
@@ -220,45 +206,72 @@ struct vu::ui_indicator::impl {
         ui::strings::args ch_number_args{
             .text = "CH-" + std::to_string(idx + 1), .max_word_count = 5, .alignment = ui::layout_alignment::max};
         this->ch_number = ui::strings::make_shared(ch_number_args);
-        this->ch_number->rect_plane()->node()->color()->set_value(vu::indicator_ch_color());
+        this->ch_number->rect_plane()->node()->set_color(vu::indicator_ch_color());
         this->ch_number->rect_plane()->node()->attach_position_layout_guides(*this->_ch_number_guide);
         this->node->add_sub_node(ch_number->rect_plane()->node());
 
-        this->_observers += this->frame_layout_guide_rect->chain()
-                                .to([](ui::region const &region) {
-                                    return ui::point{.x = region.size.width * 0.97f, .y = region.size.height * 0.2f};
-                                })
-                                .send_to(this->_ch_number_guide)
-                                .sync();
+        this->frame_layout_guide_rect
+            ->observe([this](ui::region const &region) {
+                this->_ch_number_guide->set_point(
+                    ui::point{.x = region.size.width * 0.97f, .y = region.size.height * 0.2f});
+            })
+            .sync()
+            ->add_to(this->_pool);
 
         // needle
-        this->needle->node()->color()->set_value(vu::indicator_needle_color());
+        this->needle->node()->set_color(vu::indicator_needle_color());
         this->needle_root_node->add_sub_node(this->needle->node());
 
         // indicator_resource
 
-        this->_resource_observer =
-            this->_resource->font_atlas()
-                ->chain()
-                .perform([weak_indicator](ui::font_atlas_ptr const &atlas) {
-                    if (ui_indicator_ptr const indicator = weak_indicator.lock()) {
-                        auto &imp = indicator->_impl;
-                        float const number_offset = atlas ? (atlas->ascent() + atlas->descent()) * 0.5f : 0.0f;
+        this->_resource_observer = this->_resource->font_atlas()
+                                       ->observe([weak_indicator](ui::font_atlas_ptr const &atlas) {
+                                           if (ui_indicator_ptr const indicator = weak_indicator.lock()) {
+                                               auto &imp = indicator->_impl;
+                                               float const number_offset =
+                                                   atlas ? (atlas->ascent() + atlas->descent()) * 0.5f : 0.0f;
 
-                        for (auto const &number : imp->db_numbers) {
-                            number->set_font_atlas(atlas);
-                            number->rect_plane()->node()->position()->set_value({.y = number_offset});
-                        }
+                                               for (auto const &number : imp->db_numbers) {
+                                                   number->set_font_atlas(atlas);
+                                                   number->rect_plane()->node()->set_position({.y = number_offset});
+                                               }
 
-                        imp->ch_number->set_font_atlas(atlas);
-                    }
-                })
-                .sync();
+                                               imp->ch_number->set_font_atlas(atlas);
+                                           }
+                                       })
+                                       .sync();
 
         // layout_guide
-        this->_frame_observer = this->frame_layout_guide_rect->chain().send_to(this->_layout_receiver).end();
+        this->frame_layout_guide_rect
+            ->observe([weak_indicator](ui::region const &region) {
+                if (auto indicator = weak_indicator.lock()) {
+                    indicator->_impl->_layout(region);
+                }
+            })
+            .end()
+            ->add_to(this->_pool);
 
-        this->_renderer_observer = this->node->chain_renderer().send_to(this->_renderer_receiver).sync();
+        this->node
+            ->observe_renderer([weak_indicator, canceller = observing::cancellable_ptr{nullptr}](
+                                   ui::renderer_ptr const &renderer) mutable {
+                if (auto indicator = weak_indicator.lock()) {
+                    if (renderer) {
+                        auto &imp = indicator->_impl;
+                        canceller = renderer
+                                        ->observe_will_render([weak_indicator](auto const &) {
+                                            if (auto indicator = weak_indicator.lock()) {
+                                                indicator->_impl->_update();
+                                            }
+                                        })
+                                        .end();
+                        imp->_render_target->sync_scale_from_renderer(renderer);
+                    } else {
+                        canceller = nullptr;
+                    }
+                }
+            })
+            .sync()
+            ->add_to(this->_pool);
     }
 
     void _layout(ui::region const &region) {
@@ -278,19 +291,19 @@ struct vu::ui_indicator::impl {
         float const gridline_width = constants::gridline_width_rate * height;
 
         // needle
-        this->needle_root_node->position()->set_value({.x = needle_root_x, .y = needle_root_y});
+        this->needle_root_node->set_position({.x = needle_root_x, .y = needle_root_y});
         this->needle->data()->set_rect_position(
             {.origin = {.x = -needle_width * 0.5f}, .size = {.width = needle_width, .height = needle_height}}, 0);
 
         // numbers_root_node
-        this->_numbers_root_node->position()->set_value(this->needle_root_node->position()->raw());
+        this->_numbers_root_node->set_position(this->needle_root_node->position());
 
         // gridline
         for (auto const &gridline : this->gridlines) {
             ui::node_ptr const &parent = gridline->node()->parent();
             float const gridline_y =
-                vu::ui_utils::gridline_y(parent->angle()->raw(), constants::half_angle, gridline_side_y, 0.1f);
-            gridline->node()->position()->set_value({.y = gridline_y});
+                vu::ui_utils::gridline_y(parent->angle(), constants::half_angle, gridline_side_y, 0.1f);
+            gridline->node()->set_position({.y = gridline_y});
             gridline->data()->set_rect_position({.origin = {.x = -gridline_width * 0.5f, .y = -gridline_height * 0.5f},
                                                  .size = {.width = gridline_width, .height = gridline_height}},
                                                 0);
@@ -300,8 +313,8 @@ struct vu::ui_indicator::impl {
         for (auto &handle : this->number_handles) {
             ui::node_ptr const parent = handle->parent();
             float const number_y =
-                vu::ui_utils::gridline_y(parent->angle()->raw(), constants::half_angle, number_side_y, 0.1f);
-            handle->position()->set_value({.y = number_y});
+                vu::ui_utils::gridline_y(parent->angle(), constants::half_angle, number_side_y, 0.1f);
+            handle->set_position({.y = number_y});
         }
     }
 
@@ -311,20 +324,16 @@ struct vu::ui_indicator::impl {
             float const value = (this->idx < values.size()) ? values.at(this->idx) : 0.0f;
             ui::angle const angle =
                 ui_utils::meter_angle(value, main->data->reference(), constants::half_angle.degrees);
-            this->needle->node()->angle()->set_value(angle);
+            this->needle->node()->set_angle(angle);
         }
     }
 
    private:
-    chaining::any_observer_ptr _frame_observer = nullptr;
-    chaining::any_observer_ptr _resource_observer = nullptr;
+    observing::cancellable_ptr _frame_observer = nullptr;
+    observing::cancellable_ptr _resource_observer = nullptr;
     weak_main_ptr_t _weak_main;
 
-    chaining::observer_pool _observers;
-    chaining::any_observer_ptr _renderer_observer = nullptr;
-    chaining::receiver_ptr<ui::renderer_ptr> _renderer_receiver = nullptr;
-    chaining::receiver_ptr<std::nullptr_t> _update_receiver = nullptr;
-    chaining::receiver_ptr<ui::region> _layout_receiver = nullptr;
+    observing::canceller_pool _pool;
     ui::layout_guide_point_ptr _node_guide_point = ui::layout_guide_point::make_shared();
     ui::layout_guide_rect_ptr _base_guide_rect = ui::layout_guide_rect::make_shared();
 };

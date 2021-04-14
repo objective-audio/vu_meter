@@ -4,7 +4,7 @@
 
 #include "vu_ui_indicator_layout.hpp"
 #include <cpp_utils/yas_fast_each.h>
-#include <ui/yas_ui_chaining_utils.h>
+#include <ui/yas_ui_observing_utils.h>
 
 using namespace yas;
 using namespace yas::vu;
@@ -72,11 +72,10 @@ std::vector<ui::region> ui_indicator_layout::regions(std::size_t const count, ui
         }
     }
 
-    auto h_justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 100.0f; });
-    auto v_justify_handler = ui::justify([](std::size_t const &idx) { return idx % 2 ? 1.0f : 50.0f; });
-
-    auto h_positions = h_justify_handler(std::make_tuple(0.0f, max_scaled_size.width, max_size.width * 2 - 1));
-    auto v_positions = v_justify_handler(std::make_tuple(0.0f, max_scaled_size.height, max_size.height * 2 - 1));
+    auto h_positions = ui::justify(0.0, max_scaled_size.width, max_size.width * 2 - 1,
+                                   [](std::size_t const &idx) { return idx % 2 ? 1.0f : 100.0f; });
+    auto v_positions = ui::justify(0.0, max_scaled_size.height, max_size.height * 2 - 1,
+                                   [](std::size_t const &idx) { return idx % 2 ? 1.0f : 50.0f; });
 
     float const origin_y = region.bottom() + (region.size.height - max_scaled_size.height) * 0.5f;
     float const origin_x = region.left() + (region.size.width - max_scaled_size.width) * 0.5f;

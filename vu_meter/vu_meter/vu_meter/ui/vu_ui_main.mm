@@ -3,7 +3,6 @@
 //
 
 #include "vu_ui_main.hpp"
-#include <chaining/yas_chaining_utils.h>
 #include <cpp_utils/yas_fast_each.h>
 #include "vu_main.hpp"
 #include "vu_ui_color.hpp"
@@ -22,12 +21,13 @@ bool vu::ui_main::needs_setup() const {
 void vu::ui_main::setup(ui::renderer_ptr const &renderer, main_ptr_t const &main) {
     this->_weak_main = main;
     this->renderer = std::move(renderer);
+
     this->_indicator_resource = ui_indicator_resource::make_shared(this->renderer);
 
     auto texture = ui::texture::make_shared({.point_size = {1024, 1024}});
     texture->sync_scale_from_renderer(this->renderer);
 
-    this->renderer->background()->color()->set_value(vu::base_color());
+    this->renderer->background()->set_color(vu::base_color());
 
     this->_setup_frame_guide_rect();
     this->_setup_indicators(main);
@@ -36,48 +36,74 @@ void vu::ui_main::setup(ui::renderer_ptr const &renderer, main_ptr_t const &main
 void vu::ui_main::_setup_frame_guide_rect() {
     auto const &safe_area_guide_rect = this->renderer->safe_area_layout_guide_rect();
 
-    ui::insets insets{.left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
-
-    this->_observers +=
-        safe_area_guide_rect->chain().to(chaining::add<ui::region>(insets)).send_to(this->_frame_guide_rect).sync();
+    safe_area_guide_rect
+        ->observe([this](ui::region const &region) {
+            ui::insets const insets{
+                .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
+            this->_frame_guide_rect->set_region(region + insets);
+        })
+        .sync()
+        ->add_to(this->_pool);
 }
 
 void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
-    this->_observers += main->indicator_count->chain()
-                            .perform([this](std::size_t const &value) {
-                                if (value < this->indicators.size()) {
-                                    auto each = make_fast_each(this->indicators.size() - value);
-                                    while (yas_each_next(each)) {
-                                        this->_remove_indicator();
-                                    }
-                                } else if (this->indicators.size() < value) {
-                                    auto each = make_fast_each(value - this->indicators.size());
-                                    while (yas_each_next(each)) {
-                                        this->_add_indicator();
-                                    }
-                                }
-                            })
-                            .to_tuple()
-                            .combine(this->_frame_guide_rect->chain().to_tuple())
-                            .to([](std::tuple<std::size_t, ui::region> const &tuple) {
-                                std::size_t const &count = std::get<0>(tuple);
-                                ui::region const &region = std::get<1>(tuple);
-                                return ui_indicator_layout::regions(count, region);
-                            })
-                            .perform([this](std::vector<ui::region> const &regions) {
-                                std::size_t const count = std::min(this->indicators.size(), regions.size());
-                                auto each = make_fast_each(count);
-                                while (yas_each_next(each)) {
-                                    std::size_t const &idx = yas_each_index(each);
-                                    ui::region const &region = regions.at(idx);
-                                    this->indicators.at(idx)->frame_layout_guide_rect()->set_region(region);
+    struct cache {
+        std::optional<std::size_t> count{std::nullopt};
+        std::optional<ui::region> region{std::nullopt};
+    };
 
-                                    if (idx == 0) {
-                                        this->_indicator_resource->set_vu_height(region.size.height);
-                                    }
-                                }
-                            })
-                            .sync();
+    std::function<void(std::optional<std::size_t> const &, std::optional<ui::region> const &)> lambda =
+        [this, shared_cache = std::make_shared<cache>()](std::optional<std::size_t> const &count,
+                                                         std::optional<ui::region> const &region) {
+            if (count.has_value()) {
+                shared_cache->count = count;
+            } else if (region.has_value()) {
+                shared_cache->region = region;
+            }
+
+            if (!shared_cache->count.has_value() || !shared_cache->region.has_value()) {
+                return;
+            }
+
+            auto const regions =
+                ui_indicator_layout::regions(shared_cache->count.value(), shared_cache->region.value());
+
+            std::size_t const _count = std::min(this->indicators.size(), regions.size());
+            auto each = make_fast_each(_count);
+            while (yas_each_next(each)) {
+                std::size_t const &idx = yas_each_index(each);
+                ui::region const &region = regions.at(idx);
+                this->indicators.at(idx)->frame_layout_guide_rect()->set_region(region);
+
+                if (idx == 0) {
+                    this->_indicator_resource->set_vu_height(region.size.height);
+                }
+            }
+        };
+
+    main->indicator_count
+        ->observe([this, lambda](std::size_t const &value) {
+            if (value < this->indicators.size()) {
+                auto each = make_fast_each(this->indicators.size() - value);
+                while (yas_each_next(each)) {
+                    this->_remove_indicator();
+                }
+            } else if (this->indicators.size() < value) {
+                auto each = make_fast_each(value - this->indicators.size());
+                while (yas_each_next(each)) {
+                    this->_add_indicator();
+                }
+            }
+
+            lambda(value, std::nullopt);
+        })
+        .sync()
+        ->add_to(this->_pool);
+
+    this->_frame_guide_rect
+        ->observe([lambda = std::move(lambda)](ui::region const &region) { lambda(std::nullopt, region); })
+        .sync()
+        ->add_to(this->_pool);
 }
 
 void vu::ui_main::_add_indicator() {
