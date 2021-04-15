@@ -5,21 +5,21 @@
       location = "group:vu_meter/vu_meter.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:audio_engine/audio_ios/audio_ios.xcodeproj">
+      location = "group:submodules/audio_engine/audio_ios/audio_ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:chaining/chaining_ios/chaining_ios.xcodeproj">
+      location = "group:submodules/cpp_utils/cpp_utils_ios/cpp_utils_ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:cpp_utils/cpp_utils_ios/cpp_utils_ios.xcodeproj">
+      location = "group:submodules/objc_utils/objc_utils_ios/objc_utils_ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:objc_utils/objc_utils_ios/objc_utils_ios.xcodeproj">
+      location = "group:submodules/observing/observing_ios/observing_ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:processing/processing_ios/processing_ios.xcodeproj">
+      location = "group:submodules/processing/processing_ios/processing_ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ui/ui_ios/ui_ios.xcodeproj">
+      location = "group:submodules/ui/ui_ios/ui_ios.xcodeproj">
    </FileRef>
 </Workspace>

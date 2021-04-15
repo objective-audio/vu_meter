@@ -4,9 +4,9 @@
 
 #import <XCTest/XCTest.h>
 #import "vu_sum_module.hpp"
-#import "yas_processing_test_utils.h"
 
 using namespace yas;
+using namespace yas::proc;
 
 @interface vu_sum_module_tests : XCTestCase
 
@@ -56,7 +56,7 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        proc::signal_event_ptr const signal = events.cbegin()->second.get<signal_event>();
         auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);
@@ -77,7 +77,7 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        proc::signal_event_ptr const signal = events.cbegin()->second.get<signal_event>();
         auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);
@@ -98,7 +98,7 @@ using namespace yas;
 
         XCTAssertEqual(events.size(), 1);
 
-        proc::signal_event_ptr const signal = std::dynamic_pointer_cast<proc::signal_event>(events.cbegin()->second);
+        proc::signal_event_ptr const signal = events.cbegin()->second.get<signal_event>();
         auto const &vec = signal->vector<float>();
 
         XCTAssertEqual(vec.size(), process_length);

@@ -34,8 +34,7 @@ void vu::main::setup() {
     this->_update_indicator_count();
 
     this->_device.value()
-        ->io_device_chain()
-        .perform([this](auto const &) {
+        ->observe_io_device([this](auto const &) {
             this->_update_timeline();
             this->_update_indicator_count();
         })
