@@ -10,8 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RMSViewController : YASUIMetalViewController
 
-- (void)set_vu_main:(yas::vu::main_ptr_t)main;
-
 @end
 
 NS_ASSUME_NONNULL_END
