@@ -20,14 +20,14 @@ struct ui_indicator_resource {
 
     void set_vu_height(float const);
 
-    observing::value::holder_ptr<ui::font_atlas_ptr> const &font_atlas();
+    observing::value::holder_ptr<std::shared_ptr<ui::font_atlas>> const &font_atlas();
 
-    static ui_indicator_resource_ptr make_shared(ui::renderer_ptr const &);
+    static ui_indicator_resource_ptr make_shared(std::shared_ptr<ui::view_look> const &);
 
    private:
     std::unique_ptr<impl> _impl;
 
-    ui_indicator_resource(ui::renderer_ptr const &);
+    ui_indicator_resource(std::shared_ptr<ui::view_look> const &);
 };
 
 struct ui_indicator {
@@ -35,16 +35,16 @@ struct ui_indicator {
 
     void setup(main_ptr_t const &, ui_indicator_resource_ptr const &, std::size_t const idx);
 
-    ui::node_ptr const &node();
+    std::shared_ptr<ui::node> const &node();
 
-    ui::layout_guide_rect_ptr const &frame_layout_guide_rect();
+    std::shared_ptr<ui::layout_region_guide> const &frame_layout_guide_rect();
 
-    static ui_indicator_ptr make_shared();
+    static ui_indicator_ptr make_shared(std::shared_ptr<ui::standard> const &);
 
    private:
     std::weak_ptr<ui_indicator> _weak_indicator;
     std::unique_ptr<impl> _impl;
 
-    ui_indicator();
+    ui_indicator(std::shared_ptr<ui::standard> const &);
 };
 }  // namespace yas::vu

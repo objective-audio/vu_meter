@@ -48,12 +48,15 @@ struct rms_vc_cpp {
         return;
     }
 
-    auto renderer = ui::renderer::make_shared(
-        ui::metal_system::make_shared(objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object()));
+    auto const metal_system = ui::metal_system::make_shared(
+        objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
+    auto const standard = ui::standard::make_shared([self view_look], metal_system);
 
-    [self setRenderable:renderer];
+    self->_cpp.ui_main->setup(standard, self->_cpp.main);
 
-    self->_cpp.ui_main->setup(renderer, self->_cpp.main);
+    [self configure_with_metal_system:metal_system
+                             renderer:standard->renderer()
+                        event_manager:standard->event_manager()];
 }
 
 @end
