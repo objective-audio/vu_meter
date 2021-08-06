@@ -146,11 +146,7 @@ struct ui_indicator::impl {
         this->_batch_node->add_sub_node(this->base_plane->node());
 
         this->_base_guide_rect
-            ->observe([weak_indicator](ui::region const &region) {
-                if (auto indicator = weak_indicator.lock()) {
-                    indicator->_impl->base_plane->data()->set_rect_position(region, 0);
-                }
-            })
+            ->observe([this](ui::region const &region) { this->base_plane->data()->set_rect_position(region, 0); })
             .end()
             ->add_to(this->_pool);
 
@@ -217,34 +213,17 @@ struct ui_indicator::impl {
 
         // indicator_resource
 
-        this->_resource_observer = this->_resource->font_atlas()
-                                       ->observe([weak_indicator](std::shared_ptr<ui::font_atlas> const &atlas) {
-                                           if (ui_indicator_ptr const indicator = weak_indicator.lock()) {
-                                               indicator->_impl->_set_font_atlas(atlas);
-                                           }
-                                       })
-                                       .sync();
+        this->_resource_observer =
+            this->_resource->font_atlas()
+                ->observe([this](std::shared_ptr<ui::font_atlas> const &atlas) { this->_set_font_atlas(atlas); })
+                .sync();
 
         // layout_guide
-        this->frame_layout_guide
-            ->observe([weak_indicator](ui::region const &region) {
-                if (auto indicator = weak_indicator.lock()) {
-                    indicator->_impl->_layout(region);
-                }
-            })
+        this->frame_layout_guide->observe([this](ui::region const &region) { this->_layout(region); })
             .end()
             ->add_to(this->_pool);
 
-        if (auto const indicator = weak_indicator.lock()) {
-            this->_renderer
-                ->observe_will_render([weak_indicator](auto const &) {
-                    if (auto indicator = weak_indicator.lock()) {
-                        indicator->_impl->_update();
-                    }
-                })
-                .end()
-                ->add_to(this->_pool);
-        }
+        this->_renderer->observe_will_render([this](auto const &) { this->_update(); }).end()->add_to(this->_pool);
     }
 
     void _layout(ui::region const &region) {
