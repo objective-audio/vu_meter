@@ -19,8 +19,6 @@ struct main {
     observing::value::holder_ptr<uint32_t> const indicator_count =
         observing::value::holder<uint32_t>::make_shared(uint32_t(0));
 
-    void setup();
-
     void set_values(std::vector<float> &&);
     std::vector<float> values();
 
@@ -43,5 +41,7 @@ struct main {
 
     uint32_t _last_ch_count = 0;
     double _last_sample_rate = 0.0;
+
+    main();
 };
 }  // namespace yas::vu

@@ -28,7 +28,6 @@ struct rms_vc_cpp {
         return;
     }
 
-    self->_cpp.main->setup();
     self->_cpp.ui_main = vu::ui_main::make_shared();
 
     auto const metal_system = ui::metal_system::make_shared(
