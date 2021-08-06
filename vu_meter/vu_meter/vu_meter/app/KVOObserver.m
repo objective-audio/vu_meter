@@ -29,10 +29,6 @@
 
 - (void)dealloc {
     [_target removeObserver:self forKeyPath:_keyPath];
-
-    yas_release(_keyPath);
-    yas_release(_handler);
-    yas_super_dealloc();
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
