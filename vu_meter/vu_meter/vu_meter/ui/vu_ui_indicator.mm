@@ -90,26 +90,25 @@ ui_indicator_resource_ptr ui_indicator_resource::make_shared(std::shared_ptr<ui:
 
 struct ui_indicator::impl {
     std::shared_ptr<ui::renderer> const _renderer;
+    std::shared_ptr<ui::render_target> const _render_target;
 
     std::size_t idx;
-    std::shared_ptr<ui::node> node = ui::node::make_shared();
-    std::shared_ptr<ui::node> _batch_node = ui::node::make_shared();
-    std::shared_ptr<ui::rect_plane> base_plane = ui::rect_plane::make_shared(1);
-    std::shared_ptr<ui::node> needle_root_node = ui::node::make_shared();
-    std::shared_ptr<ui::node> _numbers_root_node = ui::node::make_shared();
-    std::shared_ptr<ui::rect_plane> needle = ui::rect_plane::make_shared(1);
+    std::shared_ptr<ui::node> const node = ui::node::make_shared();
+    std::shared_ptr<ui::node> const _batch_node = ui::node::make_shared();
+    std::shared_ptr<ui::rect_plane> const base_plane = ui::rect_plane::make_shared(1);
+    std::shared_ptr<ui::node> const needle_root_node = ui::node::make_shared();
+    std::shared_ptr<ui::node> const _numbers_root_node = ui::node::make_shared();
+    std::shared_ptr<ui::rect_plane> const needle = ui::rect_plane::make_shared(1);
     std::vector<std::shared_ptr<ui::node>> gridline_handles;
     std::vector<std::shared_ptr<ui::rect_plane>> gridlines;
     std::vector<std::shared_ptr<ui::node>> number_handles;
     std::vector<std::shared_ptr<ui::strings>> db_numbers;
     std::shared_ptr<ui::strings> ch_number = nullptr;
-    std::shared_ptr<ui::layout_point_guide> _ch_number_guide = ui::layout_point_guide::make_shared();
+    std::shared_ptr<ui::layout_point_guide> const _ch_number_guide = ui::layout_point_guide::make_shared();
 
     ui_indicator_resource_ptr _resource = nullptr;
 
-    std::shared_ptr<ui::render_target> const _render_target;
-
-    std::shared_ptr<ui::layout_region_guide> frame_layout_guide_rect = ui::layout_region_guide::make_shared();
+    std::shared_ptr<ui::layout_region_guide> const frame_layout_guide = ui::layout_region_guide::make_shared();
 
     impl(std::shared_ptr<ui::standard> const &standard)
         : _renderer(standard->renderer()), _render_target(ui::render_target::make_shared(standard->view_look())) {
@@ -126,12 +125,12 @@ struct ui_indicator::impl {
 
         this->node->attach_position_layout_guides(*this->_node_guide_point);
 
-        this->frame_layout_guide_rect->left()
+        this->frame_layout_guide->left()
             ->observe([this](float const &value) { this->_node_guide_point->x()->set_value(value); })
             .sync()
             ->add_to(this->_pool);
 
-        this->frame_layout_guide_rect->bottom()
+        this->frame_layout_guide->bottom()
             ->observe([this](float const &value) { this->_node_guide_point->y()->set_value(value); })
             .sync()
             ->add_to(this->_pool);
@@ -155,12 +154,12 @@ struct ui_indicator::impl {
             .end()
             ->add_to(this->_pool);
 
-        this->frame_layout_guide_rect->width()
+        this->frame_layout_guide->width()
             ->observe([this](float const &value) { this->_base_guide_rect->right()->set_value(value); })
             .sync()
             ->add_to(this->_pool);
 
-        this->frame_layout_guide_rect->height()
+        this->frame_layout_guide->height()
             ->observe([this](float const &value) { this->_base_guide_rect->top()->set_value(value); })
             .sync()
             ->add_to(this->_pool);
@@ -204,7 +203,7 @@ struct ui_indicator::impl {
             }
         }
 
-        this->frame_layout_guide_rect
+        this->frame_layout_guide
             ->observe([this](ui::region const &region) {
                 this->_ch_number_guide->set_point(
                     ui::point{.x = region.size.width * 0.97f, .y = region.size.height * 0.2f});
@@ -227,7 +226,7 @@ struct ui_indicator::impl {
                                        .sync();
 
         // layout_guide
-        this->frame_layout_guide_rect
+        this->frame_layout_guide
             ->observe([weak_indicator](ui::region const &region) {
                 if (auto indicator = weak_indicator.lock()) {
                     indicator->_impl->_layout(region);
@@ -378,7 +377,7 @@ std::shared_ptr<ui::node> const &ui_indicator::node() {
 }
 
 std::shared_ptr<ui::layout_region_guide> const &ui_indicator::frame_layout_guide_rect() {
-    return this->_impl->frame_layout_guide_rect;
+    return this->_impl->frame_layout_guide;
 }
 
 ui_indicator_ptr ui_indicator::make_shared(std::shared_ptr<ui::standard> const &standard) {
