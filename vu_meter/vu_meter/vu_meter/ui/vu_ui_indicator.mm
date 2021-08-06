@@ -3,8 +3,10 @@
 //
 
 #include "vu_ui_indicator.hpp"
+
 #include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
+
 #include "vu_main.hpp"
 #include "vu_ui_color.hpp"
 #include "vu_ui_utils.hpp"
@@ -25,8 +27,8 @@ namespace constants {
     static ui::angle constexpr half_angle{.degrees = 50.0f};
 
     static std::array<int32_t, 11> params{-20, -10, -7, -5, -3, -2, -1, 0, 1, 2, 3};
-}
-}
+}  // namespace constants
+}  // namespace yas::vu
 
 #pragma mark - ui_indicator_resource::impl
 
