@@ -15,32 +15,33 @@ static float constexpr padding = 4.0f;
 }
 
 bool vu::ui_main::needs_setup() const {
-    return !this->renderer;
+    return !this->_standard;
 }
 
-void vu::ui_main::setup(ui::renderer_ptr const &renderer, main_ptr_t const &main) {
+void vu::ui_main::setup(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main) {
     this->_weak_main = main;
-    this->renderer = std::move(renderer);
+    this->_standard = standard;
 
-    this->_indicator_resource = ui_indicator_resource::make_shared(this->renderer);
+    this->_indicator_resource = ui_indicator_resource::make_shared(standard->view_look());
 
-    auto texture = ui::texture::make_shared({.point_size = {1024, 1024}});
-    texture->sync_scale_from_renderer(this->renderer);
+#warning todo 消して良い？
+    //    auto texture = ui::texture::make_shared({.point_size = {1024, 1024}}, standard->view_look());
+    //    texture->sync_scale_from_renderer(this->renderer);
 
-    this->renderer->background()->set_color(vu::base_color());
+    standard->view_look()->background()->set_color(vu::base_color());
 
     this->_setup_frame_guide_rect();
     this->_setup_indicators(main);
 }
 
 void vu::ui_main::_setup_frame_guide_rect() {
-    auto const &safe_area_guide_rect = this->renderer->safe_area_layout_guide_rect();
+    auto const &safe_area_guide = this->_standard->view_look()->safe_area_layout_guide();
 
-    safe_area_guide_rect
+    safe_area_guide
         ->observe([this](ui::region const &region) {
-            ui::insets const insets{
+            ui::region_insets const insets{
                 .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
-            this->_frame_guide_rect->set_region(region + insets);
+            this->_frame_guide->set_region(region + insets);
         })
         .sync()
         ->add_to(this->_pool);
@@ -100,7 +101,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
         .sync()
         ->add_to(this->_pool);
 
-    this->_frame_guide_rect
+    this->_frame_guide
         ->observe([lambda = std::move(lambda)](ui::region const &region) { lambda(std::nullopt, region); })
         .sync()
         ->add_to(this->_pool);
@@ -109,8 +110,8 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
 void vu::ui_main::_add_indicator() {
     if (auto main = this->_weak_main.lock()) {
         std::size_t const idx = this->indicators.size();
-        ui_indicator_ptr indicator = ui_indicator::make_shared();
-        this->renderer->root_node()->add_sub_node(indicator->node());
+        ui_indicator_ptr indicator = ui_indicator::make_shared(this->_standard);
+        this->_standard->root_node()->add_sub_node(indicator->node());
         indicator->setup(main, this->_indicator_resource, idx);
         this->indicators.emplace_back(std::move(indicator));
     }

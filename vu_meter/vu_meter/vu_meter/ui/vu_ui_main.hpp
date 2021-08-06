@@ -13,21 +13,21 @@
 
 namespace yas::vu {
 struct ui_main {
-    ui::renderer_ptr renderer{nullptr};
-
     std::vector<ui_indicator_ptr> indicators;
 
     bool needs_setup() const;
-    void setup(ui::renderer_ptr const &renderer, main_ptr_t const &main);
+    void setup(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main);
 
     static ui_main_ptr_t make_shared();
 
    private:
+    std::shared_ptr<ui::standard> _standard;
+
     ui_indicator_resource_ptr _indicator_resource{nullptr};
 
     weak_main_ptr_t _weak_main;
-    ui::layout_guide_rect_ptr _frame_guide_rect = ui::layout_guide_rect::make_shared();
-    std::vector<ui::layout_guide> _guides;
+    std::shared_ptr<ui::layout_region_guide> _frame_guide = ui::layout_region_guide::make_shared();
+    std::vector<std::shared_ptr<ui::layout_value_guide>> _guides;
     observing::canceller_pool _pool;
 
     ui_main() = default;

@@ -27,32 +27,30 @@
 
 - (void)test {
     __auto_type target = [[TestObject alloc] init];
-
     __auto_type received = [[NSMutableArray<NSString *> alloc] init];
 
-    __auto_type observer =
-        [[KVOObserver alloc] initWithTarget:target
-                                    keyPath:@"value"
-                                    handler:^(NSDictionary<NSKeyValueChangeKey, id> *_Nonnull change) {
-                                        NSString *newValue = change[NSKeyValueChangeNewKey];
-                                        [received addObject:newValue];
-                                    }];
+    {
+        __auto_type observer =
+            [[KVOObserver alloc] initWithTarget:target
+                                        keyPath:@"value"
+                                        handler:^(NSDictionary<NSKeyValueChangeKey, id> *_Nonnull change) {
+                                            NSString *newValue = change[NSKeyValueChangeNewKey];
+                                            [received addObject:newValue];
+                                        }];
 
-    XCTAssertEqual(received.count, 0);
+        XCTAssertEqual(received.count, 0);
 
-    target.value = @"test_1";
+        target.value = @"test_1";
 
-    XCTAssertEqual(received.count, 1);
-    XCTAssertEqualObjects(received[0], @"test_1");
+        XCTAssertEqual(received.count, 1);
+        XCTAssertEqualObjects(received[0], @"test_1");
 
-    yas_release(observer);
+        NSLog(@"%@", observer);
+    }
 
     target.value = @"test_2";
 
     XCTAssertEqual(received.count, 1);
-
-    yas_release(received);
-    yas_release(target);
 }
 
 @end
