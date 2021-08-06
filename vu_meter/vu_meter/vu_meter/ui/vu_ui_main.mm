@@ -24,10 +24,6 @@ void vu::ui_main::setup(std::shared_ptr<ui::standard> const &standard, main_ptr_
 
     this->_indicator_resource = ui_indicator_resource::make_shared(standard->view_look());
 
-#warning todo 消して良い？
-    //    auto texture = ui::texture::make_shared({.point_size = {1024, 1024}}, standard->view_look());
-    //    texture->sync_scale_from_renderer(this->renderer);
-
     standard->view_look()->background()->set_color(vu::base_color());
 
     this->_setup_frame_guide_rect();
