@@ -89,7 +89,7 @@ ui_indicator_resource_ptr ui_indicator_resource::make_shared(std::shared_ptr<ui:
 #pragma mark - ui_indicator::impl
 
 struct ui_indicator::impl {
-    std::shared_ptr<ui::standard> const &_standard;
+    std::shared_ptr<ui::renderer> const _renderer;
 
     std::size_t idx;
     std::shared_ptr<ui::node> node = ui::node::make_shared();
@@ -112,7 +112,7 @@ struct ui_indicator::impl {
     std::shared_ptr<ui::layout_region_guide> frame_layout_guide_rect = ui::layout_region_guide::make_shared();
 
     impl(std::shared_ptr<ui::standard> const &standard)
-        : _standard(standard), _render_target(ui::render_target::make_shared(standard->view_look())) {
+        : _renderer(standard->renderer()), _render_target(ui::render_target::make_shared(standard->view_look())) {
     }
 
     void setup(std::weak_ptr<ui_indicator> const &weak_indicator, main_ptr_t const &main,
@@ -237,7 +237,7 @@ struct ui_indicator::impl {
             ->add_to(this->_pool);
 
         if (auto const indicator = weak_indicator.lock()) {
-            this->_standard->renderer()
+            this->_renderer
                 ->observe_will_render([weak_indicator](auto const &) {
                     if (auto indicator = weak_indicator.lock()) {
                         indicator->_impl->_update();
