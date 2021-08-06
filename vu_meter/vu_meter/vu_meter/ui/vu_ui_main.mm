@@ -9,21 +9,16 @@
 #include "vu_ui_indicator_layout.hpp"
 
 using namespace yas;
+using namespace yas::vu;
 
 namespace yas::vu {
 static float constexpr padding = 4.0f;
 }
 
-bool vu::ui_main::needs_setup() const {
-    return !this->_standard;
-}
-
-void vu::ui_main::setup(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main) {
-    this->_weak_main = main;
-    this->_standard = standard;
-
-    this->_indicator_resource = ui_indicator_resource::make_shared(standard->view_look());
-
+ui_main::ui_main(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main)
+    : _standard(standard),
+      _weak_main(main),
+      _indicator_resource(ui_indicator_resource::make_shared(standard->view_look())) {
     standard->view_look()->background()->set_color(vu::base_color());
 
     this->_setup_frame_guide_rect();
@@ -122,6 +117,6 @@ void vu::ui_main::_remove_indicator() {
     this->indicators.pop_back();
 }
 
-vu::ui_main_ptr_t vu::ui_main::make_shared() {
-    return std::shared_ptr<ui_main>(new ui_main{});
+vu::ui_main_ptr_t vu::ui_main::make_shared(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main) {
+    return std::shared_ptr<ui_main>(new ui_main{standard, main});
 }
