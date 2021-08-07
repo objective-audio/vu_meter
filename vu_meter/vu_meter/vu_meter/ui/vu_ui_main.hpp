@@ -32,6 +32,6 @@ struct ui_main {
     void _setup_indicators(main_ptr_t const &);
 
     void _add_indicator();
-    void _remove_indicator();
+    void _remove_last_indicator();
 };
 }  // namespace yas::vu

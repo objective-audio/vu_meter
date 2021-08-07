@@ -78,7 +78,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
             if (value < this->indicators.size()) {
                 auto each = make_fast_each(this->indicators.size() - value);
                 while (yas_each_next(each)) {
-                    this->_remove_indicator();
+                    this->_remove_last_indicator();
                 }
             } else if (this->indicators.size() < value) {
                 auto each = make_fast_each(value - this->indicators.size());
@@ -107,7 +107,7 @@ void vu::ui_main::_add_indicator() {
     }
 }
 
-void vu::ui_main::_remove_indicator() {
+void vu::ui_main::_remove_last_indicator() {
     if (this->indicators.size() == 0) {
         throw std::runtime_error("");
     }
