@@ -26,7 +26,8 @@ ui_main::ui_main(std::shared_ptr<ui::standard> const &standard, main_ptr_t const
 }
 
 void vu::ui_main::_setup_frame_guide_rect() {
-    this->_standard->view_look()->safe_area_layout_guide()
+    this->_standard->view_look()
+        ->safe_area_layout_guide()
         ->observe([this](ui::region const &region) {
             ui::region_insets const insets{
                 .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
