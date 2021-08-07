@@ -9,8 +9,6 @@
 #import "KVOObserver.h"
 #include "vu_types.h"
 
-#include <iostream>
-
 using namespace yas;
 
 namespace yas::vu {
@@ -30,7 +28,6 @@ struct vu::data::impl {
                handler:[weak_setter = to_weak(this->_reference_setter)](NSDictionary<NSKeyValueChangeKey, id> *change) {
                    if (auto setter = weak_setter.lock()) {
                        double const value = [[NSUserDefaults standardUserDefaults] doubleForKey:vu::reference_key];
-                       std::cout << "value : " << value << std::endl;
                        setter->notify(value);
                    }
                }]);
@@ -70,7 +67,5 @@ int32_t vu::data::reference() const {
 }
 
 vu::data_ptr vu::data::make_shared() {
-    auto shared = std::shared_ptr<vu::data>(new vu::data{});
-
-    return shared;
+    return std::shared_ptr<vu::data>(new vu::data{});
 }

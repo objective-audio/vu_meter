@@ -9,25 +9,16 @@
 #include "vu_ui_indicator_layout.hpp"
 
 using namespace yas;
+using namespace yas::vu;
 
 namespace yas::vu {
 static float constexpr padding = 4.0f;
 }
 
-bool vu::ui_main::needs_setup() const {
-    return !this->_standard;
-}
-
-void vu::ui_main::setup(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main) {
-    this->_weak_main = main;
-    this->_standard = standard;
-
-    this->_indicator_resource = ui_indicator_resource::make_shared(standard->view_look());
-
-#warning todo 消して良い？
-    //    auto texture = ui::texture::make_shared({.point_size = {1024, 1024}}, standard->view_look());
-    //    texture->sync_scale_from_renderer(this->renderer);
-
+ui_main::ui_main(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main)
+    : _standard(standard),
+      _weak_main(main),
+      _indicator_resource(ui_indicator_resource::make_shared(standard->view_look())) {
     standard->view_look()->background()->set_color(vu::base_color());
 
     this->_setup_frame_guide_rect();
@@ -35,9 +26,8 @@ void vu::ui_main::setup(std::shared_ptr<ui::standard> const &standard, main_ptr_
 }
 
 void vu::ui_main::_setup_frame_guide_rect() {
-    auto const &safe_area_guide = this->_standard->view_look()->safe_area_layout_guide();
-
-    safe_area_guide
+    this->_standard->view_look()
+        ->safe_area_layout_guide()
         ->observe([this](ui::region const &region) {
             ui::region_insets const insets{
                 .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
@@ -87,7 +77,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
             if (value < this->indicators.size()) {
                 auto each = make_fast_each(this->indicators.size() - value);
                 while (yas_each_next(each)) {
-                    this->_remove_indicator();
+                    this->_remove_last_indicator();
                 }
             } else if (this->indicators.size() < value) {
                 auto each = make_fast_each(value - this->indicators.size());
@@ -108,16 +98,15 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
 }
 
 void vu::ui_main::_add_indicator() {
-    if (auto main = this->_weak_main.lock()) {
+    if (auto const main = this->_weak_main.lock()) {
         std::size_t const idx = this->indicators.size();
-        ui_indicator_ptr indicator = ui_indicator::make_shared(this->_standard);
+        ui_indicator_ptr indicator = ui_indicator::make_shared(this->_standard, main, this->_indicator_resource, idx);
         this->_standard->root_node()->add_sub_node(indicator->node());
-        indicator->setup(main, this->_indicator_resource, idx);
         this->indicators.emplace_back(std::move(indicator));
     }
 }
 
-void vu::ui_main::_remove_indicator() {
+void vu::ui_main::_remove_last_indicator() {
     if (this->indicators.size() == 0) {
         throw std::runtime_error("");
     }
@@ -126,6 +115,6 @@ void vu::ui_main::_remove_indicator() {
     this->indicators.pop_back();
 }
 
-vu::ui_main_ptr_t vu::ui_main::make_shared() {
-    return std::shared_ptr<ui_main>(new ui_main{});
+vu::ui_main_ptr_t vu::ui_main::make_shared(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main) {
+    return std::shared_ptr<ui_main>(new ui_main{standard, main});
 }

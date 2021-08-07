@@ -13,8 +13,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 using namespace yas;
+using namespace yas::vu;
 
-void vu::main::setup() {
+main::main() {
     yas_audio_set_log_enabled(true);
 
     auto const &session = audio::ios_session::shared();
@@ -42,14 +43,14 @@ void vu::main::setup() {
         ->add_to(this->_pool);
 }
 
-uint32_t vu::main::_input_channel_count() {
+uint32_t main::_input_channel_count() {
     if (auto const &device = this->_device) {
         return device.value()->input_channel_count();
     }
     return 0;
 }
 
-double vu::main::_sample_rate() {
+double main::_sample_rate() {
     if (auto const &device = this->_device) {
         if (auto const &format = device.value()->input_format()) {
             return format.value().sample_rate();
@@ -58,11 +59,11 @@ double vu::main::_sample_rate() {
     return 0;
 }
 
-void vu::main::_update_indicator_count() {
+void main::_update_indicator_count() {
     this->indicator_count->set_value(this->_input_channel_count());
 }
 
-void vu::main::_update_timeline() {
+void main::_update_timeline() {
     uint32_t const ch_count = this->_input_channel_count();
     double const sample_rate = this->_sample_rate();
 
@@ -104,9 +105,9 @@ void vu::main::_update_timeline() {
             std::size_t const &ch = yas_each_index(each);
 
             if (auto track = proc::track::make_shared()) {
-                auto module = vu::send::make_signal_module([context, ch](proc::time::range const &time_range,
-                                                                         proc::connector_index_t const &,
-                                                                         float *const signal_ptr) {
+                auto module = send::make_signal_module([context, ch](proc::time::range const &time_range,
+                                                                     proc::connector_index_t const &,
+                                                                     float *const signal_ptr) {
                     audio::pcm_buffer const *const buffer = context->buffer;
                     if (!buffer) {
                         return;
@@ -116,7 +117,7 @@ void vu::main::_update_timeline() {
                     buffer->copy_to(signal_ptr, 1, 0, static_cast<uint32_t>(ch), 0, length);
                 });
 
-                module->connect_output(proc::to_connector_index(vu::send::output::value), ch);
+                module->connect_output(proc::to_connector_index(send::output::value), ch);
 
                 track->push_back_module(module, time_range);
 
@@ -159,9 +160,9 @@ void vu::main::_update_timeline() {
             std::size_t const &ch = yas_each_index(each);
 
             if (auto track = proc::track::make_shared()) {
-                auto module = vu::sum::make_signal_module(300.0 / 1000.0);  // 300ms
-                module->connect_input(proc::to_connector_index(vu::sum::input::value), ch);
-                module->connect_output(proc::to_connector_index(vu::sum::output::value), ch);
+                auto module = sum::make_signal_module(300.0 / 1000.0);  // 300ms
+                module->connect_input(proc::to_connector_index(sum::input::value), ch);
+                module->connect_output(proc::to_connector_index(sum::output::value), ch);
 
                 track->push_back_module(module, time_range);
 
@@ -227,12 +228,12 @@ void vu::main::_update_timeline() {
     }
 }
 
-void vu::main::set_values(std::vector<float> &&values) {
+void main::set_values(std::vector<float> &&values) {
     std::lock_guard<std::mutex> lock(_values_mutex);
     this->_values = std::move(values);
 }
 
-std::vector<float> vu::main::values() {
+std::vector<float> main::values() {
     std::vector<float> values;
     if (std::lock_guard<std::mutex> lock(_values_mutex); true) {
         values = this->_values;
@@ -240,6 +241,6 @@ std::vector<float> vu::main::values() {
     return values;
 }
 
-vu::main_ptr_t vu::main::make_shared() {
+main_ptr_t main::make_shared() {
     return std::shared_ptr<main>(new main{});
 }
