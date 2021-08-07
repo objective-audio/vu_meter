@@ -110,11 +110,9 @@ struct ui_indicator::impl {
 
     std::shared_ptr<ui::layout_region_guide> const frame_layout_guide = ui::layout_region_guide::make_shared();
 
-    impl(std::shared_ptr<ui::standard> const &standard)
+    impl(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main,
+         ui_indicator_resource_ptr const &resource, std::size_t const idx)
         : _renderer(standard->renderer()), _render_target(ui::render_target::make_shared(standard->view_look())) {
-    }
-
-    void setup(main_ptr_t const &main, ui_indicator_resource_ptr const &resource, std::size_t const idx) {
         weak_main_ptr_t weak_main = main;
         this->_weak_main = weak_main;
         this->_resource = resource;
@@ -343,11 +341,9 @@ struct ui_indicator::impl {
 
 #pragma mark - ui_indicator
 
-ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard) : _impl(std::make_unique<impl>(standard)) {
-}
-
-void ui_indicator::setup(main_ptr_t const &main, ui_indicator_resource_ptr const &resource, std::size_t const idx) {
-    this->_impl->setup(main, resource, idx);
+ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main,
+                           ui_indicator_resource_ptr const &resource, std::size_t const idx)
+    : _impl(std::make_unique<impl>(standard, main, resource, idx)) {
 }
 
 std::shared_ptr<ui::node> const &ui_indicator::node() {
@@ -358,6 +354,7 @@ std::shared_ptr<ui::layout_region_guide> const &ui_indicator::frame_layout_guide
     return this->_impl->frame_layout_guide;
 }
 
-ui_indicator_ptr ui_indicator::make_shared(std::shared_ptr<ui::standard> const &standard) {
-    return std::shared_ptr<ui_indicator>(new ui_indicator{standard});
+ui_indicator_ptr ui_indicator::make_shared(std::shared_ptr<ui::standard> const &standard, main_ptr_t const &main,
+                                           ui_indicator_resource_ptr const &resource, std::size_t const idx) {
+    return std::shared_ptr<ui_indicator>(new ui_indicator{standard, main, resource, idx});
 }
