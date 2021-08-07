@@ -99,7 +99,7 @@ void vu::ui_main::_setup_indicators(main_ptr_t const &main) {
 }
 
 void vu::ui_main::_add_indicator() {
-    if (auto main = this->_weak_main.lock()) {
+    if (auto const main = this->_weak_main.lock()) {
         std::size_t const idx = this->indicators.size();
         ui_indicator_ptr indicator = ui_indicator::make_shared(this->_standard, main, this->_indicator_resource, idx);
         this->_standard->root_node()->add_sub_node(indicator->node());
