@@ -114,8 +114,7 @@ struct ui_indicator::impl {
         : _renderer(standard->renderer()), _render_target(ui::render_target::make_shared(standard->view_look())) {
     }
 
-    void setup(std::weak_ptr<ui_indicator> const &weak_indicator, main_ptr_t const &main,
-               ui_indicator_resource_ptr const &resource, std::size_t const idx) {
+    void setup(main_ptr_t const &main, ui_indicator_resource_ptr const &resource, std::size_t const idx) {
         weak_main_ptr_t weak_main = main;
         this->_weak_main = weak_main;
         this->_resource = resource;
@@ -348,7 +347,7 @@ ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard) : _imp
 }
 
 void ui_indicator::setup(main_ptr_t const &main, ui_indicator_resource_ptr const &resource, std::size_t const idx) {
-    this->_impl->setup(this->_weak_indicator, main, resource, idx);
+    this->_impl->setup(main, resource, idx);
 }
 
 std::shared_ptr<ui::node> const &ui_indicator::node() {
@@ -360,7 +359,5 @@ std::shared_ptr<ui::layout_region_guide> const &ui_indicator::frame_layout_guide
 }
 
 ui_indicator_ptr ui_indicator::make_shared(std::shared_ptr<ui::standard> const &standard) {
-    auto shared = std::shared_ptr<ui_indicator>(new ui_indicator{standard});
-    shared->_weak_indicator = shared;
-    return shared;
+    return std::shared_ptr<ui_indicator>(new ui_indicator{standard});
 }

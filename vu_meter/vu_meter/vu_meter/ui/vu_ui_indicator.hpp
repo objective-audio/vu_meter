@@ -42,7 +42,6 @@ struct ui_indicator {
    private:
     class impl;
 
-    std::weak_ptr<ui_indicator> _weak_indicator;
     std::unique_ptr<impl> _impl;
 
     ui_indicator(std::shared_ptr<ui::standard> const &);
