@@ -323,15 +323,15 @@
 		B675645B206F432D00944F8E /* app */ = {
 			isa = PBXGroup;
 			children = (
-				B62B5215205E1A0A00A300E5 /* main.m */,
 				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
 				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
-				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
-				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
-				B675644D206B21FA00944F8E /* vu_data.mm */,
-				B675644E206B21FA00944F8E /* vu_data.hpp */,
 				B6034C4123E314470077E832 /* KVOObserver.h */,
 				B6034C4223E314470077E832 /* KVOObserver.m */,
+				B62B5215205E1A0A00A300E5 /* main.m */,
+				B675644E206B21FA00944F8E /* vu_data.hpp */,
+				B675644D206B21FA00944F8E /* vu_data.mm */,
+				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
+				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
 				B634214320711978002C6742 /* vu_types.h */,
 			);
 			path = app;
