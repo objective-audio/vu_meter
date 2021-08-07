@@ -1,18 +1,18 @@
 //
-//  vu_data_tests.mm
+//  vu_settings_tests.mm
 //
 
 #import <XCTest/XCTest.h>
-#import "vu_data.hpp"
+#import "vu_settings.hpp"
 
 using namespace yas;
 using namespace yas::vu;
 
-@interface vu_data_tests : XCTestCase
+@interface vu_settings_tests : XCTestCase
 
 @end
 
-@implementation vu_data_tests
+@implementation vu_settings_tests
 
 - (void)setUp {
     [self clearUserDefaults];
@@ -23,39 +23,39 @@ using namespace yas::vu;
 }
 
 - (void)test_default_reference {
-    auto const data = vu::data::make_shared();
+    auto const settings = vu::settings::make_shared();
 
-    XCTAssertEqual(data->reference(), -20);
+    XCTAssertEqual(settings->reference(), -20);
 }
 
 - (void)test_restore_reference {
     [self setUserDefaultsReference:-10];
 
-    auto const data = vu::data::make_shared();
+    auto const settings = vu::settings::make_shared();
 
-    XCTAssertEqual(data->reference(), -10);
+    XCTAssertEqual(settings->reference(), -10);
 }
 
 - (void)test_set_reference_from_user_defaults {
-    auto const data = vu::data::make_shared();
+    auto const settings = vu::settings::make_shared();
 
-    XCTAssertEqual(data->reference(), -20);
+    XCTAssertEqual(settings->reference(), -20);
 
     [self setUserDefaultsReference:0];
 
-    XCTAssertEqual(data->reference(), 0);
+    XCTAssertEqual(settings->reference(), 0);
 
     [self setUserDefaultsReference:1];
 
-    XCTAssertEqual(data->reference(), 0);
+    XCTAssertEqual(settings->reference(), 0);
 
     [self setUserDefaultsReference:-30];
 
-    XCTAssertEqual(data->reference(), -30);
+    XCTAssertEqual(settings->reference(), -30);
 
     [self setUserDefaultsReference:-31];
 
-    XCTAssertEqual(data->reference(), -30);
+    XCTAssertEqual(settings->reference(), -30);
 }
 
 #pragma mark - private
