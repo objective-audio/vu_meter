@@ -7,6 +7,7 @@
 #include "vu_app.h"
 #include "vu_main.hpp"
 #include "vu_ui_color.hpp"
+#include "vu_ui_indicator_container.hpp"
 #include "vu_ui_utils.hpp"
 
 using namespace yas;
@@ -17,7 +18,7 @@ static float constexpr padding = 4.0f;
 }
 
 ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look,
-                 std::shared_ptr<ui_indicator_container> const &container,
+                 std::shared_ptr<ui_main_indicator_container_interface> const &container,
                  std::shared_ptr<ui_main_presenter> const &presenter)
     : _indicator_container(container), _presenter(presenter) {
     view_look->background()->set_color(presenter->background_color());

@@ -13,10 +13,9 @@ ui_indicator_factory::ui_indicator_factory(std::shared_ptr<ui_indicator_resource
     : _resource(resource) {
 }
 
-std::shared_ptr<ui_indicator> ui_indicator_factory::make_indicator(std::size_t const idx) {
-    auto const &app = vu::app::shared();
-    auto const presenter = ui_indicator_presenter::make_shared(app->main, idx);
-    return ui_indicator::make_shared(app->ui_standard, this->_resource, presenter);
+std::shared_ptr<ui_indicator_container_indicator_interface> ui_indicator_factory::make_indicator(
+    std::size_t const idx) {
+    return ui_indicator::make_shared(this->_resource, idx);
 }
 
 std::shared_ptr<ui_indicator_factory> ui_indicator_factory::make_shared(

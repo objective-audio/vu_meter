@@ -6,28 +6,26 @@
 
 #include <ui/yas_ui_umbrella.h>
 
+#include "vu_ui_indicator_container_dependency.h"
+#include "vu_ui_indicator_dependency.h"
 #include "vu_ui_indicator_presenter.hpp"
 #include "vu_ui_indicator_resource.hpp"
 
 namespace yas::vu {
-class ui_indicator;
-using ui_indicator_ptr = std::shared_ptr<ui_indicator>;
+struct ui_indicator final : ui_indicator_container_indicator_interface {
+    std::shared_ptr<ui::node> const &node() override;
 
-struct ui_indicator final {
-    std::shared_ptr<ui::node> const &node();
+    void set_region(ui::region const) override;
 
-    std::shared_ptr<ui::layout_region_guide> const &frame_layout_guide_rect();
-
-    static ui_indicator_ptr make_shared(std::shared_ptr<ui::standard> const &,
-                                        std::shared_ptr<ui_indicator_resource> const &,
-                                        std::shared_ptr<ui_indicator_presenter> const &);
+    static std::shared_ptr<ui_indicator> make_shared(std::shared_ptr<ui_indicator_resource_interface> const &,
+                                                     std::size_t const);
 
    private:
     class impl;
 
     std::unique_ptr<impl> _impl;
 
-    ui_indicator(std::shared_ptr<ui::standard> const &, std::shared_ptr<ui_indicator_resource> const &,
+    ui_indicator(std::shared_ptr<ui::standard> const &, std::shared_ptr<ui_indicator_resource_interface> const &,
                  std::shared_ptr<ui_indicator_presenter> const &);
 };
 }  // namespace yas::vu
