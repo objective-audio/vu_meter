@@ -34,11 +34,9 @@ ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look,
 
 std::shared_ptr<ui_main> vu::ui_main::make_shared() {
     auto const &app = vu::app::shared();
-    auto const &root_node = app->ui_standard->root_node();
     auto const &view_look = app->ui_standard->view_look();
-    auto const resource = ui_indicator_resource::make_shared(view_look);
-    auto const factory = ui_main_indicator_factory::make_shared(resource);
-    auto const container = ui_indicator_container::make_shared(app->main, root_node, factory, resource);
+
+    auto const container = ui_indicator_container::make_shared();
     auto const presenter = ui_main_presenter::make_shared();
 
     return std::shared_ptr<ui_main>(new ui_main{view_look, container, presenter});

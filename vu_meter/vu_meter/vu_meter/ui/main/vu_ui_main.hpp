@@ -9,7 +9,6 @@
 #include <array>
 
 #include "vu_ui_indicator_container.hpp"
-#include "vu_ui_main_factories.hpp"
 #include "vu_ui_main_presenter.hpp"
 
 namespace yas::vu {
