@@ -9,24 +9,19 @@ using namespace yas;
 using namespace yas::vu;
 
 vu_ui_indicator_container_presenter::vu_ui_indicator_container_presenter(std::shared_ptr<main> const &main)
-    : _weak_main(main) {
+    : _weak_main(main), _indicator_count(observing::value::holder<std::size_t>::make_shared(0)) {
+    main->observe_indicators([this](auto const &indicators) { this->_indicator_count->set_value(indicators.size()); })
+        .sync()
+        ->add_to(this->_pool);
 }
 
 std::size_t vu_ui_indicator_container_presenter::indicator_count() const {
-    if (auto const main = this->_weak_main.lock()) {
-        return main->indicator_count();
-    } else {
-        return 0;
-    }
+    return this->_indicator_count->value();
 }
 
 observing::syncable vu_ui_indicator_container_presenter::observe_indicator_count(
     std::function<void(std::size_t const &)> &&handler) {
-    if (auto const main = this->_weak_main.lock()) {
-        return main->observe_indicator_count(std::move(handler));
-    } else {
-        return observing::syncable{};
-    }
+    return this->_indicator_count->observe(std::move(handler));
 }
 
 std::shared_ptr<vu_ui_indicator_container_presenter> vu_ui_indicator_container_presenter::make_shared(

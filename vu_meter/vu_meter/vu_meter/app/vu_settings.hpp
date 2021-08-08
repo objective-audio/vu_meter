@@ -5,7 +5,6 @@
 #pragma once
 
 #include <observing/yas_observing_umbrella.h>
-#include <stdint.h>
 
 namespace yas::vu {
 struct settings {

@@ -13,8 +13,7 @@ ui_indicator_factory::ui_indicator_factory(std::shared_ptr<ui_indicator_resource
     : _resource(resource) {
 }
 
-std::shared_ptr<ui_indicator_container_indicator_interface> ui_indicator_factory::make_indicator(
-    std::size_t const idx) {
+std::shared_ptr<ui_indicator_interface> ui_indicator_factory::make_indicator(std::size_t const idx) {
     return ui_indicator::make_shared(this->_resource, idx);
 }
 

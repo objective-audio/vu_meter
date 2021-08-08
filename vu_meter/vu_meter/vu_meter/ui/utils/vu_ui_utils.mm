@@ -107,10 +107,7 @@ std::vector<ui::region> ui_utils::indicator_regions(std::size_t const count, ui:
     return regions;
 }
 
-ui::angle vu::ui_utils::meter_angle(float const in_value, float const reference, float const half_degrees) {
-    float const db_value = audio::math::decibel_from_linear(in_value);
-    float const value = audio::math::linear_from_decibel(db_value - reference);
-
+ui::angle vu::ui_utils::meter_angle(float const value, float const half_degrees) {
     static float const min = audio::math::linear_from_decibel(-20.0);
     static float const max = audio::math::linear_from_decibel(3.0);
     static float const min_to_max = max - min;

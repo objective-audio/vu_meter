@@ -8,17 +8,18 @@
 
 namespace yas::vu {
 class main;
+class indicator;
 
 struct ui_indicator_presenter final {
     ui::angle meter_angle() const;
     std::string ch_number_text() const;
 
-    static std::shared_ptr<ui_indicator_presenter> make_shared(std::shared_ptr<main> const &, std::size_t const idx);
+    static std::shared_ptr<ui_indicator_presenter> make_shared(std::size_t const idx);
 
    private:
-    std::weak_ptr<main> const _weak_main;
+    std::weak_ptr<indicator> const _weak_indicator;
     std::size_t const _idx;
 
-    ui_indicator_presenter(std::shared_ptr<main> const &, std::size_t const idx);
+    ui_indicator_presenter(std::shared_ptr<indicator> const &, std::size_t const idx);
 };
 }  // namespace yas::vu
