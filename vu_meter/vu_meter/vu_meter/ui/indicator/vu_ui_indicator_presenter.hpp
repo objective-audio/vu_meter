@@ -9,7 +9,7 @@
 namespace yas::vu {
 class main;
 
-struct ui_indicator_presenter {
+struct ui_indicator_presenter final {
     ui::angle meter_angle() const;
     std::string ch_number_text() const;
 

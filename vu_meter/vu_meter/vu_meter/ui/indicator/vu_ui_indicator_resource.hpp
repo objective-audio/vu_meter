@@ -8,7 +8,7 @@
 #include <ui/yas_ui_umbrella.h>
 
 namespace yas::vu {
-struct ui_indicator_resource {
+struct ui_indicator_resource final {
     void set_vu_height(float const);
 
     observing::value::holder_ptr<std::shared_ptr<ui::font_atlas>> const &font_atlas();
