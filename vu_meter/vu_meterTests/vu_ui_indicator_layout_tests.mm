@@ -3,7 +3,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "vu_ui_indicator_layout.hpp"
+#import "vu_ui_utils.hpp"
 
 using namespace yas;
 using namespace yas::vu;
@@ -23,7 +23,7 @@ using namespace yas::vu;
 }
 
 - (void)test_zero {
-    auto const regions = ui_indicator_layout::regions(0, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 50.0f}});
+    auto const regions = ui_utils::indicator_regions(0, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 50.0f}});
 
     XCTAssertEqual(regions.size(), 0);
 }
@@ -33,7 +33,7 @@ using namespace yas::vu;
     // |0|
     // ---
 
-    auto const regions = ui_indicator_layout::regions(1, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 50.0f}});
+    auto const regions = ui_utils::indicator_regions(1, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 50.0f}});
 
     XCTAssertEqual(regions.size(), 1);
 
@@ -48,7 +48,7 @@ using namespace yas::vu;
     // |0|1|
     // -----
 
-    auto const regions = ui_indicator_layout::regions(2, ui::region{.origin = {10.0f, 20.0f}, .size = {201.0f, 50.0f}});
+    auto const regions = ui_utils::indicator_regions(2, ui::region{.origin = {10.0f, 20.0f}, .size = {201.0f, 50.0f}});
 
     XCTAssertEqual(regions.size(), 2);
 
@@ -70,8 +70,7 @@ using namespace yas::vu;
     // |1|
     // ---
 
-    auto const regions =
-        ui_indicator_layout::regions(2, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 101.0f}});
+    auto const regions = ui_utils::indicator_regions(2, ui::region{.origin = {10.0f, 20.0f}, .size = {100.0f, 101.0f}});
 
     XCTAssertEqual(regions.size(), 2);
 
@@ -93,8 +92,7 @@ using namespace yas::vu;
     // |2|3|
     // -----
 
-    auto const regions =
-        ui_indicator_layout::regions(4, ui::region{.origin = {10.0f, 20.0f}, .size = {201.0f, 101.0f}});
+    auto const regions = ui_utils::indicator_regions(4, ui::region{.origin = {10.0f, 20.0f}, .size = {201.0f, 101.0f}});
 
     XCTAssertEqual(regions.size(), 4);
 

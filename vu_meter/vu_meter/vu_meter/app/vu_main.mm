@@ -60,7 +60,7 @@ double main::_sample_rate() {
 }
 
 void main::_update_indicator_count() {
-    this->indicator_count->set_value(this->_input_channel_count());
+    this->_indicator_count->set_value(this->_input_channel_count());
 }
 
 void main::_update_timeline() {
@@ -228,6 +228,18 @@ void main::_update_timeline() {
     }
 }
 
+void main::set_indicator_count(uint32_t const count) {
+    this->_indicator_count->set_value(count);
+}
+
+uint32_t main::indicator_count() const {
+    return this->_indicator_count->value();
+}
+
+observing::syncable main::observe_indicator_count(std::function<void(uint32_t const &)> &&handler) {
+    return this->_indicator_count->observe(std::move(handler));
+}
+
 void main::set_values(std::vector<float> &&values) {
     std::lock_guard<std::mutex> lock(_values_mutex);
     this->_values = std::move(values);
@@ -241,6 +253,6 @@ std::vector<float> main::values() {
     return values;
 }
 
-main_ptr_t main::make_shared() {
+std::shared_ptr<main> main::make_shared() {
     return std::shared_ptr<main>(new main{});
 }

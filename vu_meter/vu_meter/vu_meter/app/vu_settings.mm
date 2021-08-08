@@ -1,13 +1,12 @@
 //
-//  vu_data.mm
+//  vu_settings.mm
 //
 
-#include "vu_data.hpp"
+#include "vu_settings.hpp"
 #import <Foundation/Foundation.h>
 #include <cpp_utils/yas_cf_utils.h>
 #include <cpp_utils/yas_objc_ptr.h>
 #import "KVOObserver.h"
-#include "vu_types.h"
 
 using namespace yas;
 
@@ -18,7 +17,7 @@ static int32_t constexpr reference_max = 0;
 static int32_t constexpr reference_min = -30;
 }
 
-struct vu::data::impl {
+struct vu::settings::impl {
     observing::value::holder_ptr<int32_t> _reference = observing::value::holder<int32_t>::make_shared(0);
     observing::notifier_ptr<int32_t> _reference_setter = observing::notifier<int32_t>::make_shared();
 
@@ -59,13 +58,13 @@ struct vu::data::impl {
     }
 };
 
-vu::data::data() : _impl(std::make_unique<impl>()) {
+vu::settings::settings() : _impl(std::make_unique<impl>()) {
 }
 
-int32_t vu::data::reference() const {
+int32_t vu::settings::reference() const {
     return this->_impl->_reference->value();
 }
 
-vu::data_ptr vu::data::make_shared() {
-    return std::shared_ptr<vu::data>(new vu::data{});
+std::shared_ptr<vu::settings> vu::settings::make_shared() {
+    return std::shared_ptr<vu::settings>(new vu::settings{});
 }

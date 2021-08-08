@@ -9,22 +9,26 @@
 
 #include <mutex>
 
-#include "vu_data.hpp"
-#include "vu_types.h"
+#include "vu_settings.hpp"
 #include "vu_ui_main.hpp"
 
 namespace yas::vu {
 struct main {
-    vu::data_ptr const data = vu::data::make_shared();
-    observing::value::holder_ptr<uint32_t> const indicator_count =
-        observing::value::holder<uint32_t>::make_shared(uint32_t(0));
+    std::shared_ptr<settings> const settings = vu::settings::make_shared();
+
+    void set_indicator_count(uint32_t const);
+    uint32_t indicator_count() const;
+    observing::syncable observe_indicator_count(std::function<void(uint32_t const &)> &&);
 
     void set_values(std::vector<float> &&);
     std::vector<float> values();
 
-    static main_ptr_t make_shared();
+    static std::shared_ptr<main> make_shared();
 
    private:
+    observing::value::holder_ptr<uint32_t> const _indicator_count =
+        observing::value::holder<uint32_t>::make_shared(uint32_t(0));
+
     std::optional<audio::ios_device_ptr> _device = std::nullopt;
     audio::graph_ptr const _graph = audio::graph::make_shared();
     audio::graph_input_tap_ptr const _input_tap = audio::graph_input_tap::make_shared();

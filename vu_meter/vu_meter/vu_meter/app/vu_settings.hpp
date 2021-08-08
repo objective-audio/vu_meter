@@ -1,5 +1,5 @@
 //
-//  vu_data.hpp
+//  vu_settings.hpp
 //
 
 #pragma once
@@ -8,19 +8,16 @@
 #include <stdint.h>
 
 namespace yas::vu {
-class data;
-using data_ptr = std::shared_ptr<data>;
-
-struct data {
+struct settings {
     int32_t reference() const;
 
-    static data_ptr make_shared();
+    static std::shared_ptr<settings> make_shared();
 
    private:
     struct impl;
 
     std::unique_ptr<impl> _impl;
 
-    data();
+    settings();
 };
 }  // namespace yas::vu
