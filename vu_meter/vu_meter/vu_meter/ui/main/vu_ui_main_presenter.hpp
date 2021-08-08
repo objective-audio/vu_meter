@@ -11,5 +11,8 @@ struct ui_main_presenter final {
     ui::color const &background_color() const;
 
     static std::shared_ptr<ui_main_presenter> make_shared();
+
+   private:
+    ui_main_presenter();
 };
 }  // namespace yas::vu

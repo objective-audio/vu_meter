@@ -105,6 +105,9 @@
 		B616FC1926BF866F008B0F5A /* vu_ui_main_presenter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main_presenter.hpp; sourceTree = "<group>"; };
 		B616FC1F26BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_container_presenter.mm; sourceTree = "<group>"; };
 		B616FC2026BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_container_presenter.hpp; sourceTree = "<group>"; };
+		B616FC2226BFE416008B0F5A /* vu_ui_main_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_main_dependency.h; sourceTree = "<group>"; };
+		B616FC2326BFE50D008B0F5A /* vu_ui_indicator_container_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_indicator_container_dependency.h; sourceTree = "<group>"; };
+		B616FC2426BFF517008B0F5A /* vu_ui_indicator_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_indicator_dependency.h; sourceTree = "<group>"; };
 		B617CF622071AA320012B32A /* vu_ui_indicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator.mm; sourceTree = "<group>"; };
 		B617CF632071AA320012B32A /* vu_ui_indicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator.hpp; sourceTree = "<group>"; };
 		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
@@ -215,6 +218,7 @@
 			children = (
 				B616FC2026BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.hpp */,
 				B616FC1F26BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm */,
+				B616FC2326BFE50D008B0F5A /* vu_ui_indicator_container_dependency.h */,
 				B616FC1626BF70D4008B0F5A /* vu_ui_indicator_container.hpp */,
 				B616FC1526BF70D4008B0F5A /* vu_ui_indicator_container.mm */,
 			);
@@ -376,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				B692FC4026BE569700B8D573 /* vu_ui_indicator_constants.h */,
+				B616FC2426BFF517008B0F5A /* vu_ui_indicator_dependency.h */,
 				B692FC4826BEAA3F00B8D573 /* vu_ui_indicator_factory.hpp */,
 				B692FC4726BEAA3F00B8D573 /* vu_ui_indicator_factory.mm */,
 				B692FC3E26BE511900B8D573 /* vu_ui_indicator_presenter.hpp */,
@@ -391,10 +396,11 @@
 		B692FC4626BEAA0800B8D573 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				B616FC2226BFE416008B0F5A /* vu_ui_main_dependency.h */,
+				B616FC1926BF866F008B0F5A /* vu_ui_main_presenter.hpp */,
+				B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
-				B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */,
-				B616FC1926BF866F008B0F5A /* vu_ui_main_presenter.hpp */,
 			);
 			path = main;
 			sourceTree = "<group>";

@@ -3,6 +3,7 @@
 //
 
 #include "vu_ui_indicator_resource.hpp"
+#include "vu_app.h"
 #include "vu_ui_indicator_constants.h"
 
 using namespace yas;
@@ -55,11 +56,16 @@ void ui_indicator_resource::set_vu_height(float const height) {
     this->_impl->set_vu_height(height);
 }
 
-observing::value::holder_ptr<std::shared_ptr<ui::font_atlas>> const &ui_indicator_resource::font_atlas() {
-    return this->_impl->_font_atlas;
+std::shared_ptr<ui::font_atlas> const &ui_indicator_resource::font_atlas() const {
+    return this->_impl->_font_atlas->value();
 }
 
-std::shared_ptr<ui_indicator_resource> ui_indicator_resource::make_shared(
-    std::shared_ptr<ui::view_look> const &view_look) {
-    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{view_look});
+observing::syncable ui_indicator_resource::observe_font_atlas(
+    std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&handler) {
+    return this->_impl->_font_atlas->observe(std::move(handler));
+}
+
+std::shared_ptr<ui_indicator_resource> ui_indicator_resource::make_shared() {
+    auto const &app = vu::app::shared();
+    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{app->ui_standard->view_look()});
 }

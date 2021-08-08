@@ -7,6 +7,7 @@
 #include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
 
+#include "vu_app.h"
 #include "vu_ui_color.hpp"
 #include "vu_ui_indicator_constants.h"
 #include "vu_ui_utils.hpp"
@@ -20,7 +21,8 @@ struct ui_indicator::impl {
     std::shared_ptr<ui::node> const node = ui::node::make_shared();
     std::shared_ptr<ui::layout_region_guide> const frame_layout_guide = ui::layout_region_guide::make_shared();
 
-    impl(std::shared_ptr<ui::standard> const &standard, std::shared_ptr<ui_indicator_resource> const &resource,
+    impl(std::shared_ptr<ui::standard> const &standard,
+         std::shared_ptr<ui_indicator_resource_interface> const &resource,
          std::shared_ptr<ui_indicator_presenter> const &presenter)
         : _render_target(ui::render_target::make_shared(standard->view_look())),
           _resource(resource),
@@ -117,10 +119,11 @@ struct ui_indicator::impl {
 
         // indicator_resource
 
-        this->_resource_observer =
-            this->_resource->font_atlas()
-                ->observe([this](std::shared_ptr<ui::font_atlas> const &atlas) { this->_set_font_atlas(atlas); })
-                .sync();
+        this->_resource_observer = this->_resource
+                                       ->observe_font_atlas([this](std::shared_ptr<ui::font_atlas> const &atlas) {
+                                           this->_replace_font_atlas(atlas);
+                                       })
+                                       .sync();
 
         // layout_guide
         this->frame_layout_guide->observe([this](ui::region const &region) { this->_layout(region); })
@@ -177,7 +180,7 @@ struct ui_indicator::impl {
         }
     }
 
-    void _set_font_atlas(std::shared_ptr<ui::font_atlas> const &atlas) {
+    void _replace_font_atlas(std::shared_ptr<ui::font_atlas> const &atlas) {
         if (this->_ch_number) {
             this->_ch_number->rect_plane()->node()->remove_from_super_node();
             this->_ch_number = nullptr;
@@ -232,7 +235,7 @@ struct ui_indicator::impl {
 
    private:
     std::shared_ptr<ui::render_target> const _render_target;
-    std::shared_ptr<ui_indicator_resource> const _resource;
+    std::shared_ptr<ui_indicator_resource_interface> const _resource;
     std::shared_ptr<ui_indicator_presenter> const _presenter;
 
     std::shared_ptr<ui::node> const _batch_node = ui::node::make_shared();
@@ -256,7 +259,7 @@ struct ui_indicator::impl {
 #pragma mark - ui_indicator
 
 ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard,
-                           std::shared_ptr<ui_indicator_resource> const &resource,
+                           std::shared_ptr<ui_indicator_resource_interface> const &resource,
                            std::shared_ptr<ui_indicator_presenter> const &presenter)
     : _impl(std::make_unique<impl>(standard, resource, presenter)) {
 }
@@ -265,12 +268,13 @@ std::shared_ptr<ui::node> const &ui_indicator::node() {
     return this->_impl->node;
 }
 
-std::shared_ptr<ui::layout_region_guide> const &ui_indicator::frame_layout_guide_rect() {
-    return this->_impl->frame_layout_guide;
+void ui_indicator::set_region(ui::region const region) {
+    return this->_impl->frame_layout_guide->set_region(region);
 }
 
-ui_indicator_ptr ui_indicator::make_shared(std::shared_ptr<ui::standard> const &standard,
-                                           std::shared_ptr<ui_indicator_resource> const &resource,
-                                           std::shared_ptr<ui_indicator_presenter> const &presenter) {
-    return std::shared_ptr<ui_indicator>(new ui_indicator{standard, resource, presenter});
+std::shared_ptr<ui_indicator> ui_indicator::make_shared(
+    std::shared_ptr<ui_indicator_resource_interface> const &resource, std::size_t const idx) {
+    auto const &app = vu::app::shared();
+    auto const presenter = ui_indicator_presenter::make_shared(app->main, idx);
+    return std::shared_ptr<ui_indicator>(new ui_indicator{app->ui_standard, resource, presenter});
 }

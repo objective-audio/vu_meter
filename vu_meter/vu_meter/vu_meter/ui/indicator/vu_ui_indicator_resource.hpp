@@ -7,13 +7,18 @@
 #include <observing/yas_observing_umbrella.h>
 #include <ui/yas_ui_umbrella.h>
 
+#include "vu_ui_indicator_container_dependency.h"
+#include "vu_ui_indicator_dependency.h"
+
 namespace yas::vu {
-struct ui_indicator_resource final {
-    void set_vu_height(float const);
+struct ui_indicator_resource final : ui_indicator_container_indicator_resource_interface,
+                                     ui_indicator_resource_interface {
+    void set_vu_height(float const) override;
 
-    observing::value::holder_ptr<std::shared_ptr<ui::font_atlas>> const &font_atlas();
+    std::shared_ptr<ui::font_atlas> const &font_atlas() const override;
+    observing::syncable observe_font_atlas(std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) override;
 
-    static std::shared_ptr<ui_indicator_resource> make_shared(std::shared_ptr<ui::view_look> const &);
+    static std::shared_ptr<ui_indicator_resource> make_shared();
 
    private:
     class impl;

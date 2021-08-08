@@ -8,6 +8,9 @@
 using namespace yas;
 using namespace yas::vu;
 
+ui_main_presenter::ui_main_presenter() {
+}
+
 ui::color const &ui_main_presenter::background_color() const {
     return vu::base_color();
 }
