@@ -11,7 +11,7 @@ class ui_indicator;
 class ui_indicator_resource;
 class main;
 
-struct ui_main_indicator_factory {
+struct ui_main_indicator_factory final {
     std::shared_ptr<ui_indicator> make_indicator(std::size_t const idx);
 
     static std::shared_ptr<ui_main_indicator_factory> make_shared(std::shared_ptr<ui_indicator_resource> const &);
