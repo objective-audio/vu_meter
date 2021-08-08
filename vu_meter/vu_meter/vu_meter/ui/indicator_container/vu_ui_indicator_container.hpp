@@ -8,29 +8,27 @@
 #include <vector>
 
 #include "vu_ui_indicator.hpp"
-#include "vu_ui_main_factories.hpp"
+#include "vu_ui_indicator_container_presenter.hpp"
+#include "vu_ui_indicator_factory.hpp"
 
 namespace yas::vu {
 struct ui_indicator_container final {
     void set_frame(ui::region const);
 
-    static std::shared_ptr<ui_indicator_container> make_shared(std::shared_ptr<main> const &,
-                                                               std::shared_ptr<ui::node> const &,
-                                                               std::shared_ptr<ui_main_indicator_factory> const &,
-                                                               std::shared_ptr<ui_indicator_resource> const &);
+    static std::shared_ptr<ui_indicator_container> make_shared();
 
    private:
-    std::weak_ptr<main> const _weak_main;
+    std::shared_ptr<vu_ui_indicator_container_presenter> const _presenter;
     std::shared_ptr<ui::node> const _root_node;
     std::vector<ui_indicator_ptr> _indicators;
-    std::shared_ptr<ui_main_indicator_factory> const _factory;
+    std::shared_ptr<ui_indicator_factory> const _factory;
     std::shared_ptr<ui_indicator_resource> const _resource;
     std::shared_ptr<ui::layout_region_guide> const _frame_guide;
 
     observing::canceller_pool _pool;
 
-    ui_indicator_container(std::shared_ptr<main> const &, std::shared_ptr<ui::node> const &,
-                           std::shared_ptr<ui_main_indicator_factory> const &,
+    ui_indicator_container(std::shared_ptr<vu_ui_indicator_container_presenter> const &,
+                           std::shared_ptr<ui::node> const &, std::shared_ptr<ui_indicator_factory> const &,
                            std::shared_ptr<ui_indicator_resource> const &);
 
     void _update_indicator_regions();

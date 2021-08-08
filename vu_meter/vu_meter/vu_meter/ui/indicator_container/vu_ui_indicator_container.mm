@@ -3,22 +3,25 @@
 //
 
 #include "vu_ui_indicator_container.hpp"
+#include "vu_app.h"
 #include "vu_main.hpp"
+#include "vu_ui_indicator_resource.hpp"
 #include "vu_ui_utils.hpp"
 
 using namespace yas;
 using namespace yas::vu;
 
-ui_indicator_container::ui_indicator_container(std::shared_ptr<main> const &main,
+ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_container_presenter> const &presenter,
                                                std::shared_ptr<ui::node> const &root_node,
-                                               std::shared_ptr<ui_main_indicator_factory> const &factory,
+                                               std::shared_ptr<ui_indicator_factory> const &factory,
                                                std::shared_ptr<ui_indicator_resource> const &resource)
-    : _weak_main(main),
+    : _presenter(presenter),
       _root_node(root_node),
       _factory(factory),
       _resource(resource),
       _frame_guide(ui::layout_region_guide::make_shared()) {
-    main->observe_indicator_count([this](std::size_t const &value) {
+    presenter
+        ->observe_indicator_count([this](std::size_t const &value) {
             this->_resize_indicators(value);
             this->_update_indicator_regions();
         })
@@ -35,12 +38,7 @@ void ui_indicator_container::set_frame(ui::region const frame) {
 }
 
 void ui_indicator_container::_update_indicator_regions() {
-    auto const main = this->_weak_main.lock();
-    if (!main) {
-        return;
-    }
-
-    auto const count = main->indicator_count();
+    auto const count = this->_presenter->indicator_count();
     auto const frame = this->_frame_guide->region();
     auto const regions = ui_utils::indicator_regions(count, frame);
 
@@ -88,8 +86,14 @@ void ui_indicator_container::_remove_last_indicator() {
     this->_indicators.pop_back();
 }
 
-std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared(
-    std::shared_ptr<main> const &main, std::shared_ptr<ui::node> const &root_node,
-    std::shared_ptr<ui_main_indicator_factory> const &factory, std::shared_ptr<ui_indicator_resource> const &resource) {
-    return std::shared_ptr<ui_indicator_container>(new ui_indicator_container{main, root_node, factory, resource});
+std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared() {
+    auto const &app = vu::app::shared();
+    auto const &root_node = app->ui_standard->root_node();
+    auto const &view_look = app->ui_standard->view_look();
+
+    auto const resource = ui_indicator_resource::make_shared(view_look);
+    auto const factory = ui_indicator_factory::make_shared(resource);
+    auto const presenter = vu_ui_indicator_container_presenter::make_shared(app->main);
+
+    return std::shared_ptr<ui_indicator_container>(new ui_indicator_container{presenter, root_node, factory, resource});
 }
