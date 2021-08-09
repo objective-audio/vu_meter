@@ -7,6 +7,8 @@
 #include <audio/yas_audio_umbrella.h>
 #include <observing/yas_observing_umbrella.h>
 
+#include "vu_audio_types.h"
+
 namespace yas::vu {
 class settings;
 class indicator;
@@ -26,15 +28,15 @@ struct main {
     audio::graph_ptr const _graph = audio::graph::make_shared();
     audio::graph_input_tap_ptr const _input_tap = audio::graph_input_tap::make_shared();
 
-    uint32_t _input_channel_count();
-    double _sample_rate();
+    audio_format _format() const;
+    uint32_t _input_channel_count() const;
+    double _sample_rate() const;
     void _update_indicators();
     void _update_timeline();
 
     observing::canceller_pool _pool;
 
-    std::size_t _last_ch_count = 0;
-    double _last_sample_rate = 0.0;
+    audio_format _last_format;
 
     main();
 };

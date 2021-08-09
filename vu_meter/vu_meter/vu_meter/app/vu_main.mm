@@ -51,14 +51,18 @@ observing::syncable main::observe_indicators(
     return this->_indicators->observe(std::move(handler));
 }
 
-uint32_t main::_input_channel_count() {
+audio_format main::_format() const {
+    return audio_format{.channel_count = this->_input_channel_count(), .sample_rate = this->_sample_rate()};
+}
+
+uint32_t main::_input_channel_count() const {
     if (auto const &device = this->_device) {
         return device.value()->input_channel_count();
     }
     return 0;
 }
 
-double main::_sample_rate() {
+double main::_sample_rate() const {
     if (auto const &device = this->_device) {
         if (auto const &format = device.value()->input_format()) {
             return format.value().sample_rate();
@@ -68,7 +72,7 @@ double main::_sample_rate() {
 }
 
 void main::_update_indicators() {
-    auto const ch_count = this->_input_channel_count();
+    auto const ch_count = this->_format().channel_count;
     auto const prev_count = this->_indicators->value().size();
 
     if (ch_count < prev_count) {
@@ -89,24 +93,25 @@ void main::_update_indicators() {
 }
 
 void main::_update_timeline() {
-    auto const ch_count = this->_indicators->value().size();
-    double const sample_rate = this->_sample_rate();
+    auto const current_format = this->_format();
 
-    if (this->_last_ch_count == ch_count && this->_last_sample_rate == sample_rate) {
+    if (this->_last_format == current_format) {
         return;
     }
 
     this->_graph->stop();
     this->_graph->disconnect_input(this->_input_tap->node);
 
-    this->_last_ch_count = ch_count;
-    this->_last_sample_rate = sample_rate;
+    this->_last_format = current_format;
 
-    if (ch_count == 0) {
+    if (current_format.channel_count == 0) {
         return;
     }
 
-    audio::format const format{{.sample_rate = sample_rate, .channel_count = static_cast<uint32_t>(ch_count)}};
+    auto const ch_count = current_format.channel_count;
+
+    audio::format const format{{.sample_rate = current_format.sample_rate,
+                                .channel_count = static_cast<uint32_t>(current_format.channel_count)}};
     this->_graph->connect(this->_graph->io().value()->input_node, this->_input_tap->node, format);
 
     struct context_t {
@@ -122,7 +127,7 @@ void main::_update_timeline() {
     proc::timeline_ptr timeline = proc::timeline::make_shared();
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
-    proc::channel_index_t const pow_ch = ch_count;
+    proc::channel_index_t const pow_ch = current_format.channel_count;
 
     /// インプットを受け付けるトラック
     if (auto each = make_fast_each(ch_count); true) {
