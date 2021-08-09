@@ -7,10 +7,18 @@
 using namespace yas;
 using namespace yas::vu;
 
-app::app() {
+namespace yas::vu::global {
+static std::shared_ptr<app> _app;
+}
+
+void app_setup::setup(std::shared_ptr<ui::standard> const &standard) {
+    global::_app = std::shared_ptr<app>(new app{standard});
+    global::_app->_ui_main = ui_main::make_shared();
+}
+
+app::app(std::shared_ptr<ui::standard> const &standard) : ui_standard(standard) {
 }
 
 std::shared_ptr<app> app::shared() {
-    static auto const _app = std::shared_ptr<app>(new app{});
-    return _app;
+    return global::_app;
 }

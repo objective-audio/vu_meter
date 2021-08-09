@@ -21,12 +21,11 @@ using namespace yas::vu;
         return;
     }
 
-    auto const &app = vu::app::shared();
-
     auto const metal_system = ui::metal_system::make_shared(
         objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
-    app->ui_standard = ui::standard::make_shared([self view_look], metal_system);
-    app->ui_main = vu::ui_main::make_shared();
+    app_setup::setup(ui::standard::make_shared([self view_look], metal_system));
+
+    auto const &app = vu::app::shared();
 
     [self configure_with_metal_system:metal_system
                              renderer:app->ui_standard->renderer()
