@@ -3,19 +3,22 @@
 //
 
 #include "vu_main.hpp"
+#import <AVFoundation/AVFoundation.h>
 #include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
 #include <iostream>
 #include <limits>
+#include "vu_indicator.hpp"
 #include "vu_send_module.hpp"
+#include "vu_settings.hpp"
 #include "vu_sum_module.hpp"
-
-#import <AVFoundation/AVFoundation.h>
 
 using namespace yas;
 using namespace yas::vu;
 
-main::main() {
+main::main()
+    : _settings(vu::settings::make_shared()),
+      _indicators(observing::value::holder<std::vector<std::shared_ptr<indicator>>>::make_shared({})) {
     yas_audio_set_log_enabled(true);
 
     auto const &session = audio::ios_session::shared();
@@ -31,16 +34,21 @@ main::main() {
 
     this->_graph->add_io(this->_device);
 
-    this->_update_timeline();
-    this->_update_indicator_count();
+    this->_update_indicators();
 
     this->_device.value()
-        ->observe_io_device([this](auto const &) {
-            this->_update_timeline();
-            this->_update_indicator_count();
-        })
+        ->observe_io_device([this](auto const &) { this->_update_indicators(); })
         .end()
         ->add_to(this->_pool);
+}
+
+std::vector<std::shared_ptr<indicator>> const &main::indicators() const {
+    return this->_indicators->value();
+}
+
+observing::syncable main::observe_indicators(
+    std::function<void(std::vector<std::shared_ptr<indicator>> const &)> &&handler) {
+    return this->_indicators->observe(std::move(handler));
 }
 
 uint32_t main::_input_channel_count() {
@@ -59,12 +67,29 @@ double main::_sample_rate() {
     return 0;
 }
 
-void main::_update_indicator_count() {
-    this->_indicator_count->set_value(this->_input_channel_count());
+void main::_update_indicators() {
+    auto const ch_count = this->_input_channel_count();
+    auto const prev_count = this->_indicators->value().size();
+
+    if (ch_count < prev_count) {
+        auto indicators = this->_indicators->value();
+        indicators.resize(ch_count);
+        this->_indicators->set_value(std::move(indicators));
+    } else if (ch_count > prev_count) {
+        auto const diff_count = ch_count - prev_count;
+        auto indicators = this->_indicators->value();
+        auto each = make_fast_each(diff_count);
+        while (yas_each_next(each)) {
+            indicators.emplace_back(indicator::make_shared(this->_settings));
+        }
+        this->_indicators->set_value(std::move(indicators));
+    }
+
+    this->_update_timeline();
 }
 
 void main::_update_timeline() {
-    uint32_t const ch_count = this->_input_channel_count();
+    auto const ch_count = this->_indicators->value().size();
     double const sample_rate = this->_sample_rate();
 
     if (this->_last_ch_count == ch_count && this->_last_sample_rate == sample_rate) {
@@ -81,7 +106,7 @@ void main::_update_timeline() {
         return;
     }
 
-    audio::format format{{.sample_rate = sample_rate, .channel_count = ch_count}};
+    audio::format const format{{.sample_rate = sample_rate, .channel_count = static_cast<uint32_t>(ch_count)}};
     this->_graph->connect(this->_graph->io().value()->input_node, this->_input_tap->node, format);
 
     struct context_t {
@@ -189,7 +214,7 @@ void main::_update_timeline() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->_input_tap->set_render_handler([context, timeline, ch_count, this, values = std::vector<float>()](
+    this->_input_tap->set_render_handler([context, timeline, indicators = this->_indicators->value()](
                                              audio::node_input_render_args const &args) mutable {
         proc::length_t const length = args.buffer->frame_length();
         context->buffer = args.buffer;
@@ -200,25 +225,27 @@ void main::_update_timeline() {
 
         timeline->process(time_range, stream);
 
-        values.clear();
-
-        if (auto each = make_fast_each(ch_count); true) {
+        if (auto each = make_fast_each(indicators.size()); true) {
             while (yas_each_next(each)) {
                 std::size_t const &ch = yas_each_index(each);
+
+                float value = 0.0f;
 
                 if (stream.has_channel(ch)) {
                     auto const &channel = stream.channel(ch);
                     auto events = channel.filtered_events<float, proc::signal_event>();
                     for (auto const &event_pair : events) {
                         auto const &event = event_pair.second;
-
-                        values.push_back(event->vector<float>().at(ch));
+                        auto const &vector = event->vector<float>();
+                        if (!vector.empty()) {
+                            value = vector.at(0);
+                        }
                     }
                 }
+
+                indicators.at(ch)->set_raw_value(value);
             }
         }
-
-        this->set_values(std::move(values));
 
         context->reset_buffer();
     });
@@ -226,31 +253,6 @@ void main::_update_timeline() {
     if (auto result = this->_graph->start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
     }
-}
-
-void main::set_indicator_count(uint32_t const count) {
-    this->_indicator_count->set_value(count);
-}
-
-uint32_t main::indicator_count() const {
-    return this->_indicator_count->value();
-}
-
-observing::syncable main::observe_indicator_count(std::function<void(uint32_t const &)> &&handler) {
-    return this->_indicator_count->observe(std::move(handler));
-}
-
-void main::set_values(std::vector<float> &&values) {
-    std::lock_guard<std::mutex> lock(_values_mutex);
-    this->_values = std::move(values);
-}
-
-std::vector<float> main::values() {
-    std::vector<float> values;
-    if (std::lock_guard<std::mutex> lock(_values_mutex); true) {
-        values = this->_values;
-    }
-    return values;
 }
 
 std::shared_ptr<main> main::make_shared() {

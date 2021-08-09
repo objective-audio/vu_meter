@@ -5,6 +5,7 @@
 #pragma once
 
 #include "vu_main.hpp"
+#include "vu_ui_main.hpp"
 
 namespace yas::vu {
 struct app {
