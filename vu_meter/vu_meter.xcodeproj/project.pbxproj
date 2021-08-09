@@ -165,6 +165,7 @@
 		B6B09C69220885D100B483BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B6B09C6B220885E100B483BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_layout_tests.mm; sourceTree = "<group>"; };
+		B6D9FBC726C0D09C002F6E97 /* vu_audio_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_audio_types.h; sourceTree = "<group>"; };
 		B6E2CC2A2207177300717FA9 /* audio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = audio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC2C2207177300717FA9 /* chaining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = chaining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC2E2207177300717FA9 /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,6 +361,7 @@
 				B62B5215205E1A0A00A300E5 /* main.m */,
 				B692FC3C26BE491300B8D573 /* vu_app.h */,
 				B692FC4A26BEC08700B8D573 /* vu_app.mm */,
+				B6D9FBC726C0D09C002F6E97 /* vu_audio_types.h */,
 				B60BE0CC26C020B4001028E5 /* vu_indicator.cpp */,
 				B60BE0CD26C020B4001028E5 /* vu_indicator.hpp */,
 				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
