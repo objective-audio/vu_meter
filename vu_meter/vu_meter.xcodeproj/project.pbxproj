@@ -44,6 +44,7 @@
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
 		B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
+		B6E6666826C2C19D002AFC6B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6666726C2C19D002AFC6B /* SceneDelegate.m */; };
 		B6EDB4B1262453F1002DB62C /* audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; };
 		B6EDB4B2262453F1002DB62C /* audio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6EDB4B3262453F1002DB62C /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2E2207177300717FA9 /* cpp_utils.framework */; };
@@ -172,6 +173,8 @@
 		B6E2CC302207177300717FA9 /* objc_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = objc_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC322207177300717FA9 /* processing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = processing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E2CC342207177300717FA9 /* ui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6E6666626C2C19D002AFC6B /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		B6E6666726C2C19D002AFC6B /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		B6EDB4B0262453F1002DB62C /* observing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = observing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EDB4D126247E15002DB62C /* audio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = audio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6EDB4D326247E15002DB62C /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -356,6 +359,8 @@
 			children = (
 				B62B5206205E1A0A00A300E5 /* AppDelegate.h */,
 				B62B5207205E1A0A00A300E5 /* AppDelegate.mm */,
+				B6E6666626C2C19D002AFC6B /* SceneDelegate.h */,
+				B6E6666726C2C19D002AFC6B /* SceneDelegate.m */,
 				B6034C4123E314470077E832 /* KVOObserver.h */,
 				B6034C4223E314470077E832 /* KVOObserver.m */,
 				B62B5215205E1A0A00A300E5 /* main.m */,
@@ -545,6 +550,7 @@
 				B675644F206B21FA00944F8E /* vu_settings.mm in Sources */,
 				B616FC1726BF70D4008B0F5A /* vu_ui_indicator_container.mm in Sources */,
 				B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */,
+				B6E6666826C2C19D002AFC6B /* SceneDelegate.m in Sources */,
 				B692FC4326BE5E1A00B8D573 /* vu_ui_indicator_resource.mm in Sources */,
 				B616FC2126BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm in Sources */,
 				B616FC1A26BF866F008B0F5A /* vu_ui_main_presenter.mm in Sources */,
