@@ -17,7 +17,6 @@
 		B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B617CF622071AA320012B32A /* vu_ui_indicator.mm */; };
 		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
-		B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B520C205E1A0A00A300E5 /* Main.storyboard */; };
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
 		B62B5216205E1A0A00A300E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B5215205E1A0A00A300E5 /* main.m */; };
@@ -119,7 +118,6 @@
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B5206205E1A0A00A300E5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B62B5207205E1A0A00A300E5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		B62B520D205E1A0A00A300E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B62B520F205E1A0A00A300E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B62B5212205E1A0A00A300E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B62B5214205E1A0A00A300E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -309,7 +307,6 @@
 				B675645B206F432D00944F8E /* app */,
 				B6756459206F430500944F8E /* processing */,
 				B6756458206F42F700944F8E /* ui */,
-				B62B520C205E1A0A00A300E5 /* Main.storyboard */,
 				B62B520F205E1A0A00A300E5 /* Assets.xcassets */,
 				B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */,
 				B62B5214205E1A0A00A300E5 /* Info.plist */,
@@ -505,7 +502,6 @@
 				B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */,
 				B6FF26DF23E1B79B00E38ED3 /* Settings.bundle in Resources */,
 				B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */,
-				B62B520E205E1A0A00A300E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,14 +585,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B62B520C205E1A0A00A300E5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B62B520D205E1A0A00A300E5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
