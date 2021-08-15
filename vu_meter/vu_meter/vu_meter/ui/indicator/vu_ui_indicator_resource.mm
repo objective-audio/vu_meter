@@ -67,5 +67,5 @@ observing::syncable ui_indicator_resource::observe_font_atlas(
 
 std::shared_ptr<ui_indicator_resource> ui_indicator_resource::make_shared() {
     auto const &app = vu::app::shared();
-    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{app->ui_standard->view_look()});
+    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{app->ui_standard()->view_look()});
 }

@@ -11,12 +11,19 @@ namespace yas::vu::global {
 static std::shared_ptr<app> _app;
 }
 
-void app_setup::setup(std::shared_ptr<ui::standard> const &standard) {
-    global::_app = std::shared_ptr<app>(new app{standard});
-    global::_app->_ui_main = ui_main::make_shared();
+void app_setup::setup() {
+    global::_app = std::shared_ptr<app>(new app{});
 }
 
-app::app(std::shared_ptr<ui::standard> const &standard) : main(main::make_shared()), ui_standard(standard) {
+void app::set_ui_standard(std::shared_ptr<ui::standard> const &ui_standard) {
+    this->_ui_standard = ui_standard;
+}
+
+app::app() : main(main::make_shared()) {
+}
+
+std::shared_ptr<ui::standard> const &app::ui_standard() const {
+    return this->_ui_standard;
 }
 
 std::shared_ptr<app> app::shared() {

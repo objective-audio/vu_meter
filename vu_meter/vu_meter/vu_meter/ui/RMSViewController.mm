@@ -12,7 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 using namespace yas;
 using namespace yas::vu;
 
-@implementation RMSViewController
+namespace yas::vu {
+struct view_controller_cpp {
+    std::shared_ptr<ui_main> ui_main = nullptr;
+};
+}
+
+@implementation RMSViewController {
+    view_controller_cpp _cpp;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,13 +31,14 @@ using namespace yas::vu;
 
     auto const metal_system = ui::metal_system::make_shared(
         objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
-    app_setup::setup(ui::standard::make_shared([self view_look], metal_system));
+    auto const ui_standard = ui::standard::make_shared([self view_look], metal_system);
+    vu::app::shared()->set_ui_standard(ui_standard);
 
-    auto const &app = vu::app::shared();
+    self->_cpp.ui_main = ui_main::make_shared();
 
     [self configure_with_metal_system:metal_system
-                             renderer:app->ui_standard->renderer()
-                        event_manager:app->ui_standard->event_manager()];
+                             renderer:ui_standard->renderer()
+                        event_manager:ui_standard->event_manager()];
 }
 
 @end
