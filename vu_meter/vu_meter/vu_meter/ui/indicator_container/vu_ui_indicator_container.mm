@@ -11,10 +11,10 @@
 using namespace yas;
 using namespace yas::vu;
 
-ui_indicator_container::ui_indicator_container(
-    std::shared_ptr<vu_ui_indicator_container_presenter> const &presenter, std::shared_ptr<ui::node> const &root_node,
-    std::shared_ptr<ui_indicator_factory> const &factory,
-    std::shared_ptr<ui_updatable_indicator_resource_interface> const &resource)
+ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_container_presenter> const &presenter,
+                                               std::shared_ptr<ui::node> const &root_node,
+                                               std::shared_ptr<ui_indicator_factory> const &factory,
+                                               std::shared_ptr<ui_indicator_resource_for_container> const &resource)
     : _presenter(presenter),
       _root_node(root_node),
       _factory(factory),

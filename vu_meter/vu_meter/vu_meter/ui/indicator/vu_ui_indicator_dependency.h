@@ -7,8 +7,8 @@
 #include <ui/yas_ui_umbrella.h>
 
 namespace yas::vu {
-struct ui_observable_indicator_resource_interface {
-    virtual ~ui_observable_indicator_resource_interface() = default;
+struct ui_indicator_resource_for_indicator {
+    virtual ~ui_indicator_resource_for_indicator() = default;
 
     virtual std::shared_ptr<ui::font_atlas> const &font_atlas() const = 0;
     virtual observing::syncable observe_font_atlas(std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) = 0;
