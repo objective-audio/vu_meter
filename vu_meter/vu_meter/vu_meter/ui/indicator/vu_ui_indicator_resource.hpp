@@ -11,8 +11,7 @@
 #include "vu_ui_indicator_dependency.h"
 
 namespace yas::vu {
-struct ui_indicator_resource final : ui_updatable_indicator_resource_interface,
-                                     ui_observable_indicator_resource_interface {
+struct ui_indicator_resource final : ui_indicator_resource_for_container, ui_indicator_resource_for_indicator {
     void set_vu_height(float const) override;
 
     std::shared_ptr<ui::font_atlas> const &font_atlas() const override;

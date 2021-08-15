@@ -13,7 +13,7 @@ struct app_setup {
 };
 
 struct app {
-    std::shared_ptr<main> const main = main::make_shared();
+    std::shared_ptr<main> const main;
     std::shared_ptr<ui::standard> const ui_standard;
 
     static std::shared_ptr<app> shared();

@@ -16,7 +16,7 @@ void app_setup::setup(std::shared_ptr<ui::standard> const &standard) {
     global::_app->_ui_main = ui_main::make_shared();
 }
 
-app::app(std::shared_ptr<ui::standard> const &standard) : ui_standard(standard) {
+app::app(std::shared_ptr<ui::standard> const &standard) : main(main::make_shared()), ui_standard(standard) {
 }
 
 std::shared_ptr<app> app::shared() {

@@ -22,7 +22,7 @@ struct ui_indicator::impl {
     std::shared_ptr<ui::layout_region_guide> const frame_layout_guide = ui::layout_region_guide::make_shared();
 
     impl(std::shared_ptr<ui::standard> const &standard,
-         std::shared_ptr<ui_observable_indicator_resource_interface> const &resource,
+         std::shared_ptr<ui_indicator_resource_for_indicator> const &resource,
          std::shared_ptr<ui_indicator_presenter> const &presenter)
         : _render_target(ui::render_target::make_shared(standard->view_look())),
           _resource(resource),
@@ -235,7 +235,7 @@ struct ui_indicator::impl {
 
    private:
     std::shared_ptr<ui::render_target> const _render_target;
-    std::shared_ptr<ui_observable_indicator_resource_interface> const _resource;
+    std::shared_ptr<ui_indicator_resource_for_indicator> const _resource;
     std::shared_ptr<ui_indicator_presenter> const _presenter;
 
     std::shared_ptr<ui::node> const _batch_node = ui::node::make_shared();
@@ -259,7 +259,7 @@ struct ui_indicator::impl {
 #pragma mark - ui_indicator
 
 ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard,
-                           std::shared_ptr<ui_observable_indicator_resource_interface> const &resource,
+                           std::shared_ptr<ui_indicator_resource_for_indicator> const &resource,
                            std::shared_ptr<ui_indicator_presenter> const &presenter)
     : _impl(std::make_unique<impl>(standard, resource, presenter)) {
 }
@@ -273,7 +273,7 @@ void ui_indicator::set_region(ui::region const region) {
 }
 
 std::shared_ptr<ui_indicator> ui_indicator::make_shared(
-    std::shared_ptr<ui_observable_indicator_resource_interface> const &resource, std::size_t const idx) {
+    std::shared_ptr<ui_indicator_resource_for_indicator> const &resource, std::size_t const idx) {
     auto const &app = vu::app::shared();
     auto const presenter = ui_indicator_presenter::make_shared(idx);
     return std::shared_ptr<ui_indicator>(new ui_indicator{app->ui_standard, resource, presenter});
