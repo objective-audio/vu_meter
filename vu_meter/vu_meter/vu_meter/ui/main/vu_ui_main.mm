@@ -18,7 +18,7 @@ static float constexpr padding = 4.0f;
 }
 
 ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look,
-                 std::shared_ptr<ui_indicator_container_for_main> const &container,
+                 std::shared_ptr<ui_indicator_container_for_ui_main> const &container,
                  std::shared_ptr<ui_main_presenter> const &presenter)
     : _indicator_container(container), _presenter(presenter) {
     view_look->background()->set_color(presenter->background_color());
@@ -35,7 +35,7 @@ ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look,
 
 std::shared_ptr<ui_main> vu::ui_main::make_shared() {
     auto const &app = vu::app::shared();
-    auto const &view_look = app->ui_standard->view_look();
+    auto const &view_look = app->ui_standard()->view_look();
 
     auto const container = ui_indicator_container::make_shared();
     auto const presenter = ui_main_presenter::make_shared();

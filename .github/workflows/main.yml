@@ -26,4 +26,4 @@ jobs:
 
     - name: Run tests
       run:
-        xcodebuild -workspace vu_meter.xcworkspace -scheme vu_meter -configuration Debug OBJROOT=build -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8' clean test
+        xcodebuild -workspace vu_meter.xcworkspace -scheme vu_meter -configuration Debug OBJROOT=build -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' clean test

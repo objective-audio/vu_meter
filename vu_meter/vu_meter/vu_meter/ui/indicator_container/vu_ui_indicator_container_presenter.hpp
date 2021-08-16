@@ -15,10 +15,9 @@ struct vu_ui_indicator_container_presenter final {
     std::size_t indicator_count() const;
     observing::syncable observe_indicator_count(std::function<void(std::size_t const &)> &&);
 
-    static std::shared_ptr<vu_ui_indicator_container_presenter> make_shared(std::shared_ptr<main> const &);
+    static std::shared_ptr<vu_ui_indicator_container_presenter> make_shared();
 
    private:
-    std::weak_ptr<main> const _weak_main;
     observing::value::holder_ptr<std::size_t> const _indicator_count;
     observing::canceller_pool _pool;
 

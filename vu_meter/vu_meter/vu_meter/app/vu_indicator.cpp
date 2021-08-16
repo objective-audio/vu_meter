@@ -11,7 +11,7 @@
 using namespace yas;
 using namespace yas::vu;
 
-indicator::indicator(std::shared_ptr<settings> const &settings) : _weak_settings(settings) {
+indicator::indicator(std::shared_ptr<settings_for_indicator> const &settings) : _weak_settings(settings) {
 }
 
 void indicator::set_raw_value(float const value) {
@@ -27,6 +27,6 @@ float indicator::value() const {
     }
 }
 
-std::shared_ptr<indicator> indicator::make_shared(std::shared_ptr<settings> const &settings) {
+std::shared_ptr<indicator> indicator::make_shared(std::shared_ptr<settings_for_indicator> const &settings) {
     return std::shared_ptr<indicator>(new indicator{settings});
 }

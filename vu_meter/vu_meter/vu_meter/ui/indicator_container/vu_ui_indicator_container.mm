@@ -13,7 +13,7 @@ using namespace yas::vu;
 
 ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_container_presenter> const &presenter,
                                                std::shared_ptr<ui::node> const &root_node,
-                                               std::shared_ptr<ui_indicator_factory> const &factory,
+                                               std::shared_ptr<ui_indicator_factory_for_container> const &factory,
                                                std::shared_ptr<ui_indicator_resource_for_container> const &resource)
     : _presenter(presenter),
       _root_node(root_node),
@@ -89,11 +89,11 @@ void ui_indicator_container::_remove_last_indicator() {
 
 std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared() {
     auto const &app = vu::app::shared();
-    auto const &root_node = app->ui_standard->root_node();
+    auto const &root_node = app->ui_standard()->root_node();
 
     auto const resource = ui_indicator_resource::make_shared();
     auto const factory = ui_indicator_factory::make_shared(resource);
-    auto const presenter = vu_ui_indicator_container_presenter::make_shared(app->main);
+    auto const presenter = vu_ui_indicator_container_presenter::make_shared();
 
     return std::shared_ptr<ui_indicator_container>(new ui_indicator_container{presenter, root_node, factory, resource});
 }

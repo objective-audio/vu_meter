@@ -276,5 +276,5 @@ std::shared_ptr<ui_indicator> ui_indicator::make_shared(
     std::shared_ptr<ui_indicator_resource_for_indicator> const &resource, std::size_t const idx) {
     auto const &app = vu::app::shared();
     auto const presenter = ui_indicator_presenter::make_shared(idx);
-    return std::shared_ptr<ui_indicator>(new ui_indicator{app->ui_standard, resource, presenter});
+    return std::shared_ptr<ui_indicator>(new ui_indicator{app->ui_standard(), resource, presenter});
 }
