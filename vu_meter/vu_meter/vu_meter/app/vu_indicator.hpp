@@ -14,9 +14,9 @@ class settings;
 
 struct indicator final {
     void set_raw_value(float const);
-    float value() const;
+    [[nodiscard]] float value() const;
 
-    static std::shared_ptr<indicator> make_shared(std::shared_ptr<settings_for_indicator> const &);
+    [[nodiscard]] static std::shared_ptr<indicator> make_shared(std::shared_ptr<settings_for_indicator> const &);
 
    private:
     std::weak_ptr<settings_for_indicator> _weak_settings;

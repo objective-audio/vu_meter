@@ -10,9 +10,9 @@
 
 namespace yas::vu {
 struct settings final : settings_for_indicator {
-    int32_t reference() const override;
+    [[nodiscard]] int32_t reference() const override;
 
-    static std::shared_ptr<settings> make_shared();
+    [[nodiscard]] static std::shared_ptr<settings> make_shared();
 
    private:
     struct impl;

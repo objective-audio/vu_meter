@@ -17,7 +17,7 @@ namespace yas::vu {
 struct ui_indicator_container final : ui_indicator_container_for_ui_main {
     void set_frame(ui::region const) override;
 
-    static std::shared_ptr<ui_indicator_container> make_shared();
+    [[nodiscard]] static std::shared_ptr<ui_indicator_container> make_shared();
 
    private:
     std::shared_ptr<vu_ui_indicator_container_presenter> const _presenter;

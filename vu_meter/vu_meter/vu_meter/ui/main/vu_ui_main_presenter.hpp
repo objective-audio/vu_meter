@@ -8,9 +8,9 @@
 
 namespace yas::vu {
 struct ui_main_presenter final {
-    ui::color const &background_color() const;
+    [[nodiscard]] ui::color const &background_color() const;
 
-    static std::shared_ptr<ui_main_presenter> make_shared();
+    [[nodiscard]] static std::shared_ptr<ui_main_presenter> make_shared();
 
    private:
     ui_main_presenter();

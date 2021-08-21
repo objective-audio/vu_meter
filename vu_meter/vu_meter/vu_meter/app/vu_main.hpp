@@ -14,10 +14,11 @@ class settings;
 class indicator;
 
 struct main {
-    std::vector<std::shared_ptr<indicator>> const &indicators() const;
-    observing::syncable observe_indicators(std::function<void(std::vector<std::shared_ptr<indicator>> const &)> &&);
+    [[nodiscard]] std::vector<std::shared_ptr<indicator>> const &indicators() const;
+    [[nodiscard]] observing::syncable observe_indicators(
+        std::function<void(std::vector<std::shared_ptr<indicator>> const &)> &&);
 
-    static std::shared_ptr<main> make_shared();
+    [[nodiscard]] static std::shared_ptr<main> make_shared();
 
    private:
     std::shared_ptr<settings> const _settings;

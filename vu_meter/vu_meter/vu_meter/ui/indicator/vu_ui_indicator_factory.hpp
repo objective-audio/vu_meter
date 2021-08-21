@@ -14,9 +14,10 @@ class ui_indicator_resource;
 class main;
 
 struct ui_indicator_factory final : ui_indicator_factory_for_container {
-    std::shared_ptr<ui_indicator_for_container> make_indicator(std::size_t const idx) override;
+    [[nodiscard]] std::shared_ptr<ui_indicator_for_container> make_indicator(std::size_t const idx) override;
 
-    static std::shared_ptr<ui_indicator_factory> make_shared(std::shared_ptr<ui_indicator_resource> const &);
+    [[nodiscard]] static std::shared_ptr<ui_indicator_factory> make_shared(
+        std::shared_ptr<ui_indicator_resource> const &);
 
    private:
     std::shared_ptr<ui_indicator_resource> const _resource;
