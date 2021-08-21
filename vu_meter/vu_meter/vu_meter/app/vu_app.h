@@ -24,7 +24,7 @@ struct app {
    private:
     std::shared_ptr<ui::standard> _ui_standard;
 
-    app();
+    app(std::shared_ptr<vu::main> const &);
 
     friend app_setup;
 };
