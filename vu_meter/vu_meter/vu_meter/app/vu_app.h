@@ -16,9 +16,10 @@ struct app {
     std::shared_ptr<main> const main;
 
     void set_ui_standard(std::shared_ptr<ui::standard> const &);
-    std::shared_ptr<ui::standard> const &ui_standard() const;
+    [[nodiscard]] std::shared_ptr<ui::standard> const &ui_standard() const;
 
-    static std::shared_ptr<app> global();
+    [[nodiscard]] static std::shared_ptr<app> make_shared();
+    [[nodiscard]] static std::shared_ptr<app> global();
 
    private:
     std::shared_ptr<ui::standard> _ui_standard;

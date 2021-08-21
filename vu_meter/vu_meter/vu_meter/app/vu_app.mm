@@ -12,7 +12,7 @@ static std::shared_ptr<app> _app;
 }
 
 void app_setup::setup_global() {
-    global::_app = std::shared_ptr<app>(new app{});
+    global::_app = app::make_shared();
 }
 
 void app::set_ui_standard(std::shared_ptr<ui::standard> const &ui_standard) {
@@ -24,6 +24,10 @@ app::app() : main(main::make_shared()) {
 
 std::shared_ptr<ui::standard> const &app::ui_standard() const {
     return this->_ui_standard;
+}
+
+std::shared_ptr<app> app::make_shared() {
+    return std::shared_ptr<app>(new app{});
 }
 
 std::shared_ptr<app> app::global() {
