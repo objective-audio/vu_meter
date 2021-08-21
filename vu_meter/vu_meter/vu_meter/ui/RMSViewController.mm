@@ -32,7 +32,7 @@ struct view_controller_cpp {
     auto const metal_system = ui::metal_system::make_shared(
         objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
     auto const ui_standard = ui::standard::make_shared([self view_look], metal_system);
-    vu::app::shared()->set_ui_standard(ui_standard);
+    vu::app::global()->set_ui_standard(ui_standard);
 
     self->_cpp.ui_main = ui_main::make_shared();
 

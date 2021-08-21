@@ -10,7 +10,8 @@ namespace yas::vu {
 struct ui_indicator_resource_for_indicator {
     virtual ~ui_indicator_resource_for_indicator() = default;
 
-    virtual std::shared_ptr<ui::font_atlas> const &font_atlas() const = 0;
-    virtual observing::syncable observe_font_atlas(std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) = 0;
+    [[nodiscard]] virtual std::shared_ptr<ui::font_atlas> const &font_atlas() const = 0;
+    [[nodiscard]] virtual observing::syncable observe_font_atlas(
+        std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) = 0;
 };
 }  // namespace yas::vu

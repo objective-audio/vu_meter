@@ -13,12 +13,12 @@
 
 namespace yas::vu {
 struct ui_indicator final : ui_indicator_for_container {
-    std::shared_ptr<ui::node> const &node() override;
+    [[nodiscard]] std::shared_ptr<ui::node> const &node() override;
 
     void set_region(ui::region const) override;
 
-    static std::shared_ptr<ui_indicator> make_shared(std::shared_ptr<ui_indicator_resource_for_indicator> const &,
-                                                     std::size_t const);
+    [[nodiscard]] static std::shared_ptr<ui_indicator> make_shared(
+        std::shared_ptr<ui_indicator_resource_for_indicator> const &, std::size_t const);
 
    private:
     class impl;

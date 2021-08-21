@@ -14,10 +14,11 @@ namespace yas::vu {
 struct ui_indicator_resource final : ui_indicator_resource_for_container, ui_indicator_resource_for_indicator {
     void set_vu_height(float const) override;
 
-    std::shared_ptr<ui::font_atlas> const &font_atlas() const override;
-    observing::syncable observe_font_atlas(std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) override;
+    [[nodiscard]] std::shared_ptr<ui::font_atlas> const &font_atlas() const override;
+    [[nodiscard]] observing::syncable observe_font_atlas(
+        std::function<void(std::shared_ptr<ui::font_atlas> const &)> &&) override;
 
-    static std::shared_ptr<ui_indicator_resource> make_shared();
+    [[nodiscard]] static std::shared_ptr<ui_indicator_resource> make_shared();
 
    private:
     class impl;

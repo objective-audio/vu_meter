@@ -42,6 +42,7 @@
 		B692FC4B26BEC08700B8D573 /* vu_app.mm in Sources */ = {isa = PBXBuildFile; fileRef = B692FC4A26BEC08700B8D573 /* vu_app.mm */; };
 		B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A846672075ABD200DFF041 /* vu_ui_utils.mm */; };
 		B6A8466B2076572200DFF041 /* vu_ui_utils_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */; };
+		B6B06CDE26D0865A002E5CA5 /* vu_app_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6B06CDD26D0865A002E5CA5 /* vu_app_tests.mm */; };
 		B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
 		B6E6666826C2C19D002AFC6B /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6666726C2C19D002AFC6B /* SceneDelegate.m */; };
@@ -163,6 +164,7 @@
 		B6A846672075ABD200DFF041 /* vu_ui_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils.mm; sourceTree = "<group>"; };
 		B6A846682075ABD200DFF041 /* vu_ui_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_utils.hpp; sourceTree = "<group>"; };
 		B6A8466A2076572200DFF041 /* vu_ui_utils_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_utils_tests.mm; sourceTree = "<group>"; };
+		B6B06CDD26D0865A002E5CA5 /* vu_app_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_app_tests.mm; sourceTree = "<group>"; };
 		B6B09C67220885C000B483BC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B6B09C69220885D100B483BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B6B09C6B220885E100B483BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -271,6 +273,7 @@
 				B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */,
 				B68CE470244350B9005019C2 /* vu_settings_tests.mm */,
 				B616D29B26C96342002F3C79 /* vu_indicator_tests.mm */,
+				B6B06CDD26D0865A002E5CA5 /* vu_app_tests.mm */,
 				B68CE46E2442E294005019C2 /* KVOObserverTests.m */,
 			);
 			path = vu_meterTests;
@@ -576,6 +579,7 @@
 				B616D29C26C96342002F3C79 /* vu_indicator_tests.mm in Sources */,
 				B68CE471244350B9005019C2 /* vu_settings_tests.mm in Sources */,
 				B67564462067C50400944F8E /* vu_summing_buffer_tests.mm in Sources */,
+				B6B06CDE26D0865A002E5CA5 /* vu_app_tests.mm in Sources */,
 				B605BFC72067867B00B4ACCF /* vu_sum_module_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

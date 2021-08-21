@@ -13,7 +13,7 @@
 
 namespace yas::vu {
 struct ui_main final {
-    static std::shared_ptr<ui_main> make_shared();
+    [[nodiscard]] static std::shared_ptr<ui_main> make_shared();
 
    private:
     std::shared_ptr<ui_indicator_container_for_ui_main> const _indicator_container;

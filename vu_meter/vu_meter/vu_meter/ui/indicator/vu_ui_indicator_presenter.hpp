@@ -11,10 +11,10 @@ class main;
 class indicator;
 
 struct ui_indicator_presenter final {
-    ui::angle meter_angle() const;
-    std::string ch_number_text() const;
+    [[nodiscard]] ui::angle meter_angle() const;
+    [[nodiscard]] std::string ch_number_text() const;
 
-    static std::shared_ptr<ui_indicator_presenter> make_shared(std::size_t const idx);
+    [[nodiscard]] static std::shared_ptr<ui_indicator_presenter> make_shared(std::size_t const idx);
 
    private:
     std::weak_ptr<indicator> const _weak_indicator;

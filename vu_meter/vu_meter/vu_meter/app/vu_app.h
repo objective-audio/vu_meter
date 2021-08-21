@@ -9,21 +9,22 @@
 
 namespace yas::vu {
 struct app_setup {
-    static void setup();
+    static void setup_global();
 };
 
 struct app {
     std::shared_ptr<main> const main;
 
     void set_ui_standard(std::shared_ptr<ui::standard> const &);
-    std::shared_ptr<ui::standard> const &ui_standard() const;
+    [[nodiscard]] std::shared_ptr<ui::standard> const &ui_standard() const;
 
-    static std::shared_ptr<app> shared();
+    [[nodiscard]] static std::shared_ptr<app> make_shared();
+    [[nodiscard]] static std::shared_ptr<app> global();
 
    private:
     std::shared_ptr<ui::standard> _ui_standard;
 
-    app();
+    app(std::shared_ptr<vu::main> const &);
 
     friend app_setup;
 };
