@@ -30,6 +30,6 @@ std::string ui_indicator_presenter::ch_number_text() const {
 }
 
 std::shared_ptr<ui_indicator_presenter> ui_indicator_presenter::make_shared(std::size_t const idx) {
-    auto const &app = vu::app::shared();
+    auto const &app = vu::app::global();
     return std::shared_ptr<ui_indicator_presenter>(new ui_indicator_presenter{app->main->indicators().at(idx), idx});
 }

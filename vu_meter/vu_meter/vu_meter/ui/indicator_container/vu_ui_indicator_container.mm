@@ -88,7 +88,7 @@ void ui_indicator_container::_remove_last_indicator() {
 }
 
 std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared() {
-    auto const &app = vu::app::shared();
+    auto const &app = vu::app::global();
     auto const &root_node = app->ui_standard()->root_node();
 
     auto const resource = ui_indicator_resource::make_shared();

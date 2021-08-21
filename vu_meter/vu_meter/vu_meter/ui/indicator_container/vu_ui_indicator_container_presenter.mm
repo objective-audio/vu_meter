@@ -26,6 +26,6 @@ observing::syncable vu_ui_indicator_container_presenter::observe_indicator_count
 }
 
 std::shared_ptr<vu_ui_indicator_container_presenter> vu_ui_indicator_container_presenter::make_shared() {
-    auto const &main = app::shared()->main;
+    auto const &main = app::global()->main;
     return std::shared_ptr<vu_ui_indicator_container_presenter>(new vu_ui_indicator_container_presenter{main});
 }

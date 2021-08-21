@@ -11,7 +11,7 @@ using namespace yas::vu;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    app_setup::setup();
+    app_setup::setup_global();
     return YES;
 }
 

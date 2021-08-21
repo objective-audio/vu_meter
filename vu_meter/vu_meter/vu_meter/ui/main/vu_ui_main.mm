@@ -34,7 +34,7 @@ ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look,
 }
 
 std::shared_ptr<ui_main> vu::ui_main::make_shared() {
-    auto const &app = vu::app::shared();
+    auto const &app = vu::app::global();
     auto const &view_look = app->ui_standard()->view_look();
 
     auto const container = ui_indicator_container::make_shared();
