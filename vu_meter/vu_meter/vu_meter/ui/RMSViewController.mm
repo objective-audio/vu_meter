@@ -3,9 +3,11 @@
 //
 
 #import "RMSViewController.h"
-#include "vu_app.h"
-#include "vu_main.hpp"
-#include "vu_ui_color.hpp"
+#include "vu_app_lifetime.hpp"
+#include "vu_lifetime_accessor.hpp"
+#include "vu_ui_lifecycle.hpp"
+#include "vu_ui_lifetime.hpp"
+#include "vu_ui_main.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,7 +34,8 @@ struct view_controller_cpp {
     auto const metal_system = ui::metal_system::make_shared(
         objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
     auto const ui_standard = ui::standard::make_shared([self view_look], metal_system);
-    vu::app::global()->set_ui_standard(ui_standard);
+
+    lifetime_accessor::app_lifetime()->ui_lifecycle->add_lifetime(ui_standard);
 
     self->_cpp.ui_main = ui_main::make_shared();
 

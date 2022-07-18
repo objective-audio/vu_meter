@@ -3,6 +3,9 @@
 //
 
 #import "SceneDelegate.h"
+#include <audio/yas_audio_umbrella.h>
+
+using namespace yas;
 
 @interface SceneDelegate ()
 
@@ -19,6 +22,8 @@
 }
 
 - (void)sceneDidBecomeActive:(UIScene *)scene {
+    auto const &session = audio::ios_session::shared();
+    session->did_become_active();
 }
 
 - (void)sceneWillResignActive:(UIScene *)scene {

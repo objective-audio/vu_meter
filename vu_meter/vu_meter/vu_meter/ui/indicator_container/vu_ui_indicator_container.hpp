@@ -35,8 +35,6 @@ struct ui_indicator_container final : ui_indicator_container_for_ui_main {
                            std::shared_ptr<ui_indicator_resource_for_container> const &);
 
     void _update_indicator_regions();
-    void _resize_indicators(std::size_t const);
-    void _add_indicator();
-    void _remove_last_indicator();
+    void _reload_indicators(std::size_t const);
 };
 }  // namespace yas::vu

@@ -3,8 +3,9 @@
 //
 
 #include "vu_ui_indicator_resource.hpp"
-#include "vu_app.h"
+#include "vu_lifetime_accessor.hpp"
 #include "vu_ui_indicator_constants.h"
+#include "vu_ui_lifetime.hpp"
 
 using namespace yas;
 using namespace yas::vu;
@@ -66,6 +67,6 @@ observing::syncable ui_indicator_resource::observe_font_atlas(
 }
 
 std::shared_ptr<ui_indicator_resource> ui_indicator_resource::make_shared() {
-    auto const &app = vu::app::global();
-    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{app->ui_standard()->view_look()});
+    auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
+    return std::shared_ptr<ui_indicator_resource>(new ui_indicator_resource{ui_lifetime->standard->view_look()});
 }

@@ -12,18 +12,16 @@
 namespace yas::vu {
 class settings;
 class indicator;
+class indicator_values;
 
 struct main {
-    [[nodiscard]] std::vector<std::shared_ptr<indicator>> const &indicators() const;
-    [[nodiscard]] observing::syncable observe_indicators(
-        std::function<void(std::vector<std::shared_ptr<indicator>> const &)> &&);
+    [[nodiscard]] static std::shared_ptr<main> make_shared(indicator_values *);
 
-    [[nodiscard]] static std::shared_ptr<main> make_shared();
+    void setup();
 
    private:
     std::shared_ptr<settings> const _settings;
-
-    observing::value::holder_ptr<std::vector<std::shared_ptr<indicator>>> const _indicators;
+    indicator_values *const _indicator_values;
 
     std::optional<audio::ios_device_ptr> _device = std::nullopt;
     audio::graph_ptr const _graph = audio::graph::make_shared();
@@ -39,6 +37,6 @@ struct main {
 
     audio_format _last_format;
 
-    main();
+    main(indicator_values *);
 };
 }  // namespace yas::vu

@@ -9,7 +9,7 @@
 #include <memory>
 
 namespace yas::vu {
-class main;
+class indicator_lifecycle;
 
 struct vu_ui_indicator_container_presenter final {
     [[nodiscard]] std::size_t indicator_count() const;
@@ -21,6 +21,6 @@ struct vu_ui_indicator_container_presenter final {
     observing::value::holder_ptr<std::size_t> const _indicator_count;
     observing::canceller_pool _pool;
 
-    vu_ui_indicator_container_presenter(std::shared_ptr<main> const &);
+    vu_ui_indicator_container_presenter(std::shared_ptr<indicator_lifecycle> const &);
 };
 }  // namespace yas::vu

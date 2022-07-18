@@ -9,6 +9,8 @@
 #include <iostream>
 #include <limits>
 #include "vu_indicator.hpp"
+#include "vu_indicator_value.hpp"
+#include "vu_indicator_values.hpp"
 #include "vu_send_module.hpp"
 #include "vu_settings.hpp"
 #include "vu_sum_module.hpp"
@@ -16,9 +18,15 @@
 using namespace yas;
 using namespace yas::vu;
 
-main::main()
-    : _settings(vu::settings::make_shared()),
-      _indicators(observing::value::holder<std::vector<std::shared_ptr<indicator>>>::make_shared({})) {
+std::shared_ptr<main> main::make_shared(indicator_values *values) {
+    return std::shared_ptr<main>(new main{values});
+}
+
+main::main(indicator_values *indicator_values)
+    : _settings(vu::settings::make_shared()), _indicator_values(indicator_values) {
+}
+
+void main::setup() {
     yas_audio_set_log_enabled(true);
 
     auto const &session = audio::ios_session::shared();
@@ -40,15 +48,6 @@ main::main()
         ->observe_io_device([this](auto const &) { this->_update_indicators(); })
         .end()
         ->add_to(this->_pool);
-}
-
-std::vector<std::shared_ptr<indicator>> const &main::indicators() const {
-    return this->_indicators->value();
-}
-
-observing::syncable main::observe_indicators(
-    std::function<void(std::vector<std::shared_ptr<indicator>> const &)> &&handler) {
-    return this->_indicators->observe(std::move(handler));
 }
 
 audio_format main::_format() const {
@@ -73,21 +72,7 @@ double main::_sample_rate() const {
 
 void main::_update_indicators() {
     auto const ch_count = this->_format().channel_count;
-    auto const prev_count = this->_indicators->value().size();
-
-    if (ch_count < prev_count) {
-        auto indicators = this->_indicators->value();
-        indicators.resize(ch_count);
-        this->_indicators->set_value(std::move(indicators));
-    } else if (ch_count > prev_count) {
-        auto const diff_count = ch_count - prev_count;
-        auto indicators = this->_indicators->value();
-        auto each = make_fast_each(diff_count);
-        while (yas_each_next(each)) {
-            indicators.emplace_back(indicator::make_shared(this->_settings));
-        }
-        this->_indicators->set_value(std::move(indicators));
-    }
+    this->_indicator_values->resize(ch_count);
 
     this->_update_timeline();
 }
@@ -219,7 +204,7 @@ void main::_update_timeline() {
     }
 
     // デバイスのインプットからタイムラインにデータを渡す
-    this->_input_tap->set_render_handler([context, timeline, indicators = this->_indicators->value()](
+    this->_input_tap->set_render_handler([context, timeline, indicator_values = this->_indicator_values->raw()](
                                              audio::node_input_render_args const &args) mutable {
         proc::length_t const length = args.buffer->frame_length();
         context->buffer = args.buffer;
@@ -230,7 +215,7 @@ void main::_update_timeline() {
 
         timeline->process(time_range, stream);
 
-        if (auto each = make_fast_each(indicators.size()); true) {
+        if (auto each = make_fast_each(indicator_values.size()); true) {
             while (yas_each_next(each)) {
                 std::size_t const &ch = yas_each_index(each);
 
@@ -248,7 +233,7 @@ void main::_update_timeline() {
                     }
                 }
 
-                indicators.at(ch)->set_raw_value(value);
+                indicator_values.at(ch)->store(value);
             }
         }
 
@@ -258,8 +243,4 @@ void main::_update_timeline() {
     if (auto result = this->_graph->start_render(); !result) {
         std::cout << "error : " << result.error() << std::endl;
     }
-}
-
-std::shared_ptr<main> main::make_shared() {
-    return std::shared_ptr<main>(new main{});
 }

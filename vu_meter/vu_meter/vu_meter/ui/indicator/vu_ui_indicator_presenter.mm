@@ -4,8 +4,9 @@
 
 #include "vu_ui_indicator_presenter.hpp"
 
-#include "vu_app.h"
 #include "vu_indicator.hpp"
+#include "vu_indicator_lifetime.hpp"
+#include "vu_lifetime_accessor.hpp"
 #include "vu_main.hpp"
 #include "vu_ui_indicator_constants.h"
 #include "vu_ui_utils.hpp"
@@ -30,6 +31,6 @@ std::string ui_indicator_presenter::ch_number_text() const {
 }
 
 std::shared_ptr<ui_indicator_presenter> ui_indicator_presenter::make_shared(std::size_t const idx) {
-    auto const &app = vu::app::global();
-    return std::shared_ptr<ui_indicator_presenter>(new ui_indicator_presenter{app->main->indicators().at(idx), idx});
+    auto const &indicator_lifetime = lifetime_accessor::indicator_lifetime(idx);
+    return std::shared_ptr<ui_indicator_presenter>(new ui_indicator_presenter{indicator_lifetime->indicator, idx});
 }
