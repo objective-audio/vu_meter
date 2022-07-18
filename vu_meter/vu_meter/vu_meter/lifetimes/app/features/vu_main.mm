@@ -8,95 +8,47 @@
 #include <cpp_utils/yas_fast_each.h>
 #include <iostream>
 #include <limits>
+#include "vu_audio_device.hpp"
 #include "vu_indicator.hpp"
 #include "vu_indicator_value.hpp"
 #include "vu_indicator_values.hpp"
 #include "vu_send_module.hpp"
-#include "vu_settings.hpp"
 #include "vu_sum_module.hpp"
 
 using namespace yas;
 using namespace yas::vu;
 
-std::shared_ptr<main> main::make_shared(indicator_values *values) {
-    return std::shared_ptr<main>(new main{values});
+std::shared_ptr<main> main::make_shared(indicator_values *values, audio_device *audio_device) {
+    yas_audio_set_log_enabled(true);
+    return std::shared_ptr<main>(new main{values, audio_device});
 }
 
-main::main(indicator_values *indicator_values)
-    : _settings(vu::settings::make_shared()), _indicator_values(indicator_values) {
+main::main(indicator_values *indicator_values, audio_device *audio_device)
+    : _indicator_values(indicator_values), _audio_device(audio_device) {
 }
 
 void main::setup() {
-    yas_audio_set_log_enabled(true);
+    this->_graph->add_io(this->_audio_device->ios_device());
 
-    auto const &session = audio::ios_session::shared();
-
-    session->set_category(audio::ios_session::category::record);
-    auto const result = session->activate();
-    if (!result) {
-        std::cout << "session activate result : " << result.error() << std::endl;
-        return;
-    }
-
-    this->_device = audio::ios_device::make_shared(session);
-
-    this->_graph->add_io(this->_device);
-
-    this->_update_indicators();
-
-    this->_device.value()
-        ->observe_io_device([this](auto const &) { this->_update_indicators(); })
-        .end()
+    this->_audio_device->observe_format([this](audio_format const &format) { this->_update(format); })
+        .sync()
         ->add_to(this->_pool);
 }
 
-audio_format main::_format() const {
-    return audio_format{.channel_count = this->_input_channel_count(), .sample_rate = this->_sample_rate()};
-}
+void main::_update(audio_format const &current_format) {
+    auto const ch_count = current_format.channel_count;
 
-uint32_t main::_input_channel_count() const {
-    if (auto const &device = this->_device) {
-        return device.value()->input_channel_count();
-    }
-    return 0;
-}
-
-double main::_sample_rate() const {
-    if (auto const &device = this->_device) {
-        if (auto const &format = device.value()->input_format()) {
-            return format.value().sample_rate();
-        }
-    }
-    return 0;
-}
-
-void main::_update_indicators() {
-    auto const ch_count = this->_format().channel_count;
     this->_indicator_values->resize(ch_count);
-
-    this->_update_timeline();
-}
-
-void main::_update_timeline() {
-    auto const current_format = this->_format();
-
-    if (this->_last_format == current_format) {
-        return;
-    }
 
     this->_graph->stop();
     this->_graph->disconnect_input(this->_input_tap->node);
 
-    this->_last_format = current_format;
-
-    if (current_format.channel_count == 0) {
+    if (ch_count == 0) {
         return;
     }
 
-    auto const ch_count = current_format.channel_count;
-
-    audio::format const format{{.sample_rate = current_format.sample_rate,
-                                .channel_count = static_cast<uint32_t>(current_format.channel_count)}};
+    audio::format const format{
+        {.sample_rate = current_format.sample_rate, .channel_count = static_cast<uint32_t>(ch_count)}};
     this->_graph->connect(this->_graph->io().value()->input_node, this->_input_tap->node, format);
 
     struct context_t {
@@ -112,7 +64,7 @@ void main::_update_timeline() {
     proc::timeline_ptr timeline = proc::timeline::make_shared();
     proc::track_index_t trk_idx = 0;
     proc::time::range time_range{0, std::numeric_limits<proc::frame_index_t>::max()};
-    proc::channel_index_t const pow_ch = current_format.channel_count;
+    proc::channel_index_t const pow_ch = ch_count;
 
     /// インプットを受け付けるトラック
     if (auto each = make_fast_each(ch_count); true) {

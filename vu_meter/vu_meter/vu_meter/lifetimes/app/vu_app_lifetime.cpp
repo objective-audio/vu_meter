@@ -4,6 +4,7 @@
 
 #include "vu_app_lifetime.hpp"
 
+#include "vu_audio_device.hpp"
 #include "vu_indicator_lifecycle.hpp"
 #include "vu_indicator_values.hpp"
 #include "vu_main.hpp"
@@ -19,8 +20,9 @@ std::shared_ptr<app_lifetime> app_lifetime::make_shared() {
 
 app_lifetime::app_lifetime()
     : settings(settings::make_shared()),
+      audio_device(audio_device::make_shared()),
       indicator_lifecycle(indicator_lifecycle::make_shared()),
       ui_lifecycle(ui_lifecycle::make_shared()),
       indicator_values(indicator_values::make_shared(this->indicator_lifecycle.get())),
-      main(main::make_shared(this->indicator_values.get())) {
+      main(main::make_shared(this->indicator_values.get(), this->audio_device.get())) {
 }
