@@ -26,6 +26,8 @@ struct audio_device final {
 
     [[nodiscard]] observing::syncable observe_format(std::function<void(audio_format const &)> &&);
 
+    void did_become_active();
+
    private:
     std::optional<std::shared_ptr<audio::ios_device>> const _ios_device;
     observing::value::holder_ptr<audio_format> const _format;
