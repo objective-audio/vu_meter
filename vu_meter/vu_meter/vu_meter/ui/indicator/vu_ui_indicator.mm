@@ -7,9 +7,10 @@
 #include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
 
-#include "vu_app.h"
+#include "vu_lifetime_accessor.hpp"
 #include "vu_ui_color.hpp"
 #include "vu_ui_indicator_constants.h"
+#include "vu_ui_lifetime.hpp"
 #include "vu_ui_utils.hpp"
 
 using namespace yas;
@@ -274,7 +275,7 @@ void ui_indicator::set_region(ui::region const region) {
 
 std::shared_ptr<ui_indicator> ui_indicator::make_shared(
     std::shared_ptr<ui_indicator_resource_for_indicator> const &resource, std::size_t const idx) {
-    auto const &app = vu::app::global();
+    auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
     auto const presenter = ui_indicator_presenter::make_shared(idx);
-    return std::shared_ptr<ui_indicator>(new ui_indicator{app->ui_standard(), resource, presenter});
+    return std::shared_ptr<ui_indicator>(new ui_indicator{ui_lifetime->standard, resource, presenter});
 }

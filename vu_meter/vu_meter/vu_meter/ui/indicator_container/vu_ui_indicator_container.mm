@@ -3,9 +3,10 @@
 //
 
 #include "vu_ui_indicator_container.hpp"
-#include "vu_app.h"
+#include "vu_lifetime_accessor.hpp"
 #include "vu_main.hpp"
 #include "vu_ui_indicator_resource.hpp"
+#include "vu_ui_lifetime.hpp"
 #include "vu_ui_utils.hpp"
 
 using namespace yas;
@@ -21,8 +22,8 @@ ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_c
       _resource(resource),
       _frame_guide(ui::layout_region_guide::make_shared()) {
     presenter
-        ->observe_indicator_count([this](std::size_t const &value) {
-            this->_resize_indicators(value);
+        ->observe_indicator_count([this](std::size_t const &size) {
+            this->_reload_indicators(size);
             this->_update_indicator_regions();
         })
         .sync()
@@ -56,40 +57,25 @@ void ui_indicator_container::_update_indicator_regions() {
     }
 }
 
-void ui_indicator_container::_resize_indicators(std::size_t const value) {
-    if (value < this->_indicators.size()) {
-        auto each = make_fast_each(this->_indicators.size() - value);
-        while (yas_each_next(each)) {
-            this->_remove_last_indicator();
-        }
-    } else if (this->_indicators.size() < value) {
-        auto each = make_fast_each(value - this->_indicators.size());
-        while (yas_each_next(each)) {
-            this->_add_indicator();
-        }
-    }
-}
-
-void ui_indicator_container::_add_indicator() {
-    std::size_t const idx = this->_indicators.size();
-    auto indicator = this->_factory->make_indicator(idx);
-    this->_root_node->add_sub_node(indicator->node());
-    this->_indicators.emplace_back(std::move(indicator));
-}
-
-void ui_indicator_container::_remove_last_indicator() {
-    if (this->_indicators.size() == 0) {
-        throw std::runtime_error("");
+void ui_indicator_container::_reload_indicators(std::size_t const size) {
+    for (auto const &indicator : this->_indicators) {
+        indicator->node()->remove_from_super_node();
     }
 
-    auto const &indicator = this->_indicators.at(this->_indicators.size() - 1);
-    indicator->node()->remove_from_super_node();
-    this->_indicators.pop_back();
+    this->_indicators.clear();
+
+    auto each = make_fast_each(size);
+    while (yas_each_next(each)) {
+        auto const &idx = yas_each_index(each);
+        auto indicator = this->_factory->make_indicator(idx);
+        this->_root_node->add_sub_node(indicator->node());
+        this->_indicators.emplace_back(std::move(indicator));
+    }
 }
 
 std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared() {
-    auto const &app = vu::app::global();
-    auto const &root_node = app->ui_standard()->root_node();
+    auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
+    auto const &root_node = ui_lifetime->standard->root_node();
 
     auto const resource = ui_indicator_resource::make_shared();
     auto const factory = ui_indicator_factory::make_shared(resource);

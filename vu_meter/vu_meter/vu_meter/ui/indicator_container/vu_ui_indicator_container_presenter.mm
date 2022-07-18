@@ -3,15 +3,23 @@
 //
 
 #include "vu_ui_indicator_container_presenter.hpp"
-#include "vu_app.h"
-#include "vu_main.hpp"
+#include "vu_app_lifetime.hpp"
+#include "vu_indicator_lifecycle.hpp"
+#include "vu_lifetime_accessor.hpp"
 
 using namespace yas;
 using namespace yas::vu;
 
-vu_ui_indicator_container_presenter::vu_ui_indicator_container_presenter(std::shared_ptr<main> const &main)
+std::shared_ptr<vu_ui_indicator_container_presenter> vu_ui_indicator_container_presenter::make_shared() {
+    auto const &app_lifetime = lifetime_accessor::app_lifetime();
+    return std::shared_ptr<vu_ui_indicator_container_presenter>(
+        new vu_ui_indicator_container_presenter{app_lifetime->indicator_lifecycle});
+}
+
+vu_ui_indicator_container_presenter::vu_ui_indicator_container_presenter(
+    std::shared_ptr<indicator_lifecycle> const &lifecycle)
     : _indicator_count(observing::value::holder<std::size_t>::make_shared(0)) {
-    main->observe_indicators([this](auto const &indicators) { this->_indicator_count->set_value(indicators.size()); })
+    lifecycle->observe([this](auto const &lifetimes) { this->_indicator_count->set_value(lifetimes.size()); })
         .sync()
         ->add_to(this->_pool);
 }
@@ -23,9 +31,4 @@ std::size_t vu_ui_indicator_container_presenter::indicator_count() const {
 observing::syncable vu_ui_indicator_container_presenter::observe_indicator_count(
     std::function<void(std::size_t const &)> &&handler) {
     return this->_indicator_count->observe(std::move(handler));
-}
-
-std::shared_ptr<vu_ui_indicator_container_presenter> vu_ui_indicator_container_presenter::make_shared() {
-    auto const &main = app::global()->main;
-    return std::shared_ptr<vu_ui_indicator_container_presenter>(new vu_ui_indicator_container_presenter{main});
 }

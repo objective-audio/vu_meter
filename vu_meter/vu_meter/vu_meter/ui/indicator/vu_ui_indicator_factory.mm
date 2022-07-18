@@ -3,7 +3,6 @@
 //
 
 #include "vu_ui_indicator_factory.hpp"
-#include "vu_app.h"
 #include "vu_ui_indicator.hpp"
 
 using namespace yas;
