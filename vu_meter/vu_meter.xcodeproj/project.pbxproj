@@ -356,12 +356,12 @@
 		B6756458206F42F700944F8E /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				B616FC1B26BFADD4008B0F5A /* indicator_container */,
-				B692FC4526BE605D00B8D573 /* indicator */,
-				B692FC4626BEAA0800B8D573 /* main */,
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756450206F0A3B00944F8E /* RMSViewController.h */,
 				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
+				B692FC4626BEAA0800B8D573 /* main */,
+				B616FC1B26BFADD4008B0F5A /* indicator_container */,
+				B692FC4526BE605D00B8D573 /* indicator */,
 				B692FC4426BE603A00B8D573 /* utils */,
 			);
 			path = ui;
