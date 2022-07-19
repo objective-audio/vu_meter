@@ -30,7 +30,7 @@ struct ui_indicator_container final : ui_indicator_container_for_ui_main {
     observing::canceller_pool _pool;
 
     ui_indicator_container(std::shared_ptr<vu_ui_indicator_container_presenter> const &,
-                           std::shared_ptr<ui::node> const &,
+                           std::shared_ptr<ui::view_look> const &, std::shared_ptr<ui::node> const &,
                            std::shared_ptr<ui_indicator_factory_for_container> const &,
                            std::shared_ptr<ui_indicator_resource_for_container> const &);
 
