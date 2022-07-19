@@ -1,8 +1,8 @@
 //
-//  vu_main.mm
+//  vu_audio_graph.mm
 //
 
-#include "vu_main.hpp"
+#include "vu_audio_graph.hpp"
 #import <AVFoundation/AVFoundation.h>
 #include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
@@ -18,16 +18,16 @@
 using namespace yas;
 using namespace yas::vu;
 
-std::shared_ptr<main> main::make_shared(indicator_values *values, audio_device *audio_device) {
+std::shared_ptr<audio_graph> audio_graph::make_shared(indicator_values *values, audio_device *audio_device) {
     yas_audio_set_log_enabled(true);
-    return std::shared_ptr<main>(new main{values, audio_device});
+    return std::shared_ptr<audio_graph>(new audio_graph{values, audio_device});
 }
 
-main::main(indicator_values *indicator_values, audio_device *audio_device)
+audio_graph::audio_graph(indicator_values *indicator_values, audio_device *audio_device)
     : _indicator_values(indicator_values), _audio_device(audio_device) {
 }
 
-void main::setup() {
+void audio_graph::setup() {
     this->_graph->add_io(this->_audio_device->ios_device());
 
     this->_audio_device->observe_format([this](audio_format const &format) { this->_update(format); })
@@ -35,7 +35,7 @@ void main::setup() {
         ->add_to(this->_pool);
 }
 
-void main::_update(audio_format const &current_format) {
+void audio_graph::_update(audio_format const &current_format) {
     auto const ch_count = current_format.channel_count;
 
     this->_indicator_values->resize(ch_count);

@@ -7,7 +7,7 @@
 #include <ui/yas_ui_umbrella.h>
 
 namespace yas::vu {
-class main;
+class audio_graph;
 class indicator;
 
 struct ui_indicator_presenter final {

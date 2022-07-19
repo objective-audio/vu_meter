@@ -4,8 +4,8 @@
 
 #include "vu_ui_main.hpp"
 #include <cpp_utils/yas_fast_each.h>
+#include "vu_audio_graph.hpp"
 #include "vu_lifetime_accessor.hpp"
-#include "vu_main.hpp"
 #include "vu_ui_color.hpp"
 #include "vu_ui_indicator_container.hpp"
 #include "vu_ui_lifetime.hpp"

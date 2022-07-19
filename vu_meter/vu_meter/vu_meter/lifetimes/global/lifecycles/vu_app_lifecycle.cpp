@@ -7,7 +7,7 @@
 #include <cpp_utils/yas_assertion.h>
 
 #include "vu_app_lifetime.hpp"
-#include "vu_main.hpp"
+#include "vu_audio_graph.hpp"
 
 using namespace yas;
 using namespace yas::vu;
@@ -30,5 +30,5 @@ void app_lifecycle::add_lifetime() {
     }
 
     this->_lifetime = app_lifetime::make_shared();
-    this->_lifetime->main->setup();
+    this->_lifetime->audio_graph->setup();
 }
