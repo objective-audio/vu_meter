@@ -87,13 +87,13 @@ void ui_indicator_container::_reload_indicators(std::size_t const size) {
     }
 }
 
-std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared() {
+std::shared_ptr<ui_indicator_container> ui_indicator_container::make_shared(
+    std::shared_ptr<ui_indicator_factory_for_container> const &factory,
+    std::shared_ptr<ui_indicator_resource_for_container> const &resource) {
     auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
     auto const &view_look = ui_lifetime->standard->view_look();
     auto const &root_node = ui_lifetime->standard->root_node();
 
-    auto const resource = ui_indicator_resource::make_shared();
-    auto const factory = ui_indicator_factory::make_shared(resource);
     auto const presenter = vu_ui_indicator_container_presenter::make_shared();
 
     return std::shared_ptr<ui_indicator_container>(
