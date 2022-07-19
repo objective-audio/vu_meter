@@ -355,9 +355,6 @@
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756450206F0A3B00944F8E /* RMSViewController.h */,
 				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
-				B692FC4626BEAA0800B8D573 /* background */,
-				B616FC1B26BFADD4008B0F5A /* indicator_container */,
-				B692FC4526BE605D00B8D573 /* indicator */,
 				B692FC4426BE603A00B8D573 /* utils */,
 			);
 			path = ui;
@@ -430,13 +427,6 @@
 				B617CF622071AA320012B32A /* vu_ui_indicator.mm */,
 			);
 			path = indicator;
-			sourceTree = "<group>";
-		};
-		B692FC4626BEAA0800B8D573 /* background */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = background;
 			sourceTree = "<group>";
 		};
 		B6AEEE99288523E800C7B3C1 /* helpers */ = {
@@ -570,6 +560,8 @@
 			children = (
 				B6756456206F3EF800944F8E /* vu_ui_background.hpp */,
 				B6756455206F3EF800944F8E /* vu_ui_background.mm */,
+				B616FC1B26BFADD4008B0F5A /* indicator_container */,
+				B692FC4526BE605D00B8D573 /* indicator */,
 			);
 			path = features;
 			sourceTree = "<group>";
