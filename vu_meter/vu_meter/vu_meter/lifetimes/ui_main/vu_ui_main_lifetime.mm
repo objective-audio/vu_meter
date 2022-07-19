@@ -14,5 +14,5 @@ std::shared_ptr<ui_main_lifetime> ui_main_lifetime::make_shared() {
 }
 
 ui_main_lifetime::ui_main_lifetime()
-    : main(ui_background::make_shared()), indicator_container(ui_indicator_container::make_shared()) {
+    : background(ui_background::make_shared()), indicator_container(ui_indicator_container::make_shared()) {
 }
