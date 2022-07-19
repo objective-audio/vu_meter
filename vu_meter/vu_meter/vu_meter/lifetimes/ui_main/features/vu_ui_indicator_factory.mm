@@ -8,15 +8,13 @@
 using namespace yas;
 using namespace yas::vu;
 
-ui_indicator_factory::ui_indicator_factory(std::shared_ptr<ui_indicator_resource> const &resource)
-    : _resource(resource) {
+ui_indicator_factory::ui_indicator_factory() {
 }
 
 std::shared_ptr<ui_indicator_for_container> ui_indicator_factory::make_indicator(std::size_t const idx) {
     return ui_indicator::make_shared(idx);
 }
 
-std::shared_ptr<ui_indicator_factory> ui_indicator_factory::make_shared(
-    std::shared_ptr<ui_indicator_resource> const &resource) {
-    return std::shared_ptr<ui_indicator_factory>(new ui_indicator_factory{resource});
+std::shared_ptr<ui_indicator_factory> ui_indicator_factory::make_shared() {
+    return std::shared_ptr<ui_indicator_factory>(new ui_indicator_factory{});
 }

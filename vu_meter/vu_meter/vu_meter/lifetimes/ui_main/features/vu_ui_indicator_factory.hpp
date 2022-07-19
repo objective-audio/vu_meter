@@ -16,12 +16,9 @@ class audio_graph;
 struct ui_indicator_factory final : ui_indicator_factory_for_container {
     [[nodiscard]] std::shared_ptr<ui_indicator_for_container> make_indicator(std::size_t const idx) override;
 
-    [[nodiscard]] static std::shared_ptr<ui_indicator_factory> make_shared(
-        std::shared_ptr<ui_indicator_resource> const &);
+    [[nodiscard]] static std::shared_ptr<ui_indicator_factory> make_shared();
 
    private:
-    std::shared_ptr<ui_indicator_resource> const _resource;
-
-    ui_indicator_factory(std::shared_ptr<ui_indicator_resource> const &);
+    ui_indicator_factory();
 };
 }  // namespace yas::vu
