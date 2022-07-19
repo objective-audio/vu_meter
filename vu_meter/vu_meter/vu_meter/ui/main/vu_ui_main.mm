@@ -14,8 +14,7 @@
 using namespace yas;
 using namespace yas::vu;
 
-ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look, std::shared_ptr<ui_main_presenter> const &presenter)
-    : _presenter(presenter) {
+ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look) {
     view_look->background()->set_color(vu::base_color());
 }
 
@@ -23,7 +22,5 @@ std::shared_ptr<ui_main> vu::ui_main::make_shared() {
     auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
     auto const &view_look = ui_lifetime->standard->view_look();
 
-    auto const presenter = ui_main_presenter::make_shared();
-
-    return std::shared_ptr<ui_main>(new ui_main{view_look, presenter});
+    return std::shared_ptr<ui_main>(new ui_main{view_look});
 }

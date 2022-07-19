@@ -13,7 +13,6 @@
 		B610E98420629153004A46B5 /* vu_sum_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B610E98220629153004A46B5 /* vu_sum_module.cpp */; };
 		B616D29C26C96342002F3C79 /* vu_indicator_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616D29B26C96342002F3C79 /* vu_indicator_tests.mm */; };
 		B616FC1726BF70D4008B0F5A /* vu_ui_indicator_container.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616FC1526BF70D4008B0F5A /* vu_ui_indicator_container.mm */; };
-		B616FC1A26BF866F008B0F5A /* vu_ui_main_presenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */; };
 		B616FC2126BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616FC1F26BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm */; };
 		B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B617CF622071AA320012B32A /* vu_ui_indicator.mm */; };
 		B628C9C4205FD05B0085DF7F /* vu_audio_graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_audio_graph.cpp */; };
@@ -119,11 +118,8 @@
 		B616D29D26C963D6002F3C79 /* vu_indicator_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_indicator_dependency.h; sourceTree = "<group>"; };
 		B616FC1526BF70D4008B0F5A /* vu_ui_indicator_container.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_container.mm; sourceTree = "<group>"; };
 		B616FC1626BF70D4008B0F5A /* vu_ui_indicator_container.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_container.hpp; sourceTree = "<group>"; };
-		B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_main_presenter.mm; sourceTree = "<group>"; };
-		B616FC1926BF866F008B0F5A /* vu_ui_main_presenter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main_presenter.hpp; sourceTree = "<group>"; };
 		B616FC1F26BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_container_presenter.mm; sourceTree = "<group>"; };
 		B616FC2026BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_container_presenter.hpp; sourceTree = "<group>"; };
-		B616FC2226BFE416008B0F5A /* vu_ui_main_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_main_dependency.h; sourceTree = "<group>"; };
 		B616FC2326BFE50D008B0F5A /* vu_ui_indicator_container_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_indicator_container_dependency.h; sourceTree = "<group>"; };
 		B616FC2426BFF517008B0F5A /* vu_ui_indicator_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_indicator_dependency.h; sourceTree = "<group>"; };
 		B617CF622071AA320012B32A /* vu_ui_indicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator.mm; sourceTree = "<group>"; };
@@ -438,9 +434,6 @@
 		B692FC4626BEAA0800B8D573 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				B616FC2226BFE416008B0F5A /* vu_ui_main_dependency.h */,
-				B616FC1926BF866F008B0F5A /* vu_ui_main_presenter.hpp */,
-				B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */,
 				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
 				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 			);
@@ -715,7 +708,6 @@
 				B6AEEEBA28852E2600C7B3C1 /* vu_ui_lifetime.cpp in Sources */,
 				B692FC4326BE5E1A00B8D573 /* vu_ui_indicator_resource.mm in Sources */,
 				B616FC2126BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm in Sources */,
-				B616FC1A26BF866F008B0F5A /* vu_ui_main_presenter.mm in Sources */,
 				B692FC3F26BE511900B8D573 /* vu_ui_indicator_presenter.mm in Sources */,
 				B6AEEEAD2885261100C7B3C1 /* vu_app_lifecycle.cpp in Sources */,
 				B67781EA2885A4E60062C4CF /* vu_audio_format.cpp in Sources */,

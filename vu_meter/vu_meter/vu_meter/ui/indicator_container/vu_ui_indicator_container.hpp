@@ -11,11 +11,10 @@
 #include "vu_ui_indicator_container_dependency.h"
 #include "vu_ui_indicator_container_presenter.hpp"
 #include "vu_ui_indicator_factory.hpp"
-#include "vu_ui_main_dependency.h"
 
 namespace yas::vu {
-struct ui_indicator_container final : ui_indicator_container_for_ui_main {
-    void set_frame(ui::region const) override;
+struct ui_indicator_container final {
+    void set_frame(ui::region const);
 
     [[nodiscard]] static std::shared_ptr<ui_indicator_container> make_shared();
 
