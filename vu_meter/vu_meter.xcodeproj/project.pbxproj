@@ -31,7 +31,7 @@
 		B675644F206B21FA00944F8E /* vu_settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675644D206B21FA00944F8E /* vu_settings.mm */; };
 		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
-		B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_main.mm */; };
+		B6756457206F3EF800944F8E /* vu_ui_background.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756455206F3EF800944F8E /* vu_ui_background.mm */; };
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
 		B67781E728859A380062C4CF /* vu_audio_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781E528859A380062C4CF /* vu_audio_device.cpp */; };
 		B67781EA2885A4E60062C4CF /* vu_audio_format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781E82885A4E60062C4CF /* vu_audio_format.cpp */; };
@@ -153,8 +153,8 @@
 		B6756450206F0A3B00944F8E /* RMSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RMSViewController.h; sourceTree = "<group>"; };
 		B6756451206F0A3B00944F8E /* RMSViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RMSViewController.mm; sourceTree = "<group>"; };
 		B6756453206F167300944F8E /* RMSMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RMSMain.storyboard; sourceTree = "<group>"; };
-		B6756455206F3EF800944F8E /* vu_ui_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_main.mm; sourceTree = "<group>"; };
-		B6756456206F3EF800944F8E /* vu_ui_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main.hpp; sourceTree = "<group>"; };
+		B6756455206F3EF800944F8E /* vu_ui_background.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_background.mm; sourceTree = "<group>"; };
+		B6756456206F3EF800944F8E /* vu_ui_background.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_background.hpp; sourceTree = "<group>"; };
 		B675645C206F45FC00944F8E /* vu_ui_color.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_color.mm; sourceTree = "<group>"; };
 		B675645D206F45FC00944F8E /* vu_ui_color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_color.hpp; sourceTree = "<group>"; };
 		B67781E528859A380062C4CF /* vu_audio_device.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_audio_device.cpp; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 				B6756453206F167300944F8E /* RMSMain.storyboard */,
 				B6756450206F0A3B00944F8E /* RMSViewController.h */,
 				B6756451206F0A3B00944F8E /* RMSViewController.mm */,
-				B692FC4626BEAA0800B8D573 /* main */,
+				B692FC4626BEAA0800B8D573 /* background */,
 				B616FC1B26BFADD4008B0F5A /* indicator_container */,
 				B692FC4526BE605D00B8D573 /* indicator */,
 				B692FC4426BE603A00B8D573 /* utils */,
@@ -390,6 +390,7 @@
 			children = (
 				B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.mm */,
 				B67781ED2886DAD60062C4CF /* vu_ui_main_lifetime.hpp */,
+				B6EB9C442886E24500B6A914 /* features */,
 			);
 			path = ui_main;
 			sourceTree = "<group>";
@@ -431,13 +432,11 @@
 			path = indicator;
 			sourceTree = "<group>";
 		};
-		B692FC4626BEAA0800B8D573 /* main */ = {
+		B692FC4626BEAA0800B8D573 /* background */ = {
 			isa = PBXGroup;
 			children = (
-				B6756456206F3EF800944F8E /* vu_ui_main.hpp */,
-				B6756455206F3EF800944F8E /* vu_ui_main.mm */,
 			);
-			path = main;
+			path = background;
 			sourceTree = "<group>";
 		};
 		B6AEEE99288523E800C7B3C1 /* helpers */ = {
@@ -566,6 +565,15 @@
 			path = features;
 			sourceTree = "<group>";
 		};
+		B6EB9C442886E24500B6A914 /* features */ = {
+			isa = PBXGroup;
+			children = (
+				B6756456206F3EF800944F8E /* vu_ui_background.hpp */,
+				B6756455206F3EF800944F8E /* vu_ui_background.mm */,
+			);
+			path = features;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -689,7 +697,7 @@
 			files = (
 				B6AEEEC62885557D00C7B3C1 /* vu_indicator_values.cpp in Sources */,
 				B6A846692075ABD200DFF041 /* vu_ui_utils.mm in Sources */,
-				B6756457206F3EF800944F8E /* vu_ui_main.mm in Sources */,
+				B6756457206F3EF800944F8E /* vu_ui_background.mm in Sources */,
 				B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */,
 				B6AEEEBD28852F5500C7B3C1 /* vu_ui_lifecycle.cpp in Sources */,
 				B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */,
