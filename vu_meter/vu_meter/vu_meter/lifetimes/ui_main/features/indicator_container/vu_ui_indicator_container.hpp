@@ -18,8 +18,11 @@ struct ui_indicator_container final {
         std::shared_ptr<ui_indicator_factory_for_container> const &,
         std::shared_ptr<ui_indicator_resource_for_container> const &);
 
+    void setup();
+
    private:
     std::shared_ptr<vu_ui_indicator_container_presenter> const _presenter;
+    ui::view_look *const _view_look;
     std::shared_ptr<ui::node> const _root_node;
     std::vector<std::shared_ptr<ui_indicator_for_container>> _indicators;
     std::shared_ptr<ui_indicator_factory_for_container> const _factory;

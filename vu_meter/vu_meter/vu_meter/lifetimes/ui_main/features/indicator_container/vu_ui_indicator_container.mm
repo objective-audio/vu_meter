@@ -22,11 +22,15 @@ ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_c
                                                std::shared_ptr<ui_indicator_factory_for_container> const &factory,
                                                std::shared_ptr<ui_indicator_resource_for_container> const &resource)
     : _presenter(presenter),
+      _view_look(view_look.get()),
       _root_node(root_node),
       _factory(factory),
       _resource(resource),
       _frame_guide(ui::layout_region_guide::make_shared()) {
-    presenter
+}
+
+void ui_indicator_container::setup() {
+    this->_presenter
         ->observe_indicator_count([this](std::size_t const &size) {
             this->_reload_indicators(size);
             this->_update_indicator_regions();
@@ -38,7 +42,7 @@ ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_c
         .sync()
         ->add_to(this->_pool);
 
-    view_look->safe_area_layout_guide()
+    this->_view_look->safe_area_layout_guide()
         ->observe([this](ui::region const &region) {
             ui::region_insets const insets{
                 .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
