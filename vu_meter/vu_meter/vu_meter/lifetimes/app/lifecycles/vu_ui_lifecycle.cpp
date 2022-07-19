@@ -7,6 +7,7 @@
 #include <cpp_utils/yas_assertion.h>
 
 #include "vu_ui_lifetime.hpp"
+#include "vu_ui_main_lifecycle.hpp"
 
 using namespace yas;
 using namespace yas::vu;
@@ -29,4 +30,5 @@ void ui_lifecycle::add_lifetime(std::shared_ptr<ui::standard> const &standard) {
     }
 
     this->_lifetime = ui_lifetime::make_shared(standard);
+    this->_lifetime->main_lifecycle->add_lifetime();
 }
