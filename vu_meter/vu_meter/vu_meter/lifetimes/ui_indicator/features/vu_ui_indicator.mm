@@ -10,6 +10,9 @@
 #include "vu_lifetime_accessor.hpp"
 #include "vu_ui_color.hpp"
 #include "vu_ui_indicator_constants.h"
+#include "vu_ui_indicator_layout.hpp"
+#include "vu_ui_indicator_presenter.hpp"
+#include "vu_ui_indicator_resource.hpp"
 #include "vu_ui_lifetime.hpp"
 #include "vu_ui_main_lifetime.hpp"
 #include "vu_ui_utils.hpp"
@@ -23,12 +26,13 @@ struct ui_indicator::impl {
     std::shared_ptr<ui::node> const node = ui::node::make_shared();
     std::shared_ptr<ui::layout_region_guide> const frame_layout_guide = ui::layout_region_guide::make_shared();
 
-    impl(std::shared_ptr<ui::standard> const &standard,
-         std::shared_ptr<ui_indicator_resource_for_indicator> const &resource,
+    impl(ui::standard *standard, ui_indicator_resource *resource,
          std::shared_ptr<ui_indicator_presenter> const &presenter)
         : _render_target(ui::render_target::make_shared(standard->view_look())),
           _resource(resource),
           _presenter(presenter) {
+        standard->root_node()->add_sub_node(this->node);
+
         // node
 
         this->node->attach_position_layout_guides(*this->_node_guide_point);
@@ -237,7 +241,7 @@ struct ui_indicator::impl {
 
    private:
     std::shared_ptr<ui::render_target> const _render_target;
-    std::shared_ptr<ui_indicator_resource_for_indicator> const _resource;
+    ui_indicator_resource *const _resource;
     std::shared_ptr<ui_indicator_presenter> const _presenter;
 
     std::shared_ptr<ui::node> const _batch_node = ui::node::make_shared();
@@ -260,24 +264,28 @@ struct ui_indicator::impl {
 
 #pragma mark - ui_indicator
 
-ui_indicator::ui_indicator(std::shared_ptr<ui::standard> const &standard,
-                           std::shared_ptr<ui_indicator_resource_for_indicator> const &resource,
-                           std::shared_ptr<ui_indicator_presenter> const &presenter)
+ui_indicator::ui_indicator(std::size_t const idx, ui::standard *standard, ui_indicator_resource *resource,
+                           std::shared_ptr<ui_indicator_presenter> const &presenter, ui_indicator_layout *layout)
     : _impl(std::make_unique<impl>(standard, resource, presenter)) {
+    layout
+        ->observe_regions([this, idx](std::vector<ui::region> const &regions) {
+            if (idx < regions.size()) {
+                return this->_impl->frame_layout_guide->set_region(regions.at(idx));
+            }
+        })
+        .sync()
+        ->add_to(this->_pool);
 }
 
-std::shared_ptr<ui::node> const &ui_indicator::node() {
-    return this->_impl->node;
-}
-
-void ui_indicator::set_region(ui::region const region) {
-    return this->_impl->frame_layout_guide->set_region(region);
+void ui_indicator::clean_up() {
+    this->_impl->node->remove_from_super_node();
 }
 
 std::shared_ptr<ui_indicator> ui_indicator::make_shared(std::size_t const idx) {
     auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
     auto const &ui_main_lifetime = lifetime_accessor::ui_main_lifetime();
     auto const presenter = ui_indicator_presenter::make_shared(idx);
-    return std::shared_ptr<ui_indicator>(
-        new ui_indicator{ui_lifetime->standard, ui_main_lifetime->indicator_resource, presenter});
+    return std::shared_ptr<ui_indicator>(new ui_indicator{idx, ui_lifetime->standard.get(),
+                                                          ui_main_lifetime->indicator_resource.get(), presenter,
+                                                          ui_main_lifetime->indicator_layout.get()});
 }
