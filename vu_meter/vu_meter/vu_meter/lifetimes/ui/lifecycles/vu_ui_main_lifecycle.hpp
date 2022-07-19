@@ -12,6 +12,8 @@ class ui_main_lifetime;
 struct ui_main_lifecycle final {
     [[nodiscard]] static std::shared_ptr<ui_main_lifecycle> make_shared();
 
+    std::shared_ptr<ui_main_lifetime> const &lifetime() const;
+
     void add_lifetime();
 
    private:

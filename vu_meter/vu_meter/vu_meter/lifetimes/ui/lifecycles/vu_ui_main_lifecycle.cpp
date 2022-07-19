@@ -15,6 +15,10 @@ std::shared_ptr<ui_main_lifecycle> ui_main_lifecycle::make_shared() {
     return std::make_shared<ui_main_lifecycle>();
 }
 
+std::shared_ptr<ui_main_lifetime> const &ui_main_lifecycle::lifetime() const {
+    return this->_lifetime;
+}
+
 void ui_main_lifecycle::add_lifetime() {
     if (this->_lifetime) {
         assertion_failure_if_not_test();
