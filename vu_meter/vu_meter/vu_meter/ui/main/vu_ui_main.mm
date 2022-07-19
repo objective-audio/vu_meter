@@ -16,7 +16,7 @@ using namespace yas::vu;
 
 ui_main::ui_main(std::shared_ptr<ui::view_look> const &view_look, std::shared_ptr<ui_main_presenter> const &presenter)
     : _presenter(presenter) {
-    view_look->background()->set_color(presenter->background_color());
+    view_look->background()->set_color(vu::base_color());
 }
 
 std::shared_ptr<ui_main> vu::ui_main::make_shared() {
