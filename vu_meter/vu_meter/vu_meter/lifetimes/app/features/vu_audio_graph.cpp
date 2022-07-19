@@ -1,11 +1,13 @@
 //
-//  vu_audio_graph.mm
+//  vu_audio_graph.cpp
 //
 
 #include "vu_audio_graph.hpp"
-#import <AVFoundation/AVFoundation.h>
+
 #include <audio/yas_audio_umbrella.h>
+
 #include <iostream>
+
 #include "vu_audio_device.hpp"
 #include "vu_indicator.hpp"
 #include "vu_indicator_value.hpp"
@@ -22,7 +24,10 @@ std::shared_ptr<audio_graph> audio_graph::make_shared(indicator_values *values, 
 }
 
 audio_graph::audio_graph(indicator_values *indicator_values, audio_device *audio_device)
-    : _indicator_values(indicator_values), _audio_device(audio_device) {
+    : _indicator_values(indicator_values),
+      _audio_device(audio_device),
+      _graph(audio::graph::make_shared()),
+      _input_tap(audio::graph_input_tap::make_shared()) {
 }
 
 void audio_graph::setup() {

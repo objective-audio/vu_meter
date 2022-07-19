@@ -11,6 +11,7 @@
 #include "vu_ui_color.hpp"
 #include "vu_ui_indicator_constants.h"
 #include "vu_ui_lifetime.hpp"
+#include "vu_ui_main_lifetime.hpp"
 #include "vu_ui_utils.hpp"
 
 using namespace yas;
@@ -273,9 +274,10 @@ void ui_indicator::set_region(ui::region const region) {
     return this->_impl->frame_layout_guide->set_region(region);
 }
 
-std::shared_ptr<ui_indicator> ui_indicator::make_shared(
-    std::shared_ptr<ui_indicator_resource_for_indicator> const &resource, std::size_t const idx) {
+std::shared_ptr<ui_indicator> ui_indicator::make_shared(std::size_t const idx) {
     auto const &ui_lifetime = lifetime_accessor::ui_lifetime();
+    auto const &ui_main_lifetime = lifetime_accessor::ui_main_lifetime();
     auto const presenter = ui_indicator_presenter::make_shared(idx);
-    return std::shared_ptr<ui_indicator>(new ui_indicator{ui_lifetime->standard, resource, presenter});
+    return std::shared_ptr<ui_indicator>(
+        new ui_indicator{ui_lifetime->standard, ui_main_lifetime->indicator_resource, presenter});
 }

@@ -10,6 +10,8 @@
 #include "vu_indicator_lifetime.hpp"
 #include "vu_ui_lifecycle.hpp"
 #include "vu_ui_lifetime.hpp"
+#include "vu_ui_main_lifecycle.hpp"
+#include "vu_ui_main_lifetime.hpp"
 
 using namespace yas;
 using namespace yas::vu;
@@ -27,6 +29,10 @@ std::shared_ptr<app_lifetime> const &lifetime_accessor::app_lifetime() {
 
 std::shared_ptr<ui_lifetime> const &lifetime_accessor::ui_lifetime() {
     return app_lifetime()->ui_lifecycle->lifetime();
+}
+
+std::shared_ptr<ui_main_lifetime> const &lifetime_accessor::ui_main_lifetime() {
+    return ui_lifetime()->main_lifecycle->lifetime();
 }
 
 std::shared_ptr<indicator_lifetime> const &lifetime_accessor::indicator_lifetime(std::size_t const idx) {
