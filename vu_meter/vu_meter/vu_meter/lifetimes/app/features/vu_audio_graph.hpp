@@ -1,5 +1,5 @@
 //
-//  vu_main.hpp
+//  vu_audio_graph.hpp
 //
 
 #pragma once
@@ -15,9 +15,9 @@ class indicator;
 class indicator_values;
 class audio_device;
 
-struct main {
-    [[nodiscard]] static std::shared_ptr<main> make_shared(indicator_values *, audio_device *);
-    main(indicator_values *, audio_device *);
+struct audio_graph {
+    [[nodiscard]] static std::shared_ptr<audio_graph> make_shared(indicator_values *, audio_device *);
+    audio_graph(indicator_values *, audio_device *);
 
     void setup();
 

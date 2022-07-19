@@ -4,10 +4,10 @@
 
 #include "vu_ui_indicator_presenter.hpp"
 
+#include "vu_audio_graph.hpp"
 #include "vu_indicator.hpp"
 #include "vu_indicator_lifetime.hpp"
 #include "vu_lifetime_accessor.hpp"
-#include "vu_main.hpp"
 #include "vu_ui_indicator_constants.h"
 #include "vu_ui_utils.hpp"
 

@@ -11,7 +11,7 @@
 namespace yas::vu {
 class ui_indicator;
 class ui_indicator_resource;
-class main;
+class audio_graph;
 
 struct ui_indicator_factory final : ui_indicator_factory_for_container {
     [[nodiscard]] std::shared_ptr<ui_indicator_for_container> make_indicator(std::size_t const idx) override;

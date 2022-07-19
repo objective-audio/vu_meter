@@ -16,7 +16,7 @@
 		B616FC1A26BF866F008B0F5A /* vu_ui_main_presenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616FC1826BF866F008B0F5A /* vu_ui_main_presenter.mm */; };
 		B616FC2126BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = B616FC1F26BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm */; };
 		B617CF642071AA320012B32A /* vu_ui_indicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B617CF622071AA320012B32A /* vu_ui_indicator.mm */; };
-		B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_main.mm */; };
+		B628C9C4205FD05B0085DF7F /* vu_audio_graph.mm in Sources */ = {isa = PBXBuildFile; fileRef = B628C9C2205FD05B0085DF7F /* vu_audio_graph.mm */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
@@ -126,8 +126,8 @@
 		B616FC2426BFF517008B0F5A /* vu_ui_indicator_dependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vu_ui_indicator_dependency.h; sourceTree = "<group>"; };
 		B617CF622071AA320012B32A /* vu_ui_indicator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator.mm; sourceTree = "<group>"; };
 		B617CF632071AA320012B32A /* vu_ui_indicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator.hpp; sourceTree = "<group>"; };
-		B628C9C2205FD05B0085DF7F /* vu_main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_main.mm; sourceTree = "<group>"; };
-		B628C9C3205FD05B0085DF7F /* vu_main.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_main.hpp; sourceTree = "<group>"; };
+		B628C9C2205FD05B0085DF7F /* vu_audio_graph.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_audio_graph.mm; sourceTree = "<group>"; };
+		B628C9C3205FD05B0085DF7F /* vu_audio_graph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_audio_graph.hpp; sourceTree = "<group>"; };
 		B62B5203205E1A0A00A300E5 /* vu_meter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vu_meter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B5206205E1A0A00A300E5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B62B5207205E1A0A00A300E5 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -527,8 +527,8 @@
 			children = (
 				B6AEEEC42885557D00C7B3C1 /* vu_indicator_values.cpp */,
 				B6AEEEC52885557D00C7B3C1 /* vu_indicator_values.hpp */,
-				B628C9C3205FD05B0085DF7F /* vu_main.hpp */,
-				B628C9C2205FD05B0085DF7F /* vu_main.mm */,
+				B628C9C3205FD05B0085DF7F /* vu_audio_graph.hpp */,
+				B628C9C2205FD05B0085DF7F /* vu_audio_graph.mm */,
 				B67781E528859A380062C4CF /* vu_audio_device.cpp */,
 				B67781E628859A380062C4CF /* vu_audio_device.hpp */,
 				B675644E206B21FA00944F8E /* vu_settings.hpp */,
@@ -691,7 +691,7 @@
 				B692FC3F26BE511900B8D573 /* vu_ui_indicator_presenter.mm in Sources */,
 				B6AEEEAD2885261100C7B3C1 /* vu_app_lifecycle.cpp in Sources */,
 				B67781EA2885A4E60062C4CF /* vu_audio_format.cpp in Sources */,
-				B628C9C4205FD05B0085DF7F /* vu_main.mm in Sources */,
+				B628C9C4205FD05B0085DF7F /* vu_audio_graph.mm in Sources */,
 				B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */,
 				B67781E728859A380062C4CF /* vu_audio_device.cpp in Sources */,
 				B60BE0CE26C020B4001028E5 /* vu_indicator.cpp in Sources */,

@@ -5,9 +5,9 @@
 #include "vu_app_lifetime.hpp"
 
 #include "vu_audio_device.hpp"
+#include "vu_audio_graph.hpp"
 #include "vu_indicator_lifecycle.hpp"
 #include "vu_indicator_values.hpp"
-#include "vu_main.hpp"
 #include "vu_settings.hpp"
 #include "vu_ui_lifecycle.hpp"
 
@@ -24,5 +24,5 @@ app_lifetime::app_lifetime()
       indicator_lifecycle(indicator_lifecycle::make_shared()),
       ui_lifecycle(ui_lifecycle::make_shared()),
       indicator_values(indicator_values::make_shared(this->indicator_lifecycle.get())),
-      main(main::make_shared(this->indicator_values.get(), this->audio_device.get())) {
+      audio_graph(audio_graph::make_shared(this->indicator_values.get(), this->audio_device.get())) {
 }

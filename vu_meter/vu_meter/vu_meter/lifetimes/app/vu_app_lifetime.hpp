@@ -12,7 +12,7 @@ class audio_device;
 class indicator_lifecycle;
 class ui_lifecycle;
 class indicator_values;
-class main;
+class audio_graph;
 
 struct app_lifetime final {
     [[nodiscard]] static std::shared_ptr<app_lifetime> make_shared();
@@ -25,6 +25,6 @@ struct app_lifetime final {
     std::shared_ptr<ui_lifecycle> const ui_lifecycle;
 
     std::shared_ptr<indicator_values> const indicator_values;
-    std::shared_ptr<main> const main;
+    std::shared_ptr<audio_graph> const audio_graph;
 };
 }  // namespace yas::vu

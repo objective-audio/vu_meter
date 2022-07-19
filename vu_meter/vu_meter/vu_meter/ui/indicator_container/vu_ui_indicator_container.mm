@@ -3,8 +3,8 @@
 //
 
 #include "vu_ui_indicator_container.hpp"
+#include "vu_audio_graph.hpp"
 #include "vu_lifetime_accessor.hpp"
-#include "vu_main.hpp"
 #include "vu_ui_indicator_resource.hpp"
 #include "vu_ui_lifetime.hpp"
 #include "vu_ui_utils.hpp"
