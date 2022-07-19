@@ -3,7 +3,6 @@
 //
 
 #include "vu_audio_graph.hpp"
-#import <AVFoundation/AVFoundation.h>
 #include <audio/yas_audio_umbrella.h>
 #include <iostream>
 #include "vu_audio_device.hpp"
