@@ -3,26 +3,18 @@
 //
 
 #import "RMSViewController.h"
+#include <ui/yas_ui_umbrella.h>
 #include "vu_app_lifetime.hpp"
 #include "vu_lifetime_accessor.hpp"
 #include "vu_ui_lifecycle.hpp"
 #include "vu_ui_lifetime.hpp"
-#include "vu_ui_main.hpp"
 
 NS_ASSUME_NONNULL_BEGIN
 
 using namespace yas;
 using namespace yas::vu;
 
-namespace yas::vu {
-struct view_controller_cpp {
-    std::shared_ptr<ui_main> ui_main = nullptr;
-};
-}
-
-@implementation RMSViewController {
-    view_controller_cpp _cpp;
-}
+@implementation RMSViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,8 +28,6 @@ struct view_controller_cpp {
     auto const standard = ui::standard::make_shared([self view_look], metal_system);
 
     lifetime_accessor::app_lifetime()->ui_lifecycle->add_lifetime(standard);
-
-    self->_cpp.ui_main = ui_main::make_shared();
 
     [self configure_with_metal_system:metal_system
                              renderer:standard->renderer()

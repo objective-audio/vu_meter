@@ -36,7 +36,7 @@
 		B675645E206F45FC00944F8E /* vu_ui_color.mm in Sources */ = {isa = PBXBuildFile; fileRef = B675645C206F45FC00944F8E /* vu_ui_color.mm */; };
 		B67781E728859A380062C4CF /* vu_audio_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781E528859A380062C4CF /* vu_audio_device.cpp */; };
 		B67781EA2885A4E60062C4CF /* vu_audio_format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781E82885A4E60062C4CF /* vu_audio_format.cpp */; };
-		B67781EE2886DAD60062C4CF /* vu_ui_main_lifetime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.cpp */; };
+		B67781EE2886DAD60062C4CF /* vu_ui_main_lifetime.mm in Sources */ = {isa = PBXBuildFile; fileRef = B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.mm */; };
 		B67781F22886DAF30062C4CF /* vu_ui_main_lifecycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67781F02886DAF30062C4CF /* vu_ui_main_lifecycle.cpp */; };
 		B68CE46F2442E294005019C2 /* KVOObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B68CE46E2442E294005019C2 /* KVOObserverTests.m */; };
 		B68CE471244350B9005019C2 /* vu_settings_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B68CE470244350B9005019C2 /* vu_settings_tests.mm */; };
@@ -165,7 +165,7 @@
 		B67781E628859A380062C4CF /* vu_audio_device.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_audio_device.hpp; sourceTree = "<group>"; };
 		B67781E82885A4E60062C4CF /* vu_audio_format.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_audio_format.cpp; sourceTree = "<group>"; };
 		B67781E92885A4E60062C4CF /* vu_audio_format.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_audio_format.hpp; sourceTree = "<group>"; };
-		B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_ui_main_lifetime.cpp; sourceTree = "<group>"; };
+		B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_main_lifetime.mm; sourceTree = "<group>"; };
 		B67781ED2886DAD60062C4CF /* vu_ui_main_lifetime.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main_lifetime.hpp; sourceTree = "<group>"; };
 		B67781F02886DAF30062C4CF /* vu_ui_main_lifecycle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_ui_main_lifecycle.cpp; sourceTree = "<group>"; };
 		B67781F12886DAF30062C4CF /* vu_ui_main_lifecycle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_main_lifecycle.hpp; sourceTree = "<group>"; };
@@ -392,7 +392,7 @@
 		B67781EB2886DAC30062C4CF /* ui_main */ = {
 			isa = PBXGroup;
 			children = (
-				B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.cpp */,
+				B67781EC2886DAD60062C4CF /* vu_ui_main_lifetime.mm */,
 				B67781ED2886DAD60062C4CF /* vu_ui_main_lifetime.hpp */,
 			);
 			path = ui_main;
@@ -711,7 +711,7 @@
 				B6E6666826C2C19D002AFC6B /* SceneDelegate.mm in Sources */,
 				B6AEEEC3288544A200C7B3C1 /* vu_indicator_value.cpp in Sources */,
 				B6AEEEB02885262600C7B3C1 /* vu_indicator_lifecycle.cpp in Sources */,
-				B67781EE2886DAD60062C4CF /* vu_ui_main_lifetime.cpp in Sources */,
+				B67781EE2886DAD60062C4CF /* vu_ui_main_lifetime.mm in Sources */,
 				B6AEEEBA28852E2600C7B3C1 /* vu_ui_lifetime.cpp in Sources */,
 				B692FC4326BE5E1A00B8D573 /* vu_ui_indicator_resource.mm in Sources */,
 				B616FC2126BFAE5E008B0F5A /* vu_ui_indicator_container_presenter.mm in Sources */,
