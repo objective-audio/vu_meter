@@ -22,7 +22,10 @@ std::shared_ptr<audio_graph> audio_graph::make_shared(indicator_values *values, 
 }
 
 audio_graph::audio_graph(indicator_values *indicator_values, audio_device *audio_device)
-    : _indicator_values(indicator_values), _audio_device(audio_device) {
+    : _indicator_values(indicator_values),
+      _audio_device(audio_device),
+      _graph(audio::graph::make_shared()),
+      _input_tap(audio::graph_input_tap::make_shared()) {
 }
 
 void audio_graph::setup() {
