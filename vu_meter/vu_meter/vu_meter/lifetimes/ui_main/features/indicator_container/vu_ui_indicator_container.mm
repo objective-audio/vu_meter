@@ -42,13 +42,13 @@ ui_indicator_container::ui_indicator_container(std::shared_ptr<vu_ui_indicator_c
         ->observe([this](ui::region const &region) {
             ui::region_insets const insets{
                 .left = vu::padding, .right = -vu::padding, .bottom = vu::padding, .top = -vu::padding};
-            this->set_frame(region + insets);
+            this->_set_frame(region + insets);
         })
         .sync()
         ->add_to(this->_pool);
 }
 
-void ui_indicator_container::set_frame(ui::region const frame) {
+void ui_indicator_container::_set_frame(ui::region const frame) {
     this->_frame_guide->set_region(frame);
 }
 
