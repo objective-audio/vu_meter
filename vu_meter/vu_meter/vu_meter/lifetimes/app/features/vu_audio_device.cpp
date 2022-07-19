@@ -49,6 +49,10 @@ observing::syncable audio_device::observe_format(std::function<void(audio_format
     return this->_format->observe(std::move(handler));
 }
 
+void audio_device::did_become_active() {
+    audio::ios_session::shared()->did_become_active();
+}
+
 audio_format audio_device::_make_format() const {
     if (auto const &device = this->_ios_device) {
         if (auto const &format = device.value()->input_format()) {
