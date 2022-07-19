@@ -17,8 +17,7 @@ struct ui_indicator final : ui_indicator_for_container {
 
     void set_region(ui::region const) override;
 
-    [[nodiscard]] static std::shared_ptr<ui_indicator> make_shared(
-        std::shared_ptr<ui_indicator_resource_for_indicator> const &, std::size_t const);
+    [[nodiscard]] static std::shared_ptr<ui_indicator> make_shared(std::size_t const);
 
    private:
     class impl;
