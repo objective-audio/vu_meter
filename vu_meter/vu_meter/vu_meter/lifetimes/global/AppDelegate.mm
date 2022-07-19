@@ -12,7 +12,12 @@ using namespace yas::vu;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    if (NSClassFromString(@"XCTestCase") != nil) {
+        return YES;
+    }
+
     lifetime_accessor::app_lifecycle()->add_lifetime();
+
     return YES;
 }
 
