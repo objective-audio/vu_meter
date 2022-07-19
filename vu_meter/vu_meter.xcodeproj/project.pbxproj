@@ -417,12 +417,8 @@
 			children = (
 				B692FC4026BE569700B8D573 /* vu_ui_indicator_constants.h */,
 				B616FC2426BFF517008B0F5A /* vu_ui_indicator_dependency.h */,
-				B692FC4826BEAA3F00B8D573 /* vu_ui_indicator_factory.hpp */,
-				B692FC4726BEAA3F00B8D573 /* vu_ui_indicator_factory.mm */,
 				B692FC3E26BE511900B8D573 /* vu_ui_indicator_presenter.hpp */,
 				B692FC3D26BE511900B8D573 /* vu_ui_indicator_presenter.mm */,
-				B692FC4226BE5E1A00B8D573 /* vu_ui_indicator_resource.hpp */,
-				B692FC4126BE5E1A00B8D573 /* vu_ui_indicator_resource.mm */,
 				B617CF632071AA320012B32A /* vu_ui_indicator.hpp */,
 				B617CF622071AA320012B32A /* vu_ui_indicator.mm */,
 			);
@@ -560,6 +556,10 @@
 			children = (
 				B6756456206F3EF800944F8E /* vu_ui_background.hpp */,
 				B6756455206F3EF800944F8E /* vu_ui_background.mm */,
+				B692FC4226BE5E1A00B8D573 /* vu_ui_indicator_resource.hpp */,
+				B692FC4126BE5E1A00B8D573 /* vu_ui_indicator_resource.mm */,
+				B692FC4826BEAA3F00B8D573 /* vu_ui_indicator_factory.hpp */,
+				B692FC4726BEAA3F00B8D573 /* vu_ui_indicator_factory.mm */,
 				B616FC1B26BFADD4008B0F5A /* indicator_container */,
 				B692FC4526BE605D00B8D573 /* indicator */,
 			);
