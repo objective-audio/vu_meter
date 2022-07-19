@@ -21,8 +21,9 @@ using namespace vu;
 - (void)scene:(UIScene *)scene
     willConnectToSession:(UISceneSession *)session
                  options:(UISceneConnectionOptions *)connectionOptions {
-    auto const &app_lifetime = lifetime_accessor::app_lifetime();
-    self->_audio_device = app_lifetime->audio_device;
+    if (auto const &app_lifetime = lifetime_accessor::app_lifetime()) {
+        self->_audio_device = app_lifetime->audio_device;
+    }
 }
 
 - (void)sceneDidDisconnect:(UIScene *)scene {
