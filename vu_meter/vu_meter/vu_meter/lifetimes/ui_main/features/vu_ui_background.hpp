@@ -11,6 +11,6 @@ struct ui_background final {
     [[nodiscard]] static std::shared_ptr<ui_background> make_shared();
 
    private:
-    ui_background(std::shared_ptr<ui::view_look> const &);
+    ui_background(ui::view_look *);
 };
 }  // namespace yas::vu
