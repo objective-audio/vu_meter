@@ -16,6 +16,10 @@ using namespace yas::vu;
 
 @implementation RMSViewController
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
