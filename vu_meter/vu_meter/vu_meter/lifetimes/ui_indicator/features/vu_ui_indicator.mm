@@ -4,8 +4,8 @@
 
 #include "vu_ui_indicator.hpp"
 
-#include <audio/yas_audio_umbrella.h>
 #include <cpp_utils/yas_fast_each.h>
+#include <audio/yas_audio_umbrella.hpp>
 
 #include "vu_lifetime_accessor.hpp"
 #include "vu_ui_color.hpp"
