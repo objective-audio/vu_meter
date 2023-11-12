@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <processing/yas_processing_umbrella.h>
+#include <processing/yas_processing_umbrella.hpp>
 
 namespace yas::vu::send {
 enum class output : proc::connector_index_t {
