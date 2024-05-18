@@ -3,7 +3,7 @@
 //
 
 #import "KVOObserver.h"
-#import <objc_utils/yas_objc_macros.h>
+#import <objc-utils/macros.h>
 
 @interface KVOObserver ()
 @property (nonatomic, weak) NSObject *target;

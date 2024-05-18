@@ -4,7 +4,7 @@
 
 #include "vu_indicator.hpp"
 
-#include <audio/yas_audio_umbrella.hpp>
+#include <audio-engine/umbrella.hpp>
 
 #include "vu_indicator_value.hpp"
 #include "vu_settings.hpp"

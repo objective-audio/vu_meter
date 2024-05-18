@@ -6,7 +6,7 @@
 
 #include <ui/yas_ui_umbrella.h>
 
-#include <observing/yas_observing_umbrella.hpp>
+#include <observing/umbrella.hpp>
 
 namespace yas::vu {
 struct ui_indicator_resource final {

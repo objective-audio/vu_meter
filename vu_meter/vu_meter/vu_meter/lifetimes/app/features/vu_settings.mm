@@ -4,8 +4,8 @@
 
 #include "vu_settings.hpp"
 #import <Foundation/Foundation.h>
-#include <cpp_utils/yas_cf_utils.h>
-#include <cpp_utils/yas_objc_ptr.h>
+#include <cpp-utils/cf_utils.h>
+#include <cpp-utils/objc_ptr.h>
 #import "KVOObserver.h"
 
 using namespace yas;

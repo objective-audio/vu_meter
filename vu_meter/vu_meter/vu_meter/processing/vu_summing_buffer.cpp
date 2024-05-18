@@ -5,7 +5,7 @@
 #include "vu_summing_buffer.hpp"
 
 #include <Accelerate/Accelerate.h>
-#include <cpp_utils/yas_data.h>
+#include <cpp-utils/data.h>
 
 using namespace yas;
 

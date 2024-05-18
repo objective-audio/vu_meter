@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,10 +18,6 @@
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
 		B62B5216205E1A0A00A300E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B5215205E1A0A00A300E5 /* main.m */; };
-		B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */; };
-		B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5400205E59C500A300E5 /* MetalKit.framework */; };
-		B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */; };
-		B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5405205E5A0600A300E5 /* Accelerate.framework */; };
 		B659949A20620A5E00EBC1D8 /* vu_send_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B659949820620A5E00EBC1D8 /* vu_send_module.cpp */; };
 		B67564412067AE0600944F8E /* TestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67564402067AE0600944F8E /* TestAppDelegate.m */; };
 		B67564442067B85800944F8E /* vu_summing_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B67564422067B85800944F8E /* vu_summing_buffer.cpp */; };
@@ -50,31 +46,14 @@
 		B6AEEEBD28852F5500C7B3C1 /* vu_ui_lifecycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AEEEBB28852F5500C7B3C1 /* vu_ui_lifecycle.cpp */; };
 		B6AEEEC3288544A200C7B3C1 /* vu_indicator_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AEEEC1288544A200C7B3C1 /* vu_indicator_value.cpp */; };
 		B6AEEEC62885557D00C7B3C1 /* vu_indicator_values.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AEEEC42885557D00C7B3C1 /* vu_indicator_values.cpp */; };
-		B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62B5409205E5A7600A300E5 /* AVFoundation.framework */; };
 		B6CCC27620E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */; };
+		B6CE3E152BF8C2120056FBDD /* audio in Frameworks */ = {isa = PBXBuildFile; productRef = B6CE3E142BF8C2120056FBDD /* audio */; };
+		B6CE3E1B2BF8F7300056FBDD /* ui in Frameworks */ = {isa = PBXBuildFile; productRef = B6CE3E1A2BF8F7300056FBDD /* ui */; };
 		B6E6666826C2C19D002AFC6B /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6E6666726C2C19D002AFC6B /* SceneDelegate.mm */; };
 		B6EB9C4A2886FBC100B6A914 /* vu_ui_indicator_lifecycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9C482886FBC100B6A914 /* vu_ui_indicator_lifecycle.cpp */; };
 		B6EB9C4D2886FBEE00B6A914 /* vu_ui_indicator_lifetime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9C4B2886FBEE00B6A914 /* vu_ui_indicator_lifetime.cpp */; };
 		B6EB9C512887B86C00B6A914 /* vu_ui_indicator_layout.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9C4F2887B86C00B6A914 /* vu_ui_indicator_layout.mm */; };
 		B6EB9C542887D40C00B6A914 /* vu_ui_indicators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6EB9C522887D40C00B6A914 /* vu_ui_indicators.cpp */; };
-		B6EDB4B1262453F1002DB62C /* audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; };
-		B6EDB4B2262453F1002DB62C /* audio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2A2207177300717FA9 /* audio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4B3262453F1002DB62C /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2E2207177300717FA9 /* cpp_utils.framework */; };
-		B6EDB4B4262453F1002DB62C /* cpp_utils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC2E2207177300717FA9 /* cpp_utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4B5262453F1002DB62C /* objc_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC302207177300717FA9 /* objc_utils.framework */; };
-		B6EDB4B6262453F1002DB62C /* objc_utils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC302207177300717FA9 /* objc_utils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4B7262453F1002DB62C /* observing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4B0262453F1002DB62C /* observing.framework */; };
-		B6EDB4B8262453F1002DB62C /* observing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4B0262453F1002DB62C /* observing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4B9262453F1002DB62C /* processing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC322207177300717FA9 /* processing.framework */; };
-		B6EDB4BA262453F1002DB62C /* processing.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC322207177300717FA9 /* processing.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4BB262453F1002DB62C /* ui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC342207177300717FA9 /* ui.framework */; };
-		B6EDB4BC262453F1002DB62C /* ui.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6E2CC342207177300717FA9 /* ui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B6EDB4D226247E15002DB62C /* audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4D126247E15002DB62C /* audio.framework */; };
-		B6EDB4D426247E15002DB62C /* cpp_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4D326247E15002DB62C /* cpp_utils.framework */; };
-		B6EDB4D626247E15002DB62C /* objc_utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4D526247E15002DB62C /* objc_utils.framework */; };
-		B6EDB4D826247E15002DB62C /* observing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4D726247E15002DB62C /* observing.framework */; };
-		B6EDB4DA26247E15002DB62C /* processing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4D926247E15002DB62C /* processing.framework */; };
-		B6EDB4DC26247E15002DB62C /* ui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EDB4DB26247E15002DB62C /* ui.framework */; };
 		B6FF26DF23E1B79B00E38ED3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
@@ -95,12 +74,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B6EDB4B4262453F1002DB62C /* cpp_utils.framework in Embed Frameworks */,
-				B6EDB4B6262453F1002DB62C /* objc_utils.framework in Embed Frameworks */,
-				B6EDB4BC262453F1002DB62C /* ui.framework in Embed Frameworks */,
-				B6EDB4B8262453F1002DB62C /* observing.framework in Embed Frameworks */,
-				B6EDB4BA262453F1002DB62C /* processing.framework in Embed Frameworks */,
-				B6EDB4B2262453F1002DB62C /* audio.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,12 +103,6 @@
 		B62B5215205E1A0A00A300E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B62B521B205E1A0A00A300E5 /* vu_meterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vu_meterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B5221205E1A0A00A300E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		B62B53FF205E59C500A300E5 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		B62B5400205E59C500A300E5 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
-		B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalPerformanceShaders.framework; path = System/Library/Frameworks/MetalPerformanceShaders.framework; sourceTree = SDKROOT; };
-		B62B5405205E5A0600A300E5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		B62B5409205E5A7600A300E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B659949820620A5E00EBC1D8 /* vu_send_module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_send_module.cpp; sourceTree = "<group>"; };
 		B659949920620A5E00EBC1D8 /* vu_send_module.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_send_module.hpp; sourceTree = "<group>"; };
 		B675643F2067AE0600944F8E /* TestAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestAppDelegate.h; sourceTree = "<group>"; };
@@ -188,16 +155,7 @@
 		B6AEEEC2288544A200C7B3C1 /* vu_indicator_value.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_indicator_value.hpp; sourceTree = "<group>"; };
 		B6AEEEC42885557D00C7B3C1 /* vu_indicator_values.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_indicator_values.cpp; sourceTree = "<group>"; };
 		B6AEEEC52885557D00C7B3C1 /* vu_indicator_values.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_indicator_values.hpp; sourceTree = "<group>"; };
-		B6B09C67220885C000B483BC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		B6B09C69220885D100B483BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		B6B09C6B220885E100B483BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B6CCC27520E27EEA00716A62 /* vu_ui_indicator_layout_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vu_ui_indicator_layout_tests.mm; sourceTree = "<group>"; };
-		B6E2CC2A2207177300717FA9 /* audio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = audio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E2CC2C2207177300717FA9 /* chaining.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = chaining.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E2CC2E2207177300717FA9 /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E2CC302207177300717FA9 /* objc_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = objc_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E2CC322207177300717FA9 /* processing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = processing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E2CC342207177300717FA9 /* ui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E6666626C2C19D002AFC6B /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		B6E6666726C2C19D002AFC6B /* SceneDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneDelegate.mm; sourceTree = "<group>"; };
 		B6EB9C482886FBC100B6A914 /* vu_ui_indicator_lifecycle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_ui_indicator_lifecycle.cpp; sourceTree = "<group>"; };
@@ -208,13 +166,6 @@
 		B6EB9C502887B86C00B6A914 /* vu_ui_indicator_layout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicator_layout.hpp; sourceTree = "<group>"; };
 		B6EB9C522887D40C00B6A914 /* vu_ui_indicators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vu_ui_indicators.cpp; sourceTree = "<group>"; };
 		B6EB9C532887D40C00B6A914 /* vu_ui_indicators.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vu_ui_indicators.hpp; sourceTree = "<group>"; };
-		B6EDB4B0262453F1002DB62C /* observing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = observing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4D126247E15002DB62C /* audio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = audio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4D326247E15002DB62C /* cpp_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = cpp_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4D526247E15002DB62C /* objc_utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = objc_utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4D726247E15002DB62C /* observing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = observing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4D926247E15002DB62C /* processing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = processing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6EDB4DB26247E15002DB62C /* ui.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ui.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = vu_meter/vu_meter/Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,17 +174,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6B09C73220887AE00B483BC /* AVFoundation.framework in Frameworks */,
-				B62B5406205E5A0600A300E5 /* Accelerate.framework in Frameworks */,
-				B6EDB4B3262453F1002DB62C /* cpp_utils.framework in Frameworks */,
-				B6EDB4B9262453F1002DB62C /* processing.framework in Frameworks */,
-				B62B5404205E59F800A300E5 /* MetalPerformanceShaders.framework in Frameworks */,
-				B6EDB4BB262453F1002DB62C /* ui.framework in Frameworks */,
-				B62B5402205E59C500A300E5 /* MetalKit.framework in Frameworks */,
-				B6EDB4B7262453F1002DB62C /* observing.framework in Frameworks */,
-				B62B53FE205E59BB00A300E5 /* AudioToolbox.framework in Frameworks */,
-				B6EDB4B5262453F1002DB62C /* objc_utils.framework in Frameworks */,
-				B6EDB4B1262453F1002DB62C /* audio.framework in Frameworks */,
+				B6CE3E1B2BF8F7300056FBDD /* ui in Frameworks */,
+				B6CE3E152BF8C2120056FBDD /* audio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,12 +183,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6EDB4D426247E15002DB62C /* cpp_utils.framework in Frameworks */,
-				B6EDB4D626247E15002DB62C /* objc_utils.framework in Frameworks */,
-				B6EDB4DC26247E15002DB62C /* ui.framework in Frameworks */,
-				B6EDB4D826247E15002DB62C /* observing.framework in Frameworks */,
-				B6EDB4DA26247E15002DB62C /* processing.framework in Frameworks */,
-				B6EDB4D226247E15002DB62C /* audio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +196,6 @@
 				B62B5205205E1A0A00A300E5 /* vu_meter */,
 				B62B521E205E1A0A00A300E5 /* vu_meterTests */,
 				B62B5204205E1A0A00A300E5 /* Products */,
-				B62B53FC205E59BB00A300E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,35 +229,6 @@
 				B68CE46E2442E294005019C2 /* KVOObserverTests.m */,
 			);
 			path = vu_meterTests;
-			sourceTree = "<group>";
-		};
-		B62B53FC205E59BB00A300E5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B6EDB4D126247E15002DB62C /* audio.framework */,
-				B6EDB4D326247E15002DB62C /* cpp_utils.framework */,
-				B6EDB4D526247E15002DB62C /* objc_utils.framework */,
-				B6EDB4D726247E15002DB62C /* observing.framework */,
-				B6EDB4D926247E15002DB62C /* processing.framework */,
-				B6EDB4DB26247E15002DB62C /* ui.framework */,
-				B6EDB4B0262453F1002DB62C /* observing.framework */,
-				B6B09C6B220885E100B483BC /* UIKit.framework */,
-				B6B09C69220885D100B483BC /* CoreGraphics.framework */,
-				B6B09C67220885C000B483BC /* CoreText.framework */,
-				B6E2CC2A2207177300717FA9 /* audio.framework */,
-				B6E2CC2C2207177300717FA9 /* chaining.framework */,
-				B6E2CC2E2207177300717FA9 /* cpp_utils.framework */,
-				B6E2CC302207177300717FA9 /* objc_utils.framework */,
-				B6E2CC322207177300717FA9 /* processing.framework */,
-				B6E2CC342207177300717FA9 /* ui.framework */,
-				B62B5409205E5A7600A300E5 /* AVFoundation.framework */,
-				B62B5405205E5A0600A300E5 /* Accelerate.framework */,
-				B62B5403205E59F800A300E5 /* MetalPerformanceShaders.framework */,
-				B62B53FF205E59C500A300E5 /* Metal.framework */,
-				B62B5400205E59C500A300E5 /* MetalKit.framework */,
-				B62B53FD205E59BB00A300E5 /* AudioToolbox.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B62B5410205FCFED00A300E5 /* vu_meter */ = {
@@ -593,6 +499,10 @@
 			dependencies = (
 			);
 			name = vu_meter;
+			packageProductDependencies = (
+				B6CE3E142BF8C2120056FBDD /* audio */,
+				B6CE3E1A2BF8F7300056FBDD /* ui */,
+			);
 			productName = vu_meter;
 			productReference = B62B5203205E1A0A00A300E5 /* vu_meter.app */;
 			productType = "com.apple.product-type.application";
@@ -644,6 +554,10 @@
 				Base,
 			);
 			mainGroup = B62B51FA205E1A0A00A300E5;
+			packageReferences = (
+				B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */,
+				B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */,
+			);
 			productRefGroup = B62B5204205E1A0A00A300E5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -888,7 +802,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -903,7 +820,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meter";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -918,7 +838,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meterTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -934,7 +858,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.objective-audio.vu-meterTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -973,6 +901,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/objective-audio/audio_engine.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/objective-audio/ui.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B6CE3E142BF8C2120056FBDD /* audio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */;
+			productName = audio;
+		};
+		B6CE3E1A2BF8F7300056FBDD /* ui */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */;
+			productName = ui;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B62B51FB205E1A0A00A300E5 /* Project object */;
 }

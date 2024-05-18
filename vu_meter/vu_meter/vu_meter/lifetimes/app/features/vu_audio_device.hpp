@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include <observing/yas_observing_umbrella.hpp>
+#include <observing/umbrella.hpp>
 #include <optional>
 
 #include "vu_audio_format.hpp"

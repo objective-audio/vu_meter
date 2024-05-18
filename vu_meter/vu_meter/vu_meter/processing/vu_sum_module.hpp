@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <processing/yas_processing_umbrella.hpp>
+#include <audio-processing/umbrella.hpp>
 
 namespace yas::vu::sum {
 enum class output : proc::connector_index_t {

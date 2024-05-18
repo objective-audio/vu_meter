@@ -3,7 +3,7 @@
 //
 
 #include "vu_ui_utils.hpp"
-#include <audio/yas_audio_umbrella.hpp>
+#include <audio-engine/umbrella.hpp>
 #include "vu_ui_color.hpp"
 
 using namespace yas;

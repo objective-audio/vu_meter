@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <observing/yas_observing_umbrella.hpp>
+#include <observing/umbrella.hpp>
 
 #include "vu_indicator_dependency.h"
 

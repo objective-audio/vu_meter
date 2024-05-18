@@ -3,7 +3,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <objc_utils/objc_utils.h>
 #import "KVOObserver.h"
 
 @interface TestObject : NSObject

@@ -4,7 +4,7 @@
 
 #include "vu_app_lifecycle.hpp"
 
-#include <cpp_utils/yas_assertion.h>
+#include <cpp-utils/assertion.h>
 
 #include "vu_app_lifetime.hpp"
 #include "vu_audio_graph.hpp"

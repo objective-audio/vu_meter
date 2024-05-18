@@ -3,7 +3,7 @@
 //
 
 #import "TestAppDelegate.h"
-#import <objc_utils/yas_objc_macros.h>
+#import <objc-utils/macros.h>
 
 @implementation TestAppDelegate
 

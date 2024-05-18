@@ -4,7 +4,7 @@
 
 #include "vu_indicator_lifecycle.hpp"
 
-#include <cpp_utils/yas_fast_each.h>
+#include <cpp-utils/fast_each.h>
 
 #include "vu_indicator_lifetime.hpp"
 

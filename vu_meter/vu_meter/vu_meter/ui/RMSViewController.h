@@ -3,7 +3,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <ui/yas_ui_metal_view_controller.h>
+#import <ui/metal/view/yas_ui_metal_view_controller.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

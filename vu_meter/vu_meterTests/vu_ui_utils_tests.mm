@@ -3,7 +3,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <audio/yas_audio_umbrella.h>
+#import <audio-engine/umbrella.h>
 #import "vu_ui_utils.hpp"
 
 using namespace yas;

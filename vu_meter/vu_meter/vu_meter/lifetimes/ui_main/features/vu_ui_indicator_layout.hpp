@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <ui/yas_ui_types.h>
+#include <ui/common/yas_ui_types.h>
 
 #include <memory>
-#include <observing/yas_observing_umbrella.hpp>
+#include <observing/umbrella.hpp>
 
 namespace yas::ui {
 class layout_region_guide;

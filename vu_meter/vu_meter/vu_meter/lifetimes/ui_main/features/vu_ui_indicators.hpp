@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include <observing/yas_observing_umbrella.hpp>
+#include <observing/umbrella.hpp>
 
 namespace yas::vu {
 class indicator_lifecycle;

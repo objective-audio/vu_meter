@@ -4,7 +4,7 @@
 
 #include "vu_ui_main_lifecycle.hpp"
 
-#include <cpp_utils/yas_assertion.h>
+#include <cpp-utils/assertion.h>
 
 #include "vu_ui_indicators.hpp"
 #include "vu_ui_main_lifetime.hpp"

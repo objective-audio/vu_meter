@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <audio-processing/umbrella.hpp>
 #include <optional>
-#include <processing/yas_processing_umbrella.hpp>
 #include <vector>
 
 namespace yas::vu {
