@@ -15,7 +15,7 @@ static NSString *const reference_key = @"reference";
 
 static int32_t constexpr reference_max = 0;
 static int32_t constexpr reference_min = -30;
-}
+}  // namespace yas::vu
 
 struct vu::settings::impl {
     observing::value::holder_ptr<int32_t> _reference = observing::value::holder<int32_t>::make_shared(0);

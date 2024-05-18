@@ -17,7 +17,7 @@ struct settings : settings_for_indicator {
         return reference_value;
     }
 };
-}
+}  // namespace yas::vu::test_utils
 
 @interface vu_indicator_tests : XCTestCase
 
