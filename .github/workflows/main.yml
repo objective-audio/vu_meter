@@ -31,7 +31,7 @@ jobs:
       run:
         xcodebuild 
           -workspace vu_meter.xcworkspace
-          -scheme vu_meter
+          -scheme vu-meter-core
           -configuration debug
           -destination 'platform=iOS Simulator,name=iPhone 15'
           clean test
