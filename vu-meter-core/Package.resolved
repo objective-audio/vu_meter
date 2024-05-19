@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "audio_engine",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/objective-audio/audio_engine.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "864ee708d02ce3e81771e535827c9ea3d3f3a67d"
+      }
+    },
+    {
+      "identity" : "cpp_utils",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/objective-audio/cpp_utils.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "919df4b021cc053e22d2a0770e46162cc464e40a"
+      }
+    },
+    {
+      "identity" : "ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/objective-audio/ui.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c305f327d724732f18641a799ed97fcef3ed0421"
+      }
+    }
+  ],
+  "version" : 2
+}
