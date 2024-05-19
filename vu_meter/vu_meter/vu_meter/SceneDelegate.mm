@@ -3,9 +3,9 @@
 //
 
 #import "SceneDelegate.h"
-#include <vu-meter-core/lifetimes/app/vu_app_lifetime.hpp>
-#include <vu-meter-core/lifetimes/app/features/vu_audio_device.hpp>
-#include <vu-meter-core/lifetimes/global/vu_lifetime_accessor.hpp>
+#include <vu-meter-core/lifetimes/app/app_lifetime.hpp>
+#include <vu-meter-core/lifetimes/app/features/audio_device.hpp>
+#include <vu-meter-core/lifetimes/global/lifetime_accessor.hpp>
 
 using namespace yas;
 using namespace vu;

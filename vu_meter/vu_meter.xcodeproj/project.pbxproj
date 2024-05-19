@@ -3,19 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B6259CF82BF99D8A00F5861C /* vu-meter-core in Frameworks */ = {isa = PBXBuildFile; productRef = B6259CF72BF99D8A00F5861C /* vu-meter-core */; };
+		B6259CFD2BFA2E9A00F5861C /* vu-meter-core in Frameworks */ = {isa = PBXBuildFile; productRef = B6259CFC2BFA2E9A00F5861C /* vu-meter-core */; };
 		B62B5208205E1A0A00A300E5 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B62B5207205E1A0A00A300E5 /* AppDelegate.mm */; };
 		B62B5210205E1A0A00A300E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B520F205E1A0A00A300E5 /* Assets.xcassets */; };
 		B62B5213205E1A0A00A300E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B5211205E1A0A00A300E5 /* LaunchScreen.storyboard */; };
 		B62B5216205E1A0A00A300E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62B5215205E1A0A00A300E5 /* main.m */; };
 		B6756452206F0A3B00944F8E /* RMSViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6756451206F0A3B00944F8E /* RMSViewController.mm */; };
 		B6756454206F167300944F8E /* RMSMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6756453206F167300944F8E /* RMSMain.storyboard */; };
-		B6CE3E152BF8C2120056FBDD /* audio in Frameworks */ = {isa = PBXBuildFile; productRef = B6CE3E142BF8C2120056FBDD /* audio */; };
-		B6CE3E1B2BF8F7300056FBDD /* ui in Frameworks */ = {isa = PBXBuildFile; productRef = B6CE3E1A2BF8F7300056FBDD /* ui */; };
 		B6E6666826C2C19D002AFC6B /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6E6666726C2C19D002AFC6B /* SceneDelegate.mm */; };
 		B6FF26DF23E1B79B00E38ED3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B6FF26DE23E1B79B00E38ED3 /* Settings.bundle */; };
 /* End PBXBuildFile section */
@@ -54,9 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6259CF82BF99D8A00F5861C /* vu-meter-core in Frameworks */,
-				B6CE3E1B2BF8F7300056FBDD /* ui in Frameworks */,
-				B6CE3E152BF8C2120056FBDD /* audio in Frameworks */,
+				B6259CFD2BFA2E9A00F5861C /* vu-meter-core in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,9 +128,7 @@
 			);
 			name = vu_meter;
 			packageProductDependencies = (
-				B6CE3E142BF8C2120056FBDD /* audio */,
-				B6CE3E1A2BF8F7300056FBDD /* ui */,
-				B6259CF72BF99D8A00F5861C /* vu-meter-core */,
+				B6259CFC2BFA2E9A00F5861C /* vu-meter-core */,
 			);
 			productName = vu_meter;
 			productReference = B62B5203205E1A0A00A300E5 /* vu_meter.app */;
@@ -165,8 +159,7 @@
 			);
 			mainGroup = B62B51FA205E1A0A00A300E5;
 			packageReferences = (
-				B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */,
-				B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */,
+				B6259CFB2BFA2E9A00F5861C /* XCLocalSwiftPackageReference "../vu-meter-core" */,
 			);
 			productRefGroup = B62B5204205E1A0A00A300E5 /* Products */;
 			projectDirPath = "";
@@ -268,7 +261,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -320,7 +312,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -335,6 +326,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -353,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WVVR5YE53F;
 				INFOPLIST_FILE = vu_meter/vu_meter/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -386,39 +379,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/objective-audio/audio_engine.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		B6259CFB2BFA2E9A00F5861C /* XCLocalSwiftPackageReference "../vu-meter-core" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../vu-meter-core";
 		};
-		B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/objective-audio/ui.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B6259CF72BF99D8A00F5861C /* vu-meter-core */ = {
+		B6259CFC2BFA2E9A00F5861C /* vu-meter-core */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "vu-meter-core";
-		};
-		B6CE3E142BF8C2120056FBDD /* audio */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6CE3E132BF8C2120056FBDD /* XCRemoteSwiftPackageReference "audio_engine" */;
-			productName = audio;
-		};
-		B6CE3E1A2BF8F7300056FBDD /* ui */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B6CE3E192BF8F7300056FBDD /* XCRemoteSwiftPackageReference "ui" */;
-			productName = ui;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
