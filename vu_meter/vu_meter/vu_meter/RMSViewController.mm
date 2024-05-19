@@ -23,10 +23,6 @@ using namespace yas::vu;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    if (NSClassFromString(@"XCTest")) {
-        return;
-    }
-
     auto const metal_system = ui::metal_system::make_shared(
         objc_ptr_with_move_object(MTLCreateSystemDefaultDevice()).object(), self.metalView, 4);
     auto const standard = ui::standard::make_shared([self view_look], metal_system);
