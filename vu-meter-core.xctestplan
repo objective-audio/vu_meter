@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "48BEAED5-8A31-4746-B018-5094DBC1FA9B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "vu-meter-core-tests",
+        "name" : "vu-meter-core-tests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "vu-meter-objc-tests",
+        "name" : "vu-meter-objc-tests"
+      }
+    }
+  ],
+  "version" : 1
+}

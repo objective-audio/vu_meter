@@ -7,4 +7,7 @@
    <FileRef
       location = "group:vu-meter-core">
    </FileRef>
+   <FileRef
+      location = "group:vu-meter-core.xctestplan">
+   </FileRef>
 </Workspace>
