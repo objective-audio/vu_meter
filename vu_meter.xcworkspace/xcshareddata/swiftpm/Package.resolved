@@ -1,5 +1,4 @@
 {
-  "originHash" : "efa551b5836f28ea386ccb397be35ef2a774c52e3ed5f35ab292c0eac0ab2093",
   "pins" : [
     {
       "identity" : "audio_engine",
@@ -7,7 +6,7 @@
       "location" : "https://github.com/objective-audio/audio_engine.git",
       "state" : {
         "branch" : "master",
-        "revision" : "864ee708d02ce3e81771e535827c9ea3d3f3a67d"
+        "revision" : "75059a3032deb32d24a93edcdc30fcbbe0317819"
       }
     },
     {
@@ -16,7 +15,7 @@
       "location" : "https://github.com/objective-audio/cpp_utils.git",
       "state" : {
         "branch" : "master",
-        "revision" : "919df4b021cc053e22d2a0770e46162cc464e40a"
+        "revision" : "128652315bacd561f66661fda76039e5e0b265f3"
       }
     },
     {
@@ -25,9 +24,9 @@
       "location" : "https://github.com/objective-audio/ui.git",
       "state" : {
         "branch" : "master",
-        "revision" : "c305f327d724732f18641a799ed97fcef3ed0421"
+        "revision" : "7e9e9df93bf64363bc60f972d892e1906dab555e"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
