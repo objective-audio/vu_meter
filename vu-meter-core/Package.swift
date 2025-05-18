@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -37,6 +37,6 @@ let package = Package(
             name: "vu-meter-core-tests",
             dependencies: ["vu-meter-core"]),
     ],
-    cLanguageStandard: .gnu18,
+    cLanguageStandard: .gnu2x,
     cxxLanguageStandard: .gnucxx2b
 )

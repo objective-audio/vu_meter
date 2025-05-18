@@ -11,14 +11,14 @@ on:
     branches: [ master ]
 
 env:
-  DEVELOPER_DIR: /Applications/Xcode_15.3.app
+  DEVELOPER_DIR: /Applications/Xcode_16.3.app
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macos-14
+    runs-on: macos-15
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -33,5 +33,5 @@ jobs:
           -workspace vu_meter.xcworkspace
           -scheme vu-meter-core
           -configuration debug
-          -destination 'platform=iOS Simulator,name=iPhone 15'
+          -destination 'platform=iOS Simulator,name=iPhone 16'
           clean test
